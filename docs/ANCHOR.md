@@ -1,0 +1,73 @@
+# ANCHOR — W17_03_Claude_porfolio
+
+> Mốc chuẩn (anchor) để Codex kiểm. Mọi mục dưới đây đều kiểm được bằng lệnh hoặc bằng việc mở file; mục nào chưa kiểm được ghi rõ ở phần "Chưa kiểm".
+
+## 0. Nguồn gốc và phạm vi
+
+| Mục | Giá trị |
+|---|---|
+| Nguồn | `W17_02` tại commit `9a37799` (nhánh `main`) |
+| Bản này | `W17_03_Claude_porfolio`, repo Git độc lập, lịch sử bắt đầu từ commit khởi tạo của bản này |
+| Mục tiêu | Đổi định vị từ "ứng viên có nhiều dịch vụ" sang **freelancer về dữ liệu, nhận ít dịch vụ, làm được và chứng minh được** |
+| Quyết định của chủ hồ sơ (vòng 2) | Dịch vụ là **dữ liệu**; Digital Marketing **đang học**, không nhận chạy quảng cáo. Nhận làm website, không cam kết doanh thu. Được dùng tên công ty cũ. Xóa số điện thoại. Dữ liệu demo và GA4 (trang do chính chủ làm) dùng bình thường |
+| Phạm vi sửa | Chỉ **nội dung chữ** (4 locale `vi/en/es/zh`) trong 2 file Final, hai file Creator sinh lại từ Final, và chuỗi kỳ vọng trong `tests/regression/run_all.py` |
+| Ngoài phạm vi | `server.py`, `dev_server.py`, `tools/`, bố cục, màu, số liệu GA4, dữ liệu phễu mẫu, ảnh đại diện, logic JS |
+
+Lý do từng thay đổi nằm ở `docs/CHANGE_RATIONALE.md`.
+
+## 1. Anchor định vị (A1–A3)
+
+**A1. Dữ liệu là chính; website nhận làm; đo lường theo yêu cầu; Digital Marketing đang học.**
+- Chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`.
+- Nhận làm: `3. Website & Trang đích` (không cam kết doanh thu hay lượng khách).
+- Theo yêu cầu: `4. Kiểm lỗi Đo lường` (GA4/GTM, chỉ phần kỹ thuật).
+- Digital Marketing: ghi rõ **đang học**, không nhận chạy quảng cáo (`hero_bio`, `hero_desc`, `eco_property`, `modal_pkg_note`, `skill_grp_1`).
+- Kiểm: khóa `eco_badge_1..4`, `modal_p1..4_badge`, `modal_pkg_heading` ở đủ 4 locale trong `index.html`.
+
+**A2. Không còn tuyên bố không kiểm chứng được.** Các lệnh sau phải **không** trả kết quả trong nội dung hiển thị của 2 file Final:
+```bash
+grep -nE "xác thực 100|100% Verified|Verified Specialist|đã xác thực|认证专家|100% 真实|Verificad|verificad" index.html index_portfolio_clean.html
+grep -nE "~60%|500\+|12 Vùng|12 Regions|12 Regiones|12 个战区|80–90%" index.html index_portfolio_clean.html
+grep -nE "ROAS|CPA|CVR" index.html index_portfolio_clean.html
+grep -nE "Google Ads|Meta Ads|TikTok" index.html index_portfolio_clean.html
+```
+Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WRP Tax Services (Certified Public Accountant / Enrolled Agent, không phải chỉ số quảng cáo) và một dòng nằm trong chuỗi ảnh nhúng base64; cả hai chấp nhận được. Tên Prudential, Chubb Life, AIA **được phép** xuất hiện (chủ hồ sơ cho phép ở vòng 2); chúng chỉ nằm trong `sol_desc` của CV.
+
+**A3. Số liệu GA4 là của các trang do chính chủ hồ sơ xây.** Nguồn ghi là "thuộc tính GA4 của các trang do TJ xây dựng"; `hub_desc` nói số liệu lấy từ chính các trang này. Các con số (174 người dùng, 1.684 lượt xem, 10.465 sự kiện) và dữ liệu phễu mẫu **không đổi**.
+
+## 2. Anchor nội dung dịch vụ (A4–A5)
+
+**A4. Mỗi dịch vụ có đúng 3 đầu việc; dịch vụ 1–4 đều ghi sản phẩm bàn giao.** Mỗi `modal_pN_itemM` (N = 1..4, M = 1..3) chứa cụm "Bàn giao:" (vi), "Delivered:" (en), "Entrega:" (es), "交付：" (zh). Riêng `modal_p3_item*` vẫn là 3 mục.
+
+**A5. Câu "không cam kết" còn đúng ở chỗ cần thiết.** Còn trong: `hero_desc`/`hero_bio`, `eco_card4_desc` (đúng cụm kiểm thử: `không cam kết doanh thu/lead`, `no revenue/lead KPI commitments`, `sin compromiso de ingresos/leads`, `不承诺获客或营收 KPI`), `modal_p4_item3`, `footer_desc`. Không lặp ở mọi khối như bản W17_02.
+
+## 3. Anchor riêng tư (A6)
+
+**A6. Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html index_portfolio_clean.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
+
+## 4. Anchor kỹ thuật (A7–A9)
+
+**A7. Quy tắc `AGENTS.md` vẫn đúng.** Không thêm màu/font/spacing mới. Chuỗi mới có `text-balance`/`inline-block` bảo vệ hai chữ cuối ở các tiêu đề và mô tả đã có (`hero_title`, `hub_title`, `contact_section_sub`, `footer_title`). Không dùng `innerHTML` với chuỗi thô mới ngoài cơ chế sẵn có.
+
+**A8. Từ điển và HTML tĩnh đồng bộ.** Mọi khóa sửa có đủ 4 locale. Giá trị `vi` trong từ điển khớp văn bản tĩnh của phần tử `data-i18n` tương ứng.
+
+**A9. Creator ↔ Final không lệch.**
+```bash
+python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Creator
+```
+
+## 5. Lệnh kiểm tổng
+
+```bash
+python -X utf8 tools/sync_creators.py --check
+python -X utf8 tests/regression/run_all.py --quick
+python -X utf8 tests/regression/native_zoom.py
+```
+Kết quả đã chạy khi tạo bản này được ghi ở `docs/CHANGE_RATIONALE.md`, mục "Kết quả kiểm tra".
+
+## 6. Chưa kiểm (ghi thẳng, không tuyên bố PASS)
+
+- Chưa mở site đã deploy; chỉ kiểm trên file trong repo.
+- Chất lượng bản dịch `es` và `zh` do Claude viết, **chưa có người bản ngữ rà**.
+- Chưa so sánh thị giác từng viewport 320/375/390/768/1024/1440 bằng ảnh chụp mới cho các đoạn chữ vừa đổi; chuỗi mới dài hơn ở một số khối (modal dịch vụ có thêm "Bàn giao: …"). Codex nên chụp modal dịch vụ ở 375px và 720×450.
+- Việc nêu tên công ty cũ do chủ hồ sơ xác nhận bằng lời; chưa có tài liệu nào chứng minh quyền đó.
