@@ -91,17 +91,23 @@ Những điều **vẫn giữ** từ vòng 1: bỏ các cụm "xác thực 100%"
 
 ## Kết quả kiểm tra
 
-Trạng thái khi commit (ghi thẳng, không tuyên bố PASS toàn bộ):
+Trạng thái khi commit (ghi thẳng, không tuyên bố một lần chạy sạch toàn bộ):
 
 | Kiểm tra | Kết quả |
 |---|---|
 | `python tools/sync_creators.py --check` | OK cho cả hai Creator |
 | `grep w17_02` trong 2 Final + 2 Creator | 0 dòng (đã đổi sang `w17_03_`) |
-| Các lệnh grep ở A2 (Prudential được phép) | Không còn tuyên bố bị cấm; chỉ còn `CPA/EA` hợp lệ |
-| `run_all.py --quick` | **CHƯA hoàn tất.** Các lần chạy bị hệ thống dừng vì thiếu bộ nhớ. Lần cuối chỉ đến 3 PASS (nhóm STATIC/F01) trước khi bị dừng, 0 FAIL ở phần đã chạy |
+| Lệnh grep ở A2 | Không còn tuyên bố bị cấm; chỉ còn `CPA/EA` hợp lệ |
+| `run_all.py --quick`, lần 1 (sau sửa vòng 2) | 35 PASS, 1 FAIL: `R3-01..05` do chuỗi ES `Landing Page` trong tên dịch vụ 3. **Đã sửa** về "Página de Aterrizaje" |
+| `run_all.py --quick`, lần 2 (sau sửa ES) | 27 PASS, 4 FAIL, đều là timeout (`Page.goto` 30s, chờ `download` 8s) hoặc ghi file ở F07/F09/F10/N; R3 đã PASS. Các nhóm này PASS ở lần 1, máy đang thiếu RAM |
+| `run_all.py --quick --only F07,F09,F10,N` | **11/11 PASS** (chạy riêng, máy rảnh hơn) |
 | `run_all.py` (đầy đủ), `native_zoom.py` | Chưa chạy |
 | So sánh thị giác 320–1440px, zoom 200% | Chưa làm |
 
-Một lần chạy sớm hơn (trước khi sửa vòng 2) đã báo 1 FAIL ở F05 migration. Nguyên nhân đã xác định: bài test sửa nút `hero_badge`, mà nội dung này đã đổi nên cơ chế migration (chỉ áp khi văn bản gốc khớp) từ chối đúng thiết kế; cộng thêm khóa `w17_02_` trong fixture. Đã sửa test sang nút `eco_title` (không đổi) và đổi tiền tố trong fixture, **nhưng chưa chạy lại để xác nhận**. Codex cần chạy `run_all.py` trên máy đủ bộ nhớ trước khi kết luận.
+Kết luận có giới hạn: chưa có một lượt `--quick` nào xanh toàn bộ liên tục. Các lỗi còn lại ở lần 2 giải thích được bằng timeout khi máy chậm và PASS khi chạy riêng, nhưng đó là suy luận, không phải bằng chứng. Codex nên chạy lại `run_all.py` đầy đủ trên máy rảnh RAM.
 
-Thay đổi test ngoài chuỗi kỳ vọng: thêm `tests/fixtures/legacy_ad92e4b/` (bản Creator cũ của W17_02, đổi tiền tố khóa sang `w17_03_`) vì repo này không có lịch sử Git của W17_02; `run_all.py`/`extra_cases.py` đọc fixture thay vì `git show`.
+Lỗi F05 migration ở một lần chạy sớm hơn đã được xử lý: bài test sửa nút `hero_badge` (nội dung đã đổi nên migration từ chối đúng thiết kế) nay sửa nút `eco_title` (không đổi), và fixture Creator cũ đổi tiền tố khóa sang `w17_03_`; F05 PASS ở lần 1.
+
+Thay đổi test ngoài chuỗi kỳ vọng: thêm `tests/fixtures/legacy_ad92e4b/` (bản Creator cũ của W17_02, đổi tiền tố khóa) vì repo này không có lịch sử Git của W17_02; `run_all.py`/`extra_cases.py` đọc fixture thay vì `git show`.
+
+Ghi chú công cụ: Codex CLI không chạy được test trên ổ mạng (`CreateProcessWithLogonW failed: 267`, thư mục UNC), nên test được chạy bởi Claude.
