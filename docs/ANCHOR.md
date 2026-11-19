@@ -71,3 +71,9 @@ Kết quả đã chạy khi tạo bản này được ghi ở `docs/CHANGE_RATIO
 - Chất lượng bản dịch `es` và `zh` do Claude viết, **chưa có người bản ngữ rà**.
 - Chưa so sánh thị giác từng viewport 320/375/390/768/1024/1440 bằng ảnh chụp mới cho các đoạn chữ vừa đổi; chuỗi mới dài hơn ở một số khối (modal dịch vụ có thêm "Bàn giao: …"). Codex nên chụp modal dịch vụ ở 375px và 720×450.
 - Việc nêu tên công ty cũ do chủ hồ sơ xác nhận bằng lời; chưa có tài liệu nào chứng minh quyền đó.
+
+## 7. Cập nhật vòng 3 (2026-11-18)
+
+Xem `docs/CHANGE_RATIONALE.md`, mục "Vòng 3". Tóm tắt các anchor bị ảnh hưởng: A1/A5 (`hero_desc` bỏ câu "đang học", vẫn giữ "không cam kết"), A3 (đã gỡ chuỗi số theo ngày và số liệu 7 ngày; chỉ còn các số 28 ngày trong `ga4_metrics_live.json`, chưa đối soát với GA4 thật). Kiểm: `grep -nE "Chart|trend28d|airy-web|Telemetry" index.html` phải không trả kết quả hiển thị.
+
+Vòng 3b (2026-11-19): ngôn ngữ mặc định theo trình duyệt (kiểm bằng R3-09), CV ghi "Business English", khối phễu ghi rõ dữ liệu mẫu. Giữ nguyên theo chủ hồ sơ: "Hệ sinh thái", "Power BI (Nâng cao)", "Báo cáo thời gian thực" trong CV.

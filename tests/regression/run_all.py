@@ -203,7 +203,7 @@ def want(only, fid):
 
 # ======================================================================= F01
 def t_f01(b, env):
-    ctx = b.new_context(viewport={"width": 1280, "height": 800})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
     pg = new_page(ctx)
     # Giả lập ứng dụng W17 khác cùng origin đang để ngôn ngữ/theme riêng
     open_page(pg, env, FINAL_PORTFOLIO)
@@ -241,7 +241,7 @@ def t_f01(b, env):
 
 # ======================================================================= F02
 def t_f02(b, env):
-    ctx = b.new_context(viewport={"width": 1280, "height": 800})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
     pg = new_page(ctx)
     sentinel = {
         "w17_03_portfolio_edited_html_v1": "AUDIT_SENTINEL",
@@ -292,7 +292,7 @@ def t_f03(b, env, quick, shots):
     checks = 0
     for rel in pages:
         for (w, h) in vps:
-            ctx = b.new_context(viewport={"width": w, "height": h})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = new_page(ctx)
             open_page(pg, env, rel)
             for lang in LOCALES:
@@ -337,7 +337,7 @@ def t_f03(b, env, quick, shots):
 
 
 def t_f03_keyboard(b, env):
-    ctx = b.new_context(viewport={"width": 375, "height": 600})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 375, "height": 600})
     pg = new_page(ctx)
     open_page(pg, env, FINAL_PORTFOLIO)
     btn = pg.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(3)
@@ -372,7 +372,7 @@ def t_f03_keyboard(b, env):
 
 # ======================================================================= F04 / F06 / F08
 def t_i18n(b, env):
-    ctx = b.new_context(viewport={"width": 1280, "height": 800})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
     pg = new_page(ctx)
     dicts, miss = {}, []
     for rel in ALL_PAGES:
@@ -404,7 +404,7 @@ def t_i18n(b, env):
 
 
 def t_f04_cta(b, env):
-    ctx = b.new_context(viewport={"width": 1280, "height": 800})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
     pg = new_page(ctx)
     bad = []
     for rel in (FINAL_PORTFOLIO, CREATOR_PORTFOLIO):
@@ -425,7 +425,7 @@ def t_f04_cta(b, env):
 
 
 def t_f06_cv(b, env):
-    ctx = b.new_context(viewport={"width": 1280, "height": 800})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
     pg = new_page(ctx)
     bad = []
     for rel in (FINAL_CV, CREATOR_CV):
@@ -444,7 +444,7 @@ def t_f08(b, env, quick, shots):
     bad, n = [], 0
     for rel in ALL_PAGES:
         for (w, h) in vps:
-            ctx = b.new_context(viewport={"width": w, "height": h})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = new_page(ctx)
             open_page(pg, env, rel)
             for l in LOCALES:
@@ -471,7 +471,7 @@ def t_f05(b, env):
         (FINAL_CV, "tj_capability_w17_03_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
         (CREATOR_CV, "tj_capability_w17_03_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
     ]:
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         open_page(pg, env, rel)
         pg.evaluate("([k, v]) => localStorage.setItem(k, v)", [key, json.dumps(shape())])
@@ -488,7 +488,7 @@ def t_f05(b, env):
                    '<span data-i18n="hero_badge" contenteditable="true" onclick="window.__pwned=8">Legacy edited badge</span></section>')
     for rel, keys in [(FINAL_PORTFOLIO, {"w17_03_portfolio_edited_html_v1": legacy_main}),
                       (CREATOR_PORTFOLIO, {"w17_03_portfolio_edited_html_v1": legacy_main})]:
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         open_page(pg, env, rel)
         pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", keys)
@@ -532,7 +532,7 @@ def t_f05_migration(b, env):
     bad = []
     try:
         # Creator portfolio cũ
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         pg.goto(f"{env.base}/editor_workspace/legacy_editor_portfolio.html"); pg.wait_for_timeout(900)
         pg.evaluate("toggleEditMode()")
@@ -540,7 +540,7 @@ def t_f05_migration(b, env):
         pg.wait_for_timeout(300)
         legacy_vals = pg.evaluate("() => Object.fromEntries(Object.entries(localStorage))")
         ctx.close()
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         pg.goto(f"{env.base}/editor_workspace/editor_portfolio.html"); pg.wait_for_timeout(300)
         pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", legacy_vals)
@@ -566,7 +566,7 @@ def t_f05_migration(b, env):
         ctx.close()
 
         # Creator CV cũ
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         pg.goto(f"{env.base}/editor_workspace/legacy_editor_cv.html"); pg.wait_for_timeout(900)
         pg.evaluate("""() => {
@@ -579,7 +579,7 @@ def t_f05_migration(b, env):
         order_before = pg.evaluate("[...document.querySelectorAll('#reorderable-sections > .reorderable-section')].map((s) => s.getAttribute('data-section-id'))")
         legacy_vals = pg.evaluate("() => Object.fromEntries(Object.entries(localStorage))")
         ctx.close()
-        ctx = b.new_context(viewport={"width": 1280, "height": 800})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
         pg.goto(f"{env.base}/editor_workspace/editor_cv.html"); pg.wait_for_timeout(300)
         pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", legacy_vals)
@@ -609,7 +609,7 @@ def t_f05_nodes(b, env):
     """Chỉnh sửa node KHÔNG có data-i18n (thương hiệu, nhãn, bản quyền...) vẫn còn sau khi tải lại Creator và khi đổi ngôn ngữ."""
     bad = []
     for rel, idx_name in [(CREATOR_PORTFOLIO, "w17NodeIndex"), (CREATOR_CV, "nodeIndexCV"), (FINAL_PORTFOLIO, "w17NodeIndex"), (FINAL_CV, "nodeIndexCV")]:
-        ctx = b.new_context(viewport={"width": 1280, "height": 900})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
         pg = new_page(ctx)
         open_page(pg, env, rel)
         n_nodes = pg.evaluate(f"{idx_name}.length")
@@ -665,7 +665,7 @@ def t_f07(b, env):
                                               (CREATOR_CV, FINAL_CV, FINAL_PORTFOLIO), (FINAL_CV, FINAL_CV, FINAL_PORTFOLIO)]:
             env.reset_work()
             is_cv = out_rel == FINAL_CV
-            ctx = b.new_context(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+            ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900}, accept_downloads=True)
             pg = new_page(ctx)
             errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
@@ -760,11 +760,11 @@ def t_f07(b, env):
                 return pg2
 
             # (a) cache TRỐNG: ngữ cảnh mới
-            ctx_empty = b.new_context(viewport={"width": 1280, "height": 900})
+            ctx_empty = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             check_reopen("cache-trống", ctx_empty, None)
             ctx_empty.close()
             # (b) cache CÓ DỮ LIỆU: cùng bộ nhớ của Creator
-            ctx_cache = b.new_context(viewport={"width": 1280, "height": 900})
+            ctx_cache = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             check_reopen("cache-có-dữ-liệu", ctx_cache, same_origin_cache)
             ctx_cache.close()
             # (c) Creator mở lại vẫn còn dữ liệu của chính nó
@@ -786,7 +786,7 @@ def t_f07_dom_scan(b, env):
     bad = []
     for src in (CREATOR_PORTFOLIO, CREATOR_CV):
         env.reset_work()
-        ctx = b.new_context(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900}, accept_downloads=True)
         pg = new_page(ctx)
         open_page(pg, env, src)
         pg.keyboard.press("Alt+e"); pg.wait_for_timeout(250)
@@ -801,7 +801,7 @@ def t_f07_dom_scan(b, env):
             if "is-editing" in static.split("<body", 1)[1].split(">", 1)[0] or re.search(r"""\scontenteditable\s*=|id=["'](?:visual|floating)-toolbar["']""", static):
                 bad.append(f"{src}: HTML đã serialize còn trạng thái editor")
         for l in ("cache-có-dữ-liệu", "cache-trống"):
-            ctx2 = b.new_context(viewport={"width": 1280, "height": 900}) if l == "cache-trống" else ctx
+            ctx2 = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900}) if l == "cache-trống" else ctx
             pg2 = ctx2.new_page()
             open_page(pg2, env, out)
             dom = pg2.evaluate(CLEAN_DOM_JS)
@@ -840,7 +840,7 @@ def t_f09(b, env, quick, shots):
     bad, n = [], 0
     for rel in (CREATOR_CV, CREATOR_PORTFOLIO, FINAL_CV, FINAL_PORTFOLIO):
         for (w, h) in vps:
-            ctx = b.new_context(viewport={"width": w, "height": h})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = new_page(ctx)
             open_page(pg, env, rel)
             if rel in (FINAL_CV, FINAL_PORTFOLIO):
@@ -864,7 +864,7 @@ def t_f09(b, env, quick, shots):
             # nút Lưu thật sự bấm được và kích hoạt xuất
             if w in (375, 320) and rel in (CREATOR_CV, CREATOR_PORTFOLIO):
                 env.reset_work()
-                ctx2 = b.new_context(viewport={"width": w, "height": h}, accept_downloads=True)
+                ctx2 = b.new_context(locale="vi-VN", viewport={"width": w, "height": h}, accept_downloads=True)
                 pg2 = new_page(ctx2)
                 open_page(pg2, env, rel)
                 try:
@@ -883,7 +883,7 @@ def t_f09(b, env, quick, shots):
 
 
 def t_f09_keyboard(b, env):
-    ctx = b.new_context(viewport={"width": 375, "height": 812})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 375, "height": 812})
     pg = new_page(ctx)
     open_page(pg, env, CREATOR_CV)
     seen_save = False
@@ -1035,7 +1035,7 @@ POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations 
 def t_content(b, env):
     """Nội dung bắt buộc, kiểm theo DICTIONARY của từng locale (không còn ép giữ tiếng Anh ở mọi locale)."""
     bad = []
-    ctx = b.new_context(viewport={"width": 1280, "height": 900})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
     pg = new_page(ctx)
     for rel in (FINAL_PORTFOLIO, CREATOR_PORTFOLIO):
         open_page(pg, env, rel)
@@ -1071,7 +1071,7 @@ def t_content(b, env):
 
 def t_nav(b, env):
     bad = []
-    ctx = b.new_context(viewport={"width": 1280, "height": 900})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
     pg = new_page(ctx)
     for a, b_ in [(FINAL_PORTFOLIO, FINAL_CV), (CREATOR_PORTFOLIO, CREATOR_CV)]:
         for start, tgt in [(a, b_), (b_, a)]:
@@ -1094,7 +1094,7 @@ def t_overflow(b, env, quick):
     bad, n = [], 0
     for rel in ALL_PAGES:
         for (w, h) in vps:
-            ctx = b.new_context(viewport={"width": w, "height": h})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = new_page(ctx)
             open_page(pg, env, rel, 500)
             for l in LOCALES:
@@ -1168,7 +1168,7 @@ def main():
                 ("F07", lambda: (t_f07(b, env), t_f07_dom_scan(b, env))),
                 ("F10", lambda: t_f10(env)),
                 ("N", lambda: (X.t_n01_migration_cards(b, env), X.t_n02_duplicate_keys(b, env), X.t_n03_node_identity(b, env), X.t_n04_brand(b, env), X.t_server_extra(env))),
-                ("R3", lambda: (X3.t_i18n_purity(b, env), X3.t_static_equals_vi(b, env), X3.t_ui_locale(b, env), X3.t_aria_meta(b, env), X3.t_n07_comment(env))),
+                ("R3", lambda: (X3.t_i18n_purity(b, env), X3.t_static_equals_vi(b, env), X3.t_ui_locale(b, env), X3.t_aria_meta(b, env), X3.t_n07_comment(env), X3.t_default_locale(b, env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

@@ -27,10 +27,12 @@ W17_03_Claude_porfolio/
 
 1. **`index.html` — Portfolio Showcase V3**:
    - **Mô phỏng Phễu & Hiệu suất (Interactive Funnel Simulation)**: Lọc KPI động theo khu vực/kênh bán hàng.
-   - **GA4 & Power BI Telemetry Dashboard**:
-     - Tích hợp **Chart.js** biểu đồ đường & miền (Line & Area Chart) xu hướng 28 ngày (`1.684 lượt xem`, `174 người dùng`, `10.465 sự kiện`, `12m 30s tương tác TB`).
-     - Bộ lọc Slicer tương tác (`[Tất cả]`, `[🇺🇸 Hoa Kỳ]`, `[🇻🇳 Việt Nam]`, chuyển đổi `28 ngày` / `7 ngày`).
-     - **Interactive Drill-down Modal (Popup)**: Xem chi tiết Top 10 Quốc gia và Top 10 Tiêu đề trang kèm thanh tiến độ Data Bar.
+   - **Dashboard GA4** (số liệu 28 ngày, 14/10 – 10/11/2026, cập nhật thủ công, không phải thời gian thực):
+     - 4 thẻ KPI (`174 người dùng`, `1.684 lượt xem`, `10.465 sự kiện`, `12m 30s tương tác TB/người dùng`) kèm bối cảnh: Việt Nam chiếm 89,8% sự kiện; Hoa Kỳ 80 người dùng nhưng 41 phiên, 11 giây.
+     - Khối **Cách đọc số liệu**: nói rõ đây là sản phẩm cá nhân, không phải dữ liệu khách hàng, và lưu lượng nghi tự động chưa được lọc.
+     - Bộ lọc `[Tất cả]`, `[🇺🇸 Hoa Kỳ]`, `[🇻🇳 Việt Nam]`; popup chi tiết Top 10 quốc gia và Top 10 trang.
+     - Đã bỏ biểu đồ xu hướng theo ngày và bộ chọn 7 ngày: chuỗi số cũ không có nguồn trong `ga4_metrics_live.json` và không khớp tổng. Chỉ đưa lại khi có số theo ngày kéo thẳng từ GA4.
+
    - **4 Dự Án Cá Nhân**: Liên kết trực tiếp tới Live Demo & GitHub của *WRP Tax Services*, *Operation 0 — 1,000 Chunks Engine*, *TJ WordLoop Multiplayer Game*, và *TJ Courses Hub*.
 
 2. **`index_portfolio_clean.html` — Hồ Sơ Năng Lực / Interactive CV V3**:
@@ -43,7 +45,7 @@ W17_03_Claude_porfolio/
 ## 💻 Cách Chạy Thử Nhanh Trên Máy Khác
 
 ### Cách 1: Mở trực tiếp (Zero-Config)
-- Chỉ cần **double-click** mở trực tiếp file `index.html` hoặc `index_portfolio_clean.html` trên bất kỳ trình duyệt nào (mọi thư viện Tailwind CSS, Lucide Icons, Chart.js và Google Fonts đều hoạt động độc lập qua CDN và đường dẫn tương đối).
+- Chỉ cần **double-click** mở trực tiếp file `index.html` hoặc `index_portfolio_clean.html` trên bất kỳ trình duyệt nào (mọi thư viện Tailwind CSS, Lucide Icons và Google Fonts đều hoạt động độc lập qua CDN và đường dẫn tương đối).
 
 ### Cách 2: Chạy qua Local Dev Server (Hỗ trợ tự động lưu file sạch từ Visual Editor)
 ```bash

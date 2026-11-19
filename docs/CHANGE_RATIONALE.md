@@ -111,3 +111,45 @@ Lỗi F05 migration ở một lần chạy sớm hơn đã được xử lý: b�
 Thay đổi test ngoài chuỗi kỳ vọng: thêm `tests/fixtures/legacy_ad92e4b/` (bản Creator cũ của W17_02, đổi tiền tố khóa) vì repo này không có lịch sử Git của W17_02; `run_all.py`/`extra_cases.py` đọc fixture thay vì `git show`.
 
 Ghi chú công cụ: Codex CLI không chạy được test trên ổ mạng (`CreateProcessWithLogonW failed: 267`, thư mục UNC), nên test được chạy bởi Claude.
+
+
+## Vòng 3: rà soát theo yêu cầu của chủ hồ sơ (2026-11-18)
+
+Chủ hồ sơ yêu cầu: số liệu hiển thị đúng bản chất, nhận freelance và remote cho thị trường nước ngoài, bỏ chữ khó hiểu ("Hồ sơ trình diễn", "CV Interactive"). Vòng này **thay đổi một phần phạm vi cũ** (trước đây "số liệu GA4 không đổi"); quyết định mới của chủ hồ sơ thay thế.
+
+| Đổi | Vì sao |
+|---|---|
+| Bỏ biểu đồ xu hướng theo ngày, tab 3 trong popup, bộ chọn 7 ngày, thư viện Chart.js | Chuỗi số theo ngày không có nguồn trong `ga4_metrics_live.json`. Cộng 28 ngày ra 1.684 nhưng 7 ngày cuối ra 388 (thẻ 7 ngày ghi 269); Mỹ + Việt Nam không bằng "Tất cả" theo từng ngày; Mỹ cộng ra 332 lượt xem (thẻ ghi 312), Việt Nam 1.226 (thẻ ghi 1.245). Số "14m 15s" và "1.840 sự kiện" của 7 ngày cũng không có nguồn, còn script ghi "5,000+ sự kiện" cho cùng 7 ngày |
+| Thêm khối "Cách đọc số liệu" | Hoa Kỳ có 80 người dùng nhưng 41 phiên (người dùng nhiều hơn phiên là bất thường) và 11 giây mỗi người dùng; ghi rõ chưa lọc, 174 người dùng không phải quy mô khán giả thật |
+| Bỏ mũi tên ▲ ở "163 người dùng mới", bỏ emoji trang trí, đổi nhãn thẻ thứ 3 thành "Tương tác TB / người dùng" | ▲ gợi ý tăng trưởng nhưng không có kỳ so sánh |
+| Sửa 21,46 thành 21,47 lượt xem/người dùng của Việt Nam | 1.245 / 58 = 21,4655 |
+| Chân bảng quốc gia ghi "Top 10: 168/174 người dùng, 10.229/10.465 sự kiện" | Phép cộng 10 dòng ra 168 và 10.229, không phải tổng toàn bộ |
+| Bỏ "Power BI Telemetry", "TRỰC TIẾP", "Đồng bộ BigQuery", mã project GCP; ghi "cập nhật thủ công, không phải thời gian thực" | Trang dựng bằng Tailwind, không phải Power BI; số liệu là ảnh chụp, không có kết nối trực tiếp |
+| Ngày ghi cố định (14/10 – 10/11/2026) thay cho "28 ngày qua" | "Qua" sai khi số liệu đã cũ |
+| `brand_tag`: "Portfolio" (bỏ "Hồ sơ trình diễn (V3)"); CV: bỏ "Tương tác", "Interactive", "V3" | Khách không cần biết số phiên bản nội bộ; "trình diễn" khó hiểu |
+| `hero_badge`: "Nhận dự án freelance & remote"; bỏ "(Freelance)" lặp ở định vị | Nhận freelance và remote; badge ngay phía trên đã nói |
+| `hero_desc` viết lại: nêu việc làm, remote, bàn giao file chạy được kèm hướng dẫn; giữ "không chạy quảng cáo, không cam kết KPI doanh số" ở cuối; bỏ câu "Digital Marketing đang học" khỏi hero | Câu đang học làm yếu phần chào chính; trạng thái đang học vẫn còn ở `eco_property`, `skill_grp_1`, `modal_pkg_note` |
+| `hero_title` về chữ thường theo câu, thêm dấu phẩy | Viết hoa mỗi chữ là kiểu tiếng Anh |
+| Nút CV: "Xem CV & hồ sơ năng lực", bỏ ↗ (link mở cùng tab) | ↗ báo hiệu mở tab mới nhưng link không mở tab mới |
+
+Anchor đã đổi: A1 và A5 không còn đòi `hero_desc` chứa chữ "đang học" (vẫn đòi "không cam kết"); A3 chỉ còn đúng với các con số **174 / 1.684 / 10.465** và bảng quốc gia/trang; chuỗi số theo ngày và số liệu 7 ngày đã gỡ.
+
+**Chưa đối soát với GA4 thật (máy này không có thông tin đăng nhập BigQuery):** tất cả số 28 ngày (người dùng, phiên, sự kiện, bảng quốc gia/trang) và lượt xem theo quốc gia (312 Mỹ, 1.245 Việt Nam) lấy từ `ga4_metrics_live.json`, chưa so lại với giao diện GA4. Chủ hồ sơ nên mở GA4 so một lần.
+
+**Kết quả kiểm tra (2026-11-18):** `sync_creators.py --check` OK; `run_all.py --quick` chạy theo ba lượt vì lượt đầu bị đóng trình duyệt thử khi hết thời gian: F01–F05, F03, F08, STATIC PASS; R3, CONTENT, NAV, SAFETY 8/8 PASS; F07, F09, F10, N, RESP 13/13 PASS. Đã chụp màn hình 1440px và 390px (hero, dashboard) và xem bằng mắt; không có lỗi console. `run_all.py` đầy đủ, `native_zoom.py`, ảnh chụp 320/768/1024px chưa chạy. Bản dịch es và zh của chuỗi mới do Claude viết, chưa có người bản ngữ rà.
+
+
+### Vòng 3b (2026-11-19): quyết định thêm của chủ hồ sơ
+
+| Đổi | Vì sao |
+|---|---|
+| Ngôn ngữ mặc định lấy theo trình duyệt (vi/en/es/zh; ngôn ngữ khác dùng en); lựa chọn đã lưu luôn được ưu tiên. Áp dụng cho trang chính và CV | Chủ hồ sơ nhắm thị trường nước ngoài; trước đây khách nào cũng thấy tiếng Việt trước |
+| Bộ kiểm thử: mọi `new_context` đặt `locale="vi-VN"`; thêm test R3-09 cho ngôn ngữ mặc định | Các test cũ giả định trang mở bằng tiếng Việt; trình duyệt thử mặc định là en-US |
+| CV `pill_lang`: "TOEIC ~700+" → "Business English" (es "Inglés de negocios", zh "商务英语") | Chủ hồ sơ chọn; "~700+" nghe thiếu chắc chắn. Không ghi điểm vì không có chứng chỉ kèm theo |
+| CV `hero_bio` viết lại giống trang chính; bỏ "(Freelance)" lặp ở `hero_title`; "Xem GitHub"; sửa "gởi" → "gửi" | Đồng bộ với trang chính |
+| Khối mô phỏng phễu: nhãn "Dữ liệu mẫu • Mô phỏng"; chú thích nói rõ toàn bộ số là dữ liệu mẫu, không phải kết quả của khách nào (chữ lớn hơn, màu amber) | ROI 3.4x, +24.8%, 78.4% là số minh họa nhưng trước chỉ có một dòng chữ nhỏ |
+| Phần trăm trong bảng GA4 dùng dấu phẩy ở vi/es | Thống nhất với các số khác (9,68; 93,7%) |
+
+**Chủ hồ sơ giữ nguyên (không sửa):** chữ "Hệ sinh thái"; trong CV, "Power BI (Nâng cao)" và "Báo cáo thời gian thực". Đây là lời tự nhận của chủ hồ sơ; Claude không kiểm chứng.
+
+**Kết quả kiểm tra (2026-11-19):** `sync_creators.py --check` OK. `run_all.py --quick` chạy theo nhóm: STATIC, F01, F02, F04, F05, F06, F08, R3 (gồm R3-09), CONTENT, NAV 22/22 PASS; F03 và F09 PASS (lượt đó bị lệnh `timeout` cắt sau F09); F07, F10, N, RESP 11/11 PASS khi chạy riêng. Ảnh chụp: trang chính và CV với trình duyệt en-US và vi-VN, không lỗi console.

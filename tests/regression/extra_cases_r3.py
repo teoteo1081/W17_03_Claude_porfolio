@@ -58,10 +58,10 @@ def _deny_hits(strings):
 
 
 def t_i18n_purity(b, env):
-    """Giá trị dịch + chữ hiển thị thật (3 tab GA4, 3 modal demo, tooltip/aria) không còn từ tiếng Anh thông dụng ở VI/ES/ZH."""
+    """Giá trị dịch + chữ hiển thị thật (2 tab GA4, 3 modal demo, tooltip/aria) không còn từ tiếng Anh thông dụng ở VI/ES/ZH."""
     bad = []
     for rel in (R.FINAL_PORTFOLIO, R.CREATOR_PORTFOLIO, R.FINAL_CV, R.CREATOR_CV):
-        ctx = b.new_context(viewport={"width": 1440, "height": 900})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1440, "height": 900})
         pg = R.new_page(ctx)
         R.open_page(pg, env, rel)
         d = pg.evaluate(DICT_JS)
@@ -74,7 +74,7 @@ def t_i18n_purity(b, env):
             R.set_lang(pg, l)
             texts = list(pg.evaluate(TEXT_JS))
             if is_portfolio:
-                for tab in ("countries", "pages", "powerbi"):
+                for tab in ("countries", "pages"):
                     pg.evaluate("openGA4DrilldownModal('%s')" % tab)
                     pg.wait_for_timeout(450)
                     texts += pg.evaluate(TEXT_JS)
@@ -89,13 +89,13 @@ def t_i18n_purity(b, env):
             if h:
                 bad.append("%s DOM/%s: %s" % (rel, l, sorted(set(h))[:4]))
         ctx.close()
-    R.record("R3-01..05", "độ thuần nhất ngôn ngữ: không còn từ tiếng Anh thông dụng (Users/Views/Events/Core Service/Verified/Master Degree/Actual vs. Target/Self-service/Auto-Dispatch...) trong từ điển và chữ hiển thị thật ở VI/ES/ZH (4 trang, 3 tab GA4, 3 modal demo, tooltip/aria)", not bad, " | ".join(bad[:6]))
+    R.record("R3-01..05", "độ thuần nhất ngôn ngữ: không còn từ tiếng Anh thông dụng (Users/Views/Events/Core Service/Verified/Master Degree/Actual vs. Target/Self-service/Auto-Dispatch...) trong từ điển và chữ hiển thị thật ở VI/ES/ZH (4 trang, 2 tab GA4, 3 modal demo, tooltip/aria)", not bad, " | ".join(bad[:6]))
 
 
 def t_static_equals_vi(b, env):
     """HTML tĩnh (mặc định, trước khi JS chạy) trùng bản VI: không nháy chữ khi tải trang."""
     bad = []
-    ctx = b.new_context(viewport={"width": 1280, "height": 900})
+    ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
     pg = R.new_page(ctx)
     for rel in (R.FINAL_PORTFOLIO, R.CREATOR_PORTFOLIO, R.FINAL_CV, R.CREATOR_CV):
         R.open_page(pg, env, rel)
@@ -111,7 +111,7 @@ def t_ui_locale(b, env):
     bad = []
     vn = re.compile("[%s]" % VN_LETTERS)
     for rel, ui_name in [(R.CREATOR_PORTFOLIO, "W17_UI"), (R.CREATOR_CV, "UI_CV")]:
-        ctx = b.new_context(viewport={"width": 1280, "height": 900})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
         pg = R.new_page(ctx)
         R.open_page(pg, env, rel)
         ui = pg.evaluate(ui_name)
@@ -150,7 +150,7 @@ def t_aria_meta(b, env):
     bad = []
     vn = re.compile("[%s]" % VN_LETTERS)
     for rel in (R.FINAL_PORTFOLIO, R.FINAL_CV):
-        ctx = b.new_context(viewport={"width": 1280, "height": 900})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
         pg = R.new_page(ctx)
         R.open_page(pg, env, rel)
         titles = {}
@@ -203,3 +203,29 @@ def t_n07_comment(env):
     R.record("N07", "validator đọc CÂY HTML đã parse: marker trong comment/chuỗi script, sai thẻ, trùng id đều bị từ chối; trang thật vẫn ghi được", not bad, " | ".join(bad))
     env.reset_work()
     shutil.rmtree(env.work / ".w17_backups", ignore_errors=True)
+
+
+def t_default_locale(b, env):
+    """Ngôn ngữ mặc định theo trình duyệt: vi/en/es/zh khớp thì dùng, ngôn ngữ lạ thì en; lựa chọn đã lưu luôn thắng."""
+    bad = []
+    expect = {"vi-VN": "vi", "en-US": "en", "es-ES": "es", "zh-CN": "zh", "fr-FR": "en", "de-DE": "en"}
+    pages = (R.FINAL_PORTFOLIO, R.FINAL_CV)
+    for loc, want in expect.items():
+        ctx = b.new_context(locale=loc, viewport={"width": 1280, "height": 900})
+        pg = R.new_page(ctx)
+        for rel in pages:
+            R.open_page(pg, env, rel)
+            got = pg.evaluate("document.documentElement.lang")
+            if got != want:
+                bad.append("%s/%s: lang=%s, phải là %s" % (rel, loc, got, want))
+        ctx.close()
+    ctx = b.new_context(locale="en-US", viewport={"width": 1280, "height": 900})
+    ctx.add_init_script("try { localStorage.setItem('w17_03_lang', 'vi'); } catch (e) {}")
+    pg = R.new_page(ctx)
+    for rel in pages:
+        R.open_page(pg, env, rel)
+        got = pg.evaluate("document.documentElement.lang")
+        if got != "vi":
+            bad.append("%s: lựa chọn đã lưu (vi) bị bỏ qua, lang=%s" % (rel, got))
+    ctx.close()
+    R.record("R3-09", "ngôn ngữ mặc định theo trình duyệt (vi/en/es/zh; lạ → en) và lựa chọn đã lưu luôn được ưu tiên (portfolio + CV)", not bad, " | ".join(bad[:6]))

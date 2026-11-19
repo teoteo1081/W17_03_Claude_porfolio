@@ -32,7 +32,7 @@ def t_n01_migration_cards(b, env):
     bad = []
     try:
         for lang in R.LOCALES:
-            ctx = b.new_context(viewport={"width": 1280, "height": 900})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             pg = R.new_page(ctx)
             pg.goto(f"{env.base}/editor_workspace/{name}"); pg.wait_for_timeout(700)
             pg.evaluate(R.SELECT_LANG_JS, lang); pg.wait_for_timeout(200)
@@ -43,7 +43,7 @@ def t_n01_migration_cards(b, env):
             keys_legacy = pg.evaluate("[...document.querySelectorAll('.solution-card-item')].map((c) => (c.querySelector('[data-i18n^=sol_card]') || {getAttribute: () => null}).getAttribute('data-i18n'))")
             store = pg.evaluate("() => Object.fromEntries(Object.entries(localStorage))")
             ctx.close()
-            ctx = b.new_context(viewport={"width": 1280, "height": 900})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             pg = R.new_page(ctx)
             pg.goto(f"{env.base}/{R.FINAL_PORTFOLIO}"); pg.wait_for_timeout(200)
             pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", store)
@@ -62,7 +62,7 @@ def t_n02_duplicate_keys(b, env):
     bad = []
     for src, out in [(R.CREATOR_PORTFOLIO, R.FINAL_PORTFOLIO), (R.FINAL_PORTFOLIO, R.FINAL_PORTFOLIO)]:
         env.reset_work()
-        ctx = b.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1440, "height": 900}, accept_downloads=True)
         pg = R.new_page(ctx)
         R.open_page(pg, env, src)
         if not pg.evaluate("document.body.classList.contains('is-editing')"):
@@ -84,7 +84,7 @@ def t_n02_duplicate_keys(b, env):
             pg.keyboard.press("Alt+e"); pg.wait_for_timeout(300)  # Final: toolbar chỉ có sau Alt+E (trang vừa tải lại)
         R.click_save(pg)
         for label, init in (("cache-trống", None), ("cache-có-dữ-liệu", cache)):
-            ctx2 = b.new_context(viewport={"width": 1440, "height": 900})
+            ctx2 = b.new_context(locale="vi-VN", viewport={"width": 1440, "height": 900})
             pg2 = R.new_page(ctx2)
             if init is not None:
                 pg2.goto(f"{env.base}/{R.FINAL_CV}"); pg2.wait_for_timeout(200)
@@ -104,7 +104,7 @@ def t_n03_node_identity(b, env):
     bad = []
     for src in (R.CREATOR_CV, R.FINAL_CV):
         env.reset_work()
-        ctx = b.new_context(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900}, accept_downloads=True)
         pg = R.new_page(ctx)
         R.open_page(pg, env, src)
         if not pg.evaluate("document.body.classList.contains('is-editing')"):
@@ -133,7 +133,7 @@ def t_n03_node_identity(b, env):
         before = pg.evaluate("[...document.querySelectorAll('.solution-card-item')].filter((c) => c.textContent.includes('CHECK-CUSTOM')).map((c) => c.getAttribute('data-card-id'))")
         count_before = pg.evaluate("[...document.querySelectorAll('span')].filter((s) => s.textContent === 'CHECK-CUSTOM').length")
         for label, init in (("cache-trống", None), ("cache-có-dữ-liệu", cache)):
-            ctx2 = b.new_context(viewport={"width": 1280, "height": 900})
+            ctx2 = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             pg2 = R.new_page(ctx2)
             if init is not None:
                 pg2.goto(f"{env.base}/{R.FINAL_PORTFOLIO}"); pg2.wait_for_timeout(200)
@@ -153,7 +153,7 @@ def t_n04_brand(b, env):
     """Brand trên toolbar Creator được lưu sau khi sửa và khôi phục khi tải lại (CV và portfolio)."""
     bad = []
     for rel, sel in [(R.CREATOR_CV, "#floating-toolbar .brand-title"), (R.CREATOR_PORTFOLIO, "#visual-toolbar .brand-title")]:
-        ctx = b.new_context(viewport={"width": 1280, "height": 900})
+        ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
         pg = R.new_page(ctx)
         R.open_page(pg, env, rel)
         pg.click("#btn-toggle-edit"); pg.wait_for_timeout(250)
@@ -276,7 +276,7 @@ def t_f03_wheel(b, env):
     bad = []
     for rel in (R.FINAL_PORTFOLIO, R.CREATOR_PORTFOLIO):
         for (w, h) in [(320, 568), (375, 812), (390, 844), (720, 450)]:
-            ctx = b.new_context(viewport={"width": w, "height": h})
+            ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = R.new_page(ctx)
             R.open_page(pg, env, rel)
             btn = pg.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(0)

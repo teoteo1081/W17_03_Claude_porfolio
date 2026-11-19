@@ -32,8 +32,6 @@
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@0.468.0"></script>
-  <!-- Chart.js CDN for Power BI GA4 Visuals -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
     /* Smooth transitions and scroll offset for sticky header */
@@ -115,7 +113,7 @@
           TJ
         </span>
         <span class="brand-title editable-node truncate font-bold text-sm sm:text-xl lg:text-lg xl:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-          Thao Nguyen <span class="brand-title editable-node hidden sm:inline lg:hidden xl:inline text-xs font-semibold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 ml-1" data-i18n="brand_tag">Hồ sơ trình diễn (V3)</span>
+          Thao Nguyen <span class="brand-title editable-node hidden sm:inline lg:hidden xl:inline text-xs font-semibold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 ml-1" data-i18n="brand_tag">Portfolio</span>
         </span>
       </a>
 
@@ -124,7 +122,7 @@
         <a href="#about" data-i18n="nav_about" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Giới thiệu</a>
         <a href="#dashboard" data-i18n="nav_dashboard" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Mô phỏng Phễu</a>
         <a href="#ga4-ecosystem" data-i18n="nav_ecosystem" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Hệ Sinh Thái GA4</a>
-        <a href="./index_portfolio_clean.html" data-i18n="nav_capability" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors font-semibold text-emerald-700 dark:text-emerald-400">Hồ Sơ Năng Lực ↗</a>
+        <a href="./index_portfolio_clean.html" data-i18n="nav_capability" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors font-semibold text-emerald-700 dark:text-emerald-400">CV &amp; Năng lực</a>
         <a href="#contact" data-i18n="nav_contact" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Liên hệ</a>
       </nav>
 
@@ -178,7 +176,7 @@
         <a href="#about" onclick="toggleMobileMenu()" data-i18n="nav_about" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Giới thiệu</a>
         <a href="#dashboard" onclick="toggleMobileMenu()" data-i18n="nav_dashboard" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Mô phỏng Phễu</a>
         <a href="#ga4-ecosystem" onclick="toggleMobileMenu()" data-i18n="nav_ecosystem" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Hệ Sinh Thái GA4</a>
-        <a href="./index_portfolio_clean.html" onclick="toggleMobileMenu()" data-i18n="nav_capability" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded font-semibold text-emerald-700 dark:text-emerald-400">Hồ Sơ Năng Lực ↗</a>
+        <a href="./index_portfolio_clean.html" onclick="toggleMobileMenu()" data-i18n="nav_capability" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded font-semibold text-emerald-700 dark:text-emerald-400">CV &amp; Năng lực</a>
         <a href="#contact" onclick="toggleMobileMenu()" data-i18n="nav_contact" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Liên hệ</a>
         <a href="#contact" onclick="toggleMobileMenu()" data-i18n="nav_cta" class="inline-flex items-center justify-center mt-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
           Liên hệ ngay
@@ -202,20 +200,20 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
           </span>
-          <span data-i18n="hero_badge" class="editable-node">Nhận dự án Freelance</span>
+          <span data-i18n="hero_badge" class="editable-node">Nhận dự án freelance &amp; remote</span>
         </div>
 
         <!-- Headline & Name -->
         <div class="space-y-4 max-w-5xl mx-auto">
           <h1 data-i18n="hero_title" class="editable-node text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug md:leading-snug lg:leading-snug max-w-5xl mx-auto text-center text-balance mb-6">
-            Tự Động Hóa Việc Lặp Lại • Dữ Liệu Sạch<br class="hidden md:inline"> Dashboard Rõ Ràng Cho <span class="inline-block">Chủ Doanh Nghiệp</span>
+            Tự động hóa việc lặp lại, dữ liệu sạch,<br class="hidden md:inline"> dashboard rõ ràng cho <span class="inline-block">chủ doanh nghiệp</span>
           </h1>
-          <p data-i18n="hero_positioning" data-tail class="editable-node text-balance text-base sm:text-xl font-semibold bg-gradient-to-r from-emerald-700 to-cyan-700 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</p>
+          <p data-i18n="hero_positioning" data-tail class="editable-node text-balance text-base sm:text-xl font-semibold bg-gradient-to-r from-emerald-700 to-cyan-700 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">Chuyên viên Vận hành &amp; Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI</p>
         </div>
 
         <!-- Narrative Description -->
         <p data-i18n="hero_desc" data-tail class="editable-node text-sm sm:text-base lg:text-lg max-w-4xl mx-auto text-slate-700 dark:text-slate-300 leading-relaxed text-center text-balance">
-          Nhận ba nhóm việc: (1) tự động hóa nhập liệu, đối soát và đồng bộ dữ liệu; (2) làm sạch dữ liệu và dựng Dashboard điều hành (Power BI / Looker Studio); (3) dựng website gọn nhẹ. Kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu. Digital Marketing đang học, chưa nhận chạy quảng cáo <span class="inline-block">(không cam kết KPI doanh số).</span>
+          Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và kiểm lỗi đo lường GA4/GTM theo yêu cầu. Làm việc từ xa, bàn giao file chạy được kèm hướng dẫn. <span class="inline-block">Không chạy quảng cáo, không cam kết KPI doanh số.</span>
         </p>
 
         <!-- 3 CTA Action Buttons -->
@@ -225,10 +223,10 @@
             <span data-i18n="hero_btn_dashboard" class="editable-node">Xem Dashboard Tương Tác</span>
           </a>
           <a href="https://github.com/teoteo1081" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-slate-800 dark:text-slate-200 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-emerald-500/50 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-            <span data-i18n="hero_btn_github" class="editable-node">🐙 Xem Hồ Sơ GitHub ↗</span>
+            <span data-i18n="hero_btn_github" class="editable-node">🐙 Xem GitHub ↗</span>
           </a>
           <a href="./index_portfolio_clean.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-400 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-            <span data-i18n="hero_btn_capability" class="editable-node">📄 Xem Hồ Sơ Năng Lực / CV Interactive ↗</span>
+            <span data-i18n="hero_btn_capability" class="editable-node">📄 Xem CV &amp; hồ sơ năng lực</span>
           </a>
         </div>
 
@@ -241,13 +239,13 @@
         <div>
           <div class="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-emerald-700 dark:text-emerald-400 font-bold mb-1">
             <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-            <span data-i18n="dash_tag" class="editable-node">Mô Phỏng Tương Tác</span>
+            <span data-i18n="dash_tag" class="editable-node">Dữ liệu mẫu • Mô phỏng</span>
           </div>
           <h2 data-i18n="dash_title" class="editable-node text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white text-balance">
             Phân Tích Hiệu Suất &amp; Phễu <span class="inline-block">Chuyển Đổi</span>
           </h2>
-          <p data-i18n="dash_disclaimer" class="editable-node text-xs text-slate-600 dark:text-slate-400 mt-1">
-            * Dữ liệu mẫu minh họa khả năng lọc KPI linh hoạt và phân tích hiệu quả phễu kinh doanh.
+          <p data-i18n="dash_disclaimer" class="editable-node text-sm font-medium text-amber-700 dark:text-amber-300 mt-1">
+            * Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào.
           </p>
         </div>
 
@@ -536,14 +534,14 @@
 
       </div>
 
-      <!-- 1.5 KHỐI POWER BI STYLE UI DASHBOARD (GA4 LIVE TELEMETRY - 28 DAYS) -->
+      <!-- 1.5 KHỐI DASHBOARD GA4 (số liệu 28 ngày, cập nhật thủ công) -->
       <div id="pbi-ga4-dashboard" class="no-edit rounded-lg bg-slate-900 dark:bg-slate-950 border border-slate-700/80 text-slate-100 shadow-2xl overflow-hidden">
         <!-- Power BI Top Header & Slicers Bar -->
         <div class="px-4 sm:px-6 py-3.5 bg-slate-900/95 border-b border-slate-800 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
           <div class="flex items-center gap-3 flex-wrap">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold">
               <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
-              <span data-i18n="pbi_badge">POWER BI TELEMETRY • ĐO LƯỜNG</span>
+              <span data-i18n="pbi_badge">GA4 • SẢN PHẨM CÁ NHÂN</span>
             </span>
             <h3 data-i18n="pbi_report_title" class="text-sm sm:text-base font-bold text-white tracking-tight">Báo cáo điều hành GA4 — TJ WordLoop & Hệ sinh thái đa sản phẩm</h3>
           </div>
@@ -552,12 +550,9 @@
           <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <!-- Date Range Dropdown Slicer -->
             <div class="flex items-center gap-1.5 bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 max-w-full">
-              <i data-lucide="calendar" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
-              <label for="pbiDateSlicer" data-i18n="pbi_date_label" class="text-slate-400 hidden sm:inline">Khoảng thời gian:</label>
-              <select id="pbiDateSlicer" aria-label="Chọn khoảng thời gian" data-i18n-aria="aria_date_range" onchange="handlePBIDateSlicerChange(this.value)" class="bg-transparent text-white font-semibold focus:outline-none focus:ring-1 focus:ring-cyan-400 rounded cursor-pointer max-w-[210px] sm:max-w-none truncate">
-                <option value="28d" data-i18n="pbi_date_28d" class="bg-slate-900 text-white">28 ngày qua (14 thg 10 - 10 thg 11, 2026)</option>
-                <option value="7d" data-i18n="pbi_date_7d" class="bg-slate-900 text-white">7 ngày qua (04 thg 11 - 10 thg 11, 2026)</option>
-              </select>
+              <i data-lucide="calendar" class="w-3.5 h-3.5 text-cyan-400 shrink-0" aria-hidden="true"></i>
+              <span data-i18n="pbi_date_label" class="text-slate-400 hidden sm:inline">Khoảng thời gian:</span>
+              <span data-i18n="pbi_date_28d" class="text-white font-semibold">14/10 – 10/11/2026 (28 ngày)</span>
             </div>
 
             <!-- Quick Country Slicer Buttons -->
@@ -592,7 +587,7 @@
                 <i data-lucide="users" class="w-4 h-4 text-cyan-400"></i>
               </div>
               <div id="pbi-kpi-users" class="text-2xl sm:text-3xl font-black text-white font-mono mt-1.5">174</div>
-              <div id="pbi-kpi-users-sub" class="text-[11px] text-emerald-400 font-mono mt-1">▲ 163 người dùng mới (93.7%)</div>
+              <div id="pbi-kpi-users-sub" class="text-[11px] text-emerald-400 font-mono mt-1">163 người dùng mới (93,7%)</div>
             </div>
 
             <!-- KPI Card 2 -->
@@ -602,17 +597,17 @@
                 <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i>
               </div>
               <div id="pbi-kpi-views" class="text-2xl sm:text-3xl font-black text-white font-mono mt-1.5">1.684</div>
-              <div id="pbi-kpi-views-sub" class="text-[11px] text-cyan-400 font-mono mt-1">⚡ 9,68 lượt xem / người dùng</div>
+              <div id="pbi-kpi-views-sub" class="text-[11px] text-cyan-400 font-mono mt-1">9,68 lượt xem / người dùng</div>
             </div>
 
             <!-- KPI Card 3 -->
             <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 border-l-4 border-l-amber-400 flex flex-col justify-between">
               <div class="flex items-center justify-between text-xs text-slate-400 font-medium">
-                <span data-i18n="pbi_kpi3_title">THỜI GIAN TƯƠNG TÁC TB</span>
+                <span data-i18n="pbi_kpi3_title">TƯƠNG TÁC TB / NGƯỜI DÙNG</span>
                 <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
               </div>
               <div id="pbi-kpi-time" class="text-2xl sm:text-3xl font-black text-white font-mono mt-1.5">12m 30s</div>
-              <div id="pbi-kpi-time-sub" class="text-[11px] text-amber-300 font-mono mt-1">🔥 VN: 35p 11s • WordLoop: 33p 38s</div>
+              <div id="pbi-kpi-time-sub" class="text-[11px] text-amber-300 font-mono mt-1">Việt Nam 35m 11s • Hoa Kỳ 0m 11s</div>
             </div>
 
             <!-- KPI Card 4 -->
@@ -622,28 +617,22 @@
                 <i data-lucide="activity" class="w-4 h-4 text-indigo-400"></i>
               </div>
               <div id="pbi-kpi-events" class="text-2xl sm:text-3xl font-black text-white font-mono mt-1.5">10.465</div>
-              <div id="pbi-kpi-events-sub" class="text-[11px] text-indigo-300 font-mono mt-1">📊 Đồng bộ BigQuery GA4 Stream</div>
+              <div id="pbi-kpi-events-sub" class="text-[11px] text-indigo-300 font-mono mt-1">80,6% sự kiện đến từ game WordLoop</div>
             </div>
           </div>
 
-          <!-- Row 2: Chart.js 28-Day Trend Line & Area Chart -->
-          <div class="p-4 sm:p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-3">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-800 pb-3">
-              <div>
-                <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></span>
-                  <span id="pbi-chart-title" data-i18n="pbi_chart_title_28d">Xu Hướng Lượt Xem Trang &amp; Người Dùng Hoạt Động (14 thg 10 – 10 thg 11, 2026)</span>
-                </h4>
-                <p data-i18n="pbi_chart_sub" class="text-[11px] text-slate-400 mt-0.5">Biểu đồ đường &amp; miền (Line &amp; Area Chart) thể hiện tốc độ tăng trưởng truy cập thực tế trên hệ sinh thái</p>
-              </div>
-              <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
-                <span class="inline-flex items-center gap-1.5 text-cyan-300"><span class="w-2.5 h-2.5 rounded-sm bg-cyan-400"></span><span data-i18n="pbi_legend_views">Lượt xem</span></span>
-                <span class="inline-flex items-center gap-1.5 text-emerald-300"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span><span data-i18n="pbi_legend_users">Người dùng</span></span>
-              </div>
-            </div>
-            <div class="relative h-60 sm:h-72 w-full overflow-hidden max-w-full">
-              <canvas id="pbiGA4TrendChart" class="max-w-full"></canvas>
-            </div>
+          <!-- Cách đọc số liệu: thay cho biểu đồ theo ngày (chuỗi số cũ không có nguồn trong ga4_metrics_live.json và không khớp tổng) -->
+          <div id="pbi-reading-notes" class="p-4 sm:p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-3">
+            <h4 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0" aria-hidden="true"></span>
+              <span data-i18n="pbi_note_title">Cách đọc số liệu này</span>
+            </h4>
+            <ul class="space-y-2 text-xs sm:text-[13px] text-slate-300 leading-relaxed">
+              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">1.</span><span data-i18n="pbi_note_1">Nguồn: GA4 của 4 sản phẩm cá nhân do TJ tự xây (game, khóa học, phễu thuế mẫu), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.</span></li>
+              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">2.</span><span data-i18n="pbi_note_2">Việt Nam: 58 người dùng, 155 phiên, trung bình 35m 11s mỗi người dùng, chiếm 89,8% số sự kiện. Game WordLoop chiếm 80,6% tổng sự kiện.</span></li>
+              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">3.</span><span data-i18n="pbi_note_3">Hoa Kỳ: 80 người dùng nhưng chỉ 41 phiên, trung bình 11 giây mỗi người dùng. Mẫu hình này thường là lưu lượng tự động (bot, trình thu thập) và chưa được lọc khỏi tổng. Vì vậy 174 người dùng và 12m 30s không nên đọc là quy mô khán giả thật.</span></li>
+              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">4.</span><span data-i18n="pbi_note_4">Số liệu chụp đến hết 10/11/2026, cập nhật thủ công, không phải thời gian thực.</span></li>
+            </ul>
           </div>
 
           <!-- Row 3: Two Matrix Data Tables with Data Bars (Power BI Matrix Style) -->
@@ -653,7 +642,7 @@
               <div>
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
                   <div>
-                    <h4 data-i18n="pbi_m1_title" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Bảng Matrix 1: Phân Bổ Theo Quốc Gia</h4>
+                    <h4 data-i18n="pbi_m1_title" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Người dùng theo quốc gia (Top 10)</h4>
                     <p data-i18n="pbi_m1_sub" class="text-[11px] text-slate-400">Tổng: 174 người dùng • 10.465 sự kiện</p>
                   </div>
                   <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="openGA4DrilldownModal('countries', this)" data-i18n="pbi_btn_zoom" class="text-[11px] font-mono font-semibold text-cyan-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded cursor-pointer">
@@ -740,8 +729,8 @@
                 </div>
               </div>
               <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                <span data-i18n="pbi_m1_footer_left">Tổng cộng (Top 10 / 174 người dùng)</span>
-                <span data-i18n="pbi_m1_footer_right" class="text-cyan-400 font-bold">10.465 sự kiện</span>
+                <span data-i18n="pbi_m1_footer_left">Top 10 quốc gia: 168 / 174 người dùng</span>
+                <span data-i18n="pbi_m1_footer_right" class="text-cyan-400 font-bold">10.229 / 10.465 sự kiện</span>
               </div>
             </div>
 
@@ -750,7 +739,7 @@
               <div>
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
                   <div>
-                    <h4 data-i18n="pbi_m2_title" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Bảng Matrix 2: Hiệu Suất Theo Tiêu Đề Trang</h4>
+                    <h4 data-i18n="pbi_m2_title" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Lượt xem theo trang</h4>
                     <p data-i18n="pbi_m2_sub" class="text-[11px] text-slate-400">Tổng: 1.684 lượt xem • 174 người dùng</p>
                   </div>
                   <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="openGA4DrilldownModal('pages', this)" data-i18n="pbi_btn_zoom" class="text-[11px] font-mono font-semibold text-emerald-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded cursor-pointer">
@@ -783,8 +772,8 @@
 
           <!-- Power BI Footer Bar -->
           <div class="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[11px] font-mono text-slate-400 border-t border-slate-800/80">
-            <span data-i18n="pbi_source_footer">Nguồn: Google Analytics 4 (thuộc tính GA4 của các trang do TJ xây dựng) • Đồng bộ BigQuery <code class="text-cyan-400">airy-web-503408-c6</code></span>
-            <span data-i18n="pbi_updated_footer">Cập nhật lần cuối: 14 thg 10 – 10 thg 11, 2026 (28 ngày)</span>
+            <span data-i18n="pbi_source_footer">Nguồn: Google Analytics 4 (các trang do TJ xây dựng)</span>
+            <span data-i18n="pbi_updated_footer">Dữ liệu đến hết 10/11/2026 (28 ngày) • cập nhật thủ công, không phải thời gian thực</span>
           </div>
         </div>
       </div>
@@ -1012,14 +1001,14 @@
         <div class="flex items-center gap-3 flex-wrap">
           <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
             <i data-lucide="database" class="w-3.5 h-3.5"></i>
-            <span data-i18n="ga4_live_badge">GA4 TRỰC TIẾP • CHI TIẾT</span>
+            <span data-i18n="ga4_live_badge">GA4 • CHI TIẾT</span>
           </span>
           <div>
             <h3 id="ga4-modal-title" data-i18n="ga4_modal_title" class="text-base sm:text-lg font-extrabold text-white tracking-tight">
-              Báo Cáo Chi Tiết Google Analytics 4 &amp; Power BI Telemetry
+              Báo cáo chi tiết Google Analytics 4
             </h3>
             <p data-i18n="ga4_modal_sub" class="text-[11px] text-slate-400 font-mono">
-              Khoảng thời gian: 28 ngày qua (14 thg 10 – 10 thg 11, 2026) • Tổng: 174 Người dùng • 1.684 Lượt xem • 10.465 Sự kiện
+              Giai đoạn 14/10 – 10/11/2026 (28 ngày) • Tổng: 174 người dùng • 1.684 lượt xem • 10.465 sự kiện
             </p>
           </div>
         </div>
@@ -1036,9 +1025,6 @@
           </button>
           <button type="button" role="tab" aria-selected="false" aria-controls="ga4-modal-panel-pages" id="ga4-tab-btn-pages" data-i18n="ga4_tab_pages" onclick="switchGA4ModalTab('pages')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all cursor-pointer">
             📄 Tab 2: Chi Tiết Lượt Xem Trang (Top 10)
-          </button>
-          <button type="button" role="tab" aria-selected="false" aria-controls="ga4-modal-panel-powerbi" id="ga4-tab-btn-powerbi" data-i18n="ga4_tab_powerbi" onclick="switchGA4ModalTab('powerbi')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all cursor-pointer">
-            📊 Tab 3: Biểu Đồ Xu Hướng Power BI (28 Ngày)
           </button>
         </div>
 
@@ -1135,29 +1121,7 @@
         </div>
 
         <!-- TAB 3: BIỂU ĐỒ XU HƯỚNG POWER BI (28 NGÀY) -->
-        <div id="ga4-modal-panel-powerbi" role="tabpanel" aria-labelledby="ga4-tab-btn-powerbi" class="hidden space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <div>
-              <h4 data-i18n="ga4_t3_heading" class="text-sm sm:text-base font-bold text-white">Biểu Đồ Xu Hướng 28 Ngày &amp; Bộ Lọc Slicer (Power BI Interactive)</h4>
-              <p data-i18n="ga4_t3_desc" class="text-xs text-slate-400">Lọc nhanh theo thị trường trọng điểm để đối chiếu tương quan giữa Lượt xem trang và Người dùng hoạt động.</p>
-            </div>
-            <div role="group" aria-label="Bộ lọc quốc gia trong cửa sổ chi tiết" data-i18n-aria="aria_modal_country" class="inline-flex flex-wrap items-center rounded-lg bg-slate-900 p-1 border border-slate-700">
-              <button type="button" id="modal-slicer-all" aria-pressed="true" data-i18n="modal_slicer_all" onclick="filterPowerBIGA4('all')" class="px-3 py-1 text-xs font-bold rounded bg-cyan-500 text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all cursor-pointer">Tất cả (174 người dùng)</button>
-              <button type="button" id="modal-slicer-us" aria-pressed="false" data-i18n="modal_slicer_us" onclick="filterPowerBIGA4('us')" class="px-3 py-1 text-xs font-semibold rounded text-slate-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all cursor-pointer">
-                🇺🇸 Hoa Kỳ (80)
-              </button>
-              <button type="button" id="modal-slicer-vn" aria-pressed="false" data-i18n="modal_slicer_vn" onclick="filterPowerBIGA4('vn')" class="px-3 py-1 text-xs font-semibold rounded text-slate-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all cursor-pointer">
-                🇻🇳 Việt Nam (58)
-              </button>
-            </div>
-          </div>
-
-          <div class="p-4 sm:p-5 rounded-xl bg-slate-900 border border-slate-800">
-            <div class="relative h-64 sm:h-80 w-full overflow-hidden max-w-full">
-              <canvas id="modalGA4TrendChart" class="max-w-full"></canvas>
-            </div>
-          </div>
-        </div>
+        
 
         <!-- BẢNG CHI TIẾT CÁC GÓI ĐẦU VIỆC THỰC CHIẾN (SERVICE ECOSYSTEM PACKAGES) — nằm TRONG vùng cuộn của modal -->
         <div id="modal-service-packages" class="mt-6 p-4 sm:p-5 rounded-xl bg-slate-900/90 border border-emerald-500/30 space-y-4">
@@ -1232,7 +1196,7 @@
 
       <!-- Modal Footer -->
       <div class="shrink-0 px-4 sm:px-6 py-3 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-mono text-slate-400">
-        <span data-i18n="ga4_modal_footer_source">Nguồn: Google Analytics 4 (thuộc tính GA4 của các trang do TJ xây dựng) • Đồng bộ BigQuery <strong class="text-cyan-400">airy-web-503408-c6</strong></span>
+        <span data-i18n="ga4_modal_footer_source">Nguồn: Google Analytics 4 (các trang do TJ xây dựng)</span>
         <div class="flex items-center gap-3">
           <span data-i18n="ga4_modal_esc_hint" class="text-[11px] text-slate-400">Bấm phím <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">Esc</kbd> để đóng</span>
           <button type="button" data-i18n="ga4_modal_btn_close" onclick="closeGA4DrilldownModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all cursor-pointer">
@@ -1276,20 +1240,20 @@
         nav_metrics: "Chỉ số",
         nav_dashboard: "Mô phỏng Phễu",
         nav_ecosystem: "Hệ Sinh Thái GA4",
-        nav_capability: "Hồ Sơ Năng Lực ↗",
+        nav_capability: "CV & Năng lực",
         nav_contact: "Liên hệ",
         nav_cta: "Liên hệ ngay",
-        hero_badge: "Nhận dự án Freelance",
-        hero_title: "Tự Động Hóa Việc Lặp Lại • Dữ Liệu Sạch<br class='hidden md:inline'> Dashboard Rõ Ràng Cho <span class='inline-block'>Chủ Doanh Nghiệp</span>",
+        hero_badge: "Nhận dự án freelance & remote",
+        hero_title: "Tự động hóa việc lặp lại, dữ liệu sạch,<br class='hidden md:inline'> dashboard rõ ràng cho <span class='inline-block'>chủ doanh nghiệp</span>",
         hero_headline: "Dữ Liệu Chuẩn Xác • Ra Quyết Định Đúng<br class='hidden md:inline'> Tối Ưu Ngân Sách & Tăng Trưởng <span class='inline-block'>Doanh Thu</span>",
-        hero_positioning: "Chuyên viên Vận hành & Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI",
-        hero_desc: "Nhận ba nhóm việc: (1) tự động hóa nhập liệu, đối soát và đồng bộ dữ liệu; (2) làm sạch dữ liệu và dựng Dashboard điều hành (Power BI / Looker Studio); (3) dựng website gọn nhẹ. Kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu. Digital Marketing đang học, chưa nhận chạy quảng cáo <span class='inline-block'>(không cam kết KPI doanh số).</span>",
+        hero_positioning: "Chuyên viên Vận hành & Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI",
+        hero_desc: "Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và kiểm lỗi đo lường GA4/GTM theo yêu cầu. Làm việc từ xa, bàn giao file chạy được kèm hướng dẫn. <span class='inline-block'>Không chạy quảng cáo, không cam kết KPI doanh số.</span>",
         hero_btn_dashboard: "Xem Dashboard Tương Tác",
-        hero_btn_github: "🐙 Xem Hồ Sơ GitHub ↗",
-        hero_btn_capability: "📄 Xem Hồ Sơ Năng Lực / CV Interactive ↗",
-        dash_tag: "Mô Phỏng Tương Tác",
+        hero_btn_github: "🐙 Xem GitHub ↗",
+        hero_btn_capability: "📄 Xem CV & hồ sơ năng lực",
+        dash_tag: "Dữ liệu mẫu • Mô phỏng",
         dash_title: "Phân Tích Hiệu Suất & Phễu <span class='inline-block'>Chuyển Đổi</span>",
-        dash_disclaimer: "* Dữ liệu mẫu minh họa khả năng lọc KPI linh hoạt và phân tích hiệu quả phễu kinh doanh.",
+        dash_disclaimer: "* Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào.",
         filter_all: "Tất cả khu vực",
         filter_north: "Miền Bắc",
         filter_south: "Miền Nam",
@@ -1324,25 +1288,24 @@
         eco_sub_trend: "Dựng web tinh gọn",
         eco_sub_bq: "Kiểm lỗi đo lường",
         pbi_report_title: "Báo cáo điều hành GA4 — TJ WordLoop & Hệ sinh thái đa sản phẩm",
+        pbi_note_title: "Cách đọc số liệu này",
+        pbi_note_1: "Nguồn: GA4 của 4 sản phẩm cá nhân do TJ tự xây (game, khóa học, phễu thuế mẫu), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.",
+        pbi_note_2: "Việt Nam: 58 người dùng, 155 phiên, trung bình 35m 11s mỗi người dùng, chiếm 89,8% số sự kiện. Game WordLoop chiếm 80,6% tổng sự kiện.",
+        pbi_note_3: "Hoa Kỳ: 80 người dùng nhưng chỉ 41 phiên, trung bình 11 giây mỗi người dùng. Mẫu hình này thường là lưu lượng tự động (bot, trình thu thập) và chưa được lọc khỏi tổng. Vì vậy 174 người dùng và 12m 30s không nên đọc là quy mô khán giả thật.",
+        pbi_note_4: "Số liệu chụp đến hết 10/11/2026, cập nhật thủ công, không phải thời gian thực.",
         pbi_date_label: "Khoảng thời gian:",
-        pbi_date_28d: "28 ngày qua (14 thg 10 - 10 thg 11, 2026)",
-        pbi_date_7d: "7 ngày qua (04 thg 11 - 10 thg 11, 2026)",
+        pbi_date_28d: "14/10 – 10/11/2026 (28 ngày)",
         pbi_slicer_all: "Tất cả",
         pbi_slicer_us: "🇺🇸 Hoa Kỳ",
         pbi_slicer_vn: "🇻🇳 Việt Nam",
         pbi_btn_popup: "Xem Bảng Chi Tiết (Popup) ↗",
         pbi_kpi1_title: "NGƯỜI DÙNG HOẠT ĐỘNG",
         pbi_kpi2_title: "LƯỢT XEM TRANG (VIEWS)",
-        pbi_kpi3_title: "THỜI GIAN TƯƠNG TÁC TB",
+        pbi_kpi3_title: "TƯƠNG TÁC TB / NGƯỜI DÙNG",
         pbi_kpi4_title: "SỰ KIỆN GHI NHẬN (EVENTS)",
-        pbi_chart_title_28d: "Xu Hướng Lượt Xem Trang & Người Dùng Hoạt Động (14 thg 10 – 10 thg 11, 2026)",
-        pbi_chart_title_7d: "Xu Hướng Lượt Xem Trang & Người Dùng Hoạt Động (04 thg 11 – 10 thg 11, 2026)",
-        pbi_chart_sub: "Biểu đồ đường & miền (Line & Area Chart) thể hiện tốc độ tăng trưởng truy cập thực tế trên hệ sinh thái",
-        pbi_legend_views: "Lượt xem",
-        pbi_legend_users: "Người dùng",
-        pbi_m1_title: "Bảng Matrix 1: Phân Bổ Theo Quốc Gia",
+        pbi_m1_title: "Người dùng theo quốc gia (Top 10)",
         pbi_m1_sub: "Tổng: 174 người dùng • 10.465 sự kiện",
-        pbi_m2_title: "Bảng Matrix 2: Hiệu Suất Theo Tiêu Đề Trang",
+        pbi_m2_title: "Lượt xem theo trang",
         pbi_m2_sub: "Tổng: 1.684 lượt xem • 174 người dùng",
         pbi_btn_zoom: "Phóng to ↗",
         pbi_th_country: "Quốc gia",
@@ -1353,17 +1316,16 @@
         pbi_th_page: "Tiêu đề trang",
         pbi_th_views_bar: "Lượt xem (thanh dữ liệu)",
         pbi_th_users: "Người dùng",
-        pbi_m1_footer_left: "Tổng cộng (Top 10 / 174 người dùng)",
-        pbi_m1_footer_right: "10.465 sự kiện",
+        pbi_m1_footer_left: "Top 10 quốc gia: 168 / 174 người dùng",
+        pbi_m1_footer_right: "10.229 / 10.465 sự kiện",
         pbi_m2_footer_left: "Tổng cộng (1.684 Lượt xem trang)",
         pbi_m2_footer_right: "9,68 lượt xem/người dùng",
-        pbi_source_footer: "Nguồn: Google Analytics 4 (thuộc tính GA4 của các trang do TJ xây dựng) • Đồng bộ BigQuery <code class='text-cyan-400'>airy-web-503408-c6</code>",
-        pbi_updated_footer: "Cập nhật lần cuối: 14 thg 10 – 10 thg 11, 2026 (28 ngày)",
-        ga4_modal_title: "Báo Cáo Chi Tiết Google Analytics 4 & Power BI Telemetry",
-        ga4_modal_sub: "Khoảng thời gian: 28 ngày qua (14 thg 10 – 10 thg 11, 2026) • Tổng: 174 Người dùng • 1.684 Lượt xem • 10.465 Sự kiện",
+        pbi_source_footer: "Nguồn: Google Analytics 4 (các trang do TJ xây dựng)",
+        pbi_updated_footer: "Dữ liệu đến hết 10/11/2026 (28 ngày) • cập nhật thủ công, không phải thời gian thực",
+        ga4_modal_title: "Báo cáo chi tiết Google Analytics 4",
+        ga4_modal_sub: "Giai đoạn 14/10 – 10/11/2026 (28 ngày) • Tổng: 174 người dùng • 1.684 lượt xem • 10.465 sự kiện",
         ga4_tab_countries: "🌍 Tab 1: Chi Tiết Theo Quốc Gia (Top 10)",
         ga4_tab_pages: "📄 Tab 2: Chi Tiết Lượt Xem Trang (Top 10)",
-        ga4_tab_powerbi: "📊 Tab 3: Biểu Đồ Xu Hướng Power BI (28 Ngày)",
         ga4_pill_users: "Người dùng: <strong>174</strong> (163 mới)",
         ga4_pill_views: "Lượt xem: <strong>1.684</strong> (9,68/người dùng)",
         ga4_pill_time: "Thời gian TB: <strong>12m 30s</strong>",
@@ -1391,12 +1353,7 @@
         ga4_th_users: "Người dùng",
         ga4_tf_views_val: "1.684 lượt xem",
         ga4_tf_view_share_val: "100.0% (9,68 lượt/user)",
-        ga4_t3_heading: "Biểu Đồ Xu Hướng 28 Ngày & Bộ Lọc Slicer (Power BI Interactive)",
-        ga4_t3_desc: "Lọc nhanh theo thị trường trọng điểm để đối chiếu tương quan giữa Lượt xem trang và Người dùng hoạt động.",
-        modal_slicer_all: "Tất cả (174 người dùng)",
-        modal_slicer_us: "🇺🇸 Hoa Kỳ (80)",
-        modal_slicer_vn: "🇻🇳 Việt Nam (58)",
-        ga4_modal_footer_source: "Nguồn: Google Analytics 4 (thuộc tính GA4 của các trang do TJ xây dựng) • Đồng bộ BigQuery <strong class='text-cyan-400'>airy-web-503408-c6</strong>",
+        ga4_modal_footer_source: "Nguồn: Google Analytics 4 (các trang do TJ xây dựng)",
         ga4_modal_esc_hint: "Bấm phím <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> để đóng",
         ga4_modal_btn_close: "Đóng [✕]",
         hub_title: "4 Dự Án Cá Nhân — Đo Lường Hành Vi <span class='inline-block'>Người Dùng</span>",
@@ -1449,21 +1406,19 @@
         eco_badge_4: "Theo yêu cầu • Không cam kết KPI",
         chart_axis_multiple: "Bội số (x)",
         chart_axis_throughput: "Thông lượng %",
-        pbi_badge: "POWER BI TELEMETRY • ĐO LƯỜNG",
+        pbi_badge: "GA4 • SẢN PHẨM CÁ NHÂN",
         spoke_section_badge: "DỰ ÁN CÁ NHÂN & ĐO LƯỜNG GA4",
         footer_rights: "Bảo lưu mọi quyền.",
-        ga4_live_badge: "GA4 TRỰC TIẾP • CHI TIẾT",
+        ga4_live_badge: "GA4 • CHI TIẾT",
         modal_p1_badge: "Dịch vụ chính",
         modal_p2_badge: "Dịch vụ thứ hai",
         modal_p3_badge: "Nhận làm",
         modal_p4_badge: "Theo yêu cầu",
         ga4_tf_users_total: "174 người dùng",
         unit_users: "{n} người dùng",
-        aria_date_range: "Chọn khoảng thời gian",
         aria_country_filter: "Bộ lọc quốc gia",
         aria_ga4_views: "Các chế độ xem chi tiết GA4",
-        aria_modal_country: "Bộ lọc quốc gia trong cửa sổ chi tiết",
-        brand_tag: "Hồ sơ trình diễn (V3)",
+        brand_tag: "Portfolio",
         meta_title: "Thao Nguyen (TJ) | Chuyên viên Vận hành & Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI",
         meta_desc: "Hồ sơ của TJ — freelancer Vận hành & Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu."
       },
@@ -1490,20 +1445,20 @@
         nav_metrics: "Metrics",
         nav_dashboard: "Funnel Simulation",
         nav_ecosystem: "GA4 Ecosystem",
-        nav_capability: "Capability Deck ↗",
+        nav_capability: "CV & Capabilities",
         nav_contact: "Contact",
         nav_cta: "Get in Touch",
-        hero_badge: "Open to Freelance Projects",
-        hero_title: "Automate Repetitive Work • Clean Data<br class='hidden md:inline'> Clear Dashboards for <span class='inline-block'>Business Owners</span>",
+        hero_badge: "Open to freelance & remote projects",
+        hero_title: "Automate Repetitive Work, Clean Data,<br class='hidden md:inline'> Clear Dashboards for <span class='inline-block'>Business Owners</span>",
         hero_headline: "Accurate Data • Confident Decisions<br class='hidden md:inline'> Budget Optimization & <span class='inline-block'>Revenue Growth</span>",
-        hero_positioning: "Freelance Operations & Data Analyst • Process Automation • BI Dashboards",
-        hero_desc: "Three kinds of work: (1) automating data entry, reconciliation and data sync; (2) cleaning data and building executive dashboards (Power BI / Looker Studio); (3) building lean websites. GA4/GTM tracking checks on request. Digital Marketing is still being learned, so no ad campaigns <span class='inline-block'>(no revenue KPI commitments).</span>",
+        hero_positioning: "Operations & Data Analyst • Process Automation • BI Dashboards",
+        hero_desc: "I automate data entry, reconciliation and sync across Excel, Google Sheets and business systems, then clean the data and build executive dashboards in Power BI or Looker Studio. Lean websites and GA4/GTM tracking checks on request. Fully remote, delivered as working files with a handover guide. <span class='inline-block'>No ad management and no revenue KPI commitments.</span>",
         hero_btn_dashboard: "Explore Live Dashboard",
         hero_btn_github: "🐙 View GitHub Profile ↗",
-        hero_btn_capability: "📄 View Capability Deck / CV Interactive ↗",
-        dash_tag: "Interactive Simulation",
+        hero_btn_capability: "📄 View CV & capability profile",
+        dash_tag: "Sample data • Simulation",
         dash_title: "Performance & <span class='inline-block'>Funnel Analytics</span>",
-        dash_disclaimer: "* Illustrative sample dataset demonstrating dynamic KPI filtering and funnel analytics.",
+        dash_disclaimer: "* Every figure in this block is sample data illustrating KPI filters and a sales funnel. They are not real results from any client.",
         filter_all: "All Regions",
         filter_north: "North",
         filter_south: "South",
@@ -1538,25 +1493,24 @@
         eco_sub_trend: "Lean Web Build",
         eco_sub_bq: "Tracking QA",
         pbi_report_title: "GA4 Executive Report — TJ WordLoop & Multi-Product Ecosystem",
+        pbi_note_title: "How to read these numbers",
+        pbi_note_1: "Source: GA4 of four personal products TJ built (a game, a course hub, a sample tax funnel), Oct 14 – Nov 10, 2026. This is not client data and does not prove revenue.",
+        pbi_note_2: "Vietnam: 58 users, 155 sessions, 35m 11s average per user, 89.8% of all events. The WordLoop game accounts for 80.6% of total events.",
+        pbi_note_3: "United States: 80 users but only 41 sessions, 11 seconds per user on average. This pattern usually means automated traffic (bots, crawlers) and it has not been filtered out of the totals. So 174 users and 12m 30s should not be read as the size of a real audience.",
+        pbi_note_4: "Figures captured through Nov 10, 2026, updated manually, not real-time.",
         pbi_date_label: "Date Range:",
-        pbi_date_28d: "Last 28 days (Oct 14 - Nov 10, 2026)",
-        pbi_date_7d: "Last 7 days (Nov 04 - Nov 10, 2026)",
+        pbi_date_28d: "Oct 14 – Nov 10, 2026 (28 days)",
         pbi_slicer_all: "All",
         pbi_slicer_us: "🇺🇸 United States",
         pbi_slicer_vn: "🇻🇳 Vietnam",
         pbi_btn_popup: "Open Detailed Report (Popup) ↗",
         pbi_kpi1_title: "ACTIVE USERS",
         pbi_kpi2_title: "PAGE VIEWS",
-        pbi_kpi3_title: "AVG ENGAGEMENT TIME",
+        pbi_kpi3_title: "AVG ENGAGEMENT / USER",
         pbi_kpi4_title: "TRACKED EVENTS",
-        pbi_chart_title_28d: "Page Views & Active Users Trend (Oct 14 – Nov 10, 2026)",
-        pbi_chart_title_7d: "Page Views & Active Users Trend (Nov 04 – Nov 10, 2026)",
-        pbi_chart_sub: "Line & Area chart visualizing real user acquisition and engagement growth across the ecosystem",
-        pbi_legend_views: "Page Views",
-        pbi_legend_users: "Active Users",
-        pbi_m1_title: "Matrix 1: Breakdown by Country",
+        pbi_m1_title: "Users by country (Top 10)",
         pbi_m1_sub: "Total: 174 users • 10,465 events",
-        pbi_m2_title: "Matrix 2: Performance by Page Title",
+        pbi_m2_title: "Page views by page",
         pbi_m2_sub: "Total: 1,684 views • 174 users",
         pbi_btn_zoom: "Expand ↗",
         pbi_th_country: "Country",
@@ -1567,17 +1521,16 @@
         pbi_th_page: "Page Title",
         pbi_th_views_bar: "Views (Data Bar)",
         pbi_th_users: "Users",
-        pbi_m1_footer_left: "Total (Top 10 / 174 Users)",
-        pbi_m1_footer_right: "10,465 Events",
+        pbi_m1_footer_left: "Top 10 countries: 168 / 174 users",
+        pbi_m1_footer_right: "10,229 / 10,465 events",
         pbi_m2_footer_left: "Total (1,684 Page Views)",
         pbi_m2_footer_right: "9.68 views/user",
-        pbi_source_footer: "Source: Google Analytics 4 (GA4 property of the sites TJ built) • BigQuery sync <code class='text-cyan-400'>airy-web-503408-c6</code>",
-        pbi_updated_footer: "Last updated: Oct 14 – Nov 10, 2026 (28 days)",
-        ga4_modal_title: "Google Analytics 4 & Power BI Telemetry Detailed Report",
-        ga4_modal_sub: "Period: Last 28 days (Oct 14 – Nov 10, 2026) • Total: 174 Users • 1,684 Views • 10,465 Events",
+        pbi_source_footer: "Source: Google Analytics 4 (sites built by TJ)",
+        pbi_updated_footer: "Data through Nov 10, 2026 (28 days) • updated manually, not real-time",
+        ga4_modal_title: "Google Analytics 4 detailed report",
+        ga4_modal_sub: "Period: Oct 14 – Nov 10, 2026 (28 days) • Total: 174 users • 1,684 views • 10,465 events",
         ga4_tab_countries: "🌍 Tab 1: Breakdown by Country (Top 10)",
         ga4_tab_pages: "📄 Tab 2: Page Views Breakdown (Top 10)",
-        ga4_tab_powerbi: "📊 Tab 3: Power BI Trend Chart (28 Days)",
         ga4_pill_users: "Users: <strong>174</strong> (163 new)",
         ga4_pill_views: "Views: <strong>1,684</strong> (9.68/user)",
         ga4_pill_time: "Avg Time: <strong>12m 30s</strong>",
@@ -1605,12 +1558,7 @@
         ga4_th_users: "Users",
         ga4_tf_views_val: "1,684 views",
         ga4_tf_view_share_val: "100.0% (9.68 views/user)",
-        ga4_t3_heading: "28-Day Trend Chart & Slicer Filter (Power BI Interactive)",
-        ga4_t3_desc: "Filter by key market to compare Page Views and Active Users over time.",
-        modal_slicer_all: "All (174 Users)",
-        modal_slicer_us: "🇺🇸 United States (80)",
-        modal_slicer_vn: "🇻🇳 Vietnam (58)",
-        ga4_modal_footer_source: "Source: Google Analytics 4 (GA4 property of the sites TJ built) • BigQuery sync <strong class='text-cyan-400'>airy-web-503408-c6</strong>",
+        ga4_modal_footer_source: "Source: Google Analytics 4 (sites built by TJ)",
         ga4_modal_esc_hint: "Press <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> to close",
         ga4_modal_btn_close: "Close [✕]",
         hub_title: "4 Personal Projects — Measuring User <span class='inline-block'>Behavior</span>",
@@ -1652,7 +1600,7 @@
         aria_theme_toggle: "Toggle Dark/Light Theme",
         aria_mobile_menu: "Toggle Navigation Menu",
         aria_region_filter: "Dashboard Region Filter",
-        aria_country_telemetry_filter: "Country Telemetry Filter",
+        aria_country_telemetry_filter: "Country filter",
         aria_pbi_date_slicer: "Select Date Range",
         aria_ga4_modal: "GA4 & Power BI Details Dialog",
         aria_modal_close: "Close dialog",
@@ -1663,21 +1611,19 @@
         eco_badge_4: "On request • No KPI commitment",
         chart_axis_multiple: "Multiple (x)",
         chart_axis_throughput: "Throughput %",
-        pbi_badge: "POWER BI TELEMETRY",
+        pbi_badge: "GA4 • PERSONAL PRODUCTS",
         spoke_section_badge: "PERSONAL PROJECTS & GA4 TRACKING",
         footer_rights: "All rights reserved.",
-        ga4_live_badge: "GA4 LIVE DRILL-DOWN",
+        ga4_live_badge: "GA4 • DETAIL",
         modal_p1_badge: "Core service",
         modal_p2_badge: "Second service",
         modal_p3_badge: "Available",
         modal_p4_badge: "On request",
         ga4_tf_users_total: "174 users",
         unit_users: "{n} users",
-        aria_date_range: "Select Date Range",
-        aria_country_filter: "Country Telemetry Filter",
+        aria_country_filter: "Country filter",
         aria_ga4_views: "GA4 Drill-down Views",
-        aria_modal_country: "Modal Country Filter",
-        brand_tag: "Portfolio Showcase (V3)",
+        brand_tag: "Portfolio",
         meta_title: "Thao Nguyen (TJ) | Freelance Operations & Data Analyst • Process Automation • BI Dashboards",
         meta_desc: "Profile of TJ — freelance Operations & Data Analyst: automating data entry and reconciliation, building executive BI dashboards. Lean web pages and GA4/GTM tracking checks available on request."
       },
@@ -1704,20 +1650,20 @@
         nav_metrics: "Métricas",
         nav_dashboard: "Simulación de Embudo",
         nav_ecosystem: "Ecosistema GA4",
-        nav_capability: "Perfil de Capacidades ↗",
+        nav_capability: "CV y Capacidades",
         nav_contact: "Contacto",
         nav_cta: "Contactar",
-        hero_badge: "Disponible para Proyectos Freelance",
-        hero_title: "Automatiza lo Repetitivo • Datos Limpios<br class='hidden md:inline'> Paneles Claros para <span class='inline-block'>Dueños de Negocio</span>",
+        hero_badge: "Disponible para proyectos freelance y remotos",
+        hero_title: "Automatiza lo repetitivo, datos limpios,<br class='hidden md:inline'> paneles claros para <span class='inline-block'>dueños de negocio</span>",
         hero_headline: "Datos Precisos • Decisiones Acertadas<br class='hidden md:inline'> Optimización de Presupuesto y <span class='inline-block'>Crecimiento Real</span>",
-        hero_positioning: "Analista freelance de Operaciones y Datos • Automatización de Procesos • Paneles BI",
-        hero_desc: "Tres tipos de trabajo: (1) automatización de ingreso de datos, conciliación y sincronización; (2) limpieza de datos y paneles ejecutivos (Power BI / Looker Studio); (3) sitios web ligeros. Revisión GA4/GTM bajo pedido. Marketing Digital en aprendizaje, sin campañas de anuncios <span class='inline-block'>(sin compromisos de KPI de ventas).</span>",
+        hero_positioning: "Analista de Operaciones y Datos • Automatización de Procesos • Paneles BI",
+        hero_desc: "Automatización de ingreso de datos, conciliación y sincronización entre Excel, Google Sheets y sistemas de negocio. Limpieza de datos y paneles ejecutivos en Power BI o Looker Studio. Sitios web ligeros y revisión de medición GA4/GTM bajo pedido. Trabajo 100 % remoto, con archivos funcionales y guía de entrega. <span class='inline-block'>Sin gestión de anuncios ni compromisos de KPI de ventas.</span>",
         hero_btn_dashboard: "Ver Panel Interactivo",
         hero_btn_github: "🐙 Perfil de GitHub ↗",
-        hero_btn_capability: "📄 Ver Perfil de Capacidades / CV Interactive ↗",
-        dash_tag: "Simulación Interactiva",
+        hero_btn_capability: "📄 Ver CV y perfil de capacidades",
+        dash_tag: "Datos de muestra • Simulación",
         dash_title: "Análisis de Rendimiento y <span class='inline-block'>Embudo Comercial</span>",
-        dash_disclaimer: "* Datos de muestra con fines ilustrativos que muestran filtros dinámicos de KPI y análisis de embudo.",
+        dash_disclaimer: "* Todas las cifras de este bloque son datos de muestra que ilustran filtros de KPI y un embudo de ventas. No son resultados reales de ningún cliente.",
         filter_all: "Todas las Regiones",
         filter_north: "Norte",
         filter_south: "Sur",
@@ -1752,25 +1698,24 @@
         eco_sub_trend: "Desarrollo web ligero",
         eco_sub_bq: "Control de medición",
         pbi_report_title: "Informe Ejecutivo GA4 — Ecosistema TJ WordLoop",
+        pbi_note_title: "Cómo leer estas cifras",
+        pbi_note_1: "Fuente: GA4 de cuatro productos personales creados por TJ (un juego, un hub de cursos, un embudo fiscal de muestra), 14 oct – 10 nov 2026. No son datos de clientes y no prueban ingresos.",
+        pbi_note_2: "Vietnam: 58 usuarios, 155 sesiones, 35m 11s de media por usuario, 89,8 % de todos los eventos. El juego WordLoop genera el 80,6 % del total de eventos.",
+        pbi_note_3: "EE. UU.: 80 usuarios pero solo 41 sesiones, 11 segundos de media por usuario. Este patrón suele indicar tráfico automático (bots, rastreadores) y no se ha filtrado de los totales. Por eso 174 usuarios y 12m 30s no deben leerse como el tamaño de una audiencia real.",
+        pbi_note_4: "Cifras tomadas hasta el 10 nov 2026, actualización manual, no en tiempo real.",
         pbi_date_label: "Periodo:",
-        pbi_date_28d: "Últimos 28 días (14 oct - 10 nov, 2026)",
-        pbi_date_7d: "Últimos 7 días (04 nov - 10 nov, 2026)",
+        pbi_date_28d: "14 oct – 10 nov 2026 (28 días)",
         pbi_slicer_all: "Todos",
         pbi_slicer_us: "🇺🇸 EE. UU.",
         pbi_slicer_vn: "🇻🇳 Vietnam",
         pbi_btn_popup: "Ver Tabla Detallada (Popup) ↗",
         pbi_kpi1_title: "USUARIOS ACTIVOS",
         pbi_kpi2_title: "VISTAS DE PÁGINA",
-        pbi_kpi3_title: "TIEMPO DE INTERACCIÓN PROM.",
+        pbi_kpi3_title: "INTERACCIÓN PROM. / USUARIO",
         pbi_kpi4_title: "EVENTOS REGISTRADOS",
-        pbi_chart_title_28d: "Tendencia de Vistas y Usuarios Activos (14 oct – 10 nov, 2026)",
-        pbi_chart_title_7d: "Tendencia de Vistas y Usuarios Activos (04 nov – 10 nov, 2026)",
-        pbi_chart_sub: "Gráfico de líneas y áreas que muestra el crecimiento real de tráfico e interacción en el ecosistema",
-        pbi_legend_views: "Vistas",
-        pbi_legend_users: "Usuarios",
-        pbi_m1_title: "Matriz 1: Distribución por País",
+        pbi_m1_title: "Usuarios por país (Top 10)",
         pbi_m1_sub: "Total: 174 usuarios • 10.465 eventos",
-        pbi_m2_title: "Matriz 2: Rendimiento por Título de Página",
+        pbi_m2_title: "Vistas por página",
         pbi_m2_sub: "Total: 1.684 vistas • 174 usuarios",
         pbi_btn_zoom: "Ampliar ↗",
         pbi_th_country: "País",
@@ -1781,17 +1726,16 @@
         pbi_th_page: "Título de página",
         pbi_th_views_bar: "Vistas (barra de datos)",
         pbi_th_users: "Usuarios",
-        pbi_m1_footer_left: "Total (Top 10 / 174 Usuarios)",
-        pbi_m1_footer_right: "10.465 Eventos",
+        pbi_m1_footer_left: "Top 10 países: 168 / 174 usuarios",
+        pbi_m1_footer_right: "10.229 / 10.465 eventos",
         pbi_m2_footer_left: "Total (1.684 Vistas de página)",
         pbi_m2_footer_right: "9,68 vistas/usuario",
-        pbi_source_footer: "Fuente: Google Analytics 4 (propiedad GA4 de los sitios creados por TJ) • Sincronización BigQuery <code class='text-cyan-400'>airy-web-503408-c6</code>",
-        pbi_updated_footer: "Última actualización: 14 oct – 10 nov, 2026 (28 días)",
-        ga4_modal_title: "Informe Detallado Google Analytics 4 y Telemetría Power BI",
-        ga4_modal_sub: "Periodo: Últimos 28 días (14 oct – 10 nov, 2026) • Total: 174 Usuarios • 1.684 Vistas • 10.465 Eventos",
+        pbi_source_footer: "Fuente: Google Analytics 4 (sitios creados por TJ)",
+        pbi_updated_footer: "Datos hasta el 10 nov 2026 (28 días) • actualización manual, no en tiempo real",
+        ga4_modal_title: "Informe detallado de Google Analytics 4",
+        ga4_modal_sub: "Periodo: 14 oct – 10 nov 2026 (28 días) • Total: 174 usuarios • 1.684 vistas • 10.465 eventos",
         ga4_tab_countries: "🌍 Tab 1: Detalle por País (Top 10)",
         ga4_tab_pages: "📄 Tab 2: Detalle por Página (Top 10)",
-        ga4_tab_powerbi: "📊 Tab 3: Tendencia Power BI (28 Días)",
         ga4_pill_users: "Usuarios: <strong>174</strong> (163 nuevos)",
         ga4_pill_views: "Vistas: <strong>1.684</strong> (9,68/usuario)",
         ga4_pill_time: "Tiempo Prom.: <strong>12m 30s</strong>",
@@ -1819,12 +1763,7 @@
         ga4_th_users: "Usuarios",
         ga4_tf_views_val: "1.684 vistas",
         ga4_tf_view_share_val: "100.0% (9,68 vistas/usuario)",
-        ga4_t3_heading: "Gráfico de Tendencia de 28 Días y Filtro Slicer (Power BI Interactive)",
-        ga4_t3_desc: "Filtre rápidamente por mercado clave para comparar Vistas de página y Usuarios activos.",
-        modal_slicer_all: "Todos (174 Usuarios)",
-        modal_slicer_us: "🇺🇸 EE. UU. (80)",
-        modal_slicer_vn: "🇻🇳 Vietnam (58)",
-        ga4_modal_footer_source: "Fuente: Google Analytics 4 (propiedad GA4 de los sitios creados por TJ) • Sincronización BigQuery <strong class='text-cyan-400'>airy-web-503408-c6</strong>",
+        ga4_modal_footer_source: "Fuente: Google Analytics 4 (sitios creados por TJ)",
         ga4_modal_esc_hint: "Pulse <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> para cerrar",
         ga4_modal_btn_close: "Cerrar [✕]",
         hub_title: "4 Proyectos Personales — Medición del Comportamiento del <span class='inline-block'>Usuario</span>",
@@ -1877,21 +1816,19 @@
         eco_badge_4: "Bajo pedido • Sin compromiso de KPI",
         chart_axis_multiple: "Múltiplo (x)",
         chart_axis_throughput: "Rendimiento %",
-        pbi_badge: "POWER BI TELEMETRY • TELEMETRÍA",
+        pbi_badge: "GA4 • PRODUCTOS PERSONALES",
         spoke_section_badge: "PROYECTOS PERSONALES Y MEDICIÓN GA4",
         footer_rights: "Todos los derechos reservados.",
-        ga4_live_badge: "GA4 EN VIVO • DETALLE",
+        ga4_live_badge: "GA4 • DETALLE",
         modal_p1_badge: "Servicio principal",
         modal_p2_badge: "Segundo servicio",
         modal_p3_badge: "Disponible",
         modal_p4_badge: "Bajo pedido",
         ga4_tf_users_total: "174 usuarios",
         unit_users: "{n} usuarios",
-        aria_date_range: "Seleccionar intervalo de fechas",
         aria_country_filter: "Filtro por país",
         aria_ga4_views: "Vistas detalladas de GA4",
-        aria_modal_country: "Filtro de país en la ventana de detalle",
-        brand_tag: "Portafolio (V3)",
+        brand_tag: "Portafolio",
         meta_title: "Thao Nguyen (TJ) | Analista freelance de Operaciones y Datos • Automatización de Procesos • Paneles BI",
         meta_desc: "Perfil de TJ — analista freelance de Operaciones y Datos: automatización de ingreso de datos y conciliación, paneles BI ejecutivos. Webs ligeras y revisión GA4/GTM bajo pedido."
       },
@@ -1918,20 +1855,20 @@
         nav_metrics: "关键指标",
         nav_dashboard: "漏斗模拟",
         nav_ecosystem: "GA4 生态系统",
-        nav_capability: "能力档案 ↗",
+        nav_capability: "简历与能力",
         nav_contact: "联系方式",
         nav_cta: "即刻联络",
-        hero_badge: "开放自由职业项目",
-        hero_title: "自动化重复工作 • 数据干净<br class='hidden md:inline'> 为企业主打造清晰<span class='inline-block'>经营看板</span>",
+        hero_badge: "接受自由职业与远程项目",
+        hero_title: "自动化重复工作，数据干净，<br class='hidden md:inline'> 为企业主打造清晰<span class='inline-block'>经营看板</span>",
         hero_headline: "精准数据洞察 • 科学业务决策<br class='hidden md:inline'> 预算精准调优与<span class='inline-block'>业绩确定性增长</span>",
-        hero_positioning: "自由职业运营与数据分析师 • 流程自动化 • BI 看板",
-        hero_desc: "三类工作：(1) 自动化数据录入、对账与同步；(2) 清洗数据并搭建经营看板（Power BI / Looker Studio）；(3) 搭建轻量网站。GA4/GTM 埋点检查按需承接。数字营销学习中，暂不承接广告投放<span class='inline-block'>（不承诺销售 KPI）。</span>",
+        hero_positioning: "运营与数据分析师 • 流程自动化 • BI 看板",
+        hero_desc: "自动化数据录入、对账，并在 Excel、Google Sheets 与业务系统之间同步；清洗数据，用 Power BI 或 Looker Studio 搭建经营看板。轻量网站与 GA4/GTM 埋点检查按需承接。全程远程协作，交付可运行的文件并附使用说明。<span class='inline-block'>不投放广告，不承诺销售 KPI。</span>",
         hero_btn_dashboard: "浏览交互式看板",
         hero_btn_github: "🐙 访问GitHub主页 ↗",
-        hero_btn_capability: "📄 查看能力档案 / 交互式简历 ↗",
-        dash_tag: "交互模拟",
+        hero_btn_capability: "📄 查看简历与能力档案",
+        dash_tag: "示例数据 • 模拟",
         dash_title: "业务绩效与<span class='inline-block'>转化漏斗分析</span>",
-        dash_disclaimer: "* 示例演示数据，展示动态KPI筛选及漏斗流转分析能力。",
+        dash_disclaimer: "* 本区块所有数字均为示例数据，用于演示 KPI 筛选与销售漏斗，并非任何客户的真实成果。",
         filter_all: "全部区域",
         filter_north: "北部大区",
         filter_south: "南部大区",
@@ -1966,25 +1903,24 @@
         eco_sub_trend: "精益建站",
         eco_sub_bq: "埋点质检",
         pbi_report_title: "GA4 高管数据看板 — TJ WordLoop 多产品矩阵",
+        pbi_note_title: "如何解读这些数据",
+        pbi_note_1: "来源：TJ 自建的 4 个个人产品（游戏、课程中心、示例税务漏斗）的 GA4 数据，2026 年 10 月 14 日 – 11 月 10 日。这不是客户数据，也不能证明营收。",
+        pbi_note_2: "越南：58 位用户、155 次会话，人均平均互动 35分11秒，占全部事件的 89.8%。WordLoop 游戏占总事件的 80.6%。",
+        pbi_note_3: "美国：80 位用户但只有 41 次会话，人均平均互动 11 秒。这种模式通常是自动化流量（机器人、爬虫），且尚未从总数中剔除。因此 174 位用户和 12m 30s 不应被理解为真实受众规模。",
+        pbi_note_4: "数据截至 2026 年 11 月 10 日，手动更新，非实时。",
         pbi_date_label: "时间范围:",
-        pbi_date_28d: "过去 28 天 (2026年10月14日 - 11月10日)",
-        pbi_date_7d: "过去 7 天 (2026年11月04日 - 11月10日)",
+        pbi_date_28d: "2026年10月14日 – 11月10日（28 天）",
         pbi_slicer_all: "全部",
         pbi_slicer_us: "🇺🇸 美国",
         pbi_slicer_vn: "🇻🇳 越南",
         pbi_btn_popup: "查看详细报表 (弹窗) ↗",
         pbi_kpi1_title: "活跃用户数",
         pbi_kpi2_title: "页面浏览量 (VIEWS)",
-        pbi_kpi3_title: "平均互动时长",
+        pbi_kpi3_title: "人均平均互动时长",
         pbi_kpi4_title: "记录事件总数 (EVENTS)",
-        pbi_chart_title_28d: "页面浏览量与活跃用户趋势 (2026年10月14日 – 11月10日)",
-        pbi_chart_title_7d: "页面浏览量与活跃用户趋势 (2026年11月04日 – 11月10日)",
-        pbi_chart_sub: "折线与面积图展示生态系统真实访问与用户互动增长趋势",
-        pbi_legend_views: "浏览量",
-        pbi_legend_users: "活跃用户",
-        pbi_m1_title: "矩阵表 1：按国家/地区分布",
+        pbi_m1_title: "按国家/地区的用户数（前 10）",
         pbi_m1_sub: "总计：174 名用户 • 10,465 个事件",
-        pbi_m2_title: "矩阵表 2：按页面标题表现",
+        pbi_m2_title: "按页面的浏览量",
         pbi_m2_sub: "总计：1,684 次浏览 • 174 名用户",
         pbi_btn_zoom: "展开详情 ↗",
         pbi_th_country: "国家/地区",
@@ -1995,17 +1931,16 @@
         pbi_th_page: "页面标题",
         pbi_th_views_bar: "浏览量 (数据条)",
         pbi_th_users: "用户数",
-        pbi_m1_footer_left: "总计 (前 10 / 174 用户)",
-        pbi_m1_footer_right: "10,465 事件",
+        pbi_m1_footer_left: "前 10 国家/地区：168 / 174 用户",
+        pbi_m1_footer_right: "10,229 / 10,465 事件",
         pbi_m2_footer_left: "总计 (1,684 页面浏览量)",
         pbi_m2_footer_right: "9.68 浏览/用户",
-        pbi_source_footer: "来源：Google Analytics 4（TJ 自建站点的 GA4 属性）• BigQuery 同步 <code class='text-cyan-400'>airy-web-503408-c6</code>",
-        pbi_updated_footer: "最近更新：2026年10月14日 – 11月10日 (28天)",
-        ga4_modal_title: "Google Analytics 4 与 Power BI 遥测详细报告",
-        ga4_modal_sub: "时间范围：过去 28 天 (2026年10月14日 – 11月10日) • 总计：174 用户 • 1,684 浏览 • 10,465 事件",
+        pbi_source_footer: "来源：Google Analytics 4（TJ 自建站点）",
+        pbi_updated_footer: "数据截至 2026 年 11 月 10 日（28 天）• 手动更新，非实时",
+        ga4_modal_title: "Google Analytics 4 详细报告",
+        ga4_modal_sub: "时间范围：2026年10月14日 – 11月10日（28 天）• 总计：174 用户 • 1,684 浏览 • 10,465 事件",
         ga4_tab_countries: "🌍 表 1：按国家/地区明细 (Top 10)",
         ga4_tab_pages: "📄 表 2：按页面浏览量明细 (Top 10)",
-        ga4_tab_powerbi: "📊 表 3：Power BI 趋势图 (28 天)",
         ga4_pill_users: "用户: <strong>174</strong> (163 新)",
         ga4_pill_views: "浏览: <strong>1,684</strong> (9.68/人)",
         ga4_pill_time: "平均时长: <strong>12m 30s</strong>",
@@ -2033,12 +1968,7 @@
         ga4_th_users: "用户数",
         ga4_tf_views_val: "1,684 浏览",
         ga4_tf_view_share_val: "100.0% (9.68 浏览/人)",
-        ga4_t3_heading: "28 天趋势图与切片筛选器 (Power BI 交互看板)",
-        ga4_t3_desc: "按核心市场快速筛选，直观对比页面浏览量与活跃用户数。",
-        modal_slicer_all: "全部 (174 用户)",
-        modal_slicer_us: "🇺🇸 美国 (80)",
-        modal_slicer_vn: "🇻🇳 越南 (58)",
-        ga4_modal_footer_source: "来源：Google Analytics 4（TJ 自建站点的 GA4 属性）• BigQuery 同步 <strong class='text-cyan-400'>airy-web-503408-c6</strong>",
+        ga4_modal_footer_source: "来源：Google Analytics 4（TJ 自建站点）",
         ga4_modal_esc_hint: "按 <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> 键关闭",
         ga4_modal_btn_close: "关闭 [✕]",
         hub_title: "4 个个人项目 — 用户行为<span class='inline-block'>测量</span>",
@@ -2091,21 +2021,19 @@
         eco_badge_4: "按需 • 不承诺 KPI",
         chart_axis_multiple: "倍数 (x)",
         chart_axis_throughput: "吞吐率 %",
-        pbi_badge: "POWER BI TELEMETRY • 遥测数据",
+        pbi_badge: "GA4 • 个人产品",
         spoke_section_badge: "个人项目与 GA4 测量",
         footer_rights: "保留所有权利。",
-        ga4_live_badge: "GA4 实时钻取",
+        ga4_live_badge: "GA4 • 明细",
         modal_p1_badge: "核心服务",
         modal_p2_badge: "第二服务",
         modal_p3_badge: "可承接",
         modal_p4_badge: "按需承接",
         ga4_tf_users_total: "174 位用户",
         unit_users: "{n} 位用户",
-        aria_date_range: "选择日期范围",
         aria_country_filter: "国家/地区筛选",
         aria_ga4_views: "GA4 钻取视图",
-        aria_modal_country: "详情弹窗国家/地区筛选",
-        brand_tag: "作品集展示 (V3)",
+        brand_tag: "作品集",
         meta_title: "Thao Nguyen (TJ) | 自由职业运营与数据分析师 • 流程自动化 • BI 看板",
         meta_desc: "TJ 的个人资料——自由职业运营与数据分析师：自动化数据录入与对账，搭建经营 BI 看板；轻量网站与 GA4/GTM 埋点检查按需承接。"
       }
@@ -2170,6 +2098,16 @@
     const W17_LEGACY_SNAPSHOT_KEYS = ['w17_03_portfolio_edited_html_v1', 'w17_03_portfolio_edited_header_v1'];
     const W17_IS_CREATOR = document.documentElement.getAttribute('data-w17-mode') === 'creator';
     const W17_PRISTINE = JSON.parse(JSON.stringify(translations));
+
+    // Khách nước ngoài thấy ngôn ngữ của họ trước: lấy theo trình duyệt, ngôn ngữ lạ thì dùng tiếng Anh. Lựa chọn đã lưu luôn được ưu tiên.
+    function w17DetectLang() {
+      const list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+      for (const l of list) {
+        const c = String(l).toLowerCase().slice(0, 2);
+        if (W17_LOCALES.includes(c)) return c;
+      }
+      return 'en';
+    }
 
     function w17GetPref(key, fallback, allowed) {
       try {
@@ -2590,8 +2528,8 @@
         }
       });
 
-      if (typeof handlePBIDateSlicerChange === 'function' && typeof GA4_REAL_DATA !== 'undefined') {
-        handlePBIDateSlicerChange(currentPBIPeriod);
+      if (typeof filterPowerBIGA4 === 'function' && typeof GA4_REAL_DATA !== 'undefined') {
+        filterPowerBIGA4(currentPBIFilter);
       }
 
       if (typeof w17RenderUi === 'function') w17RenderUi();
@@ -2732,121 +2670,91 @@
         all: {
           users: "174",
           usersSub: {
-            vi: "▲ 163 người dùng mới (93.7%)",
-            en: "▲ 163 new users (93.7%)",
-            es: "▲ 163 nuevos usuarios (93.7%)",
-            zh: "▲ 163 位新用户 (93.7%)"
+            vi: "163 người dùng mới (93,7%)",
+            en: "163 new users (93.7%)",
+            es: "163 nuevos usuarios (93,7 %)",
+            zh: "163 位新用户 (93.7%)"
           },
           views: "1.684",
           viewsSub: {
-            vi: "⚡ 9,68 lượt xem / người dùng",
-            en: "⚡ 9.68 views / user",
-            es: "⚡ 9,68 vistas / usuario",
-            zh: "⚡ 9.68 次浏览 / 用户"
+            vi: "9,68 lượt xem / người dùng",
+            en: "9.68 views / user",
+            es: "9,68 vistas / usuario",
+            zh: "9.68 次浏览 / 用户"
           },
           time: "12m 30s",
           timeSub: {
-            vi: "🔥 VN: 35p 11s • WordLoop: 33p 38s",
-            en: "🔥 VN: 35m 11s • WordLoop: 33m 38s",
-            es: "🔥 VN: 35m 11s • WordLoop: 33m 38s",
-            zh: "🔥 越南: 35分11秒 • WordLoop: 33分38秒"
+            vi: "Việt Nam 35m 11s • Hoa Kỳ 0m 11s",
+            en: "Vietnam 35m 11s • United States 0m 11s",
+            es: "Vietnam 35m 11s • EE. UU. 0m 11s",
+            zh: "越南 35分11秒 • 美国 0分11秒"
           },
           events: "10.465",
           eventsSub: {
-            vi: "📊 Đồng bộ BigQuery GA4 Stream",
-            en: "📊 Synced with BigQuery GA4 Stream",
-            es: "📊 Sincronizado con BigQuery GA4 Stream",
-            zh: "📊 同步 BigQuery GA4 数据流"
+            vi: "80,6% sự kiện đến từ game WordLoop",
+            en: "80.6% of events come from the WordLoop game",
+            es: "80,6 % de los eventos provienen del juego WordLoop",
+            zh: "80.6% 的事件来自 WordLoop 游戏"
           }
         },
         us: {
           users: "80",
           usersSub: {
-            vi: "🇺🇸 45.98% tổng người dùng (41 phiên)",
+            vi: "🇺🇸 45,98% tổng người dùng (41 phiên)",
             en: "🇺🇸 45.98% of total users (41 sessions)",
-            es: "🇺🇸 45.98% del total de usuarios (41 sesiones)",
+            es: "🇺🇸 45,98 % del total de usuarios (41 sesiones)",
             zh: "🇺🇸 占总用户 45.98% (41 次会话)"
           },
           views: "312",
           viewsSub: {
-            vi: "⚡ 3,90 lượt xem / người dùng",
-            en: "⚡ 3.90 views / user",
-            es: "⚡ 3,90 vistas / usuario",
-            zh: "⚡ 3.90 次浏览 / 用户"
+            vi: "3,90 lượt xem / người dùng",
+            en: "3.90 views / user",
+            es: "3,90 vistas / usuario",
+            zh: "3.90 次浏览 / 用户"
           },
           time: "0m 11s",
           timeSub: {
-            vi: "⏱️ Phiên truy cập nhanh từ Hoa Kỳ",
-            en: "⏱️ Quick visits from the United States",
-            es: "⏱️ Visitas rápidas desde EE. UU.",
-            zh: "⏱️ 来自美国的快速访问会话"
+            vi: "Phiên rất ngắn, tương tác thấp",
+            en: "Very short visits, low engagement",
+            es: "Visitas muy cortas, baja interacción",
+            zh: "访问极短，互动很低"
           },
           events: "422",
           eventsSub: {
-            vi: "📊 4.03% tổng sự kiện toàn cầu",
-            en: "📊 4.03% of total global events",
-            es: "📊 4.03% del total de eventos globales",
-            zh: "📊 占全球总事件 4.03%"
+            vi: "4,03% tổng sự kiện",
+            en: "4.03% of total events",
+            es: "4,03 % del total de eventos",
+            zh: "占总事件 4.03%"
           }
         },
         vn: {
           users: "58",
           usersSub: {
-            vi: "🇻🇳 33.33% tổng người dùng (155 phiên)",
+            vi: "🇻🇳 33,33% tổng người dùng (155 phiên)",
             en: "🇻🇳 33.33% of total users (155 sessions)",
-            es: "🇻🇳 33.33% del total de usuarios (155 sesiones)",
+            es: "🇻🇳 33,33 % del total de usuarios (155 sesiones)",
             zh: "🇻🇳 占总用户 33.33% (155 次会话)"
           },
           views: "1.245",
           viewsSub: {
-            vi: "⚡ 21,46 lượt xem / người dùng",
-            en: "⚡ 21.46 views / user",
-            es: "⚡ 21,46 vistas / usuario",
-            zh: "⚡ 21.46 次浏览 / 用户"
+            vi: "21,47 lượt xem / người dùng",
+            en: "21.47 views / user",
+            es: "21,47 vistas / usuario",
+            zh: "21.47 次浏览 / 用户"
           },
           time: "35m 11s",
           timeSub: {
-            vi: "🔥 Tương tác sâu nhất hệ sinh thái",
-            en: "🔥 Deepest engagement in ecosystem",
-            es: "🔥 Mayor interacción en el ecosistema",
-            zh: "🔥 生态系统中最深度的互动"
+            vi: "Tương tác sâu nhất trong các quốc gia",
+            en: "Deepest engagement of any country",
+            es: "Mayor interacción de todos los países",
+            zh: "各国家/地区中互动最深"
           },
           events: "9.393",
           eventsSub: {
-            vi: "📊 89.76% tổng sự kiện (WordLoop & Hub)",
-            en: "📊 89.76% of total events (WordLoop & Hub)",
-            es: "📊 89.76% del total de eventos (WordLoop & Hub)",
-            zh: "📊 占总事件 89.76% (WordLoop & Hub)"
-          }
-        },
-        "7d": {
-          users: "31",
-          usersSub: {
-            vi: "▲ 27 Direct • 4 FB • 3 Zalo • 2 IG",
-            en: "▲ 27 Direct • 4 FB • 3 Zalo • 2 IG",
-            es: "▲ 27 Direct • 4 FB • 3 Zalo • 2 IG",
-            zh: "▲ 27 Direct • 4 FB • 3 Zalo • 2 IG"
-          },
-          views: "269",
-          viewsSub: {
-            vi: "⚡ WordLoop (125) • Hub (68) • Chunks (44)",
-            en: "⚡ WordLoop (125) • Hub (68) • Chunks (44)",
-            es: "⚡ WordLoop (125) • Hub (68) • Chunks (44)",
-            zh: "⚡ WordLoop (125) • Hub (68) • Chunks (44)"
-          },
-          time: "14m 15s",
-          timeSub: {
-            vi: "🔥 VN (23 users) • Israel (3) • US (2)",
-            en: "🔥 VN (23 users) • Israel (3) • US (2)",
-            es: "🔥 VN (23 usuarios) • Israel (3) • US (2)",
-            zh: "🔥 越南 (23 用户) • 以色列 (3) • 美国 (2)"
-          },
-          events: "1.840",
-          eventsSub: {
-            vi: "📊 Dải ngày: 04/11 – 10/11/2026",
-            en: "📊 Date range: Nov 04 – Nov 10, 2026",
-            es: "📊 Rango: 04/11 – 10/11/2026",
-            zh: "📊 日期范围: 2026/11/04 – 11/10"
+            vi: "89,76% tổng sự kiện",
+            en: "89.76% of total events",
+            es: "89,76 % del total de eventos",
+            zh: "占总事件 89.76%"
           }
         }
       },
@@ -2872,44 +2780,21 @@
         { rank: 7, title: { vi: "IELTS Học thuật", en: "IELTS Academic", es: "IELTS Académico", zh: "IELTS 学术类" }, category: { vi: "Đào tạo ngôn ngữ", en: "Language Training", es: "Entrenamiento de Idiomas", zh: "语言培训" }, views: 15, pct: 0.89, users: 13, time: "2m 05s", events: 48 },
         { rank: 8, title: { vi: "Động cơ Chunks (Operation 0 — 1.000 Chunk)", en: "Chunks Engine (Operation 0 — 1,000 Chunks)", es: "Motor de Chunks (Operación 0 — 1.000 Chunks)", zh: "Chunks 语块引擎 (1,000 语块)" }, category: { vi: "Audio 4 Ngôn Ngữ", en: "4-Language Audio Engine", es: "Motor de Audio en 4 Idiomas", zh: "四语种音频引擎" }, views: 15, pct: 0.89, users: 12, time: "4m 10s", events: 31 },
         { rank: 9, title: { vi: "WRP Tax Services — Phễu khách hàng tiềm năng", en: "WRP Tax Services — Lead Funnel", es: "WRP Tax Services — Embudo de Leads", zh: "WRP 税务服务 — 获客漏斗" }, category: { vi: "Thu hút khách hàng tiềm năng thuế Mỹ", en: "US Tax Lead Generation", es: "Generación de Leads Fiscales", zh: "美国税务潜客开发" }, views: 6, pct: 0.36, users: 6, time: "1m 40s", events: 12 }
-      ],
-      trend28d: {
-        labels: [
-          "14/10", "15/10", "16/10", "17/10", "18/10", "19/10", "20/10",
-          "21/10", "22/10", "23/10", "24/10", "25/10", "26/10", "27/10",
-          "28/10", "29/10", "30/10", "31/10", "01/11", "02/11", "03/11",
-          "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11"
-        ],
-        all: {
-          views: [22, 28, 35, 31, 42, 48, 55, 44, 52, 61, 58, 67, 74, 62, 69, 78, 85, 92, 88, 95, 110, 64, 58, 52, 49, 56, 61, 48],
-          users: [4, 5, 6, 5, 7, 8, 9, 6, 7, 8, 7, 9, 10, 8, 9, 11, 12, 14, 11, 13, 15, 9, 8, 7, 6, 8, 9, 7]
-        },
-        us: {
-          views: [8, 10, 12, 11, 14, 15, 16, 12, 13, 15, 14, 16, 18, 14, 15, 16, 18, 19, 16, 17, 18, 5, 4, 3, 4, 4, 3, 2],
-          users: [2, 3, 3, 2, 4, 4, 5, 3, 3, 4, 3, 4, 5, 3, 4, 5, 5, 6, 4, 5, 6, 1, 1, 1, 1, 1, 1, 1]
-        },
-        vn: {
-          views: [12, 15, 19, 17, 24, 29, 34, 28, 35, 41, 39, 46, 51, 43, 49, 57, 62, 68, 67, 73, 86, 54, 49, 44, 41, 48, 53, 42],
-          users: [2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 7, 6, 7, 8, 6, 5, 5, 4, 6, 6, 5]
-        }
-      },
-      trend7d: {
-        labels: ["04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11"],
-        views: [48, 42, 36, 31, 39, 41, 32],
-        users: [8, 6, 5, 4, 6, 7, 5]
-      }
+      ]
     };
 
-    let pbiInlineChartInstance = null;
-    let pbiModalChartInstance = null;
     let currentPBIFilter = 'all';
-    let currentPBIPeriod = '28d';
     let lastGA4ModalTrigger = null;
 
     // Đơn vị có số, dịch theo locale đang chọn (khóa dạng "{n} người dùng")
     function w17Unit(key, n) {
       const tpl = (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || '{n}';
       return tpl.replace('{n}', n);
+    }
+
+    function formatPct(n, d) {
+      const t = Number(n).toFixed(d);
+      return (currentLang === 'vi' || currentLang === 'es') ? t.replace('.', ',') : t;
     }
 
     function formatNumberVI(num) {
@@ -2953,7 +2838,7 @@
                 <div class="flex-1 h-2.5 rounded-sm bg-slate-800 overflow-hidden">
                   <div class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400" style="width: ${Math.max(c.pct * 2, 4)}%"></div>
                 </div>
-                <span class="w-12 text-right text-[11px] text-slate-400">${c.pct.toFixed(2)}%</span>
+                <span class="w-12 text-right text-[11px] text-slate-400">${formatPct(c.pct, 2)}%</span>
               </div>
             </td>
             <td class="py-2.5 px-2 text-right text-slate-300">${formatNumberVI(c.sessions)}</td>
@@ -2976,7 +2861,7 @@
                 <div class="flex-1 h-2.5 rounded-sm bg-slate-800 overflow-hidden">
                   <div class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400" style="width: ${Math.max(p.pct * 1.7, 4)}%"></div>
                 </div>
-                <span class="w-11 text-right text-[11px] text-slate-400">${p.pct.toFixed(1)}%</span>
+                <span class="w-11 text-right text-[11px] text-slate-400">${formatPct(p.pct, 1)}%</span>
               </div>
             </td>
             <td class="py-2 px-2 text-right text-cyan-300">${p.users}</td>
@@ -3006,7 +2891,7 @@
                 <div class="flex-1 h-3 rounded bg-slate-800 overflow-hidden">
                   <div class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400" style="width: ${Math.max(c.pct * 2, 4)}%"></div>
                 </div>
-                <span class="w-14 text-right text-xs text-slate-300">${c.pct.toFixed(2)}%</span>
+                <span class="w-14 text-right text-xs text-slate-300">${formatPct(c.pct, 2)}%</span>
               </div>
             </td>
             <td class="py-3 px-4 text-right text-slate-300">${formatNumberVI(c.sessions)}</td>
@@ -3034,7 +2919,7 @@
                 <div class="flex-1 h-3 rounded bg-slate-800 overflow-hidden">
                   <div class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400" style="width: ${Math.max(p.pct * 1.7, 4)}%"></div>
                 </div>
-                <span class="w-14 text-right text-xs text-slate-300">${p.pct.toFixed(2)}%</span>
+                <span class="w-14 text-right text-xs text-slate-300">${formatPct(p.pct, 2)}%</span>
               </div>
             </td>
             <td class="py-3 px-4 text-right text-cyan-300">${w17Unit('unit_users', p.users)}</td>
@@ -3043,108 +2928,6 @@
           </tr>
         `;
         }).join('');
-      }
-    }
-
-    function createChartConfig(ctx, labels, viewsData, usersData) {
-      const gradCyan = ctx.createLinearGradient(0, 0, 0, 260);
-      gradCyan.addColorStop(0, 'rgba(34, 211, 238, 0.35)');
-      gradCyan.addColorStop(1, 'rgba(34, 211, 238, 0.01)');
-
-      const gradEmerald = ctx.createLinearGradient(0, 0, 0, 260);
-      gradEmerald.addColorStop(0, 'rgba(52, 211, 153, 0.30)');
-      gradEmerald.addColorStop(1, 'rgba(52, 211, 153, 0.01)');
-
-      const dict = translations[currentLang] || translations.vi;
-      const viewsLabel = dict.pbi_legend_views || 'Views';
-      const usersLabel = dict.pbi_legend_users || 'Active Users';
-
-      return {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: viewsLabel,
-              data: viewsData,
-              borderColor: '#22d3ee',
-              backgroundColor: gradCyan,
-              borderWidth: 2.5,
-              pointRadius: 2.5,
-              pointHoverRadius: 5,
-              pointBackgroundColor: '#22d3ee',
-              fill: true,
-              tension: 0.4
-            },
-            {
-              label: usersLabel,
-              data: usersData,
-              borderColor: '#34d399',
-              backgroundColor: gradEmerald,
-              borderWidth: 2,
-              pointRadius: 2.5,
-              pointHoverRadius: 5,
-              pointBackgroundColor: '#34d399',
-              fill: true,
-              tension: 0.4
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: 'rgba(15, 23, 42, 0.95)',
-              titleColor: '#f8fafc',
-              bodyColor: '#cbd5e1',
-              borderColor: 'rgba(56, 189, 248, 0.3)',
-              borderWidth: 1,
-              padding: 10
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: 'rgba(51, 65, 85, 0.25)' },
-              ticks: { color: '#94a3b8', font: { size: 10, family: 'monospace' } }
-            },
-            y: {
-              beginAtZero: true,
-              grid: { color: 'rgba(51, 65, 85, 0.3)' },
-              ticks: { color: '#94a3b8', font: { size: 10, family: 'monospace' } }
-            }
-          }
-        }
-      };
-    }
-
-    function updatePowerBICharts(filter = 'all', period = '28d') {
-      if (!window.Chart) return;
-      let labels = GA4_REAL_DATA.trend28d.labels;
-      let series = GA4_REAL_DATA.trend28d[filter] || GA4_REAL_DATA.trend28d.all;
-
-      if (period === '7d') {
-        labels = GA4_REAL_DATA.trend7d.labels;
-        series = {
-          views: GA4_REAL_DATA.trend7d.views,
-          users: GA4_REAL_DATA.trend7d.users
-        };
-      }
-
-      const inlineCanvas = document.getElementById('pbiGA4TrendChart');
-      if (inlineCanvas) {
-        const ctx = inlineCanvas.getContext('2d');
-        if (pbiInlineChartInstance) pbiInlineChartInstance.destroy();
-        pbiInlineChartInstance = new Chart(ctx, createChartConfig(ctx, labels, series.views, series.users));
-      }
-
-      const modalCanvas = document.getElementById('modalGA4TrendChart');
-      if (modalCanvas) {
-        const ctx2 = modalCanvas.getContext('2d');
-        if (pbiModalChartInstance) pbiModalChartInstance.destroy();
-        pbiModalChartInstance = new Chart(ctx2, createChartConfig(ctx2, labels, series.views, series.users));
       }
     }
 
@@ -3172,7 +2955,6 @@
 
       ['all', 'us', 'vn'].forEach((key) => {
         const btn1 = document.getElementById('pbi-slicer-' + key);
-        const btn2 = document.getElementById('modal-slicer-' + key);
         const isSelected = key === filter;
         if (btn1) {
           btn1.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
@@ -3180,39 +2962,9 @@
             ? 'px-2.5 py-1 text-xs font-bold rounded bg-cyan-500 text-slate-950 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300'
             : 'px-2.5 py-1 text-xs font-semibold rounded text-slate-300 hover:text-white transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300';
         }
-        if (btn2) {
-          btn2.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-          btn2.className = isSelected
-            ? 'px-3 py-1 text-xs font-bold rounded bg-cyan-500 text-slate-950 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300'
-            : 'px-3 py-1 text-xs font-semibold rounded text-slate-300 hover:text-white transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300';
-        }
       });
 
       renderPowerBIMatrices(filter);
-      updatePowerBICharts(filter, currentPBIPeriod);
-    }
-
-    function handlePBIDateSlicerChange(period) {
-      currentPBIPeriod = period;
-      const chartTitle = document.getElementById('pbi-chart-title');
-      const dict = translations[currentLang] || translations.vi;
-      if (period === '7d') {
-        const s7 = GA4_REAL_DATA.summary['7d'];
-        document.getElementById('pbi-kpi-users').textContent = s7.users;
-        document.getElementById('pbi-kpi-users-sub').textContent = pickLangField(s7.usersSub);
-        document.getElementById('pbi-kpi-views').textContent = s7.views;
-        document.getElementById('pbi-kpi-views-sub').textContent = pickLangField(s7.viewsSub);
-        document.getElementById('pbi-kpi-time').textContent = s7.time;
-        document.getElementById('pbi-kpi-time-sub').textContent = pickLangField(s7.timeSub);
-        document.getElementById('pbi-kpi-events').textContent = s7.events;
-        document.getElementById('pbi-kpi-events-sub').textContent = pickLangField(s7.eventsSub);
-        if (chartTitle && dict.pbi_chart_title_7d) chartTitle.textContent = dict.pbi_chart_title_7d;
-        renderPowerBIMatrices(currentPBIFilter);
-      } else {
-        if (chartTitle && dict.pbi_chart_title) chartTitle.textContent = dict.pbi_chart_title;
-        filterPowerBIGA4(currentPBIFilter);
-      }
-      updatePowerBICharts(currentPBIFilter, period);
     }
 
     function getFocusableElements(container) {
@@ -3284,7 +3036,7 @@
     }
 
     function switchGA4ModalTab(tab = 'countries') {
-      const tabs = ['countries', 'pages', 'powerbi'];
+      const tabs = ['countries', 'pages'];
       tabs.forEach((t) => {
         const panel = document.getElementById('ga4-modal-panel-' + t);
         const btn = document.getElementById('ga4-tab-btn-' + t);
@@ -3301,11 +3053,6 @@
         }
       });
 
-      if (tab === 'powerbi') {
-        setTimeout(() => {
-          updatePowerBICharts(currentPBIFilter, currentPBIPeriod);
-        }, 60);
-      }
     }
 
     window.addEventListener('keydown', (e) => {
@@ -3351,13 +3098,10 @@
       loadStructuredEditsIntoTranslations();
 
       // 2. Áp dụng ngôn ngữ đã lưu để F5 không bao giờ hiển thị sai ngôn ngữ
-      const savedLang = w17GetPref(W17_LANG_KEY, 'vi', W17_LOCALES);
+      const savedLang = w17GetPref(W17_LANG_KEY, w17DetectLang(), W17_LOCALES);
       switchLanguage(savedLang, false);
 
       renderPowerBIMatrices('all');
-      setTimeout(() => {
-        updatePowerBICharts('all', '28d');
-      }, 100);
 
       if (window.lucide) {
         lucide.createIcons();
@@ -3651,7 +3395,7 @@
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2 text-xs sm:text-sm font-bold min-w-0">
             <span class="no-edit w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-            <span class="brand-title editable-node">${(translations[currentLang] && translations[currentLang].brand_tag) || 'Portfolio Showcase (V3)'}</span>
+            <span class="brand-title editable-node">${(translations[currentLang] && translations[currentLang].brand_tag) || 'Portfolio'}</span>
             <span class="hidden md:inline text-xs font-normal text-slate-400"><span data-ui="tb_hint_pre">— Chỉnh sửa trực tiếp &amp; Xuất bản HTML sạch (Phím tắt:</span> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-400 font-mono text-[11px]">Alt + E</kbd><span data-ui="tb_hint_post">)</span></span>
           </div>
           <div class="flex flex-wrap items-center gap-2">
