@@ -184,3 +184,19 @@ Chủ hồ sơ chọn hướng B: không ghi "nhận chạy quảng cáo" khi ch
 | CV: nhóm kỹ năng "ĐO LƯỜNG HIỆU SUẤT QUẢNG CÁO", "BI & DASHBOARD"; học vấn "Ứng viên EA Thuế Mỹ" | "Trí tuệ kinh doanh" là dịch nghĩa đen, người trong nghề dùng "BI" |
 
 Anchor A1/A5 cũ (đòi "đang học" và "không cam kết") **không còn áp dụng**. Test CONTENT kiểm tên dịch vụ 4 mới và câu "so sánh hiệu quả từng kênh quảng cáo" thay cho "không cam kết". Kiểm tra: STATIC, F04, F06, F08, R3 (gồm R3-06, R3-09), CONTENT, NAV, RESP 17/17 PASS; F03 4/4 PASS; ảnh chụp 390px thẻ dịch vụ 4 và nhóm kỹ năng CV.
+
+
+### Vòng 3e (2026-11-19): 6 dịch vụ — thêm 2 dịch vụ chuyên ngành
+
+Chủ hồ sơ chọn cách B (4 → 6 dịch vụ), cho phép nêu tên phần mềm (CCH Autoflow, E-Upsafe), và chỉ dùng thông tin đã có trong CV cho phần lương thưởng (không thêm số năm, quy mô).
+
+| Đổi | Vì sao |
+|---|---|
+| Thêm dịch vụ 3 "Hỗ trợ văn phòng thuế Mỹ (1040)": kiểm hồ sơ trước CCH Autoflow, rà/sửa bookmark workpaper theo 26 nhóm CCH, đối soát phí E-Upsafe + Google Sheet | Việc đang làm thật hằng ngày (skill pre-funnel, audit/fix-bookmark, identify-client-accountant-copy, w14-eupsafe-invoice-entry); điểm khác biệt với khách là firm thuế Mỹ |
+| Thêm dịch vụ 4 "Lương thưởng, hoa hồng & KPI": mô hình chi phí thù lao, chạy thử kịch bản chi trả, MAPA, thực tế so mục tiêu, đối soát chi trả | Lấy từ CV (thẻ giải pháp 1, kinh nghiệm Prudential, Chubb Life, AIA) |
+| Website → số 5, Đo lường hiệu suất quảng cáo → số 6; lưới 3 cột × 2 hàng (máy tính), 1 cột (điện thoại) | Hai dịch vụ chuyên ngành đứng sau hai dịch vụ chính |
+| Gói 2 mục (2) đổi thành "Phân tích lợi nhuận và chi phí (P&L)…" | Tránh trùng với dịch vụ 4 |
+| Hero thêm 1 câu về nghiệp vụ thuế Mỹ và lương thưởng; dòng phạm vi và ghi chú bảng gói thêm nhóm "Chuyên ngành"; chú thích khối dữ liệu mẫu ghi "Ví dụ cho dịch vụ 4" | Các chỗ tóm tắt phải khớp danh sách dịch vụ |
+| CV: thẻ "Tự động hóa Quy trình" thêm dòng back-office thuế Mỹ | Đồng bộ CV với portfolio |
+
+Khóa i18n giữ nguyên cho dịch vụ cũ (eco_card3/4, modal_p3/4 nay hiển thị số 5/6); dịch vụ mới dùng eco_card5/6, eco_badge_5/6, eco_sub_tax/comp, modal_p5/p6. Test CONTENT/F03/F04 đổi sang 6 thẻ, 6 gói, thứ tự hiển thị p1, p2, p5, p6, p3, p4.

@@ -212,7 +212,7 @@
         </div>
 
         <!-- Narrative Description -->
-        <p data-i18n="hero_desc" data-tail class="editable-node text-sm sm:text-base lg:text-lg max-w-4xl mx-auto text-slate-700 dark:text-slate-300 leading-relaxed text-center text-balance">Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Làm việc từ xa, bàn giao file chạy được <span class="inline-block">kèm hướng dẫn.</span></p>
+        <p data-i18n="hero_desc" data-tail class="editable-node text-sm sm:text-base lg:text-lg max-w-4xl mx-auto text-slate-700 dark:text-slate-300 leading-relaxed text-center text-balance">Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ văn phòng thuế Mỹ (1040) và cơ chế lương thưởng ngành bảo hiểm. Làm việc từ xa, bàn giao file chạy được <span class="inline-block">kèm hướng dẫn.</span></p>
 
         <!-- 3 CTA Action Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
@@ -243,7 +243,7 @@
             Phân Tích Hiệu Suất &amp; Phễu <span class="inline-block">Chuyển Đổi</span>
           </h2>
           <p data-i18n="dash_disclaimer" class="editable-node text-sm font-medium text-amber-700 dark:text-amber-300 mt-1">
-            * Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào.
+            * Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào. Ví dụ cho dịch vụ 4: lương thưởng &amp; hoa hồng.
           </p>
         </div>
 
@@ -436,11 +436,11 @@
           <span data-i18n="eco_badge" data-tail class="editable-node text-balance">HỆ SINH THÁI DỊCH VỤ &amp; GIẢI PHÁP THỰC CHIẾN</span>
         </div>
         <h2 data-i18n="eco_title" class="editable-node text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight text-balance">Hệ Sinh Thái Sản Phẩm & Dịch Vụ Của TJ</h2>
-        <p data-i18n="eco_property" data-tail class="editable-node text-balance text-xs sm:text-sm font-mono font-semibold text-cyan-700 dark:text-cyan-400">Chính: Tự động hóa vận hành • Dashboard BI | Nhận làm: Website, Đo lường hiệu suất quảng cáo</p>
+        <p data-i18n="eco_property" data-tail class="editable-node text-balance text-xs sm:text-sm font-mono font-semibold text-cyan-700 dark:text-cyan-400">Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng &amp; hoa hồng | Nhận làm: Website, Đo lường hiệu suất quảng cáo</p>
       </div>
 
-      <!-- 1. CỤM 4 TRỤ CỘT DỊCH VỤ (Grid 4 cột, Group 2 tầng giá trị) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <!-- 1. CỤM 6 DỊCH VỤ (lưới 3 cột: 2 chính, 2 chuyên ngành, 2 nhận làm) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         
         <!-- Thẻ 1: End-to-End Operational -->
         <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p1')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
@@ -486,6 +486,46 @@
           </div>
         </div>
 
+        <!-- Thẻ 5: chuyên ngành -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p5')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <i data-lucide="file-check-2" class="w-5 h-5"></i>
+              </div>
+              <span data-i18n="eco_badge_5" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Chuyên ngành • Thuế Mỹ</span>
+            </div>
+            <h3 data-i18n="eco_card5_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">3. Hỗ trợ văn phòng thuế Mỹ (1040)</h3>
+            <p data-i18n="eco_card5_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Kiểm hồ sơ khách trước khi đưa vào CCH Autoflow (phân loại từng trang, bắt hồ sơ trùng, sai năm, sai người), rà và sửa bookmark workpaper PDF theo chuẩn CCH, tìm đúng bản tờ khai, đối soát phí với E-Upsafe và Google Sheet.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p5')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
+            </button>
+            <span data-i18n="eco_sub_tax" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Back-office thuế Mỹ</span>
+          </div>
+        </div>
+
+        <!-- Thẻ 6: chuyên ngành -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p6')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+              </div>
+              <span data-i18n="eco_badge_6" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Chuyên ngành • Bảo hiểm &amp; bán hàng</span>
+            </div>
+            <h3 data-i18n="eco_card6_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">4. Lương thưởng, hoa hồng &amp; KPI</h3>
+            <p data-i18n="eco_card6_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p6')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
+            </button>
+            <span data-i18n="eco_sub_comp" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Lương thưởng &amp; KPI</span>
+          </div>
+        </div>
+
         <!-- Thẻ 3: Website & Landing Page -->
         <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('powerbi', this.querySelector('button'), 'p3')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
@@ -495,7 +535,7 @@
               </div>
               <span data-i18n="eco_badge_3" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Nhận làm • Website</span>
             </div>
-            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">3. Website & Trang đích</h3>
+            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">5. Website & Trang đích</h3>
             <p data-i18n="eco_card3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -515,7 +555,7 @@
               </div>
               <span data-i18n="eco_badge_4" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Theo yêu cầu • Đo lường</span>
             </div>
-            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">4. Đo lường hiệu suất quảng cáo</h3>
+            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">6. Đo lường hiệu suất quảng cáo</h3>
             <p data-i18n="eco_card4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Gắn và kiểm tra đo lường GA4/GTM (sự kiện, chuyển đổi, UTM), sửa lỗi trùng sự kiện, dựng báo cáo so sánh hiệu quả từng kênh quảng cáo.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -1123,10 +1163,10 @@
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h4 data-i18n="modal_pkg_heading" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-                Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Nhận Thêm Website &amp; Đo Lường
+                Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Thêm Chuyên Ngành Thuế Mỹ &amp; Lương Thưởng
               </h4>
             </div>
-            <span data-i18n="modal_pkg_note" class="text-[11px] font-mono text-slate-400">* Chính: tự động hóa vận hành &amp; Dashboard BI • Nhận làm: website, đo lường hiệu suất quảng cáo</span>
+            <span data-i18n="modal_pkg_note" class="text-[11px] font-mono text-slate-400">* Chính: tự động hóa vận hành &amp; Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng &amp; hoa hồng • Nhận làm: website, đo lường hiệu suất quảng cáo</span>
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -1151,15 +1191,41 @@
               </div>
               <ul class="space-y-1.5 text-slate-300">
                 <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p2_item1">(1) Thiết kế Dashboard điều hành (Power BI / Looker Studio). Bàn giao: file dashboard và cách cập nhật dữ liệu</span></li>
-                <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p2_item2">(2) Phân tích hiệu suất &amp; mô hình hóa ngân sách. Bàn giao: file mô hình và ghi chú giả định</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p2_item2">(2) Phân tích lợi nhuận và chi phí (P&amp;L) theo sản phẩm, kênh, chi nhánh. Bàn giao: file phân tích và ghi chú giả định</span></li>
                 <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p2_item3">(3) Báo cáo gửi định kỳ qua Email/Zalo. Bàn giao: cấu hình gửi và bước kiểm tra</span></li>
+              </ul>
+            </div>
+
+            <!-- Gói 5 (chuyên ngành) -->
+            <div id="modal-pkg-p5" data-service-pkg="p5" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span data-i18n="modal_p5_title" class="font-bold text-emerald-400 text-xs sm:text-sm">3. Hỗ trợ văn phòng thuế Mỹ (1040)</span>
+                <span data-i18n="modal_p5_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Chuyên ngành</span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300">
+                <li class="flex items-start gap-1.5"><span class="text-emerald-400">✓</span><span data-i18n="modal_p5_item1">(1) Kiểm hồ sơ trước khi funnel vào CCH Autoflow. Bàn giao: bảng phân loại từng trang, danh sách hồ sơ trùng, sai năm, TIN lạ; số trang khớp 100%</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-400">✓</span><span data-i18n="modal_p5_item2">(2) Rà và sửa bookmark workpaper theo 26 nhóm chuẩn CCH. Bàn giao: báo cáo lỗi theo từng trang và file workpaper mới, nội dung trang giữ nguyên</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-400">✓</span><span data-i18n="modal_p5_item3">(3) Đối soát phí và hóa đơn với E-Upsafe và Google Sheet. Bàn giao: bảng đối soát từng dòng kèm bằng chứng (trang PDF, tổng phí khớp)</span></li>
+              </ul>
+            </div>
+
+            <!-- Gói 6 (chuyên ngành) -->
+            <div id="modal-pkg-p6" data-service-pkg="p6" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span data-i18n="modal_p6_title" class="font-bold text-cyan-400 text-xs sm:text-sm">4. Lương thưởng, hoa hồng &amp; KPI</span>
+                <span data-i18n="modal_p6_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Chuyên ngành</span>
+              </div>
+              <ul class="space-y-1.5 text-slate-300">
+                <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p6_item1">(1) Mô hình cơ chế thưởng/hoa hồng và chạy thử các kịch bản. Bàn giao: file mô hình kèm bảng giả định</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p6_item2">(2) Dự báo doanh thu theo 4 động lực MAPA (nhân lực, tỷ lệ hoạt động, năng suất, quy mô hồ sơ). Bàn giao: file dự báo và cách cập nhật</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-cyan-400">✓</span><span data-i18n="modal_p6_item3">(3) Theo dõi thực tế so với mục tiêu (tháng trước, năm trước) và đối soát chi trả. Bàn giao: dashboard và bảng đối soát</span></li>
               </ul>
             </div>
 
             <!-- Gói 3 -->
             <div id="modal-pkg-p3" data-service-pkg="p3" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p3_title" class="font-bold text-amber-400 text-xs sm:text-sm">3. Website &amp; Trang đích</span>
+                <span data-i18n="modal_p3_title" class="font-bold text-amber-400 text-xs sm:text-sm">5. Website &amp; Trang đích</span>
                 <span data-i18n="modal_p3_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Nhận làm</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -1172,7 +1238,7 @@
             <!-- Gói 4 -->
             <div id="modal-pkg-p4" data-service-pkg="p4" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">4. Đo lường hiệu suất quảng cáo (theo yêu cầu)</span>
+                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">6. Đo lường hiệu suất quảng cáo (theo yêu cầu)</span>
                 <span data-i18n="modal_p4_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Theo yêu cầu</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -1213,21 +1279,31 @@
         modal_p4_item3: "(3) Dashboard so sánh hiệu quả từng kênh quảng cáo (truy cập, chuyển đổi; chi phí nếu khách cấp dữ liệu). Bàn giao: dashboard và hướng dẫn đọc số",
         modal_p4_item2: "(2) Chuẩn hóa đường dẫn & nguồn khách (UTM). Bàn giao: bảng quy ước UTM",
         modal_p4_item1: "(1) Kiểm lỗi đo lường GA4 & GTM, sửa lỗi trùng sự kiện. Bàn giao: báo cáo lỗi và danh sách đã sửa",
-        modal_p4_title: "4. Đo lường hiệu suất quảng cáo (theo yêu cầu)",
+        modal_p4_title: "6. Đo lường hiệu suất quảng cáo (theo yêu cầu)",
+        modal_p5_title: "3. Hỗ trợ văn phòng thuế Mỹ (1040)",
+        modal_p5_badge: "Chuyên ngành",
+        modal_p5_item1: "(1) Kiểm hồ sơ trước khi funnel vào CCH Autoflow. Bàn giao: bảng phân loại từng trang, danh sách hồ sơ trùng, sai năm, TIN lạ; số trang khớp 100%",
+        modal_p5_item2: "(2) Rà và sửa bookmark workpaper theo 26 nhóm chuẩn CCH. Bàn giao: báo cáo lỗi theo từng trang và file workpaper mới, nội dung trang giữ nguyên",
+        modal_p5_item3: "(3) Đối soát phí và hóa đơn với E-Upsafe và Google Sheet. Bàn giao: bảng đối soát từng dòng kèm bằng chứng (trang PDF, tổng phí khớp)",
+        modal_p6_title: "4. Lương thưởng, hoa hồng & KPI",
+        modal_p6_badge: "Chuyên ngành",
+        modal_p6_item1: "(1) Mô hình cơ chế thưởng/hoa hồng và chạy thử các kịch bản. Bàn giao: file mô hình kèm bảng giả định",
+        modal_p6_item2: "(2) Dự báo doanh thu theo 4 động lực MAPA (nhân lực, tỷ lệ hoạt động, năng suất, quy mô hồ sơ). Bàn giao: file dự báo và cách cập nhật",
+        modal_p6_item3: "(3) Theo dõi thực tế so với mục tiêu (tháng trước, năm trước) và đối soát chi trả. Bàn giao: dashboard và bảng đối soát",
         modal_p3_item3: "(3) Web công cụ nhỏ / cổng thông tin nội bộ (Mini Web Portal). Bàn giao: trang chạy được và ghi chú sử dụng",
         modal_p3_item2: "(2) Form thu thập thông tin đổ về Google Sheets/CRM. Bàn giao: form chạy được và lần gửi thử",
         modal_p3_item1: "(1) Dựng trang giới thiệu / landing page gọn nhẹ, hosting miễn phí hoặc chi phí thấp. Bàn giao: mã nguồn và hướng dẫn đăng trang",
-        modal_p3_title: "3. Website & Trang đích",
+        modal_p3_title: "5. Website & Trang đích",
         modal_p2_item3: "(3) Báo cáo gửi định kỳ qua Email/Zalo. Bàn giao: cấu hình gửi và bước kiểm tra",
-        modal_p2_item2: "(2) Phân tích hiệu suất & mô hình hóa ngân sách. Bàn giao: file mô hình và ghi chú giả định",
+        modal_p2_item2: "(2) Phân tích lợi nhuận và chi phí (P&L) theo sản phẩm, kênh, chi nhánh. Bàn giao: file phân tích và ghi chú giả định",
         modal_p2_item1: "(1) Thiết kế Dashboard điều hành (Power BI / Looker Studio). Bàn giao: file dashboard và cách cập nhật dữ liệu",
         modal_p2_title: "2. Phân tích Dữ liệu & Dashboard BI",
         modal_p1_item3: "(3) Chuẩn hóa quy trình & phân quyền file. Bàn giao: SOP ngắn và hướng dẫn sử dụng",
         modal_p1_item2: "(2) Đối soát & làm sạch dữ liệu định kỳ. Bàn giao: báo cáo chênh lệch và danh sách dòng cần kiểm",
         modal_p1_item1: "(1) Tự động hóa nhập liệu & đồng bộ dữ liệu (Python, Playwright, Google Sheets). Bàn giao: script hoặc Sheet chạy được",
         modal_p1_title: "1. Tự động hóa Vận hành",
-        modal_pkg_note: "* Chính: tự động hóa vận hành & Dashboard BI • Nhận làm: website, đo lường hiệu suất quảng cáo",
-        modal_pkg_heading: "Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Nhận Thêm Website & Đo Lường",
+        modal_pkg_note: "* Chính: tự động hóa vận hành & Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng & hoa hồng • Nhận làm: website, đo lường hiệu suất quảng cáo",
+        modal_pkg_heading: "Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Thêm Chuyên Ngành Thuế Mỹ & Lương Thưởng",
         nav_about: "Giới thiệu",
         nav_metrics: "Chỉ số",
         nav_dashboard: "Mô phỏng Phễu",
@@ -1239,13 +1315,13 @@
         hero_title: "Tự động hóa việc lặp lại, dữ liệu sạch,<br class='hidden md:inline'> dashboard rõ ràng cho <span class='inline-block'>chủ doanh nghiệp</span>",
         hero_headline: "Dữ Liệu Chuẩn Xác • Ra Quyết Định Đúng<br class='hidden md:inline'> Tối Ưu Ngân Sách & Tăng Trưởng <span class='inline-block'>Doanh Thu</span>",
         hero_positioning: "Chuyên viên Vận hành & Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI",
-        hero_desc: "Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Làm việc từ xa, bàn giao file chạy được <span class='inline-block'>kèm hướng dẫn.</span>",
+        hero_desc: "Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI hoặc Looker Studio. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ văn phòng thuế Mỹ (1040) và cơ chế lương thưởng ngành bảo hiểm. Làm việc từ xa, bàn giao file chạy được <span class='inline-block'>kèm hướng dẫn.</span>",
         hero_btn_dashboard: "Xem Dashboard Tương Tác",
         hero_btn_github: "🐙 Xem GitHub ↗",
         hero_btn_capability: "📄 Xem CV & hồ sơ năng lực",
         dash_tag: "Dữ liệu mẫu • Mô phỏng",
         dash_title: "Phân Tích Hiệu Suất & Phễu <span class='inline-block'>Chuyển Đổi</span>",
-        dash_disclaimer: "* Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào.",
+        dash_disclaimer: "* Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào. Ví dụ cho dịch vụ 4: lương thưởng & hoa hồng.",
         filter_all: "Tất cả khu vực",
         filter_north: "Miền Bắc",
         filter_south: "Miền Nam",
@@ -1265,15 +1341,23 @@
         funnel_stage3: "3. Chốt hợp đồng & Ký kết",
         eco_badge: "HỆ SINH THÁI DỊCH VỤ & GIẢI PHÁP THỰC CHIẾN",
         eco_title: "Hệ Sinh Thái Sản Phẩm & Dịch Vụ Của TJ",
-        eco_property: "Chính: Tự động hóa vận hành • Dashboard BI | Nhận làm: Website, Đo lường hiệu suất quảng cáo",
+        eco_property: "Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng & hoa hồng | Nhận làm: Website, Đo lường hiệu suất quảng cáo",
         eco_card1_title: "1. Tự động hóa Vận hành",
         eco_card1_desc: "Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.",
         eco_card2_title: "2. Phân tích Dữ liệu & Dashboard BI",
         eco_card2_desc: "Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI / Looker Studio) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.",
-        eco_card3_title: "3. Website & Trang đích",
+        eco_card3_title: "5. Website & Trang đích",
         eco_card3_desc: "Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.",
-        eco_card4_title: "4. Đo lường hiệu suất quảng cáo",
+        eco_card4_title: "6. Đo lường hiệu suất quảng cáo",
         eco_card4_desc: "Gắn và kiểm tra đo lường GA4/GTM (sự kiện, chuyển đổi, UTM), sửa lỗi trùng sự kiện, dựng báo cáo so sánh hiệu quả từng kênh quảng cáo.",
+        eco_badge_5: "Chuyên ngành • Thuế Mỹ",
+        eco_badge_6: "Chuyên ngành • Bảo hiểm & bán hàng",
+        eco_card5_title: "3. Hỗ trợ văn phòng thuế Mỹ (1040)",
+        eco_card5_desc: "Kiểm hồ sơ khách trước khi đưa vào CCH Autoflow (phân loại từng trang, bắt hồ sơ trùng, sai năm, sai người), rà và sửa bookmark workpaper PDF theo chuẩn CCH, tìm đúng bản tờ khai, đối soát phí với E-Upsafe và Google Sheet.",
+        eco_sub_tax: "Back-office thuế Mỹ",
+        eco_card6_title: "4. Lương thưởng, hoa hồng & KPI",
+        eco_card6_desc: "Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.",
+        eco_sub_comp: "Lương thưởng & KPI",
         eco_btn_detail: "[📊 Xem bảng chi tiết ↗]",
         eco_sub_pages: "Tự động hóa quy trình",
         eco_sub_countries: "BI cho điều hành",
@@ -1418,21 +1502,31 @@
         modal_p4_item3: "(3) Dashboard comparing each ad channel (traffic, conversions; cost if the client shares the data). Delivered: dashboard and a guide to reading it",
         modal_p4_item2: "(2) Standardizing links and traffic sources (UTM). Delivered: a UTM naming convention sheet",
         modal_p4_item1: "(1) Checking GA4 and GTM tracking and fixing duplicate events. Delivered: an issue report and a list of fixes",
-        modal_p4_title: "4. Ad Performance Tracking (on request)",
+        modal_p4_title: "6. Ad Performance Tracking (on request)",
+        modal_p5_title: "3. US Tax Office Back-Office (1040)",
+        modal_p5_badge: "Specialist",
+        modal_p5_item1: "(1) Pre-funnel QA before CCH Autoflow. Delivered: a page-by-page sorting sheet, a list of duplicates, wrong-year pages and unknown TINs; page counts reconciled 100%",
+        modal_p5_item2: "(2) Workpaper bookmark audit and fix against the 26 CCH categories. Delivered: a page-level issue report and a corrected workpaper file, page content unchanged",
+        modal_p5_item3: "(3) Fee and invoice reconciliation with E-Upsafe and Google Sheets. Delivered: a line-by-line reconciliation with evidence (PDF page, matching fee totals)",
+        modal_p6_title: "4. Sales Compensation, Commissions & KPIs",
+        modal_p6_badge: "Specialist",
+        modal_p6_item1: "(1) Incentive/commission scheme model with scenario testing. Delivered: the model file and an assumptions sheet",
+        modal_p6_item2: "(2) Revenue forecast on the 4 MAPA drivers (manpower, active ratio, productivity, case size). Delivered: the forecast file and how to update it",
+        modal_p6_item3: "(3) Actual vs. target tracking (MoM, YoY) and payout reconciliation. Delivered: a dashboard and a reconciliation sheet",
         modal_p3_item3: "(3) Small web tool / internal portal (Mini Web Portal). Delivered: a working page and usage notes",
         modal_p3_item2: "(2) Lead form feeding Google Sheets/CRM. Delivered: a working form and a test submission",
         modal_p3_item1: "(1) Lean showcase or landing page on free or low-cost hosting. Delivered: source code and publishing guide",
-        modal_p3_title: "3. Website & Landing Page",
+        modal_p3_title: "5. Website & Landing Page",
         modal_p2_item3: "(3) Scheduled reports by Email/Zalo. Delivered: the sending setup and a check procedure",
-        modal_p2_item2: "(2) Performance analysis and budget modeling. Delivered: the model file and notes on assumptions",
+        modal_p2_item2: "(2) P&L and cost analysis by product, channel and branch. Delivered: the analysis file and notes on assumptions",
         modal_p2_item1: "(1) Designing an executive dashboard (Power BI / Looker Studio). Delivered: the dashboard file and how to refresh the data",
         modal_p2_title: "2. Data Analyst & BI Dashboard",
         modal_p1_item3: "(3) Standardizing the process and file permissions. Delivered: a short SOP and usage guide",
         modal_p1_item2: "(2) Recurring reconciliation and data cleaning. Delivered: a variance report and a list of rows to review",
         modal_p1_item1: "(1) Automating data entry and data sync (Python, Playwright, Google Sheets). Delivered: a working script or Sheet",
         modal_p1_title: "1. Operations Automation",
-        modal_pkg_note: "* Core: operations automation & BI dashboards • Also available: websites, ad performance tracking",
-        modal_pkg_heading: "TJ's Service Scope: Data First, Plus Websites & Tracking",
+        modal_pkg_note: "* Core: operations automation & BI dashboards • Specialist: US tax back-office, sales compensation • Also available: websites, ad performance tracking",
+        modal_pkg_heading: "TJ's Service Scope: Data First, Plus US Tax & Compensation Specialties",
         nav_about: "About",
         nav_metrics: "Metrics",
         nav_dashboard: "Funnel Simulation",
@@ -1444,13 +1538,13 @@
         hero_title: "Automate Repetitive Work, Clean Data,<br class='hidden md:inline'> Clear Dashboards for <span class='inline-block'>Business Owners</span>",
         hero_headline: "Accurate Data • Confident Decisions<br class='hidden md:inline'> Budget Optimization & <span class='inline-block'>Revenue Growth</span>",
         hero_positioning: "Operations & Data Analyst • Process Automation • BI Dashboards",
-        hero_desc: "I automate data entry, reconciliation and sync across Excel, Google Sheets and business systems, then clean the data and build executive dashboards in Power BI or Looker Studio. Lean websites and ad performance tracking (GA4/GTM) on request. Fully remote, delivered as working files with a <span class='inline-block'>handover guide.</span>",
+        hero_desc: "I automate data entry, reconciliation and sync across Excel, Google Sheets and business systems, then clean the data and build executive dashboards in Power BI or Looker Studio. Lean websites and ad performance tracking (GA4/GTM) on request. Domain know-how in US tax office (1040) operations and insurance sales compensation. Fully remote, delivered as working files with a <span class='inline-block'>handover guide.</span>",
         hero_btn_dashboard: "Explore Live Dashboard",
         hero_btn_github: "🐙 View GitHub Profile ↗",
         hero_btn_capability: "📄 View CV & capability profile",
         dash_tag: "Sample data • Simulation",
         dash_title: "Performance & <span class='inline-block'>Funnel Analytics</span>",
-        dash_disclaimer: "* Every figure in this block is sample data illustrating KPI filters and a sales funnel. They are not real results from any client.",
+        dash_disclaimer: "* Every figure in this block is sample data illustrating KPI filters and a sales funnel. They are not real results from any client. Example for service 4: sales compensation & commissions.",
         filter_all: "All Regions",
         filter_north: "North",
         filter_south: "South",
@@ -1470,15 +1564,23 @@
         funnel_stage3: "3. Final Close & Contract Won",
         eco_badge: "SERVICE ECOSYSTEM & PRAGMATIC SOLUTIONS",
         eco_title: "TJ's Product & Service Ecosystem",
-        eco_property: "Core: Operations automation • BI dashboards | Also available: Websites, Ad performance tracking",
+        eco_property: "Core: Operations automation • BI dashboards | Specialist: US tax back-office, Sales compensation | Also available: Websites, Ad performance tracking",
         eco_card1_title: "1. Operations Automation",
         eco_card1_desc: "Automation of data entry, invoice reconciliation and data sync between Excel, Google Sheets and other systems (Python, Playwright). Delivered as a working file with error logs and a usage guide.",
         eco_card2_title: "2. Data Analyst & BI Dashboard",
         eco_card2_desc: "Cleaning raw data, standardizing metrics and building executive dashboards (Power BI / Looker Studio) so owners can follow cash flow and operational performance.",
-        eco_card3_title: "3. Website & Landing Page",
+        eco_card3_title: "5. Website & Landing Page",
         eco_card3_desc: "Lean company pages and landing pages that load fast, with forms that feed Google Sheets.",
-        eco_card4_title: "4. Ad Performance Tracking",
+        eco_card4_title: "6. Ad Performance Tracking",
         eco_card4_desc: "Set up and audit GA4/GTM tracking (events, conversions, UTM), fix duplicate events, and build reports comparing each ad channel.",
+        eco_badge_5: "Specialist • US Tax",
+        eco_badge_6: "Specialist • Insurance & Sales",
+        eco_card5_title: "3. US Tax Office Back-Office (1040)",
+        eco_card5_desc: "Pre-funnel QA of client documents before CCH Autoflow (page-by-page sorting, catching duplicates, wrong-year and wrong-taxpayer pages), workpaper PDF bookmark audit and fix to CCH standards, locating the correct return copies, and fee reconciliation against E-Upsafe and Google Sheets.",
+        eco_sub_tax: "US tax back-office",
+        eco_card6_title: "4. Sales Compensation, Commissions & KPIs",
+        eco_card6_desc: "Design and calculate incentive and commission schemes for sales teams: compensation cost models, payout scenario testing, cost versus revenue, and payout reconciliation each period. Experience from Prudential, Chubb Life and AIA.",
+        eco_sub_comp: "Compensation & KPIs",
         eco_btn_detail: "[📊 View Detailed Table ↗]",
         eco_sub_pages: "Workflow Automation",
         eco_sub_countries: "Executive BI",
@@ -1623,21 +1725,31 @@
         modal_p4_item3: "(3) Panel que compara cada canal publicitario (tráfico, conversiones; costo si el cliente comparte los datos). Entrega: panel y guía de lectura",
         modal_p4_item2: "(2) Estandarización de enlaces y fuentes de tráfico (UTM). Entrega: tabla de convenciones UTM",
         modal_p4_item1: "(1) Revisión de medición GA4 y GTM y corrección de eventos duplicados. Entrega: informe de errores y lista de correcciones",
-        modal_p4_title: "4. Medición del Rendimiento Publicitario (bajo pedido)",
+        modal_p4_title: "6. Medición del Rendimiento Publicitario (bajo pedido)",
+        modal_p5_title: "3. Back-office para Despachos Fiscales de EE. UU. (1040)",
+        modal_p5_badge: "Especializado",
+        modal_p5_item1: "(1) Revisión previa a CCH Autoflow. Entrega: tabla de clasificación página por página, lista de duplicados, páginas de año incorrecto y TIN desconocidos; conteo de páginas cuadrado al 100 %",
+        modal_p5_item2: "(2) Auditoría y corrección de marcadores de papeles de trabajo según las 26 categorías CCH. Entrega: informe de errores por página y archivo corregido, sin alterar el contenido",
+        modal_p5_item3: "(3) Conciliación de honorarios y facturas con E-Upsafe y Google Sheets. Entrega: conciliación línea por línea con evidencia (página PDF, totales cuadrados)",
+        modal_p6_title: "4. Compensación Comercial, Comisiones y KPI",
+        modal_p6_badge: "Especializado",
+        modal_p6_item1: "(1) Modelo de incentivos/comisiones con prueba de escenarios. Entrega: archivo del modelo y tabla de supuestos",
+        modal_p6_item2: "(2) Previsión de ingresos con los 4 pilares MAPA (fuerza laboral, ratio de actividad, productividad, tamaño de caso). Entrega: archivo de previsión y cómo actualizarlo",
+        modal_p6_item3: "(3) Seguimiento real vs. objetivo (MoM, YoY) y conciliación de pagos. Entrega: panel y tabla de conciliación",
         modal_p3_item3: "(3) Herramienta web pequeña / portal interno (Mini Web Portal). Entrega: página funcional y notas de uso",
         modal_p3_item2: "(2) Formulario que alimenta Google Sheets/CRM. Entrega: formulario funcional y un envío de prueba",
         modal_p3_item1: "(1) Página de presentación o landing ligera en hosting gratuito o de bajo coste. Entrega: código fuente y guía de publicación",
-        modal_p3_title: "3. Sitio Web y Página de Aterrizaje",
+        modal_p3_title: "5. Sitio Web y Página de Aterrizaje",
         modal_p2_item3: "(3) Informes programados por Email/Zalo. Entrega: configuración de envío y pasos de verificación",
-        modal_p2_item2: "(2) Análisis de desempeño y modelado de presupuesto. Entrega: archivo del modelo y notas de supuestos",
+        modal_p2_item2: "(2) Análisis de P&G y costes por producto, canal y sucursal. Entrega: archivo de análisis y notas de supuestos",
         modal_p2_item1: "(1) Diseño de un panel ejecutivo (Power BI / Looker Studio). Entrega: archivo del panel y cómo actualizar los datos",
         modal_p2_title: "2. Análisis de Datos y Dashboard BI",
         modal_p1_item3: "(3) Estandarización del proceso y permisos de archivos. Entrega: SOP breve y guía de uso",
         modal_p1_item2: "(2) Conciliación y limpieza periódica de datos. Entrega: informe de diferencias y lista de filas a revisar",
         modal_p1_item1: "(1) Automatización de ingreso y sincronización de datos (Python, Playwright, Google Sheets). Entrega: script o Sheet funcional",
         modal_p1_title: "1. Automatización Operativa",
-        modal_pkg_note: "* Principal: automatización operativa y paneles BI • También: sitios web, medición del rendimiento publicitario",
-        modal_pkg_heading: "Alcance de Servicios de TJ: Datos Primero, Más Web y Medición",
+        modal_pkg_note: "* Principal: automatización operativa y paneles BI • Especializado: back-office fiscal EE. UU., compensación comercial • También: sitios web, medición del rendimiento publicitario",
+        modal_pkg_heading: "Alcance de Servicios de TJ: Datos Primero, Más Fiscalidad EE. UU. y Compensación",
         nav_about: "Sobre mí",
         nav_metrics: "Métricas",
         nav_dashboard: "Simulación de Embudo",
@@ -1649,13 +1761,13 @@
         hero_title: "Automatiza lo repetitivo, datos limpios,<br class='hidden md:inline'> paneles claros para <span class='inline-block'>dueños de negocio</span>",
         hero_headline: "Datos Precisos • Decisiones Acertadas<br class='hidden md:inline'> Optimización de Presupuesto y <span class='inline-block'>Crecimiento Real</span>",
         hero_positioning: "Analista de Operaciones y Datos • Automatización de Procesos • Paneles BI",
-        hero_desc: "Automatización de ingreso de datos, conciliación y sincronización entre Excel, Google Sheets y sistemas de negocio. Limpieza de datos y paneles ejecutivos en Power BI o Looker Studio. Sitios web ligeros y medición del rendimiento publicitario (GA4/GTM) bajo pedido. Trabajo 100 % remoto, con archivos funcionales y <span class='inline-block'>guía de entrega.</span>",
+        hero_desc: "Automatización de ingreso de datos, conciliación y sincronización entre Excel, Google Sheets y sistemas de negocio. Limpieza de datos y paneles ejecutivos en Power BI o Looker Studio. Sitios web ligeros y medición del rendimiento publicitario (GA4/GTM) bajo pedido. Conocimiento del back-office de despachos fiscales de EE. UU. (1040) y de la compensación comercial en seguros. Trabajo 100 % remoto, con archivos funcionales y <span class='inline-block'>guía de entrega.</span>",
         hero_btn_dashboard: "Ver Panel Interactivo",
         hero_btn_github: "🐙 Perfil de GitHub ↗",
         hero_btn_capability: "📄 Ver CV y perfil de capacidades",
         dash_tag: "Datos de muestra • Simulación",
         dash_title: "Análisis de Rendimiento y <span class='inline-block'>Embudo Comercial</span>",
-        dash_disclaimer: "* Todas las cifras de este bloque son datos de muestra que ilustran filtros de KPI y un embudo de ventas. No son resultados reales de ningún cliente.",
+        dash_disclaimer: "* Todas las cifras de este bloque son datos de muestra que ilustran filtros de KPI y un embudo de ventas. No son resultados reales de ningún cliente. Ejemplo del servicio 4: compensación y comisiones.",
         filter_all: "Todas las Regiones",
         filter_north: "Norte",
         filter_south: "Sur",
@@ -1675,15 +1787,23 @@
         funnel_stage3: "3. Cierre Definitivo y Contratos Ganados",
         eco_badge: "ECOSISTEMA DE SERVICIOS Y SOLUCIONES PRÁCTICAS",
         eco_title: "Ecosistema de Productos y Servicios de TJ",
-        eco_property: "Principal: Automatización operativa • Paneles BI | También: Sitios web, Medición del rendimiento publicitario",
+        eco_property: "Principal: Automatización operativa • Paneles BI | Especializado: Back-office fiscal EE. UU., Compensación comercial | También: Sitios web, Medición del rendimiento publicitario",
         eco_card1_title: "1. Automatización Operativa",
         eco_card1_desc: "Automatización de ingreso de datos, conciliación de facturas y sincronización entre Excel, Google Sheets y otros sistemas (Python, Playwright). Se entrega funcionando, con registro de errores y guía de uso.",
         eco_card2_title: "2. Análisis de Datos y Dashboard BI",
         eco_card2_desc: "Limpieza de datos en bruto, estandarización de métricas y paneles ejecutivos (Power BI / Looker Studio) para que el dueño siga el flujo de caja y el desempeño operativo.",
-        eco_card3_title: "3. Sitio Web y Página de Aterrizaje",
+        eco_card3_title: "5. Sitio Web y Página de Aterrizaje",
         eco_card3_desc: "Páginas de presentación y de aterrizaje ligeras y rápidas, con formularios que envían datos a Google Sheets.",
-        eco_card4_title: "4. Medición del Rendimiento Publicitario",
+        eco_card4_title: "6. Medición del Rendimiento Publicitario",
         eco_card4_desc: "Configuración y revisión de la medición GA4/GTM (eventos, conversiones, UTM), corrección de eventos duplicados e informes que comparan cada canal publicitario.",
+        eco_badge_5: "Especializado • Fiscal EE. UU.",
+        eco_badge_6: "Especializado • Seguros y ventas",
+        eco_card5_title: "3. Back-office para Despachos Fiscales de EE. UU. (1040)",
+        eco_card5_desc: "Revisión de documentos del cliente antes de CCH Autoflow (clasificación página por página, detección de duplicados, año o contribuyente incorrecto), auditoría y corrección de marcadores de los PDF de papeles de trabajo según el estándar CCH, localización de las copias correctas de la declaración y conciliación de honorarios con E-Upsafe y Google Sheets.",
+        eco_sub_tax: "Back-office fiscal",
+        eco_card6_title: "4. Compensación Comercial, Comisiones y KPI",
+        eco_card6_desc: "Diseño y cálculo de esquemas de incentivos y comisiones para equipos comerciales: modelos de costo de compensación, prueba de escenarios de pago, costo frente a ingresos y conciliación de pagos en cada periodo. Experiencia en Prudential, Chubb Life y AIA.",
+        eco_sub_comp: "Compensación y KPI",
         eco_btn_detail: "[📊 Ver tabla detallada ↗]",
         eco_sub_pages: "Automatización de procesos",
         eco_sub_countries: "BI ejecutivo",
@@ -1828,21 +1948,31 @@
         modal_p4_item3: "(3) 各广告渠道效果对比看板（访问、转化；如客户提供数据则含成本）。交付：看板及解读说明",
         modal_p4_item2: "(2) 规范链接与流量来源（UTM）。交付：UTM 命名规范表",
         modal_p4_item1: "(1) 检查 GA4 与 GTM 埋点并修复重复事件。交付：问题报告与修复清单",
-        modal_p4_title: "4. 广告效果衡量（按需）",
+        modal_p4_title: "6. 广告效果衡量（按需）",
+        modal_p5_title: "3. 美国报税事务所后台支持（1040）",
+        modal_p5_badge: "专业服务",
+        modal_p5_item1: "(1) 导入 CCH Autoflow 前的资料检查。交付：逐页分类表，重复、年份错误及未知 TIN 清单；页数 100% 核对一致",
+        modal_p5_item2: "(2) 按 CCH 26 类标准审核并修复工作底稿书签。交付：逐页问题报告与修正后的底稿文件，页面内容不变",
+        modal_p5_item3: "(3) 与 E-Upsafe 和 Google Sheets 核对费用与发票。交付：逐行核对表并附证据（PDF 页面、费用合计一致）",
+        modal_p6_title: "4. 销售薪酬、佣金与 KPI",
+        modal_p6_badge: "专业服务",
+        modal_p6_item1: "(1) 奖励/佣金机制模型及情景测试。交付：模型文件与假设表",
+        modal_p6_item2: "(2) 基于 MAPA 4 大驱动（人力、活动率、人均产能、件均保费）的营收预测。交付：预测文件及更新方法",
+        modal_p6_item3: "(3) 实际与目标跟踪（环比、同比）及支付核对。交付：看板与核对表",
         modal_p3_item3: "(3) 小型网页工具/内部门户（Mini Web Portal）。交付：可用页面及使用备注",
         modal_p3_item2: "(2) 将表单数据写入 Google Sheets/CRM。交付：可用表单及一次测试提交",
         modal_p3_item1: "(1) 轻量展示页或落地页，使用免费或低成本托管。交付：源码与发布说明",
-        modal_p3_title: "3. 网站与落地页",
+        modal_p3_title: "5. 网站与落地页",
         modal_p2_item3: "(3) 通过邮件/Zalo 定期发送报表。交付：发送配置与检查步骤",
-        modal_p2_item2: "(2) 绩效分析与预算建模。交付：模型文件及假设说明",
+        modal_p2_item2: "(2) 按产品、渠道、分公司的损益（P&L）与成本分析。交付：分析文件及假设说明",
         modal_p2_item1: "(1) 设计经营看板（Power BI / Looker Studio）。交付：看板文件及数据更新方法",
         modal_p2_title: "2. 数据分析与 BI 看板",
         modal_p1_item3: "(3) 规范流程与文件权限。交付：简短 SOP 与使用说明",
         modal_p1_item2: "(2) 定期对账与数据清洗。交付：差异报告与待核查行清单",
         modal_p1_item1: "(1) 自动化数据录入与同步（Python、Playwright、Google Sheets）。交付：可运行的脚本或表格",
         modal_p1_title: "1. 运营自动化",
-        modal_pkg_note: "* 核心：运营自动化与 BI 看板 • 可承接：网站、广告效果衡量",
-        modal_pkg_heading: "TJ 的服务范围：以数据为主，兼接网站与埋点",
+        modal_pkg_note: "* 核心：运营自动化与 BI 看板 • 专业：美国报税后台、销售薪酬与佣金 • 可承接：网站、广告效果衡量",
+        modal_pkg_heading: "TJ 的服务范围：以数据为主，兼具美国报税与薪酬激励专长",
         nav_about: "关于我",
         nav_metrics: "关键指标",
         nav_dashboard: "漏斗模拟",
@@ -1854,13 +1984,13 @@
         hero_title: "自动化重复工作，数据干净，<br class='hidden md:inline'> 为企业主打造清晰<span class='inline-block'>经营看板</span>",
         hero_headline: "精准数据洞察 • 科学业务决策<br class='hidden md:inline'> 预算精准调优与<span class='inline-block'>业绩确定性增长</span>",
         hero_positioning: "运营与数据分析师 • 流程自动化 • BI 看板",
-        hero_desc: "自动化数据录入、对账，并在 Excel、Google Sheets 与业务系统之间同步；清洗数据，用 Power BI 或 Looker Studio 搭建经营看板。轻量网站与广告效果衡量（GA4/GTM）按需承接。全程远程协作，交付可运行的文件并<span class='inline-block'>附使用说明。</span>",
+        hero_desc: "自动化数据录入、对账，并在 Excel、Google Sheets 与业务系统之间同步；清洗数据，用 Power BI 或 Looker Studio 搭建经营看板。轻量网站与广告效果衡量（GA4/GTM）按需承接。熟悉美国报税事务所（1040）后台流程与保险销售薪酬激励机制。全程远程协作，交付可运行的文件并<span class='inline-block'>附使用说明。</span>",
         hero_btn_dashboard: "浏览交互式看板",
         hero_btn_github: "🐙 访问GitHub主页 ↗",
         hero_btn_capability: "📄 查看简历与能力档案",
         dash_tag: "示例数据 • 模拟",
         dash_title: "业务绩效与<span class='inline-block'>转化漏斗分析</span>",
-        dash_disclaimer: "* 本区块所有数字均为示例数据，用于演示 KPI 筛选与销售漏斗，并非任何客户的真实成果。",
+        dash_disclaimer: "* 本区块所有数字均为示例数据，用于演示 KPI 筛选与销售漏斗，并非任何客户的真实成果。示例对应服务 4：薪酬与佣金。",
         filter_all: "全部区域",
         filter_north: "北部大区",
         filter_south: "南部大区",
@@ -1880,15 +2010,23 @@
         funnel_stage3: "3. 最终签单与合同达成",
         eco_badge: "实战服务与解决方案生态系统",
         eco_title: "TJ 产品与实战服务生态",
-        eco_property: "核心：运营自动化 • BI 看板 | 可承接：网站、广告效果衡量",
+        eco_property: "核心：运营自动化 • BI 看板 | 专业：美国报税后台、销售薪酬与佣金 | 可承接：网站、广告效果衡量",
         eco_card1_title: "1. 运营自动化",
         eco_card1_desc: "自动化数据录入、发票对账，以及 Excel、Google Sheets 与其他系统之间的数据同步（Python、Playwright）。交付可运行文件，附错误日志与使用说明。",
         eco_card2_title: "2. 数据分析与 BI 看板",
         eco_card2_desc: "清洗原始数据、统一指标口径，并搭建经营看板（Power BI / Looker Studio），帮助企业主跟踪现金流与运营表现。",
-        eco_card3_title: "3. 网站与落地页",
+        eco_card3_title: "5. 网站与落地页",
         eco_card3_desc: "搭建轻量、加载快的介绍页与落地页，表单数据直接写入 Google Sheets。",
-        eco_card4_title: "4. 广告效果衡量",
+        eco_card4_title: "6. 广告效果衡量",
         eco_card4_desc: "部署并检查 GA4/GTM 埋点（事件、转化、UTM），修复重复事件，并制作各广告渠道效果对比报告。",
+        eco_badge_5: "专业 • 美国报税",
+        eco_badge_6: "专业 • 保险与销售",
+        eco_card5_title: "3. 美国报税事务所后台支持（1040）",
+        eco_card5_desc: "在导入 CCH Autoflow 前检查客户资料（逐页分类，识别重复、年份错误、纳税人不符的页面），按 CCH 标准审核并修复工作底稿 PDF 书签，找准报税表副本，并与 E-Upsafe 和 Google Sheets 核对费用。",
+        eco_sub_tax: "报税后台",
+        eco_card6_title: "4. 销售薪酬、佣金与 KPI",
+        eco_card6_desc: "为销售团队设计并测算奖励与佣金机制：薪酬成本模型、支付方案情景测试、成本与营收对比，以及每期支付核对。经验来自 Prudential、Chubb Life、AIA。",
+        eco_sub_comp: "薪酬与 KPI",
         eco_btn_detail: "[📊 查看详细数据表 ↗]",
         eco_sub_pages: "流程自动化",
         eco_sub_countries: "高管 BI 看板",

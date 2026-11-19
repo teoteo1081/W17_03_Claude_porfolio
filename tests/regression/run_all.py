@@ -290,7 +290,7 @@ def t_f03(b, env, quick, shots):
     vps = VIEWPORTS + [(720, 450)]
     if quick:
         vps = [(320, 568), (375, 812), (720, 450), (1440, 900)]
-    cards = [("p1", 0), ("p2", 1), ("p3", 2), ("p4", 3)]
+    cards = [("p1", 0), ("p2", 1), ("p5", 2), ("p6", 3), ("p3", 4), ("p4", 5)]
     fails = []
     checks = 0
     for rel in pages:
@@ -329,14 +329,14 @@ def t_f03(b, env, quick, shots):
                       }
                       return {ok, total: items.length};
                     }""")
-                    if reach["total"] != 12 or reach["ok"] != 12:
+                    if reach["total"] != 18 or reach["ok"] != 18:
                         fails.append(f"{rel}@{w}x{h}/{lang}/{svc}: chỉ {reach['ok']}/{reach['total']} đầu việc tiếp cận được")
                     if shots and lang == "vi" and svc == "p4" and (w, h) in [(375, 812), (720, 450)] and rel == FINAL_PORTFOLIO:
                         pg.screenshot(path=str(Path(shots) / f"F03-modal-{w}x{h}.png"))
                     pg.keyboard.press("Escape")
                     pg.wait_for_timeout(120)
             ctx.close()
-    record("F03", f"mọi nhóm đầu việc (12 đầu việc) đọc/cuộn được; bấm thẻ dịch vụ đưa đúng nhóm vào vùng nhìn thấy ({checks} tổ hợp: 2 trang x {len(vps)} viewport x 4 ngôn ngữ x 4 thẻ)", not fails, " | ".join(fails[:6]))
+    record("F03", f"mọi nhóm đầu việc (18 đầu việc) đọc/cuộn được; bấm thẻ dịch vụ đưa đúng nhóm vào vùng nhìn thấy ({checks} tổ hợp: 2 trang x {len(vps)} viewport x 4 ngôn ngữ x 6 thẻ)", not fails, " | ".join(fails[:6]))
 
 
 def t_f03_keyboard(b, env):
@@ -416,14 +416,14 @@ def t_f04_cta(b, env):
         for l in LOCALES:
             set_lang(pg, l)
             texts[l] = pg.evaluate("[...document.querySelectorAll('[data-i18n=eco_btn_detail]')].map((e) => e.textContent.trim())")
-        if len({tuple(v) for v in texts.values()}) != 4 or any(len(v) != 4 for v in texts.values()):
+        if len({tuple(v) for v in texts.values()}) != 4 or any(len(v) != 6 for v in texts.values()):
             bad.append(f"{rel}: CTA không đổi theo locale {texts}")
         for l in LOCALES:
             set_lang(pg, l)
             hero_ok = pg.evaluate("""() => { const h = document.querySelector('h1[data-i18n=hero_title]'); return h.querySelectorAll('br').length >= 1 && h.querySelectorAll('span.inline-block').length >= 1; }""")
             if not hero_ok:
                 bad.append(f"{rel}/{l}: Hero mất br/span")
-    record("F04", "4 CTA 'Xem bảng chi tiết' dịch theo locale ở Final và Creator; Hero giữ <br> và span.inline-block sau khi đổi ngôn ngữ", not bad, " | ".join(bad))
+    record("F04", "6 CTA 'Xem bảng chi tiết' dịch theo locale ở Final và Creator; Hero giữ <br> và span.inline-block sau khi đổi ngôn ngữ", not bad, " | ".join(bad))
     ctx.close()
 
 
@@ -1020,17 +1020,17 @@ def t_f10(env):
 
 
 # ======================================================================= static content / overflow / nav
-BADGES = {
-    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Nhận làm • Website", "Theo yêu cầu • Đo lường"],
-    "en": ["Core • Automation", "Second • Data & BI", "Available • Website", "On request • Tracking"],
-    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Disponible • Web", "Bajo pedido • Medición"],
-    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "可承接 • 网站", "按需 • 效果衡量"],
+BADGES = {  # thứ tự hiển thị: 2 chính, 2 chuyên ngành, 2 nhận làm
+    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Chuyên ngành • Thuế Mỹ", "Chuyên ngành • Bảo hiểm & bán hàng", "Nhận làm • Website", "Theo yêu cầu • Đo lường"],
+    "en": ["Core • Automation", "Second • Data & BI", "Specialist • US Tax", "Specialist • Insurance & Sales", "Available • Website", "On request • Tracking"],
+    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Especializado • Fiscal EE. UU.", "Especializado • Seguros y ventas", "Disponible • Web", "Bajo pedido • Medición"],
+    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 效果衡量"],
 }
 SERVICE_TITLES = {
-    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Website & Trang đích", "4. Đo lường hiệu suất quảng cáo"],
-    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. Website & Landing Page", "4. Ad Performance Tracking"],
-    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Sitio Web y Página de Aterrizaje", "4. Medición del Rendimiento Publicitario"],
-    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 网站与落地页", "4. 广告效果衡量"],
+    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ (1040)", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Trang đích", "6. Đo lường hiệu suất quảng cáo"],
+    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. US Tax Office Back-Office (1040)", "4. Sales Compensation, Commissions & KPIs", "5. Website & Landing Page", "6. Ad Performance Tracking"],
+    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Back-office para Despachos Fiscales de EE. UU. (1040)", "4. Compensación Comercial, Comisiones y KPI", "5. Sitio Web y Página de Aterrizaje", "6. Medición del Rendimiento Publicitario"],
+    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 美国报税事务所后台支持（1040）", "4. 销售薪酬、佣金与 KPI", "5. 网站与落地页", "6. 广告效果衡量"],
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 
@@ -1046,7 +1046,7 @@ def t_content(b, env):
             set_lang(pg, l)
             info = pg.evaluate("""() => ({
               badges: [...document.querySelectorAll('#ga4-ecosystem [data-i18n^=eco_badge_]')].map((e) => e.textContent.trim()),
-              titles: [1, 2, 3, 4].map((i) => document.querySelector('[data-i18n=eco_card' + i + '_title]').textContent.trim()),
+              titles: [...document.querySelectorAll('#ga4-ecosystem h3[data-i18n^=eco_card]')].map((e) => e.textContent.trim()),
               cards: document.querySelectorAll('#ga4-ecosystem div[onclick*="is-editing"][onclick*="openGA4DrilldownModal"]').length,
               pbi: !!document.getElementById('pbi-ga4-dashboard'),
               apps: ['WRP Tax Services', 'Operation 0', 'TJ WordLoop', 'TJ Courses Hub'].map((n) => document.body.innerText.includes(n)),
@@ -1059,7 +1059,7 @@ def t_content(b, env):
                 bad.append(f"{rel}/{l}: tên dịch vụ {info['titles']}")
             if POSITIONING[l] not in info["pos"]:
                 bad.append(f"{rel}/{l}: sai định vị {info['pos']!r}")
-            if info["cards"] != 4 or not info["pbi"] or not all(info["apps"]) or info["pkgs"] != 4 or not info["nocommit"]:
+            if info["cards"] != 6 or not info["pbi"] or not all(info["apps"]) or info["pkgs"] != 6 or not info["nocommit"]:
                 bad.append(f"{rel}/{l}: {info}")
     for rel in (FINAL_CV, CREATOR_CV):
         open_page(pg, env, rel)
@@ -1068,7 +1068,7 @@ def t_content(b, env):
             t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent")
             if POSITIONING[l] not in t:
                 bad.append(f"{rel}/{l}: sai định vị {t!r}")
-    record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 4 dịch vụ + badge theo dictionary, dịch vụ 4 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
+    record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
     ctx.close()
 
 

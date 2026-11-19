@@ -291,11 +291,11 @@ def t_f03_wheel(b, env):
                 pg.mouse.wheel(0, 120); pg.wait_for_timeout(90)
                 cur = pg.evaluate(SCROLLER_JS)["top"]
                 moved = moved or cur != last_top
-                if len(seen) == 12 and cur == last_top:
+                if len(seen) == 18 and cur == last_top:
                     break
                 last_top = cur
             seen.update(pg.evaluate(VISIBLE_ITEMS_JS))
-            if not moved or len(seen) != 12:
-                bad.append(f"{rel}@{w}x{h}: wheel cuộn={moved}, đầu việc từng thấy trọn={len(seen)}/12")
+            if not moved or len(seen) != 18:
+                bad.append(f"{rel}@{w}x{h}: wheel cuộn={moved}, đầu việc từng thấy trọn={len(seen)}/18")
             ctx.close()
-    R.record("F03", "cuộn bằng bánh xe chuột thật (mouse.wheel) đưa đủ 12 đầu việc vào vùng nhìn thấy (2 trang × 4 viewport thấp/mobile)", not bad, " | ".join(bad))
+    R.record("F03", "cuộn bằng bánh xe chuột thật (mouse.wheel) đưa đủ 18 đầu việc vào vùng nhìn thấy (2 trang × 4 viewport thấp/mobile)", not bad, " | ".join(bad))
