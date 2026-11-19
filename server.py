@@ -13,12 +13,21 @@ Bảo vệ endpoint ghi file (F10):
   * Bắt buộc Content-Type: application/json, giới hạn kích thước body, chỉ ghi allowlist tên file.
   * Kiểm tra cấu trúc HTML trước khi ghi; ghi nguyên tử (tệp tạm + os.replace) và backup bản cũ.
   * Trả đúng trạng thái: 200 chỉ khi mọi target đã ghi; 4xx/5xx kèm lý do nếu không.
+
+Sau khi lưu một file Final, server sinh lại file Creator tương ứng (tools/sync_creators.py), để lần mở editor
+sau là bản vừa lưu.
+
+POST /api/publish (cùng các lớp bảo vệ như /api/save): commit đúng bốn file trang (PUBLISH_PATHS) rồi
+git push lên nhánh main. Không bao giờ push --force, không tự pull/gộp; GitHub có bản mới hơn thì trả 409.
 """
 
 import hmac
+import importlib.util
 import json
 import os
 import secrets
+import shutil
+import subprocess
 import tempfile
 import threading
 import time
@@ -57,6 +66,31 @@ BLOCKED_PREFIXES = ("service_account", "credentials")
 SESSION_TOKEN = secrets.token_urlsafe(32)
 WRITE_LOCK = threading.Lock()
 MAX_DRAIN_BYTES = 64 * 1024 * 1024  # body lớn hơn mức này: đóng kết nối thay vì đọc bỏ
+
+# ---- Sinh lại Creator sau khi lưu Final (cùng quy tắc với tools/sync_creators.py) ----
+_SYNC_PATH = Path(__file__).resolve().parent / "tools" / "sync_creators.py"
+
+
+def _load_sync_module():
+    try:
+        spec = importlib.util.spec_from_file_location("w17_sync_creators", _SYNC_PATH)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:
+        return None
+
+
+SYNC = _load_sync_module()
+CREATOR_FILES = {dst for _, dst, _ in SYNC.JOBS} if SYNC else set()
+
+# ---- Đăng lên web (git commit + push) ----
+PUBLISH_BRANCH = "main"
+PUBLISH_PATHS = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]
+PUBLISH_LOCK = threading.Lock()
+MAX_PUBLISH_BODY = 64 * 1024
+GIT_TIMEOUT = 30
+PUSH_TIMEOUT = 180
 
 
 def allowed_hosts(port):
@@ -221,6 +255,83 @@ def save_with_backup(name, html):
     return backup
 
 
+def sync_creator(final_name):
+    """Sinh lại file Creator từ file Final vừa lưu. Trả (đã cập nhật hay chưa, lý do nếu chưa)."""
+    if SYNC is None:
+        return False, "Không nạp được tools/sync_creators.py."
+    with WRITE_LOCK:
+        try:
+            dst_rel, text = SYNC.creator_for(final_name, root=BASE_DIR)
+        except SYNC.SyncError as err:
+            return False, str(err)
+        target = BASE_DIR / dst_rel
+        try:
+            current = SYNC.read(target) if target.exists() else None
+            if current != text:
+                atomic_write(target, text)
+        except OSError as err:
+            return False, f"Không ghi được {dst_rel}: {err.strerror or err}"
+    return True, ""
+
+
+def run_git(args, timeout=GIT_TIMEOUT):
+    # Không bao giờ chờ nhập liệu trên terminal (server không có ai gõ); cửa sổ đăng nhập GitHub (nếu có) vẫn hiện được.
+    env = dict(os.environ, GIT_TERMINAL_PROMPT="0")
+    try:
+        return subprocess.run(["git", *args], cwd=str(BASE_DIR), capture_output=True, text=True,
+                              encoding="utf-8", errors="replace", timeout=timeout, env=env)
+    except subprocess.TimeoutExpired:
+        raise SaveError(504, f"Git chạy quá {timeout} giây (mạng chậm hoặc đang chờ đăng nhập GitHub). Thử lại sau.")
+    except OSError as err:
+        raise SaveError(500, f"Không chạy được git: {err.strerror or err}")
+
+
+def _git_tail(result, limit=300):
+    text = " ".join(((result.stderr or "") + " " + (result.stdout or "")).split())
+    return text[-limit:] if text else "không có thông tin"
+
+
+def publish_to_github():
+    """Commit đúng bốn file trang (nếu có thay đổi) rồi push nhánh main. Không force, không tự gộp."""
+    with PUBLISH_LOCK:
+        if shutil.which("git") is None:
+            raise SaveError(500, "Máy này chưa cài Git nên chưa đăng được lên web.")
+        top = run_git(["rev-parse", "--show-toplevel"])
+        if top.returncode != 0:
+            raise SaveError(409, "Thư mục web không phải repo Git nên chưa đăng được lên web.")
+        try:
+            same_root = Path(top.stdout.strip()).resolve() == BASE_DIR
+        except OSError:
+            same_root = False
+        if not same_root:
+            raise SaveError(409, "Thư mục web không phải gốc của repo Git; không đăng để tránh commit nhầm chỗ.")
+        head = run_git(["symbolic-ref", "--short", "HEAD"])
+        branch = head.stdout.strip()
+        if head.returncode != 0 or branch != PUBLISH_BRANCH:
+            raise SaveError(409, f"Repo đang ở nhánh '{branch or '?'}', không phải '{PUBLISH_BRANCH}' (nhánh web chạy); chưa đăng.")
+        status = run_git(["status", "--porcelain", "--", *PUBLISH_PATHS])
+        if status.returncode != 0:
+            raise SaveError(500, "Không đọc được trạng thái Git: " + _git_tail(status))
+        committed = False
+        if status.stdout.strip():
+            added = run_git(["add", "--", *PUBLISH_PATHS])
+            if added.returncode != 0:
+                raise SaveError(500, "Không thêm được file vào Git: " + _git_tail(added))
+            message = "content: cập nhật nội dung từ editor (" + time.strftime("%Y-%m-%d %H:%M") + ")"
+            commit = run_git(["commit", "--only", "-m", message, "--", *PUBLISH_PATHS])
+            if commit.returncode != 0:
+                raise SaveError(500, "Không tạo được commit: " + _git_tail(commit))
+            committed = True
+        sha = run_git(["rev-parse", "--short", "HEAD"]).stdout.strip()
+        push = run_git(["push", "origin", f"{PUBLISH_BRANCH}:{PUBLISH_BRANCH}"], timeout=PUSH_TIMEOUT)
+        if push.returncode != 0:
+            detail = (push.stderr or "") + (push.stdout or "")
+            if any(s in detail for s in ("[rejected]", "non-fast-forward", "fetch first", "Updates were rejected")):
+                raise SaveError(409, "Trên GitHub có bản mới hơn bản trên máy nên chưa đăng (nội dung đã lưu và commit trên máy). Nhờ Claude gộp giúp rồi đăng lại.")
+            raise SaveError(502, "Chưa đẩy được lên GitHub (nội dung đã lưu và commit trên máy): " + _git_tail(push))
+        return {"status": "ok", "committed": committed, "commit": sha, "pushed": True, "branch": branch}
+
+
 class PortfolioEditorHandler(SimpleHTTPRequestHandler):
     server_version = "W17Editor/1.0"
     sys_version = ""
@@ -292,7 +403,7 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
             name = fs_path.relative_to(BASE_DIR).as_posix()
         except (ValueError, OSError):
             return False
-        if name not in ALLOWED_FILES:
+        if name not in ALLOWED_FILES and name not in CREATOR_FILES:
             return False
         try:
             with WRITE_LOCK:
@@ -366,41 +477,58 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
         except OSError:
             self.close_connection = True
 
+    def _authorized_json_body(self, max_bytes):
+        """Các lớp bảo vệ chung của mọi POST ghi dữ liệu: Host, Origin, token phiên, Content-Type, kích thước, JSON object."""
+        if not self._host_ok():
+            raise SaveError(403, "Host không được phép.")
+        if not self._same_origin_ok():
+            raise SaveError(403, "Origin không được phép.")
+        supplied = self.headers.get("X-W17-Token") or ""
+        if not hmac.compare_digest(supplied.encode("utf-8"), SESSION_TOKEN.encode("utf-8")):
+            raise SaveError(401, "Thiếu hoặc sai token phiên. Tải lại trang editor rồi lưu lại.")
+        ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        if ctype != "application/json":
+            raise SaveError(415, "Content-Type phải là application/json.")
+        try:
+            length = int(self.headers.get("Content-Length") or "")
+        except ValueError:
+            raise SaveError(411, "Thiếu Content-Length hợp lệ.")
+        if length <= 0:
+            raise SaveError(400, "Body rỗng.")
+        if length > max_bytes:
+            limit = f"{max_bytes // (1024 * 1024)}MB" if max_bytes >= 1024 * 1024 else f"{max_bytes // 1024}KB"
+            raise SaveError(413, f"Body vượt giới hạn {limit}.")
+        raw = self.rfile.read(length)
+        self._body_consumed = True
+        if len(raw) != length:
+            raise SaveError(400, "Body bị cắt cụt.")
+        try:
+            data = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            raise SaveError(400, "Body không phải JSON UTF-8 hợp lệ.")
+        if not isinstance(data, dict):
+            raise SaveError(400, "Body JSON phải là object.")
+        return data
+
     def do_POST(self):
         self._body_consumed = False
-        if urlsplit(self.path).path != "/api/save":
+        path = urlsplit(self.path).path
+        if path not in ("/api/save", "/api/publish"):
             self._discard_unread_body()
             self._send_json(404, {"status": "error", "message": "Không tìm thấy endpoint."})
             return
+        if path == "/api/publish":
+            try:
+                self._authorized_json_body(MAX_PUBLISH_BODY)
+                self._send_json(200, publish_to_github())
+            except SaveError as err:
+                self._discard_unread_body()
+                self._send_json(err.status, {"status": "error", "pushed": False, "message": err.message})
+            except Exception:
+                self._send_json(500, {"status": "error", "pushed": False, "message": "Lỗi nội bộ khi đăng lên web."})
+            return
         try:
-            if not self._host_ok():
-                raise SaveError(403, "Host không được phép.")
-            if not self._same_origin_ok():
-                raise SaveError(403, "Origin không được phép.")
-            supplied = self.headers.get("X-W17-Token") or ""
-            if not hmac.compare_digest(supplied.encode("utf-8"), SESSION_TOKEN.encode("utf-8")):
-                raise SaveError(401, "Thiếu hoặc sai token phiên. Tải lại trang editor rồi lưu lại.")
-            ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
-            if ctype != "application/json":
-                raise SaveError(415, "Content-Type phải là application/json.")
-            try:
-                length = int(self.headers.get("Content-Length") or "")
-            except ValueError:
-                raise SaveError(411, "Thiếu Content-Length hợp lệ.")
-            if length <= 0:
-                raise SaveError(400, "Body rỗng.")
-            if length > MAX_BODY_BYTES:
-                raise SaveError(413, f"Body vượt giới hạn {MAX_BODY_BYTES // (1024 * 1024)}MB.")
-            raw = self.rfile.read(length)
-            self._body_consumed = True
-            if len(raw) != length:
-                raise SaveError(400, "Body bị cắt cụt.")
-            try:
-                data = json.loads(raw.decode("utf-8"))
-            except (UnicodeDecodeError, json.JSONDecodeError):
-                raise SaveError(400, "Body không phải JSON UTF-8 hợp lệ.")
-            if not isinstance(data, dict):
-                raise SaveError(400, "Body JSON phải là object.")
+            data = self._authorized_json_body(MAX_BODY_BYTES)
 
             html = data.get("html")
             targets = data.get("targets")
@@ -420,7 +548,14 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
                 saved.append(name)
                 if backup is not None:
                     backups.append(backup.name)
-            self._send_json(200, {"status": "ok", "saved": saved, "backups": backups, "bytes": len(html.encode("utf-8"))})
+            # File editor (Creator) đi theo bản vừa lưu; lỗi sinh Creator không làm hỏng lần lưu đã thành công.
+            creators, creator_synced = {}, True
+            for name in saved:
+                ok, reason = sync_creator(name)
+                creators[name] = "ok" if ok else reason
+                creator_synced = creator_synced and ok
+            self._send_json(200, {"status": "ok", "saved": saved, "backups": backups, "bytes": len(html.encode("utf-8")),
+                                  "creator_synced": creator_synced, "creators": creators})
         except SaveError as err:
             self._discard_unread_body()
             self._send_json(err.status, {"status": "error", "saved": [], "message": err.message})

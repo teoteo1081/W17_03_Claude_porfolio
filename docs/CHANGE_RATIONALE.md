@@ -153,3 +153,21 @@ Anchor đã đổi: A1 và A5 không còn đòi `hero_desc` chứa chữ "đang 
 **Chủ hồ sơ giữ nguyên (không sửa):** chữ "Hệ sinh thái"; trong CV, "Power BI (Nâng cao)" và "Báo cáo thời gian thực". Đây là lời tự nhận của chủ hồ sơ; Claude không kiểm chứng.
 
 **Kết quả kiểm tra (2026-11-19):** `sync_creators.py --check` OK. `run_all.py --quick` chạy theo nhóm: STATIC, F01, F02, F04, F05, F06, F08, R3 (gồm R3-09), CONTENT, NAV 22/22 PASS; F03 và F09 PASS (lượt đó bị lệnh `timeout` cắt sau F09); F07, F10, N, RESP 11/11 PASS khi chạy riêng. Ảnh chụp: trang chính và CV với trình duyệt en-US và vi-VN, không lỗi console.
+
+
+### Vòng 3c (2026-11-19): editor đơn giản — mở, sửa, lưu & đăng lên web
+
+Chủ hồ sơ thấy editor phức tạp và "sửa xong lại quay về như cũ". Nguyên nhân (đọc từ mã): chữ sửa chỉ nằm trong bộ nhớ trình duyệt; trang Final cùng trình duyệt cũng đọc bộ nhớ đó nên tưởng đã lưu; nút Lưu chỉ ghi vào thư mục khi mở qua `dev_server.py`; web thật chỉ đổi khi commit + push; file editor không được sinh lại sau khi lưu.
+
+| Đổi | Vì sao |
+|---|---|
+| `MO_EDITOR.bat` + `dev_server.py --open` (tự mở editor, tự đổi cổng nếu bận, mở lại nếu máy chủ của thư mục này đang chạy) | Một cú bấm đúp, không phải gõ lệnh |
+| `/api/save` sinh lại file Creator từ Final vừa lưu (`tools/sync_creators.py` có `creator_for(root)`) | Lần mở editor sau là bản vừa lưu |
+| `/api/publish`: commit đúng 4 file trang (`--only`), push `main`; không force, không tự gộp; remote mới hơn/sai nhánh/không có Git → lỗi rõ | Đăng lên web từ nút bấm, an toàn |
+| Nút **🚀 Lưu & đăng lên web** (lưu → đăng → dọn nháp → tải lại editor, hiện kết quả); nút cũ đổi tên **💾 Chỉ lưu vào máy** (giữ hành vi cũ) | Luồng một nút cho người không rành kỹ thuật |
+| Web công khai (không phải localhost/file) không đọc bản nháp trong trình duyệt; editor ở đó hiện dòng nhắc "bản xem thử" và nút đăng chỉ nhắc mở bằng `MO_EDITOR.bat` | Thứ thấy trên web luôn là thứ đã đăng |
+| Editor mở tiếng Việt khi chưa chọn ngôn ngữ (trang Final vẫn theo trình duyệt) | Tránh sửa nhầm bản tiếng Anh |
+| File lưu ra luôn ở dạng chuẩn: chữ tĩnh tiếng Việt, `<html lang="vi" class="dark scroll-smooth">` dù đang xem EN/giao diện sáng | Giữ khung xem trước tiếng Việt; công cụ sinh Creator không lỗi |
+| Bỏ khối `<style>` Tailwind CDN tự chèn khỏi file lưu | Lỗi có từ trước: mỗi lần lưu file phình ~38KB (đo được 238KB → 329 → 367 → 405KB) |
+
+**Kiểm tra (2026-11-19):** R4-01..04 PASS (lưu sinh lại Creator; publish với remote Git trần tạm; web công khai không hiện nháp; chạy thật trên giao diện 2 vòng liên tiếp, không phình file). Các nhóm cũ: STATIC…NAV 22/22, F03+F09 6/6, F10/N/RESP 9/9 PASS; F07 lần đầu quá thời gian chờ 8s khi chạy chung nhóm, chạy lại riêng 3/3 PASS. Chưa có test giao diện end-to-end cho nút đăng ở trang CV (CV được kiểm ở R4-01 và R4-03).

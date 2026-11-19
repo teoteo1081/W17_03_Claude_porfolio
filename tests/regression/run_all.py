@@ -30,6 +30,8 @@ import extra_cases as X  # noqa: E402
 X.R = sys.modules[__name__]
 import extra_cases_r3 as X3  # noqa: E402
 X3.R = sys.modules[__name__]
+import extra_cases_r4 as X4  # noqa: E402
+X4.R = sys.modules[__name__]
 
 REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
@@ -88,7 +90,8 @@ class Env:
         shutil.copytree(self.work, self.pristine)
 
     def reset_work(self):
-        for rel in ["index.html", "index_portfolio_clean.html"]:
+        # server sinh lại file Creator sau mỗi lần lưu: khôi phục cả Final lẫn Creator
+        for rel in ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]:
             shutil.copyfile(self.pristine / rel, self.work / rel)
 
     def start(self):
@@ -890,7 +893,7 @@ def t_f09_keyboard(b, env):
     for _ in range(25):
         pg.keyboard.press("Tab")
         info = pg.evaluate("() => { const a = document.activeElement; const r = a.getBoundingClientRect(); return {id: a.id, text: (a.textContent || '').trim().slice(0, 20), inView: r.left >= 0 && r.right <= innerWidth}; }")
-        if "Lưu file sạch" in info["text"] and info["inView"]:
+        if info["id"] == "btn-save-final" and info["inView"]:
             seen_save = True
             focus_visible = pg.evaluate("() => { const c = getComputedStyle(document.activeElement); const o = c.outlineStyle !== 'none' && parseFloat(c.outlineWidth) > 0 && !/rgba\\(.*,\\s*0\\)$/.test(c.outlineColor); const s = c.boxShadow !== 'none' && !/rgba\\(0, 0, 0, 0\\)/.test(c.boxShadow.split(' ')[0]); return o || s; }")
             break
@@ -1169,6 +1172,7 @@ def main():
                 ("F10", lambda: t_f10(env)),
                 ("N", lambda: (X.t_n01_migration_cards(b, env), X.t_n02_duplicate_keys(b, env), X.t_n03_node_identity(b, env), X.t_n04_brand(b, env), X.t_server_extra(env))),
                 ("R3", lambda: (X3.t_i18n_purity(b, env), X3.t_static_equals_vi(b, env), X3.t_ui_locale(b, env), X3.t_aria_meta(b, env), X3.t_n07_comment(env), X3.t_default_locale(b, env))),
+                ("R4", lambda: (X4.t_save_syncs_creator(env), X4.t_publish_api(env), X4.t_public_host_drafts(b, env), X4.t_editor_publish_e2e(b, env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

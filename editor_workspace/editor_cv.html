@@ -932,10 +932,70 @@
         "zh": "编辑中（点击锁定）"
       },
       "ui_save": {
-        "vi": "Lưu file sạch (Final)",
-        "en": "Save clean file (Final)",
-        "es": "Guardar archivo limpio (Final)",
-        "zh": "保存干净文件 (Final)"
+        "vi": "Chỉ lưu vào máy",
+        "en": "Save locally only",
+        "es": "Solo guardar en el equipo",
+        "zh": "仅保存到本机"
+      },
+      "ui_publish": {
+        "vi": "Lưu & đăng lên web",
+        "en": "Save & publish",
+        "es": "Guardar y publicar",
+        "zh": "保存并发布到网站"
+      },
+      "ui_not_local": {
+        "vi": "⚠️ Bản xem thử: sửa ở đây không lưu và không đăng lên web được. Muốn sửa thật, bấm đúp file MO_EDITOR.bat trong thư mục dự án.",
+        "en": "⚠️ Preview only: edits here cannot be saved or published. To edit for real, double-click MO_EDITOR.bat in the project folder.",
+        "es": "⚠️ Solo vista previa: aquí no se puede guardar ni publicar. Para editar de verdad, haz doble clic en MO_EDITOR.bat en la carpeta del proyecto.",
+        "zh": "⚠️ 仅供预览：此处的修改无法保存或发布。要正式编辑，请双击项目文件夹中的 MO_EDITOR.bat。"
+      },
+      "t_need_local": {
+        "vi": "📎 Muốn lưu và đăng lên web, hãy mở editor bằng file MO_EDITOR.bat trong thư mục dự án.",
+        "en": "📎 To save and publish, open the editor with MO_EDITOR.bat in the project folder.",
+        "es": "📎 Para guardar y publicar, abre el editor con MO_EDITOR.bat en la carpeta del proyecto.",
+        "zh": "📎 要保存并发布，请用项目文件夹中的 MO_EDITOR.bat 打开编辑器。"
+      },
+      "t_publishing": {
+        "vi": "⏳ Đang lưu và đăng lên web, chờ chút...",
+        "en": "⏳ Saving and publishing, one moment...",
+        "es": "⏳ Guardando y publicando, un momento...",
+        "zh": "⏳ 正在保存并发布，请稍候…"
+      },
+      "t_published": {
+        "vi": "🚀 Đã lưu và đăng lên web. Khoảng 1–2 phút nữa trang web cập nhật (bấm Ctrl+F5 để xem).",
+        "en": "🚀 Saved and published. The website updates in about 1–2 minutes (press Ctrl+F5 to see it).",
+        "es": "🚀 Guardado y publicado. El sitio se actualiza en 1–2 minutos (pulsa Ctrl+F5 para verlo).",
+        "zh": "🚀 已保存并发布。网站约 1–2 分钟后更新（按 Ctrl+F5 查看）。"
+      },
+      "t_published_nothing": {
+        "vi": "✅ Đã lưu. Không có thay đổi mới so với bản trên web.",
+        "en": "✅ Saved. Nothing new compared with the website.",
+        "es": "✅ Guardado. No hay cambios nuevos respecto al sitio.",
+        "zh": "✅ 已保存。与网站上的版本相比没有新的修改。"
+      },
+      "t_publish_failed": {
+        "vi": "⚠️ Đã lưu vào máy nhưng chưa đăng lên web được: {message}",
+        "en": "⚠️ Saved on this computer but not published yet: {message}",
+        "es": "⚠️ Guardado en el equipo, pero aún no publicado: {message}",
+        "zh": "⚠️ 已保存到本机，但尚未发布：{message}"
+      },
+      "t_publish_save_failed": {
+        "vi": "⚠️ Chưa lưu được nên chưa đăng: {message}",
+        "en": "⚠️ Could not save, so nothing was published: {message}",
+        "es": "⚠️ No se pudo guardar, así que no se publicó: {message}",
+        "zh": "⚠️ 保存失败，因此未发布：{message}"
+      },
+      "t_server_down": {
+        "vi": "⚠️ Không thấy máy chủ trên máy (có thể cửa sổ MO_EDITOR.bat đã bị đóng). Bấm đúp MO_EDITOR.bat để mở lại rồi bấm lại.",
+        "en": "⚠️ The local server is not running (the MO_EDITOR.bat window may have been closed). Double-click MO_EDITOR.bat again, then retry.",
+        "es": "⚠️ El servidor local no está activo (quizá se cerró la ventana de MO_EDITOR.bat). Vuelve a abrir MO_EDITOR.bat e inténtalo de nuevo.",
+        "zh": "⚠️ 本机服务器未运行（MO_EDITOR.bat 窗口可能已关闭）。请重新双击 MO_EDITOR.bat 后再试。"
+      },
+      "t_creator_stale": {
+        "vi": "Lưu ý: chưa cập nhật được file editor ({message}); bản nháp được giữ lại để không mất chữ.",
+        "en": "Note: the editor file could not be updated ({message}); your draft is kept so nothing is lost.",
+        "es": "Nota: no se pudo actualizar el archivo del editor ({message}); se conserva el borrador para no perder nada.",
+        "zh": "注意：编辑器文件未能更新（{message}）；已保留草稿，不会丢失内容。"
       },
       "ui_reset": {
         "vi": "Khôi phục",
@@ -1232,6 +1292,15 @@
 
 
     // Khách nước ngoài thấy ngôn ngữ của họ trước: lấy theo trình duyệt, ngôn ngữ lạ thì dùng tiếng Anh. Lựa chọn đã lưu luôn được ưu tiên.
+    function isLocalServerCV() {
+      return /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);
+    }
+
+    // Web công khai chỉ hiện nội dung ĐÃ ĐĂNG; bản nháp trong trình duyệt chỉ dùng trong editor hoặc trên máy.
+    function draftsAllowedCV() {
+      return IS_CREATOR_CV || !/^https?:$/.test(location.protocol) || isLocalServerCV();
+    }
+
     function detectLangCV() {
       const list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
       for (const l of list) {
@@ -1762,6 +1831,7 @@
     }
 
     function readCachedStateCV() {
+      if (!draftsAllowedCV()) return null;
       try {
         const raw = localStorage.getItem(STORAGE_KEY_STATE);
         const parsed = raw ? JSON.parse(raw) : null;
@@ -1941,6 +2011,7 @@
 
     // Chuyển bản lưu snapshot innerHTML cũ của Creator CV sang dữ liệu có schema (một lần, không xóa bản cũ).
     function migrateLegacySnapshotsCV() {
+      if (!draftsAllowedCV()) return 0;
       if (localStorage.getItem(STORAGE_KEY_STATE) !== null) return 0;
       const html = localStorage.getItem(LEGACY_SNAPSHOT_KEY_CV);
       if (typeof html !== 'string' || !html) return 0;
@@ -2190,7 +2261,7 @@
       }
       updateThemeIconsCV();
 
-      const savedPalette = getPrefCV(STORAGE_KEY_PALETTE, null);
+      const savedPalette = draftsAllowedCV() ? getPrefCV(STORAGE_KEY_PALETTE, null) : null;
       if (savedPalette && PALETTES.includes(savedPalette)) {
         document.documentElement.setAttribute('data-palette', savedPalette);
       }
@@ -2199,7 +2270,7 @@
       loadStructuredStateCV();
 
       // 3. Áp dụng ngôn ngữ đã lưu từ w17_03_lang để F5 luôn đúng ngôn ngữ
-      const savedLang = getPrefCV(LANG_KEY_CV, detectLangCV(), LOCALES_CV);
+      const savedLang = getPrefCV(LANG_KEY_CV, IS_CREATOR_CV ? 'vi' : detectLangCV(), LOCALES_CV);
       switchLanguageCV(savedLang, false);
 
       const root = document.getElementById('portfolio-root');
@@ -2209,6 +2280,9 @@
         if (migratedCountCV > 0) {
           showToast(uiCV('t_migrated'), 7000);
         }
+        let flash = null;
+        try { flash = sessionStorage.getItem('w17_03_flash'); sessionStorage.removeItem('w17_03_flash'); } catch (e) {}
+        if (flash) showToast(flash, 12000);
       }
       if (document.getElementById('floating-toolbar')) {
         ensureEditControls(root);
@@ -2325,8 +2399,11 @@
             <button type="button" onclick="window.print()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-[#0369a1] hover:bg-[#075985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 text-white shadow-sm transition-all cursor-pointer whitespace-nowrap">
               <span>🖨️</span><span data-ui="ui_print">In PDF</span>
             </button>
-            <button type="button" id="btn-save-final" onclick="exportCleanHTML()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-white border border-emerald-400/50 shadow-sm transition-all cursor-pointer whitespace-nowrap">
-              <span>💾</span><span data-ui="ui_save">Lưu file sạch (Final)</span>
+            <button type="button" id="btn-publish" onclick="publishToWebCV()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-white border border-emerald-400/50 shadow-sm transition-all cursor-pointer whitespace-nowrap">
+              <span>🚀</span><span data-ui="ui_publish">Lưu &amp; đăng lên web</span>
+            </button>
+            <button type="button" id="btn-save-final" onclick="exportCleanHTML()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-slate-200 border border-slate-700 transition-all cursor-pointer whitespace-nowrap">
+              <span>💾</span><span data-ui="ui_save">Chỉ lưu vào máy</span>
             </button>
             <button type="button" onclick="resetOriginalState()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 hover:text-white border border-slate-800 transition-all cursor-pointer whitespace-nowrap">
               <span>↺</span><span data-ui="ui_reset">Khôi phục</span>
@@ -2335,6 +2412,14 @@
           </div>
         </div>
       `;
+      if (!isLocalServerCV()) {
+        const notice = document.createElement('div');
+        notice.id = 'w17-not-local-notice';
+        notice.className = 'max-w-6xl w-full mx-auto mt-1.5 text-[11px] sm:text-xs font-semibold text-amber-300';
+        notice.setAttribute('role', 'status');
+        notice.setAttribute('data-ui', 'ui_not_local');
+        toolbar.appendChild(notice);
+      }
       document.body.insertBefore(toolbar, document.body.firstChild);
       renderUiCV(toolbar);
       indexBrandNodesCV();
@@ -2897,9 +2982,23 @@
       const root = document.getElementById('portfolio-root');
       pruneEmptyTags(root);
       saveCurrentState();
+      const viewLang = currentLangCV;
+      if (viewLang !== 'vi') switchLanguageCV('vi', false);
+      try {
+        return cloneCleanHtmlCV();
+      } finally {
+        if (viewLang !== 'vi') switchLanguageCV(viewLang, false);
+      }
+    }
 
+    // File lưu ra luôn ở dạng chuẩn: chữ tĩnh tiếng Việt, <html lang="vi" class="dark scroll-smooth">, dù đang xem EN hay giao diện sáng.
+    function cloneCleanHtmlCV() {
       const cloneDoc = document.documentElement.cloneNode(true);
       cloneDoc.removeAttribute('data-w17-mode');
+      cloneDoc.setAttribute('lang', 'vi');
+      cloneDoc.setAttribute('class', 'dark scroll-smooth');
+      // Tailwind (CDN) tự chèn một khối <style> mỗi lần trang mở; không lưu khối đó, nếu không file phình thêm ~38KB mỗi lần lưu.
+      cloneDoc.querySelectorAll('style').forEach((st) => { if (/--tw-border-spacing-x/.test(st.textContent || '')) st.remove(); });
       const cloneBody = cloneDoc.querySelector('body');
       if (cloneBody) {
         cloneBody.classList.remove('is-editing');
@@ -3002,6 +3101,79 @@
 
     function saveCleanFinalHTML() {
       return exportCleanHTML();
+    }
+
+    async function callPublishCV() {
+      let token = '';
+      try {
+        const s = await fetch('/api/session', { cache: 'no-store', credentials: 'same-origin' });
+        if (!s.ok) return { ok: false, reason: 'no-api', status: s.status };
+        token = (await s.json()).token || '';
+      } catch (e) {
+        return { ok: false, reason: 'unreachable' };
+      }
+      try {
+        const r = await fetch('/api/publish', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json', 'X-W17-Token': token },
+          body: '{}'
+        });
+        let body = null;
+        try { body = await r.json(); } catch (e) {}
+        if (r.ok && body && body.pushed) return { ok: true, body };
+        return { ok: false, reason: 'rejected', status: r.status, message: body && body.message };
+      } catch (e) {
+        return { ok: false, reason: 'unreachable' };
+      }
+    }
+
+    // Đã lưu + đăng: nội dung nằm trong file Final và file editor; ghi trạng thái nháp rỗng (giữ tên trên thanh công cụ).
+    function clearDraftsAfterPublishCV() {
+      try {
+        const prev = readCachedStateCV() || {};
+        const next = { schema: 1, textEditsByLang: {}, fieldEdits: {}, publishedAt: new Date().toISOString() };
+        if (prev.brandEdits && typeof prev.brandEdits === 'object') next.brandEdits = prev.brandEdits;
+        localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(next));
+      } catch (e) {}
+    }
+
+    async function publishToWebCV() {
+      const FILE = 'index_portfolio_clean.html';
+      if (!isLocalServerCV()) {
+        showToast(uiCV('t_need_local'), 9000);
+        return { ok: false, reason: 'not-local' };
+      }
+      const buttons = ['btn-publish', 'btn-save-final'].map((id) => document.getElementById(id)).filter(Boolean);
+      buttons.forEach((b) => { b.disabled = true; });
+      try {
+        showToast(uiCV('t_publishing'), 120000);
+        const saved = await saveToServerCV(FILE, buildCleanHtmlCV());
+        if (!saved.ok) {
+          const key = saved.reason === 'rejected' ? 't_publish_save_failed' : 't_server_down';
+          showToast(uiCV(key, { message: saved.message || uiCV('unknown_reason') }), 15000);
+          return saved;
+        }
+        const pub = await callPublishCV();
+        if (!pub.ok) {
+          const key = pub.reason === 'rejected' ? 't_publish_failed' : 't_server_down';
+          showToast(uiCV(key, { message: pub.message || uiCV('unknown_reason') }), 20000);
+          return pub;
+        }
+        const done = uiCV(pub.body.committed ? 't_published' : 't_published_nothing');
+        const body = saved.body || {};
+        if (body.creator_synced) {
+          clearDraftsAfterPublishCV();
+          try { sessionStorage.setItem('w17_03_flash', done); } catch (e) {}
+          window.location.reload();
+        } else {
+          const why = Object.values(body.creators || {}).filter((v) => v !== 'ok').join('; ') || uiCV('unknown_reason');
+          showToast(done + ' ' + uiCV('t_creator_stale', { message: why }), 20000);
+        }
+        return pub;
+      } finally {
+        buttons.forEach((b) => { b.disabled = false; });
+      }
     }
 
     // 7. Khôi phục ban đầu

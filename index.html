@@ -2100,6 +2100,16 @@
     const W17_PRISTINE = JSON.parse(JSON.stringify(translations));
 
     // Khách nước ngoài thấy ngôn ngữ của họ trước: lấy theo trình duyệt, ngôn ngữ lạ thì dùng tiếng Anh. Lựa chọn đã lưu luôn được ưu tiên.
+    // Máy chủ trên máy (MO_EDITOR.bat / dev_server.py) mới lưu và đăng được.
+    function w17IsLocalServer() {
+      return /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);
+    }
+
+    // Web công khai (vd. GitHub Pages) chỉ hiện nội dung ĐÃ ĐĂNG: bản nháp trong trình duyệt chỉ dùng trong editor hoặc trên máy.
+    function w17DraftsAllowed() {
+      return W17_IS_CREATOR || !/^https?:$/.test(location.protocol) || w17IsLocalServer();
+    }
+
     function w17DetectLang() {
       const list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
       for (const l of list) {
@@ -2260,6 +2270,7 @@
     }
 
     function w17ReadCachedEdits() {
+      if (!w17DraftsAllowed()) return null;
       try {
         const raw = localStorage.getItem(W17_STORAGE_JSON_KEY);
         const parsed = raw ? JSON.parse(raw) : null;
@@ -2376,6 +2387,7 @@
 
     // Chuyển bản lưu snapshot innerHTML cũ của Creator sang dữ liệu có schema (một lần, không xóa bản cũ).
     function w17MigrateLegacySnapshots() {
+      if (!w17DraftsAllowed()) return 0;
       if (localStorage.getItem(W17_STORAGE_JSON_KEY) !== null) return 0;
       const present = W17_LEGACY_SNAPSHOT_KEYS.filter((k) => {
         const v = localStorage.getItem(k);
@@ -3098,7 +3110,7 @@
       loadStructuredEditsIntoTranslations();
 
       // 2. Áp dụng ngôn ngữ đã lưu để F5 không bao giờ hiển thị sai ngôn ngữ
-      const savedLang = w17GetPref(W17_LANG_KEY, w17DetectLang(), W17_LOCALES);
+      const savedLang = w17GetPref(W17_LANG_KEY, W17_IS_CREATOR ? 'vi' : w17DetectLang(), W17_LOCALES);
       switchLanguage(savedLang, false);
 
       renderPowerBIMatrices('all');
@@ -3126,10 +3138,70 @@
         "zh": "编辑中（点击锁定）"
       },
       "ui_save": {
-        "vi": "Lưu file sạch (Final)",
-        "en": "Save clean file (Final)",
-        "es": "Guardar archivo limpio (Final)",
-        "zh": "保存干净文件 (Final)"
+        "vi": "Chỉ lưu vào máy",
+        "en": "Save locally only",
+        "es": "Solo guardar en el equipo",
+        "zh": "仅保存到本机"
+      },
+      "ui_publish": {
+        "vi": "Lưu & đăng lên web",
+        "en": "Save & publish",
+        "es": "Guardar y publicar",
+        "zh": "保存并发布到网站"
+      },
+      "ui_not_local": {
+        "vi": "⚠️ Bản xem thử: sửa ở đây không lưu và không đăng lên web được. Muốn sửa thật, bấm đúp file MO_EDITOR.bat trong thư mục dự án.",
+        "en": "⚠️ Preview only: edits here cannot be saved or published. To edit for real, double-click MO_EDITOR.bat in the project folder.",
+        "es": "⚠️ Solo vista previa: aquí no se puede guardar ni publicar. Para editar de verdad, haz doble clic en MO_EDITOR.bat en la carpeta del proyecto.",
+        "zh": "⚠️ 仅供预览：此处的修改无法保存或发布。要正式编辑，请双击项目文件夹中的 MO_EDITOR.bat。"
+      },
+      "t_need_local": {
+        "vi": "📎 Muốn lưu và đăng lên web, hãy mở editor bằng file MO_EDITOR.bat trong thư mục dự án.",
+        "en": "📎 To save and publish, open the editor with MO_EDITOR.bat in the project folder.",
+        "es": "📎 Para guardar y publicar, abre el editor con MO_EDITOR.bat en la carpeta del proyecto.",
+        "zh": "📎 要保存并发布，请用项目文件夹中的 MO_EDITOR.bat 打开编辑器。"
+      },
+      "t_publishing": {
+        "vi": "⏳ Đang lưu và đăng lên web, chờ chút...",
+        "en": "⏳ Saving and publishing, one moment...",
+        "es": "⏳ Guardando y publicando, un momento...",
+        "zh": "⏳ 正在保存并发布，请稍候…"
+      },
+      "t_published": {
+        "vi": "🚀 Đã lưu và đăng lên web. Khoảng 1–2 phút nữa trang web cập nhật (bấm Ctrl+F5 để xem).",
+        "en": "🚀 Saved and published. The website updates in about 1–2 minutes (press Ctrl+F5 to see it).",
+        "es": "🚀 Guardado y publicado. El sitio se actualiza en 1–2 minutos (pulsa Ctrl+F5 para verlo).",
+        "zh": "🚀 已保存并发布。网站约 1–2 分钟后更新（按 Ctrl+F5 查看）。"
+      },
+      "t_published_nothing": {
+        "vi": "✅ Đã lưu. Không có thay đổi mới so với bản trên web.",
+        "en": "✅ Saved. Nothing new compared with the website.",
+        "es": "✅ Guardado. No hay cambios nuevos respecto al sitio.",
+        "zh": "✅ 已保存。与网站上的版本相比没有新的修改。"
+      },
+      "t_publish_failed": {
+        "vi": "⚠️ Đã lưu vào máy nhưng chưa đăng lên web được: {message}",
+        "en": "⚠️ Saved on this computer but not published yet: {message}",
+        "es": "⚠️ Guardado en el equipo, pero aún no publicado: {message}",
+        "zh": "⚠️ 已保存到本机，但尚未发布：{message}"
+      },
+      "t_publish_save_failed": {
+        "vi": "⚠️ Chưa lưu được nên chưa đăng: {message}",
+        "en": "⚠️ Could not save, so nothing was published: {message}",
+        "es": "⚠️ No se pudo guardar, así que no se publicó: {message}",
+        "zh": "⚠️ 保存失败，因此未发布：{message}"
+      },
+      "t_server_down": {
+        "vi": "⚠️ Không thấy máy chủ trên máy (có thể cửa sổ MO_EDITOR.bat đã bị đóng). Bấm đúp MO_EDITOR.bat để mở lại rồi bấm lại.",
+        "en": "⚠️ The local server is not running (the MO_EDITOR.bat window may have been closed). Double-click MO_EDITOR.bat again, then retry.",
+        "es": "⚠️ El servidor local no está activo (quizá se cerró la ventana de MO_EDITOR.bat). Vuelve a abrir MO_EDITOR.bat e inténtalo de nuevo.",
+        "zh": "⚠️ 本机服务器未运行（MO_EDITOR.bat 窗口可能已关闭）。请重新双击 MO_EDITOR.bat 后再试。"
+      },
+      "t_creator_stale": {
+        "vi": "Lưu ý: chưa cập nhật được file editor ({message}); bản nháp được giữ lại để không mất chữ.",
+        "en": "Note: the editor file could not be updated ({message}); your draft is kept so nothing is lost.",
+        "es": "Nota: no se pudo actualizar el archivo del editor ({message}); se conserva el borrador para no perder nada.",
+        "zh": "注意：编辑器文件未能更新（{message}）；已保留草稿，不会丢失内容。"
       },
       "ui_reset": {
         "vi": "Khôi phục",
@@ -3348,6 +3420,9 @@
         if (w17MigratedCount > 0) {
           showEditorToast(w17Ui('t_migrated_n', { n: w17MigratedCount }), 7000);
         }
+        let flash = null;
+        try { flash = sessionStorage.getItem('w17_03_flash'); sessionStorage.removeItem('w17_03_flash'); } catch (e) {}
+        if (flash) showEditorToast(flash, 12000);
       }
 
       // Khi đang ở chế độ Bật sửa chữ, chặn hành vi nhảy trang khi click vào các thẻ <a>
@@ -3402,8 +3477,11 @@
             <button type="button" id="btn-toggle-edit" onclick="toggleVisualEdit()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 text-slate-950 shadow-sm transition-all cursor-pointer">
               <span>✏️</span><span id="btn-edit-text" data-ui="ui_edit_on">Bật sửa chữ</span>
             </button>
-            <button type="button" id="btn-save-final" onclick="saveCleanFinalHTML()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-slate-950 shadow-sm transition-all cursor-pointer">
-              <span>💾</span><span data-ui="ui_save">Lưu file sạch (Final)</span>
+            <button type="button" id="btn-publish" onclick="w17PublishToWeb()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-slate-950 shadow-sm transition-all cursor-pointer">
+              <span>🚀</span><span data-ui="ui_publish">Lưu &amp; đăng lên web</span>
+            </button>
+            <button type="button" id="btn-save-final" onclick="saveCleanFinalHTML()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed text-slate-200 border border-slate-700 transition-all cursor-pointer">
+              <span>💾</span><span data-ui="ui_save">Chỉ lưu vào máy</span>
             </button>
             <button type="button" onclick="resetVisualChanges()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 border border-slate-700 transition-all cursor-pointer">
               <span>↺</span><span data-ui="ui_reset">Khôi phục</span>
@@ -3411,6 +3489,14 @@
           </div>
         </div>
       `;
+      if (!w17IsLocalServer()) {
+        const notice = document.createElement('div');
+        notice.id = 'w17-not-local-notice';
+        notice.className = 'max-w-7xl mx-auto mt-1.5 text-[11px] sm:text-xs font-semibold text-amber-300';
+        notice.setAttribute('role', 'status');
+        notice.setAttribute('data-ui', 'ui_not_local');
+        toolbar.appendChild(notice);
+      }
       document.body.insertBefore(toolbar, document.body.firstChild);
       if ('ResizeObserver' in window) new ResizeObserver(w17SyncChromeOffset).observe(toolbar);
       w17RenderUi(toolbar);
@@ -3494,9 +3580,22 @@
     // Dựng HTML Final sạch: không toolbar, không contenteditable/spellcheck, không cờ Creator, link về Final.
     function w17BuildCleanHtml() {
       persistStructuredEdits();
+      const viewLang = currentLang;
+      if (viewLang !== 'vi') switchLanguage('vi', false);
+      try {
+        return w17CloneCleanHtml();
+      } finally {
+        if (viewLang !== 'vi') switchLanguage(viewLang, false);
+      }
+    }
 
+    function w17CloneCleanHtml() {
       const cloneDoc = document.documentElement.cloneNode(true);
       cloneDoc.removeAttribute('data-w17-mode');
+      cloneDoc.setAttribute('lang', 'vi');
+      cloneDoc.setAttribute('class', 'dark scroll-smooth');
+      // Tailwind (CDN) tự chèn một khối <style> mỗi lần trang mở; không lưu khối đó, nếu không file phình thêm ~38KB mỗi lần lưu.
+      cloneDoc.querySelectorAll('style').forEach((st) => { if (/--tw-border-spacing-x/.test(st.textContent || '')) st.remove(); });
       const cloneBody = cloneDoc.querySelector('body');
       if (cloneBody) {
         cloneBody.classList.remove('is-editing');
@@ -3590,6 +3689,81 @@
         return result;
       } finally {
         if (btn) btn.disabled = false;
+      }
+    }
+
+    // Gọi /api/publish: commit 4 file trang và đẩy lên GitHub (máy chủ trên máy làm, trang chỉ gửi yêu cầu).
+    async function w17CallPublish() {
+      let token = '';
+      try {
+        const s = await fetch('/api/session', { cache: 'no-store', credentials: 'same-origin' });
+        if (!s.ok) return { ok: false, reason: 'no-api', status: s.status };
+        token = (await s.json()).token || '';
+      } catch (e) {
+        return { ok: false, reason: 'unreachable' };
+      }
+      try {
+        const r = await fetch('/api/publish', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json', 'X-W17-Token': token },
+          body: '{}'
+        });
+        let body = null;
+        try { body = await r.json(); } catch (e) {}
+        if (r.ok && body && body.pushed) return { ok: true, body };
+        return { ok: false, reason: 'rejected', status: r.status, message: body && body.message };
+      } catch (e) {
+        return { ok: false, reason: 'unreachable' };
+      }
+    }
+
+    // Sau khi đã lưu + đăng: nội dung nằm trong file Final và file editor, bản nháp trong trình duyệt không cần nữa.
+    // Ghi trạng thái rỗng (không xóa key) để bản lưu cũ không bị chuyển đổi lại; giữ chỉnh sửa tên trên thanh công cụ.
+    function w17ClearDraftsAfterPublish() {
+      try {
+        const prev = w17ReadCachedEdits() || {};
+        const next = { schema: 1, editsByLang: {}, publishedAt: new Date().toISOString() };
+        if (prev.brandEdits && typeof prev.brandEdits === 'object') next.brandEdits = prev.brandEdits;
+        localStorage.setItem(W17_STORAGE_JSON_KEY, JSON.stringify(next));
+      } catch (e) {}
+    }
+
+    async function w17PublishToWeb() {
+      if (!w17IsLocalServer()) {
+        showEditorToast(w17Ui('t_need_local'), 9000);
+        return { ok: false, reason: 'not-local' };
+      }
+      const buttons = ['btn-publish', 'btn-save-final'].map((id) => document.getElementById(id)).filter(Boolean);
+      buttons.forEach((b) => { b.disabled = true; });
+      try {
+        showEditorToast(w17Ui('t_publishing'), 120000);
+        const saved = await w17SaveToServer('index.html', w17BuildCleanHtml());
+        if (!saved.ok) {
+          const key = saved.reason === 'rejected' ? 't_publish_save_failed' : 't_server_down';
+          showEditorToast(w17Ui(key, { message: saved.message || w17Ui('unknown_reason') }), 15000);
+          return saved;
+        }
+        const pub = await w17CallPublish();
+        if (!pub.ok) {
+          const key = pub.reason === 'rejected' ? 't_publish_failed' : 't_server_down';
+          showEditorToast(w17Ui(key, { message: pub.message || w17Ui('unknown_reason') }), 20000);
+          return pub;
+        }
+        const done = w17Ui(pub.body.committed ? 't_published' : 't_published_nothing');
+        const body = saved.body || {};
+        if (body.creator_synced) {
+          // File editor trên đĩa đã là bản vừa lưu: dọn nháp rồi tải lại để thấy đúng bản đó.
+          w17ClearDraftsAfterPublish();
+          try { sessionStorage.setItem('w17_03_flash', done); } catch (e) {}
+          window.location.reload();
+        } else {
+          const why = Object.values(body.creators || {}).filter((v) => v !== 'ok').join('; ') || w17Ui('unknown_reason');
+          showEditorToast(done + ' ' + w17Ui('t_creator_stale', { message: why }), 20000);
+        }
+        return pub;
+      } finally {
+        buttons.forEach((b) => { b.disabled = false; });
       }
     }
 

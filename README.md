@@ -6,6 +6,20 @@ Hệ sinh thái **Portfolio Showcase & Hồ Sơ Năng Lực Tương Tác (Versio
 
 ---
 
+## ✏️ Sửa nội dung web (cách đơn giản)
+
+1. Bấm đúp **`MO_EDITOR.bat`** trong thư mục này. Một cửa sổ đen hiện ra (giữ nó mở) và trình duyệt tự mở trang editor.
+2. Bấm **✏️ Bật sửa chữ**, sửa chữ trực tiếp trên trang. Trang CV: bấm link CV trên menu.
+3. Bấm **🚀 Lưu & đăng lên web**. Máy chủ lưu file, cập nhật luôn file editor, rồi đẩy lên GitHub; khoảng 1–2 phút sau web cập nhật (Ctrl+F5 để xem).
+
+Lưu ý:
+- Sửa ở tiếng Việt thì chỉ bản tiếng Việt đổi; bản EN/ES/ZH sửa riêng (đổi ngôn ngữ trong editor) hoặc nhờ Claude dịch.
+- Mở editor trên web thật hoặc bấm đúp file HTML thì chỉ là **bản xem thử** (có dòng nhắc màu vàng), không lưu và không đăng được.
+- Nếu báo "Trên GitHub có bản mới hơn", nội dung vẫn đã lưu và commit trên máy; nhờ Claude gộp rồi đăng lại.
+- Nút **💾 Chỉ lưu vào máy** chỉ lưu file trong thư mục, không đẩy lên web.
+
+---
+
 ## 📁 Cấu Trúc Thư Mục Chuẩn (V3)
 
 ```text
