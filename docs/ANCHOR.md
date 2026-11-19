@@ -77,3 +77,5 @@ Kết quả đã chạy khi tạo bản này được ghi ở `docs/CHANGE_RATIO
 Xem `docs/CHANGE_RATIONALE.md`, mục "Vòng 3". Tóm tắt các anchor bị ảnh hưởng: A1/A5 (`hero_desc` bỏ câu "đang học", vẫn giữ "không cam kết"), A3 (đã gỡ chuỗi số theo ngày và số liệu 7 ngày; chỉ còn các số 28 ngày trong `ga4_metrics_live.json`, chưa đối soát với GA4 thật). Kiểm: `grep -nE "Chart|trend28d|airy-web|Telemetry" index.html` phải không trả kết quả hiển thị.
 
 Vòng 3b (2026-11-19): ngôn ngữ mặc định theo trình duyệt (kiểm bằng R3-09), CV ghi "Business English", khối phễu ghi rõ dữ liệu mẫu. Giữ nguyên theo chủ hồ sơ: "Hệ sinh thái", "Power BI (Nâng cao)", "Báo cáo thời gian thực" trong CV.
+
+Vòng 3d (2026-11-19): A1/A5 thay đổi theo chủ hồ sơ — trang không còn câu "đang học" / "không cam kết"; dịch vụ 4 là "Đo lường hiệu suất quảng cáo". Chi tiết ở CHANGE_RATIONALE.md, mục Vòng 3d.

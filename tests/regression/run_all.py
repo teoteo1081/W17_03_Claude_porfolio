@@ -1021,16 +1021,16 @@ def t_f10(env):
 
 # ======================================================================= static content / overflow / nav
 BADGES = {
-    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Nhận làm • Website", "Theo yêu cầu • Không cam kết KPI"],
-    "en": ["Core • Automation", "Second • Data & BI", "Available • Website", "On request • No KPI commitment"],
-    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Disponible • Web", "Bajo pedido • Sin compromiso de KPI"],
-    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "可承接 • 网站", "按需 • 不承诺 KPI"],
+    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Nhận làm • Website", "Theo yêu cầu • Đo lường"],
+    "en": ["Core • Automation", "Second • Data & BI", "Available • Website", "On request • Tracking"],
+    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Disponible • Web", "Bajo pedido • Medición"],
+    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "可承接 • 网站", "按需 • 效果衡量"],
 }
 SERVICE_TITLES = {
-    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Website & Trang đích", "4. Kiểm lỗi Đo lường"],
-    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. Website & Landing Page", "4. Tracking QA"],
-    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Sitio Web y Página de Aterrizaje", "4. Control de Medición"],
-    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 网站与落地页", "4. 埋点质检"],
+    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Website & Trang đích", "4. Đo lường hiệu suất quảng cáo"],
+    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. Website & Landing Page", "4. Ad Performance Tracking"],
+    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Sitio Web y Página de Aterrizaje", "4. Medición del Rendimiento Publicitario"],
+    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 网站与落地页", "4. 广告效果衡量"],
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 
@@ -1051,7 +1051,7 @@ def t_content(b, env):
               pbi: !!document.getElementById('pbi-ga4-dashboard'),
               apps: ['WRP Tax Services', 'Operation 0', 'TJ WordLoop', 'TJ Courses Hub'].map((n) => document.body.innerText.includes(n)),
               pos: document.querySelector('[data-i18n=hero_positioning]').textContent,
-              nocommit: document.querySelector('[data-i18n=eco_card4_desc]').textContent.includes(({vi: 'không cam kết doanh thu/lead', en: 'no revenue/lead KPI commitments', es: 'sin compromiso de ingresos/leads', zh: '不承诺获客或营收 KPI'})[document.documentElement.lang]),
+              nocommit: document.querySelector('[data-i18n=eco_card4_desc]').textContent.includes(({vi: 'so sánh hiệu quả từng kênh quảng cáo', en: 'comparing each ad channel', es: 'cada canal publicitario', zh: '各广告渠道效果对比'})[document.documentElement.lang]),
               pkgs: document.querySelectorAll('#modal-service-packages [data-service-pkg]').length })""")
             if info["badges"] != BADGES[l]:
                 bad.append(f"{rel}/{l}: badge {info['badges']}")
@@ -1068,7 +1068,7 @@ def t_content(b, env):
             t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent")
             if POSITIONING[l] not in t:
                 bad.append(f"{rel}/{l}: sai định vị {t!r}")
-    record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 4 dịch vụ + badge theo dictionary, không cam kết KPI, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
+    record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 4 dịch vụ + badge theo dictionary, dịch vụ 4 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
     ctx.close()
 
 

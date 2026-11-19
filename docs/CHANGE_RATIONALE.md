@@ -171,3 +171,16 @@ Chủ hồ sơ thấy editor phức tạp và "sửa xong lại quay về như c
 | Bỏ khối `<style>` Tailwind CDN tự chèn khỏi file lưu | Lỗi có từ trước: mỗi lần lưu file phình ~38KB (đo được 238KB → 329 → 367 → 405KB) |
 
 **Kiểm tra (2026-11-19):** R4-01..04 PASS (lưu sinh lại Creator; publish với remote Git trần tạm; web công khai không hiện nháp; chạy thật trên giao diện 2 vòng liên tiếp, không phình file). Các nhóm cũ: STATIC…NAV 22/22, F03+F09 6/6, F10/N/RESP 9/9 PASS; F07 lần đầu quá thời gian chờ 8s khi chạy chung nhóm, chạy lại riêng 3/3 PASS. Chưa có test giao diện end-to-end cho nút đăng ở trang CV (CV được kiểm ở R4-01 và R4-03).
+
+
+### Vòng 3d (2026-11-19): phạm vi quảng cáo = đo lường hiệu suất
+
+Chủ hồ sơ chọn hướng B: không ghi "nhận chạy quảng cáo" khi chưa có chiến dịch thật làm bằng chứng, nhưng bỏ hẳn các câu phủ định.
+
+| Đổi | Vì sao |
+|---|---|
+| Bỏ "Không chạy quảng cáo", "không cam kết KPI/doanh thu/lead", "Digital Marketing: đang học" ở mọi chỗ (hero, CV, thẻ 3 và 4, bảng gói, chân trang CV, popup giải pháp), cả 4 locale | Nghe phòng thủ; giới hạn trách nhiệm để trong báo giá/hợp đồng |
+| Dịch vụ 4: "Kiểm lỗi Đo lường" → "Đo lường hiệu suất quảng cáo" (gắn/kiểm GA4/GTM, chuyển đổi, UTM, báo cáo so sánh từng kênh; chi phí chỉ khi khách cấp dữ liệu) | Nêu đúng việc làm được; không hứa số liệu chi phí khi chưa có quyền tài khoản quảng cáo |
+| CV: nhóm kỹ năng "ĐO LƯỜNG HIỆU SUẤT QUẢNG CÁO", "BI & DASHBOARD"; học vấn "Ứng viên EA Thuế Mỹ" | "Trí tuệ kinh doanh" là dịch nghĩa đen, người trong nghề dùng "BI" |
+
+Anchor A1/A5 cũ (đòi "đang học" và "không cam kết") **không còn áp dụng**. Test CONTENT kiểm tên dịch vụ 4 mới và câu "so sánh hiệu quả từng kênh quảng cáo" thay cho "không cam kết". Kiểm tra: STATIC, F04, F06, F08, R3 (gồm R3-06, R3-09), CONTENT, NAV, RESP 17/17 PASS; F03 4/4 PASS; ảnh chụp 390px thẻ dịch vụ 4 và nhóm kỹ năng CV.
