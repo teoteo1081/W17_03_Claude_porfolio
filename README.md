@@ -17,6 +17,7 @@ Lưu ý:
 - Mở editor trên web thật hoặc bấm đúp file HTML thì chỉ là **bản xem thử** (có dòng nhắc màu vàng), không lưu và không đăng được.
 - Nếu báo "Trên GitHub có bản mới hơn", nội dung vẫn đã lưu và commit trên máy; nhờ Claude gộp rồi đăng lại.
 - Nút **💾 Chỉ lưu vào máy** chỉ lưu file trong thư mục, không đẩy lên web.
+- Nên mở editor ở cửa sổ không bật tiện ích trình duyệt (eJOY, Grammarly, ...). Editor tự lọc mã tiện ích đã biết khi lưu; nếu máy chủ báo "còn mã do tiện ích trình duyệt chèn vào", bấm Ctrl+F5 rồi lưu lại.
 
 ---
 

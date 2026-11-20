@@ -25,6 +25,7 @@ import hmac
 import importlib.util
 import json
 import os
+import re
 import secrets
 import shutil
 import subprocess
@@ -108,6 +109,10 @@ class SaveError(Exception):
         self.message = message
 
 
+# Dấu hiệu CSS do tiện ích trình duyệt chèn (SweetAlert của tiện ích, eJOY); khớp bộ lọc phía editor.
+_FOREIGN_STYLE_RE = re.compile(r"\.swal2-|\.ejoy-|ejoy|body\[unresolved\]", re.IGNORECASE)
+
+
 class _PageProbe(HTMLParser):
     """Dựng bản tóm tắt cây HTML thật: comment và nội dung trong <script>/<style> không bao giờ được tính là phần tử."""
 
@@ -122,6 +127,7 @@ class _PageProbe(HTMLParser):
         self.baked_json = []
         self.foreign = []        # nút do tiện ích trình duyệt chèn vào (chrome-extension://, eJOY, ...)
         self._cur_script = None
+        self._in_style = False
 
     def handle_starttag(self, tag, attrs):
         self.elements += 1
@@ -143,15 +149,25 @@ class _PageProbe(HTMLParser):
             self.foreign.append(f"<{tag}> {src[:60]}")
         if (a.get("id") or "").lower().startswith(("ejoy", "__ejoy")):
             self.foreign.append("#" + a["id"])
+        if "ejoy__" in (a.get("class") or "").lower():
+            self.foreign.append(f"<{tag}>.eJOY__")
+        if tag == "style":
+            self._in_style = True
         if tag == "script":
             self._cur_script = {"id": a.get("id"), "type": (a.get("type") or "").lower(), "chars": 0, "data": []}
 
     def handle_data(self, data):
+        if self._in_style:
+            m = _FOREIGN_STYLE_RE.search(data)
+            if m:
+                self.foreign.append("<style> " + m.group(0))
         if self._cur_script is not None:
             self._cur_script["chars"] += len(data)
             self._cur_script["data"].append(data)
 
     def handle_endtag(self, tag):
+        if tag == "style":
+            self._in_style = False
         if tag == "script" and self._cur_script is not None:
             s = self._cur_script
             if s["type"] == "application/json":

@@ -32,6 +32,8 @@ import extra_cases_r3 as X3  # noqa: E402
 X3.R = sys.modules[__name__]
 import extra_cases_r4 as X4  # noqa: E402
 X4.R = sys.modules[__name__]
+import extra_cases_r5 as X5  # noqa: E402
+X5.R = sys.modules[__name__]
 
 REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
@@ -1173,6 +1175,7 @@ def main():
                 ("N", lambda: (X.t_n01_migration_cards(b, env), X.t_n02_duplicate_keys(b, env), X.t_n03_node_identity(b, env), X.t_n04_brand(b, env), X.t_server_extra(env))),
                 ("R3", lambda: (X3.t_i18n_purity(b, env), X3.t_static_equals_vi(b, env), X3.t_ui_locale(b, env), X3.t_aria_meta(b, env), X3.t_n07_comment(env), X3.t_default_locale(b, env))),
                 ("R4", lambda: (X4.t_save_syncs_creator(env), X4.t_publish_api(env), X4.t_public_host_drafts(b, env), X4.t_editor_publish_e2e(b, env))),
+                ("R5", lambda: (X5.t_editor_strips(b, env), X5.t_server_rejects(env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

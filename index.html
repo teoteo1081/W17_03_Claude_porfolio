@@ -4351,6 +4351,9 @@
       Array.from(cloneDoc.children).forEach((el) => {
         if (el.tagName !== 'HEAD' && el.tagName !== 'BODY') el.remove();
       });
+      // <body> của trang chỉ có class; thuộc tính khác (tiện ích như Grammarly gắn data-gr-*, style của modal đang mở) không lưu.
+      const extBody = cloneDoc.querySelector('body');
+      if (extBody) Array.from(extBody.attributes).forEach((at) => { if (at.name !== 'class') extBody.removeAttribute(at.name); });
     }
 
     function w17CloneCleanHtml() {
