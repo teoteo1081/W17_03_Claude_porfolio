@@ -166,6 +166,8 @@
   <meta property="og:url" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
 
   <!-- Tailwind CDN, then class-based dark mode config -->
+  <!-- CSS dự phòng trên site: giữ bố cục khi CDN Tailwind bị chặn (tools/build_fallback_css.py) -->
+  <link rel="stylesheet" href="../assets/portfolio-base.css">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -256,7 +258,11 @@
   <style id="w17-layout-style">
     /* Mục bị ẩn: không hiện trên web; trong editor hiện mờ có viền để còn bật lại */
     html:not([data-w17-mode="creator"]) [data-w17-hidden] { display: none !important; }
-    html[data-w17-mode="creator"] section[data-w17-hidden] { opacity: .5; outline: 2px dashed #f59e0b; outline-offset: 12px; border-radius: 12px; }
+    /* Editor khi TẮT sửa chữ = xem như web thật: không nút điều khiển, mục ẩn biến mất */
+    html[data-w17-mode="creator"] body:not(.is-editing) .w17-section-controls,
+    html[data-w17-mode="creator"] body:not(.is-editing) section[data-w17-hidden] { display: none !important; }
+    html[data-w17-mode="creator"] body.is-editing section[data-w17-hidden] { opacity: .5; outline: 2px dashed #f59e0b; outline-offset: 12px; border-radius: 12px; }
+    html[data-w17-mode="creator"] body.is-editing a[data-w17-nav-dynamic][draggable="true"] { cursor: grab; outline: 1px dashed rgba(245, 158, 11, .6); outline-offset: 4px; border-radius: 4px; }
     .w17-section-controls { position: absolute; top: -2.75rem; right: 0; z-index: 30; }
     @media print { .w17-section-controls { display: none !important; } }
   </style>
@@ -4591,6 +4597,7 @@
         cloneNavbar.classList.add('top-0');
       }
 
+      cloneDoc.querySelectorAll('a[data-w17-nav-dynamic]').forEach((a) => { a.removeAttribute('draggable'); a.removeAttribute('title'); });
       cloneDoc.querySelectorAll('#visual-toolbar, .w17-section-controls, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
 
       const cloneToast = cloneDoc.querySelector('#toast-notification');
@@ -4606,6 +4613,8 @@
       cloneDoc.querySelectorAll('[contenteditable]').forEach((el) => el.removeAttribute('contenteditable'));
       cloneDoc.querySelectorAll('[spellcheck]').forEach((el) => el.removeAttribute('spellcheck'));
 
+      cloneDoc.querySelectorAll('link[href*="assets/portfolio-base.css"]').forEach((l) => l.setAttribute('href', './assets/portfolio-base.css'));
+
       const bakedEl = cloneDoc.querySelector('#w17-baked-edits');
       if (bakedEl) bakedEl.textContent = w17JsonForScriptTag(w17CollectEditsForBake());
 
@@ -4615,6 +4624,8 @@
     // Gọi máy chủ lưu file (dev_server.py): lấy token cùng origin rồi POST. Trả trạng thái thật, không đoán.
     async function w17SaveToServer(filename, html) {
       if (!/^https?:$/.test(location.protocol)) return { ok: false, reason: 'static' };
+      if (window.w17Revision) { try { await window.w17Revision.ready(); } catch (e) {} }
+      const expected = window.w17Revision ? window.w17Revision.get(filename) : null;
       let token = '';
       try {
         const s = await fetch('/api/session', { cache: 'no-store', credentials: 'same-origin' });
@@ -4628,11 +4639,12 @@
           method: 'POST',
           credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json', 'X-W17-Token': token },
-          body: JSON.stringify({ filename, targets: [filename], html })
+          body: JSON.stringify({ filename, targets: [filename], html, expected_revision: expected })
         });
         let body = null;
         try { body = await r.json(); } catch (e) {}
         if (r.ok && body && Array.isArray(body.saved) && body.saved.includes(filename)) {
+          if (window.w17Revision && body.revisions) window.w17Revision.set(filename, body.revisions[filename]);
           return { ok: true, body };
         }
         return { ok: false, reason: 'rejected', status: r.status, message: body && body.message };
@@ -4772,10 +4784,13 @@
   </script>
 
   <script id="w17-layout-script">
-    // Sắp xếp & ẩn/hiện các mục nằm giữa "Giới thiệu" (luôn đầu) và "Liên hệ" (luôn cuối).
-    // Menu máy tính + điện thoại dựng lại theo thứ tự mục; mục ẩn không có trên menu và không hiện trên web.
-    // Trong editor: mỗi mục có nút ⬆ ⬇ Ẩn/Hiện. Thay đổi lưu vào bản nháp (trường "layout" của khóa nháp editor)
-    // cho tới khi bấm Lưu/Đăng: lúc đó thứ tự và thuộc tính data-w17-hidden được ghi thẳng vào HTML Final.
+    // Mục ↔ menu (Portfolio). Các mục nằm giữa "Giới thiệu" (luôn đầu) và "Liên hệ" (luôn cuối); CV là trang riêng (nút chuyển).
+    // Menu máy tính + điện thoại dựng theo thứ tự mục; mục ẩn (data-w17-hidden) không có trên menu và không hiện trên web.
+    // Trong editor, CHỈ khi bật "Sửa chữ":
+    //   • thanh điều khiển mỗi mục: ô "Tên trên menu" (đổi tên -> menu đổi ngay), ⬆ ⬇, Ẩn/Hiện, ＋ Thêm mục, Xóa (chỉ mục tự thêm, bấm 2 lần);
+    //   • sắp xếp ngay trên menu: kéo-thả mục menu, hoặc chọn mục menu rồi Alt+← / Alt+→.
+    // Mọi thay đổi lưu nháp (trường "layout" + bản sửa chữ của khóa nhãn menu) tới khi Lưu/Đăng; khi lưu, thứ tự, data-w17-hidden,
+    // tên menu và mục tự thêm được ghi thẳng vào HTML Final. Mục tự thêm có chữ chung cho mọi ngôn ngữ (chưa dịch).
     (function () {
       const SEL = '#portfolio-main > section[data-w17-section]';
       const KEY = 'w17_03_portfolio_edits_v1';
@@ -4785,18 +4800,58 @@
         down: { vi: 'Xuống', en: 'Down', es: 'Bajar', zh: '下移' },
         hide: { vi: 'Ẩn mục', en: 'Hide', es: 'Ocultar', zh: '隐藏' },
         show: { vi: 'Hiện mục', en: 'Show', es: 'Mostrar', zh: '显示' },
+        add: { vi: 'Thêm mục', en: 'Add section', es: 'Añadir sección', zh: '添加部分' },
+        del: { vi: 'Xóa mục', en: 'Delete', es: 'Eliminar', zh: '删除' },
+        delConfirm: { vi: 'Bấm lần nữa để xóa', en: 'Click again to delete', es: 'Pulsa de nuevo para eliminar', zh: '再次点击以删除' },
+        name: { vi: 'Tên trên menu', en: 'Menu label', es: 'Nombre en el menú', zh: '菜单名称' },
         hidden: { vi: 'Đang ẩn trên web', en: 'Hidden on the website', es: 'Oculto en el sitio', zh: '网站上已隐藏' },
+        newTitle: { vi: 'Mục mới', en: 'New section', es: 'Nueva sección', zh: '新部分' },
+        newBody: { vi: 'Nội dung mục mới — bấm vào để sửa.', en: 'New section text — click to edit.', es: 'Texto de la nueva sección: haz clic para editar.', zh: '新部分内容——点击即可编辑。' },
         upAria: { vi: 'Đưa mục lên trên', en: 'Move section up', es: 'Subir sección', zh: '将该部分上移' },
-        downAria: { vi: 'Đưa mục xuống dưới', en: 'Move section down', es: 'Bajar sección', zh: '将该部分下移' }
+        downAria: { vi: 'Đưa mục xuống dưới', en: 'Move section down', es: 'Bajar sección', zh: '将该部分下移' },
+        dragTip: { vi: 'Kéo để đổi thứ tự mục (hoặc Alt+← / Alt+→)', en: 'Drag to reorder sections (or Alt+← / Alt+→)', es: 'Arrastra para reordenar (o Alt+← / Alt+→)', zh: '拖动以调整顺序（或 Alt+← / Alt+→）' }
       };
       const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
       const t = (k) => (T[k][lang()] || T[k].vi);
       const sections = () => [...document.querySelectorAll(SEL)];
+      const editing = () => IS_CREATOR && document.body.classList.contains('is-editing');
       const draftsOk = () => typeof w17DraftsAllowed === 'function' && w17DraftsAllowed();
-      const navLabel = (key) => {
-        try { const d = translations[currentLang] || translations.vi; return d[key] || translations.vi[key] || key; } catch (e) { return key; }
-      };
+      const curLang = () => { try { return currentLang || 'vi'; } catch (e) { return 'vi'; } };
 
+      function labelOf(s) {
+        const key = s.getAttribute('data-w17-nav');
+        if (!key) return s.getAttribute('data-w17-nav-label') || s.id;
+        try { const d = translations[curLang()] || translations.vi; return d[key] || translations.vi[key] || key; } catch (e) { return key; }
+      }
+
+      function readDraft() {
+        try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && typeof s === 'object' ? s : {}; } catch (e) { return {}; }
+      }
+
+      function writeDraft(mut) {
+        if (!draftsOk()) return;
+        try { const s = readDraft(); s.schema = s.schema || 1; mut(s); localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+      }
+
+      function customData(s) {
+        const h = s.querySelector('[data-w17-custom-title]');
+        const p = s.querySelector('[data-w17-custom-body]');
+        return { id: s.id, label: s.getAttribute('data-w17-nav-label') || '', title: h ? h.textContent : '', body: p ? p.textContent : '' };
+      }
+
+      function saveLayout() {
+        writeDraft((s) => {
+          const ids = sections().map((x) => x.id);
+          s.layout = {
+            order: ids,
+            hidden: sections().filter((x) => x.hasAttribute('data-w17-hidden')).map((x) => x.id),
+            custom: sections().filter((x) => x.hasAttribute('data-w17-custom')).map(customData),
+            removed: Array.from(new Set(((s.layout && s.layout.removed) || []).filter((id) => !ids.includes(id))))
+          };
+        });
+      }
+
+      // ---------- dựng menu theo thứ tự mục ----------
       function renderNav() {
         document.querySelectorAll('[data-w17-nav-list]').forEach((nav) => {
           const first = nav.querySelector('a[data-w17-nav-fixed="start"]');
@@ -4805,58 +4860,173 @@
           let after = first;
           sections().filter((s) => !s.hasAttribute('data-w17-hidden')).forEach((s) => {
             const a = first.cloneNode(false);
-            a.removeAttribute('data-w17-nav-fixed');
-            a.removeAttribute('contenteditable');
-            a.removeAttribute('spellcheck');
+            ['data-w17-nav-fixed', 'contenteditable', 'spellcheck', 'draggable', 'title'].forEach((n) => a.removeAttribute(n));
             a.setAttribute('data-w17-nav-dynamic', '');
+            a.setAttribute('data-w17-for', s.id);
             a.setAttribute('href', '#' + s.id);
-            a.setAttribute('data-i18n', s.getAttribute('data-w17-nav'));
-            a.textContent = navLabel(s.getAttribute('data-w17-nav'));
+            if (s.getAttribute('data-w17-nav')) a.setAttribute('data-i18n', s.getAttribute('data-w17-nav'));
+            else a.removeAttribute('data-i18n');
+            a.textContent = labelOf(s);
             after.after(a);
             after = a;
           });
         });
+        armNav();
       }
 
-      function readDraft() {
-        try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && typeof s === 'object' ? s : {}; } catch (e) { return {}; }
+      // ---------- sắp xếp ngay trên menu (chỉ khi đang sửa) ----------
+      let dragId = null;
+      function armNav() {
+        document.querySelectorAll('a[data-w17-nav-dynamic]').forEach((a) => {
+          if (editing()) {
+            a.setAttribute('draggable', 'true');
+            a.setAttribute('contenteditable', 'false');
+            a.setAttribute('title', t('dragTip'));
+          } else {
+            ['draggable', 'title'].forEach((n) => a.removeAttribute(n));
+            if (a.getAttribute('contenteditable') === 'false') a.removeAttribute('contenteditable');
+          }
+        });
       }
 
-      function saveDraft() {
-        if (!draftsOk()) return;
-        try {
-          const s = readDraft();
-          s.schema = s.schema || 1;
-          const ids = sections().map((x) => x.id);
-          const known = (s.layout && Array.isArray(s.layout.known)) ? s.layout.known : [];
-          s.layout = {
-            order: ids,
-            hidden: sections().filter((x) => x.hasAttribute('data-w17-hidden')).map((x) => x.id),
-            known: Array.from(new Set(known.concat(ids)))
-          };
-          localStorage.setItem(KEY, JSON.stringify(s));
-        } catch (e) {}
+      function moveRelative(id, targetId, after) {
+        const s = document.getElementById(id), target = document.getElementById(targetId);
+        if (!s || !target || s === target) return;
+        if (after) target.after(s); else target.before(s);
+        changed(s, null, false);
       }
 
-      // Bản nháp chưa lưu: áp thứ tự + ẩn/hiện. Mục mới (bản nháp chưa biết) giữ nguyên, đứng sau các mục đã sắp.
+      document.addEventListener('dragstart', (e) => {
+        const a = e.target.closest && e.target.closest('a[data-w17-nav-dynamic]');
+        if (!a || !editing()) return;
+        dragId = a.getAttribute('data-w17-for');
+        try { e.dataTransfer.setData('text/plain', dragId); e.dataTransfer.effectAllowed = 'move'; } catch (err) {}
+      });
+      document.addEventListener('dragover', (e) => {
+        const a = e.target.closest && e.target.closest('a[data-w17-nav-dynamic]');
+        if (a && dragId) e.preventDefault();
+      });
+      document.addEventListener('drop', (e) => {
+        const a = e.target.closest && e.target.closest('a[data-w17-nav-dynamic]');
+        if (!a || !dragId) return;
+        e.preventDefault();
+        const r = a.getBoundingClientRect();
+        const vertical = !!a.closest('[data-w17-nav-list="mobile"]');
+        const after = vertical ? e.clientY > r.top + r.height / 2 : e.clientX > r.left + r.width / 2;
+        moveRelative(dragId, a.getAttribute('data-w17-for'), after);
+        dragId = null;
+      });
+      document.addEventListener('dragend', () => { dragId = null; });
+      document.addEventListener('keydown', (e) => {
+        const a = e.target.closest && e.target.closest('a[data-w17-nav-dynamic]');
+        if (!a || !editing() || !e.altKey || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+        e.preventDefault();
+        const s = document.getElementById(a.getAttribute('data-w17-for'));
+        const list = sections(), i = list.indexOf(s);
+        const back = e.key === 'ArrowLeft' || e.key === 'ArrowUp';
+        if (back && i > 0) list[i - 1].before(s);
+        else if (!back && i < list.length - 1) list[i + 1].after(s);
+        else return;
+        changed(s, null, false);
+        const again = document.querySelector('[data-w17-nav-list] a[data-w17-for="' + CSS.escape(s.id) + '"]');
+        if (again) again.focus();
+      });
+
+      // ---------- đổi tên trên menu ----------
+      function rename(s, value) {
+        const v = String(value || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+        if (!v) return;
+        const key = s.getAttribute('data-w17-nav');
+        if (key) {
+          try { translations[curLang()][key] = v; } catch (e) {}
+          writeDraft((st) => {
+            if (!st.editsByLang || typeof st.editsByLang !== 'object') st.editsByLang = {};
+            (st.editsByLang[curLang()] = st.editsByLang[curLang()] || {})[key] = v;
+          });
+        } else {
+          s.setAttribute('data-w17-nav-label', v);
+          saveLayout();
+        }
+        document.querySelectorAll('[data-w17-nav-list] a[data-w17-for="' + CSS.escape(s.id) + '"]').forEach((a) => { a.textContent = v; });
+      }
+
+      // ---------- mục tự thêm ----------
+      function makeCustom(d) {
+        const s = document.createElement('section');
+        s.id = d.id;
+        s.setAttribute('data-w17-section', 'custom');
+        s.setAttribute('data-w17-custom', '1');
+        s.setAttribute('data-w17-nav-label', d.label || t('newTitle'));
+        s.className = 'relative scroll-mt-32 md:scroll-mt-36';
+        s.style.scrollMarginTop = '8.5rem';
+        const box = document.createElement('div');
+        box.className = 'max-w-4xl mx-auto text-center space-y-3';
+        const h = document.createElement('h2');
+        h.setAttribute('data-w17-custom-title', '');
+        h.className = 'editable-node text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight text-balance';
+        h.textContent = d.title || t('newTitle');
+        const p = document.createElement('p');
+        p.setAttribute('data-w17-custom-body', '');
+        p.className = 'editable-node text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed text-balance';
+        p.textContent = d.body || t('newBody');
+        box.append(h, p);
+        s.append(box);
+        return s;
+      }
+
+      function addAfter(s) {
+        const n = makeCustom({ id: 'sec-' + Date.now().toString(36) });
+        s.after(n);
+        if (editing()) n.querySelectorAll('[data-w17-custom-title], [data-w17-custom-body]').forEach((el) => { el.setAttribute('contenteditable', 'true'); el.setAttribute('spellcheck', 'false'); });
+        addControls();
+        changed(n, n.querySelector('.w17-section-controls input'), true);
+      }
+
+      function removeCustom(s, btn) {
+        if (btn.getAttribute('data-armed') !== '1') {
+          btn.setAttribute('data-armed', '1');
+          btn.textContent = '⚠ ' + t('delConfirm');
+          setTimeout(() => { btn.removeAttribute('data-armed'); refreshControls(); }, 4000);
+          return;
+        }
+        const id = s.id;
+        s.remove();
+        writeDraft((st) => { st.layout = st.layout || {}; st.layout.removed = Array.from(new Set((st.layout.removed || []).concat([id]))); });
+        renderNav();
+        refreshControls();
+        saveLayout();
+      }
+
+      document.addEventListener('input', (e) => {
+        const s = e.target.closest && e.target.closest('section[data-w17-custom]');
+        if (s && (e.target.hasAttribute('data-w17-custom-title') || e.target.hasAttribute('data-w17-custom-body'))) saveLayout();
+      });
+
+      // ---------- bản nháp ----------
       function applyDraft() {
         if (!draftsOk()) return;
         const l = readDraft().layout;
         if (!l || !Array.isArray(l.order)) return;
         const end = document.getElementById('contact');
         if (!end) return;
+        const removed = new Set(Array.isArray(l.removed) ? l.removed.map(String) : []);
+        sections().filter((s) => s.hasAttribute('data-w17-custom') && removed.has(s.id)).forEach((s) => s.remove());
+        (Array.isArray(l.custom) ? l.custom : []).forEach((d) => {
+          if (!d || typeof d.id !== 'string' || !/^sec-[a-z0-9]{4,16}$/.test(d.id) || document.getElementById(d.id)) return;
+          end.before(makeCustom({ id: d.id, label: String(d.label || '').slice(0, 40), title: String(d.title || '').slice(0, 200), body: String(d.body || '').slice(0, 4000) }));
+        });
         const byId = new Map(sections().map((s) => [s.id, s]));
         l.order.forEach((id) => { const s = byId.get(String(id)); if (s) end.before(s); });
-        sections().filter((s) => !l.order.includes(s.id)).forEach((s) => end.before(s));
+        sections().filter((s) => !l.order.includes(s.id)).forEach((s) => end.before(s));   // mục mới trong file: giữ, xếp sau
         const hidden = new Set(Array.isArray(l.hidden) ? l.hidden.map(String) : []);
-        const known = new Set(Array.isArray(l.known) ? l.known.map(String) : l.order.map(String));
+        const listed = new Set(l.order.map(String));
         sections().forEach((s) => {
-          if (!known.has(s.id)) return;
-          if (hidden.has(s.id)) s.setAttribute('data-w17-hidden', '1');
-          else s.removeAttribute('data-w17-hidden');
+          if (!listed.has(s.id)) return;
+          if (hidden.has(s.id)) s.setAttribute('data-w17-hidden', '1'); else s.removeAttribute('data-w17-hidden');
         });
       }
 
+      // ---------- thanh điều khiển ----------
       function button(cls, onClick) {
         const b = document.createElement('button');
         b.type = 'button';
@@ -4870,27 +5040,33 @@
         list.forEach((s, i) => {
           const box = s.querySelector(':scope > .w17-section-controls');
           if (!box) return;
-          const [name, note, up, down, tog] = box.children;
-          name.textContent = navLabel(s.getAttribute('data-w17-nav'));
+          const q = (r) => box.querySelector('[data-role="' + r + '"]');
+          const label = labelOf(s);
+          if (document.activeElement !== q('name')) q('name').value = label;
+          q('name').setAttribute('aria-label', t('name'));
+          q('name').setAttribute('placeholder', t('name'));
           const hidden = s.hasAttribute('data-w17-hidden');
-          note.textContent = hidden ? '• ' + t('hidden') : '';
-          up.textContent = '⬆ ' + t('up');
-          down.textContent = '⬇ ' + t('down');
-          up.setAttribute('aria-label', t('upAria') + ': ' + name.textContent);
-          down.setAttribute('aria-label', t('downAria') + ': ' + name.textContent);
-          up.disabled = i === 0;
-          down.disabled = i === list.length - 1;
-          tog.textContent = hidden ? '👁 ' + t('show') : '🚫 ' + t('hide');
-          tog.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+          q('note').textContent = hidden ? '• ' + t('hidden') : '';
+          q('up').textContent = '⬆ ' + t('up');
+          q('down').textContent = '⬇ ' + t('down');
+          q('up').setAttribute('aria-label', t('upAria') + ': ' + label);
+          q('down').setAttribute('aria-label', t('downAria') + ': ' + label);
+          q('up').disabled = i === 0;
+          q('down').disabled = i === list.length - 1;
+          q('toggle').textContent = hidden ? '👁 ' + t('show') : '🚫 ' + t('hide');
+          q('toggle').setAttribute('aria-pressed', hidden ? 'true' : 'false');
+          q('add').textContent = '＋ ' + t('add');
+          const del = q('del');
+          if (del && del.getAttribute('data-armed') !== '1') del.textContent = '🗑 ' + t('del');
         });
       }
 
-      function changed(s, btn) {
+      function changed(s, focusEl, scroll) {
         renderNav();
         refreshControls();
-        saveDraft();
-        s.scrollIntoView({ block: 'start' });
-        if (btn && !btn.disabled) btn.focus();
+        saveLayout();
+        if (scroll !== false) s.scrollIntoView({ block: 'start' });
+        if (focusEl && !focusEl.disabled) focusEl.focus();
       }
 
       function addControls() {
@@ -4899,9 +5075,15 @@
           if (s.querySelector(':scope > .w17-section-controls')) return;
           const box = document.createElement('div');
           box.className = 'w17-section-controls no-print no-edit flex flex-wrap items-center gap-1.5 px-2 py-1.5 rounded-xl bg-slate-900/95 border border-amber-500/50 shadow-lg text-slate-100';
-          const name = document.createElement('span');
-          name.className = 'no-edit text-xs font-bold text-amber-300 px-1';
+          const name = document.createElement('input');
+          name.type = 'text';
+          name.maxLength = 40;
+          name.setAttribute('data-role', 'name');
+          name.className = 'no-edit w-36 rounded-md bg-slate-950 border border-slate-600 px-2 py-1 text-xs font-bold text-amber-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300';
+          name.addEventListener('input', () => rename(s, name.value));
+          name.addEventListener('change', () => { rename(s, name.value); refreshControls(); });
           const note = document.createElement('span');
+          note.setAttribute('data-role', 'note');
           note.className = 'no-edit text-[11px] text-amber-200';
           const up = button('bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700', (b) => {
             const list = sections(); const i = list.indexOf(s); if (i > 0) { list[i - 1].before(s); changed(s, b); }
@@ -4913,15 +5095,33 @@
             if (s.hasAttribute('data-w17-hidden')) s.removeAttribute('data-w17-hidden'); else s.setAttribute('data-w17-hidden', '1');
             changed(s, b);
           });
-          box.append(name, note, up, down, tog);
+          const add = button('bg-emerald-500/15 border-emerald-500/50 text-emerald-200 hover:bg-emerald-500/25', () => addAfter(s));
+          up.setAttribute('data-role', 'up');
+          down.setAttribute('data-role', 'down');
+          tog.setAttribute('data-role', 'toggle');
+          add.setAttribute('data-role', 'add');
+          box.append(name, note, up, down, tog, add);
+          if (s.hasAttribute('data-w17-custom')) {
+            const del = button('bg-rose-500/15 border-rose-500/50 text-rose-200 hover:bg-rose-500/25', (b) => removeCustom(s, b));
+            del.setAttribute('data-role', 'del');
+            box.append(del);
+          }
           s.prepend(box);
         });
         refreshControls();
-        new MutationObserver(refreshControls).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
       }
 
       window.w17RenderNav = renderNav;
-      function init() { applyDraft(); renderNav(); addControls(); }
+      function init() {
+        applyDraft();
+        renderNav();
+        addControls();
+        new MutationObserver(refreshControls).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        new MutationObserver(() => {
+          armNav();
+          if (editing()) document.querySelectorAll('section[data-w17-custom] [data-w17-custom-title], section[data-w17-custom] [data-w17-custom-body]').forEach((el) => el.setAttribute('contenteditable', 'true'));
+        }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
       else init();
     })();
@@ -4962,6 +5162,18 @@
       const t = (k) => { const e = T[k] || {}; const l = (document.documentElement.lang || 'vi').slice(0, 2); return e[l] || e.vi || k; };
       const isLocal = () => /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);
       const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+
+      // Phiên bản file Final lúc mở trang: gửi kèm khi lưu; tab/cửa sổ khác đã lưu sau đó thì server trả 409, nháp vẫn giữ.
+      const W17_FINAL = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'index_portfolio_clean.html' : 'index.html';
+      const revs = {};
+      const revReady = isLocal()
+        ? fetch('/api/revision?file=' + W17_FINAL, { cache: 'no-store' }).then((r) => r.json()).then((d) => { if (d && typeof d.revision === 'string') revs[W17_FINAL] = d.revision; }).catch(() => {})
+        : Promise.resolve();
+      window.w17Revision = {
+        ready: () => revReady,
+        get: (name) => revs[name] || null,
+        set: (name, rev) => { if (typeof rev === 'string') revs[name] = rev; }
+      };
 
       async function api(method, path, body) {
         const init = { method, headers: {}, cache: 'no-store' };

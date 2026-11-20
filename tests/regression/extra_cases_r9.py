@@ -111,9 +111,12 @@ def t_editor_layout(b, env):
     errors = []
     pg = R.new_page(ctx, errors)
     R.open_page(pg, env, R.CREATOR_PORTFOLIO, wait=900)
+    if pg.evaluate("getComputedStyle(document.querySelector('#services > .w17-section-controls')).display") != "none":
+        bad.append("chưa bật Sửa chữ mà đã hiện nút điều khiển")
+    pg.click("#btn-toggle-edit"); pg.wait_for_timeout(250)
     info = pg.evaluate("""() => [...document.querySelectorAll('#portfolio-main > section[data-w17-section]')].map((s) => {
       const b = s.querySelectorAll(':scope > .w17-section-controls button'); return [s.id, b.length, b[0] && b[0].disabled, b[1] && b[1].disabled]; })""")
-    if [x[0] for x in info] != ORDER[1:-1] or any(x[1] != 3 for x in info) or not info[0][2] or info[0][3] or info[-1][2] or not info[-1][3]:
+    if [x[0] for x in info] != ORDER[1:-1] or any(x[1] != 4 for x in info) or not info[0][2] or info[0][3] or info[-1][2] or not info[-1][3]:
         bad.append(f"nút điều khiển {info}")
     pg.locator("#services > .w17-section-controls button").nth(1).click()          # Dịch vụ xuống 1
     pg.locator("#website > .w17-section-controls button").nth(2).click()           # ẩn Website
@@ -156,7 +159,7 @@ def t_editor_layout(b, env):
         bad.append("lỗi JS: " + " | ".join(errors[:2]))
     ctx.close()
     env.reset_work()
-    R.record("R9", "R9-03 editor: ⬆ ⬇ Ẩn/Hiện cập nhật menu ngay, tải lại vẫn giữ, Final đúng thứ tự + giữ ẩn + sạch nút điều khiển, lưu được; server chặn bản còn nút điều khiển", not bad, " | ".join(bad[:6]))
+    R.record("R9", "R9-03 editor (bật Sửa chữ): ⬆ ⬇ Ẩn/Hiện cập nhật menu ngay, tải lại vẫn giữ, Final đúng thứ tự + giữ ẩn + sạch nút điều khiển, lưu được; server chặn bản còn nút điều khiển", not bad, " | ".join(bad[:6]))
 
 
 def t_mobile_switch(b, env):

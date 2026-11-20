@@ -25,12 +25,20 @@ Sửa ở tiếng Việt thì chỉ bản tiếng Việt đổi. Bản EN/ES/ZH:
 
 ## 3. Di chuyển và ẩn/hiện các mục trên Portfolio
 
-Trong editor Portfolio, mỗi mục (Dịch vụ, Dashboard, Website, GA4 Tracking) có thanh nhỏ màu cam ở góc trên bên phải:
+Trong editor Portfolio, bấm **✏️ Bật sửa chữ**; mỗi mục (Dịch vụ, Dashboard, Website, GA4 Tracking) hiện thanh nhỏ màu cam ở góc trên bên phải (tắt sửa chữ thì thanh biến mất, trang trông như trên web):
 
+- **Ô tên** (đầu thanh): tên mục trên menu. Gõ tên mới là menu máy tính + điện thoại đổi ngay. Tiêu đề lớn của mục sửa riêng bằng cách bấm vào chữ.
+- **＋ Thêm mục**: chèn một mục mới ngay bên dưới (có tiêu đề + đoạn chữ để sửa, và một mục trên menu). Mục tự thêm có thêm nút **🗑 Xóa mục** (bấm 2 lần để xóa). Chữ của mục tự thêm dùng chung cho mọi ngôn ngữ.
+- **Sắp xếp ngay trên menu**: khi đang sửa, kéo một mục trên menu thả vào chỗ mới, hoặc bấm chọn mục menu rồi **Alt+←** / **Alt+→**.
 - **⬆ Lên / ⬇ Xuống**: đổi chỗ mục với mục bên trên/bên dưới. "Giới thiệu" luôn ở đầu, "Liên hệ" luôn ở cuối.
 - **🚫 Ẩn mục / 👁 Hiện mục**: mục bị ẩn **không hiện trên web** và **không có trên menu**; trong editor vẫn thấy mờ mờ có viền cam để bật lại khi cần. Ẩn không xóa nội dung.
 - Menu (máy tính và điện thoại) tự đổi theo ngay.
 - Tải lại trang vẫn giữ thay đổi (bản nháp). Bấm **🚀 Lưu & đăng lên web** để đưa lên web.
+
+## 3a. Xóa và khôi phục thẻ ở CV
+
+- Bấm **✕** trên thẻ Học vấn hoặc tag kỹ năng: nút đổi thành **"Xóa?"**; bấm lại trong 4 giây mới xóa.
+- Thẻ đã xóa vào **🗑 Đã xóa (n)** trên thanh công cụ CV; mở ra bấm **Khôi phục** từng thẻ. Tải lại trang vẫn khôi phục được, cho tới khi bấm Lưu/Đăng. Sau đó muốn lấy lại thì dùng bản sao lưu (mục 9).
 
 ## 3b. Chuyển giữa Portfolio và CV
 
@@ -108,6 +116,8 @@ Mở camera điện thoại, quét mã QR trên PDF (trên màn hình hoặc b�
 | "Trên GitHub có bản mới hơn" | Nội dung đã lưu và commit trên máy. Nhờ Claude gộp rồi đăng lại. |
 | "còn mã do tiện ích trình duyệt chèn vào" | Bấm Ctrl+F5 rồi lưu lại; nên tắt eJOY/Grammarly khi sửa. |
 | "Cài đặt dùng chung vừa được đổi…" | Bấm F5 ở tab đó rồi sửa lại. |
+| "Trang này đã được lưu từ một cửa sổ/tab editor khác…" | Một tab khác đã lưu bản mới hơn. Bấm F5: bản mới hiện ra và các chỉnh sửa nháp của bạn được áp lại, rồi lưu lại. |
+| "Lưu cài đặt thất bại…; đã khôi phục nguyên trạng" | Không file nào bị đổi. Đóng file đang mở bằng chương trình khác (Excel, trình soạn thảo) rồi thử lại. |
 | Nút ⚙ báo "Chỉ đổi được khi mở editor bằng MO_EDITOR.bat" | Đóng trang, bấm đúp `MO_EDITOR.bat` để mở lại. |
 
 ## 11. Hết lượt dùng Claude thì sao

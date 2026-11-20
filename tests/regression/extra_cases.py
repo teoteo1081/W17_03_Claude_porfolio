@@ -49,12 +49,14 @@ def t_n01_migration_cards(b, env):
             pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", store)
             R.open_page(pg, env, R.CREATOR_CV)
             keys_new = pg.evaluate("[...document.querySelectorAll('.solution-card-item')].map((c) => (c.querySelector('[data-i18n^=sol_card]') || {getAttribute: () => null}).getAttribute('data-i18n'))")
-            if keys_new != keys_legacy or len(keys_legacy) != 2:
+            # Snapshot cũ không ghi được thao tác xóa -> KHÔNG suy "vắng = đã xóa": thẻ vắng được giữ lại (không mất dữ liệu),
+            # các thẻ còn lại giữ đúng thứ tự. Người dùng xóa lại bằng nút ✕ (có xác nhận, khôi phục được).
+            if len(keys_legacy) != 2 or keys_new[:2] != keys_legacy or len(keys_new) != 3:
                 bad.append(f"{lang}: cũ={keys_legacy} mới={keys_new}")
             ctx.close()
     finally:
         _drop_legacy(env, name)
-    R.record("N01", "migration CV: thẻ giải pháp đã xóa ở Creator cũ không sống lại, thẻ còn lại giữ đúng (4 locale)", not bad, " | ".join(bad))
+    R.record("N01", "migration CV từ snapshot cũ: không suy 'vắng = đã xóa' — thẻ vắng được giữ lại, các thẻ còn lại đúng thứ tự (4 locale)", not bad, " | ".join(bad))
 
 
 def t_n02_duplicate_keys(b, env):

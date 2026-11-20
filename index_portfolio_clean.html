@@ -165,6 +165,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
+  <!-- CSS dự phòng trên site: giữ bố cục + bản PDF khi CDN Tailwind bị chặn (tools/build_fallback_css.py) -->
+  <link rel="stylesheet" href="./assets/cv-base.css">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -555,6 +557,8 @@
       #floating-palette-pill,
       #toast-notification,
       #demo-modal,
+      .editor-only-overlay,
+      #avatar-file-input,
       .no-print,
       .delete-btn,
       .reorder-btn,
@@ -1426,6 +1430,42 @@
         "es": "✨ Tarjetas intercambiadas y guardadas automáticamente.",
         "zh": "✨ 卡片已交换位置并自动保存！"
       },
+      "ui_trash": {
+        "vi": "Đã xóa",
+        "en": "Deleted",
+        "es": "Eliminados",
+        "zh": "已删除"
+      },
+      "ui_restore": {
+        "vi": "Khôi phục",
+        "en": "Restore",
+        "es": "Restaurar",
+        "zh": "恢复"
+      },
+      "ui_trash_empty": {
+        "vi": "Chưa xóa thẻ nào trong bản nháp này.",
+        "en": "Nothing deleted in this draft.",
+        "es": "No se ha eliminado nada en este borrador.",
+        "zh": "此草稿中尚无已删除项。"
+      },
+      "ui_del_confirm": {
+        "vi": "Xóa?",
+        "en": "Delete?",
+        "es": "¿Eliminar?",
+        "zh": "删除？"
+      },
+      "t_del_confirm": {
+        "vi": "Bấm ✕ lần nữa trong 4 giây để xóa (khôi phục được trong 🗑 Đã xóa).",
+        "en": "Press ✕ again within 4 seconds to delete (restorable from 🗑 Deleted).",
+        "es": "Pulsa ✕ de nuevo en 4 segundos para eliminar (se puede restaurar desde 🗑 Eliminados).",
+        "zh": "4 秒内再次点击 ✕ 即可删除（可在 🗑 已删除 中恢复）。"
+      },
+      "t_restored": {
+        "vi": "Đã khôi phục thẻ.",
+        "en": "Item restored.",
+        "es": "Elemento restaurado.",
+        "zh": "已恢复。"
+      },
       "t_deleted": {
         "vi": "🗑️ Đã xóa mục được chọn!",
         "en": "🗑️ Selected item deleted!",
@@ -2245,6 +2285,9 @@
       // Lưới không xác định được danh tính thẻ: không ghi danh sách thứ tự (loader sẽ bỏ qua thay vì xóa/khôi phục nhầm)
       const orderKey = { '.skill-group-card': 'skillGroupsOrder', '.solution-card-item': 'solutionsOrder', '.metric-card-item': 'metricsOrder', '.edu-card-item': 'eduCardsOrder' };
       unmatched.forEach((sel) => { delete state[orderKey[sel]]; });
+      // Snapshot cũ không ghi được thao tác xóa: thẻ vắng mặt KHÔNG được coi là đã xóa (giữ lại, người dùng xóa lại nếu muốn).
+      delete state.knownIds;
+      state.deletedIds = [];
       state.schema = 1;
       state.migratedFrom = [LEGACY_SNAPSHOT_KEY_CV];
       state.migratedAt = new Date().toISOString();
@@ -2254,9 +2297,9 @@
 
     let migratedCountCV = 0;
 
-    // Mã của mọi thẻ/tag xóa được. Bản nháp lưu "knownIds" (mọi mã từng thấy) để khi khôi phục phân biệt
-    // thẻ người dùng ĐÃ XÓA (có trong knownIds) với thẻ MỚI thêm vào file sau khi nháp được lưu (giữ lại, đặt cuối nhóm).
-    // Bản nháp cũ chưa có knownIds: giữ cách cũ (thẻ không có trong thứ tự bị xóa).
+    // Xóa thẻ/tag là thao tác TƯỜNG MINH: bấm ✕ hai lần (xác nhận) -> mã thẻ vào "deletedIds" của bản nháp và thẻ vào
+    // thùng rác (khôi phục từng thẻ được). Khi khôi phục bản nháp, CHỈ thẻ có trong deletedIds bị gỡ (và vẫn nằm trong thùng rác);
+    // không bao giờ suy "không có trong danh sách thứ tự = đã xóa": thẻ lạ/mới hoặc nháp cũ (snapshot, knownIds) đều được giữ.
     const REMOVABLE_ITEM_SEL_CV = '.solution-card-item[data-card-id], .metric-card-item[data-card-id], .edu-card-item[data-card-id], .skill-tag[data-tag-id]';
     let initialItemIdsCV = [];
 
@@ -2268,9 +2311,14 @@
       return Array.from(doc.querySelectorAll(REMOVABLE_ITEM_SEL_CV)).map(itemIdCV).filter(Boolean);
     }
 
-    function keepOrDropCV(node, known, parent, before) {
-      if (!known || known.has(itemIdCV(node))) {
+    let deletedIdsCV = new Set();
+    const trashCV = new Map();   // mã thẻ -> { node, parent, before }
+
+    function keepOrDropCV(node, deleted, parent, before) {
+      const id = itemIdCV(node);
+      if (id && deleted && deleted.has(id)) {
         node.remove();
+        trashCV.set(id, { node, parent, before: before || null });
         return;
       }
       if (before && before.parentNode === parent) parent.insertBefore(node, before);
@@ -2286,7 +2334,8 @@
         const parsed = readCachedStateCV();
         if (!parsed) return;
         applyNodeEditsCV(parsed.nodeEdits);
-        const knownCV = Array.isArray(parsed.knownIds) ? new Set(parsed.knownIds.map(String)) : null;
+        deletedIdsCV = new Set(Array.isArray(parsed.deletedIds) ? parsed.deletedIds.map(String) : []);
+        const deletedCV = deletedIdsCV;
 
         // 1. Khôi phục thứ tự các section lớn
         if (Array.isArray(parsed.sectionOrder)) {
@@ -2315,7 +2364,7 @@
                 cardMap.delete(cardId);
               }
             });
-            cardMap.forEach((c) => keepOrDropCV(c, knownCV, solGrid));
+            cardMap.forEach((c) => keepOrDropCV(c, deletedCV, solGrid));
           }
         }
 
@@ -2335,7 +2384,7 @@
                 cardMap.delete(cardId);
               }
             });
-            cardMap.forEach((c) => keepOrDropCV(c, knownCV, metricGrid));
+            cardMap.forEach((c) => keepOrDropCV(c, deletedCV, metricGrid));
           }
         }
 
@@ -2397,7 +2446,7 @@
                 tagList.appendChild(tagEl);
               }
             });
-            existingTagsMap.forEach((tagEl) => keepOrDropCV(tagEl, knownCV, tagList, addBtn));
+            existingTagsMap.forEach((tagEl) => keepOrDropCV(tagEl, deletedCV, tagList, addBtn));
           });
         }
 
@@ -2417,9 +2466,11 @@
                 cardMap.delete(cardId);
               }
             });
-            cardMap.forEach((c) => keepOrDropCV(c, knownCV, eduGrid));
+            cardMap.forEach((c) => keepOrDropCV(c, deletedCV, eduGrid));
           }
         }
+
+        renderTrashCV();
 
         // 7. Text edits + field dùng chung: áp từ cache (bản nhúng trong file Final đã được áp ở trên)
         applyTextAndFieldEditsCV(parsed);
@@ -2647,6 +2698,9 @@
             <button type="button" onclick="resetOriginalState()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 hover:text-white border border-slate-800 transition-all cursor-pointer whitespace-nowrap">
               <span>↺</span><span data-ui="ui_reset">Khôi phục</span>
             </button>
+            <button type="button" id="btn-cv-trash" onclick="toggleTrashCV()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 text-amber-200 border border-amber-500/40 transition-all cursor-pointer whitespace-nowrap">
+              <span>🗑</span><span data-ui="ui_trash">Đã xóa</span> (<span id="cv-trash-count">0</span>)
+            </button>
             <button type="button" id="btn-site-settings" onclick="w17OpenSiteSettings(this)" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 hover:text-white border border-slate-800 transition-all cursor-pointer whitespace-nowrap">
               <span>⚙</span><span data-ui="ui_settings">Cài đặt</span>
             </button>
@@ -2664,6 +2718,7 @@
       }
       document.body.insertBefore(toolbar, document.body.firstChild);
       renderUiCV(toolbar);
+      renderTrashCV();   // bộ đếm thùng rác: nháp có thể đã được khôi phục trước khi toolbar được dựng
       indexBrandNodesCV();
       const cachedCV = readCachedStateCV();
       if (cachedCV) applyBrandEditsCV(cachedCV.brandEdits);
@@ -2686,6 +2741,7 @@
       if (prev && typeof prev === 'object') state = Object.assign(state, prev);
       // Mọi mã thẻ từng thấy: bản nháp trước + trang lúc mở + trang hiện tại (xem keepOrDropCV)
       state.knownIds = Array.from(new Set([].concat(Array.isArray(state.knownIds) ? state.knownIds : [], initialItemIdsCV, collectItemIdsCV(doc))));
+      state.deletedIds = live ? Array.from(deletedIdsCV) : [];
 
       const parentSec = doc.getElementById('reorderable-sections');
       if (parentSec) {
@@ -3037,17 +3093,49 @@
     }
 
     // 2. Xóa nhanh phần tử khi bấm [✕] và Thêm tag mới [+ Thêm tag]
+    // Bấm ✕ lần 1: nút đổi thành "Xóa?" trong 4 giây; bấm lần 2 mới xóa (vào thùng rác, khôi phục được).
+    function confirmDeleteCV(btnEl) {
+      if (btnEl.getAttribute('data-armed') === '1') return true;
+      btnEl.setAttribute('data-armed', '1');
+      btnEl.setAttribute('data-label', btnEl.textContent);
+      btnEl.textContent = uiCV('ui_del_confirm');
+      btnEl.setAttribute('aria-label', uiCV('ui_del_confirm'));
+      showToast(uiCV('t_del_confirm'), 4000);
+      setTimeout(() => disarmDeleteCV(btnEl), 4000);
+      return false;
+    }
+
+    function disarmDeleteCV(btnEl) {
+      if (btnEl.getAttribute('data-armed') !== '1') return;
+      btnEl.removeAttribute('data-armed');
+      btnEl.textContent = btnEl.getAttribute('data-label') || '✕';
+      btnEl.removeAttribute('data-label');
+      btnEl.removeAttribute('aria-label');
+    }
+
+    function trashItemCV(target, btnEl) {
+      const id = itemIdCV(target);
+      const parent = target.parentElement;
+      const before = target.classList.contains('skill-tag') ? parent.querySelector('.add-tag-btn') : null;
+      if (btnEl) disarmDeleteCV(btnEl);
+      target.remove();
+      if (id) {
+        trashCV.set(id, { node: target, parent, before });
+        deletedIdsCV.add(id);
+      }
+      saveCurrentState();
+      renderTrashCV();
+    }
+
     function removeElement(event, btnEl) {
       if (event) {
         event.stopPropagation();
         event.preventDefault();
       }
       const target = btnEl.closest('.skill-tag, .metric-card-item, .solution-card-item');
-      if (target) {
-        target.remove();
-        saveCurrentState();
-        showToast(uiCV('t_deleted'));
-      }
+      if (!target || !confirmDeleteCV(btnEl)) return;
+      trashItemCV(target, btnEl);
+      showToast(uiCV('t_deleted'));
     }
 
     function removeEduItem(event, btnEl) {
@@ -3056,11 +3144,76 @@
         event.preventDefault();
       }
       const eduItem = btnEl.closest('.edu-card-item');
-      if (eduItem) {
-        eduItem.remove();
-        saveCurrentState();
-        showToast(uiCV('t_deleted_edu'));
+      if (!eduItem || !confirmDeleteCV(btnEl)) return;
+      trashItemCV(eduItem, btnEl);
+      showToast(uiCV('t_deleted_edu'));
+    }
+
+    function trashLabelCV(node) {
+      const head = node.querySelector('h3, h4, .tag-text, [data-i18n]');
+      return ((head || node).textContent || '').replace(/[✕×]/g, '').replace(/\s+/g, ' ').trim().slice(0, 70) || itemIdCV(node);
+    }
+
+    function restoreItemCV(id) {
+      const e = trashCV.get(id);
+      if (!e) return;
+      const before = e.before && e.before.parentNode === e.parent ? e.before : null;
+      if (before) e.parent.insertBefore(e.node, before);
+      else e.parent.appendChild(e.node);
+      trashCV.delete(id);
+      deletedIdsCV.delete(id);
+      saveCurrentState();
+      renderTrashCV();
+      showToast(uiCV('t_restored'));
+    }
+
+    // Danh sách "Đã xóa": mỗi thẻ một nút Khôi phục. Không lưu HTML thẻ vào bộ nhớ trình duyệt: thẻ lấy lại từ file trang
+    // (trước khi lưu Final). Sau khi Lưu/Đăng, thẻ đã xóa không còn trong file -> khôi phục bằng .w17_backups hoặc lịch sử Git.
+    function renderTrashCV() {
+      const count = document.getElementById('cv-trash-count');
+      if (count) count.textContent = String(trashCV.size);
+      const panel = document.getElementById('w17-cv-trash');
+      if (!panel || panel.classList.contains('hidden')) return;
+      panel.replaceChildren();
+      const title = document.createElement('p');
+      title.className = 'text-xs font-bold text-amber-300';
+      title.textContent = '🗑 ' + uiCV('ui_trash');
+      panel.appendChild(title);
+      if (!trashCV.size) {
+        const empty = document.createElement('p');
+        empty.className = 'text-xs text-slate-400';
+        empty.textContent = uiCV('ui_trash_empty');
+        panel.appendChild(empty);
+        return;
       }
+      trashCV.forEach((e, id) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-3 py-1.5 border-t border-slate-800';
+        row.setAttribute('data-trash-id', id);
+        const name = document.createElement('span');
+        name.className = 'text-xs text-slate-200 min-w-0 truncate';
+        name.textContent = trashLabelCV(e.node);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'shrink-0 px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 cursor-pointer';
+        btn.textContent = uiCV('ui_restore');
+        btn.addEventListener('click', () => restoreItemCV(id));
+        row.append(name, btn);
+        panel.appendChild(row);
+      });
+    }
+
+    function toggleTrashCV() {
+      let panel = document.getElementById('w17-cv-trash');
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'w17-cv-trash';
+        panel.className = 'hidden no-print fixed top-16 right-4 z-[60] w-[min(92vw,22rem)] max-h-[60vh] overflow-y-auto rounded-xl bg-[#0c1322] border border-amber-500/40 shadow-2xl p-3 space-y-1';
+        panel.setAttribute('role', 'region');
+        document.body.appendChild(panel);
+      }
+      panel.classList.toggle('hidden');
+      renderTrashCV();
     }
 
     function addNewSkillTag(btnEl) {
@@ -3272,6 +3425,7 @@
       }
 
       // Xóa sạch toolbar và các nút điều hướng tạm thời; Alt + E tái tạo lại khi cần sửa tiếp
+      cloneDoc.querySelectorAll('#w17-cv-trash').forEach((el) => el.remove());
       cloneDoc.querySelectorAll('#cv-print-qr').forEach((el) => { el.replaceChildren(); el.removeAttribute('data-qr-url'); });
       cloneDoc.querySelectorAll('a[data-w17-screen-href]').forEach((a) => { a.setAttribute('href', a.getAttribute('data-w17-screen-href')); a.removeAttribute('data-w17-screen-href'); });
       cloneDoc.querySelectorAll('#w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"], #floating-toolbar, .reorder-controls, .reorder-btn, .delete-btn, .add-tag-btn').forEach((el) => el.remove());
@@ -3299,6 +3453,8 @@
         el.removeAttribute('spellcheck');
       });
 
+      cloneDoc.querySelectorAll('link[href*="assets/cv-base.css"]').forEach((l) => l.setAttribute('href', './assets/cv-base.css'));
+
       const bakedEl = cloneDoc.querySelector('#w17-baked-edits');
       if (bakedEl) bakedEl.textContent = jsonForScriptTagCV(collectBakedStateCV());
 
@@ -3308,6 +3464,8 @@
     // Gọi máy chủ lưu file (dev_server.py): lấy token cùng origin rồi POST. Trả trạng thái thật, không đoán.
     async function saveToServerCV(filename, html) {
       if (!/^https?:$/.test(location.protocol)) return { ok: false, reason: 'static' };
+      if (window.w17Revision) { try { await window.w17Revision.ready(); } catch (e) {} }
+      const expected = window.w17Revision ? window.w17Revision.get(filename) : null;
       let token = '';
       try {
         const s = await fetch('/api/session', { cache: 'no-store', credentials: 'same-origin' });
@@ -3321,11 +3479,12 @@
           method: 'POST',
           credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json', 'X-W17-Token': token },
-          body: JSON.stringify({ filename, targets: [filename], html })
+          body: JSON.stringify({ filename, targets: [filename], html, expected_revision: expected })
         });
         let body = null;
         try { body = await r.json(); } catch (e) {}
         if (r.ok && body && Array.isArray(body.saved) && body.saved.includes(filename)) {
+          if (window.w17Revision && body.revisions) window.w17Revision.set(filename, body.revisions[filename]);
           return { ok: true, body };
         }
         return { ok: false, reason: 'rejected', status: r.status, message: body && body.message };
@@ -3807,6 +3966,18 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       const t = (k) => { const e = T[k] || {}; const l = (document.documentElement.lang || 'vi').slice(0, 2); return e[l] || e.vi || k; };
       const isLocal = () => /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);
       const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+
+      // Phiên bản file Final lúc mở trang: gửi kèm khi lưu; tab/cửa sổ khác đã lưu sau đó thì server trả 409, nháp vẫn giữ.
+      const W17_FINAL = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'index_portfolio_clean.html' : 'index.html';
+      const revs = {};
+      const revReady = isLocal()
+        ? fetch('/api/revision?file=' + W17_FINAL, { cache: 'no-store' }).then((r) => r.json()).then((d) => { if (d && typeof d.revision === 'string') revs[W17_FINAL] = d.revision; }).catch(() => {})
+        : Promise.resolve();
+      window.w17Revision = {
+        ready: () => revReady,
+        get: (name) => revs[name] || null,
+        set: (name, rev) => { if (typeof rev === 'string') revs[name] = rev; }
+      };
 
       async function api(method, path, body) {
         const init = { method, headers: {}, cache: 'no-store' };

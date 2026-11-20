@@ -34,12 +34,14 @@ JOBS = [
     (
         "index.html",
         "editor_workspace/editor_portfolio.html",
-        [('href="./index_portfolio_clean.html"', 'href="./editor_cv.html"', 2)],
+        [('href="./index_portfolio_clean.html"', 'href="./editor_cv.html"', 2),
+         ('href="./assets/portfolio-base.css"', 'href="../assets/portfolio-base.css"', 1)],
     ),
     (
         "index_portfolio_clean.html",
         "editor_workspace/editor_cv.html",
-        [('href="./index.html"', 'href="./editor_portfolio.html"', 1)],
+        [('href="./index.html"', 'href="./editor_portfolio.html"', 1),
+         ('href="./assets/cv-base.css"', 'href="../assets/cv-base.css"', 1)],
     ),
 ]
 

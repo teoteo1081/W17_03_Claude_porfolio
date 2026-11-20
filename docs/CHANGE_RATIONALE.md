@@ -275,3 +275,18 @@ Chủ hồ sơ duyệt qua nhiều vòng ảnh demo trước khi làm.
 | Bỏ "1040" khỏi chữ giới thiệu (Portfolio + CV); tên trang thật trong bảng GA4 giữ nguyên | Khách hiểu "Thuế Mỹ" là đủ |
 
 **Kiểm tra (2026-11-20):** R9-01..04 PASS. Toàn bộ STATIC, F01–F10, N, R3–R9, CONTENT, NAV, RESP, ZOOM PASS (46/46 + 12/12 + F03 4/4 + ZOOM 3/3). Test cập nhật theo cấu trúc mới: chọn thẻ dịch vụ bằng `#services`, server bắt buộc `services/website/ga4-tracking`, `sync_creators` 2 link CV ở Portfolio, "GA4 Tracking" vào danh sách cụm tiếng Anh được phép. Ảnh chụp thật: đầu trang, Dịch vụ, Website, GA4, editor có nút điều khiển. Chưa kiểm: bản dịch ES/ZH mới do Claude viết, chưa có người bản ngữ rà.
+
+### Sửa sau audit độc lập tại 2b91184 (2026-11-20)
+
+| Lỗi audit | Sửa | Test |
+|---|---|---|
+| Tab editor cũ (cùng cấu hình) ghi đè nội dung mới | `/api/revision` + `expected_revision` trong `/api/save`; lệch -> 409, nháp giữ | R10-01 (API + 2 tab thật) |
+| Nháp CV cũ thiếu knownIds loại thẻ ngoài danh sách, lưu mất vào Final | Xóa tường minh `deletedIds`; khôi phục/migration không suy "vắng = đã xóa" | R10-02, R6-04, N01 (đổi kỳ vọng: giữ thẻ) |
+| Lỗi ghi CV sau khi Portfolio đã ghi -> cấu hình lệch | `/api/settings` ghi 2 Final + 2 Creator như giao dịch, rollback toàn bộ | R10-03 |
+| Đổi tên mục không đổi menu; tắt Edit còn controls; thiếu reorder trực tiếp/thêm mục | Nút điều khiển chỉ khi Sửa chữ; ô "Tên trên menu"; kéo-thả/Alt+←→ trên menu; "＋ Thêm mục"; xóa mục tự thêm có xác nhận | R10-04, R9-03 |
+| Xóa thẻ CV không xác nhận, không khôi phục | Bấm ✕ 2 lần; thùng rác "🗑 Đã xóa (n)" khôi phục từng thẻ, cả sau tải lại | R10-05 |
+| CDN bị chặn: PDF 4→5 trang, mất bố cục, in "Đổi ảnh" | CSS dự phòng trên site + ẩn lớp phủ khi in | R10-06 |
+
+**Kiểm tra:** STATIC, F01–F10, N, R3–R10, CONTENT, NAV, RESP, ZOOM: PASS (41/41 + 12/12 + 15/15 + ZOOM 3/3). Không gọi API thật trong test (GA4 giả lập, Google bị chặn).
+
+**Còn thiếu (báo thẳng):** Portfolio chưa có đổi chỗ / thêm thẻ BÊN TRONG một mục (6 thẻ dịch vụ, 4 thẻ website) — sắp xếp mục không thay được việc này. CV chưa có thêm thẻ giải pháp/học vấn mới và chưa có nút xóa thẻ giải pháp/số liệu (từ trước). Mục tự thêm ở Portfolio có chữ chung cho 4 ngôn ngữ (chưa dịch). Thùng rác CV chỉ khôi phục được tới khi Lưu; sau Lưu dùng `.w17_backups`/Git. Phiên bản file chỉ chặn khi editor gửi `expected_revision` (editor luôn gửi; client API khác không gửi thì không bị chặn). SEO kỹ thuật (P1) và dịch Gemini (P1) chưa làm.

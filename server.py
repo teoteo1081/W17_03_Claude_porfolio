@@ -25,6 +25,7 @@ w17-site-config của CẢ HAI file Final (tools/site_config.py), rồi sinh l�
 bản lưu có khối cấu hình khác bản trên đĩa: trang editor mở từ trước khi đổi cài đặt sẽ không ghi đè được giá trị mới.
 """
 
+import hashlib
 import hmac
 import importlib.util
 import json
@@ -39,7 +40,7 @@ import time
 from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 BASE_DIR = Path(os.environ.get("W17_BASE_DIR") or Path(__file__).resolve().parent).resolve()
 BACKUP_DIR_NAME = ".w17_backups"
@@ -292,6 +293,24 @@ def atomic_write(target, text):
         raise
 
 
+def file_revision(path):
+    """Phiên bản của một file Final = 16 ký tự đầu SHA-256 nội dung (đổi khi file đổi)."""
+    try:
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()[:16]
+    except OSError:
+        return None
+
+
+def _assert_revision(target, expected):
+    """Gọi trong WRITE_LOCK. Tab editor gửi phiên bản file lúc nó mở; file đã đổi (tab khác/cửa sổ khác đã lưu) thì từ chối."""
+    if expected is None or not target.exists():
+        return
+    if not isinstance(expected, str) or file_revision(target) != expected:
+        raise SaveError(409, "Trang này đã được lưu từ một cửa sổ/tab editor khác sau khi bạn mở. Chưa lưu để không ghi đè "
+                             "nội dung mới hơn; bản nháp của bạn vẫn giữ trên máy. Tải lại trang (F5) để xem bản mới — "
+                             "các chỉnh sửa nháp sẽ được áp lại — rồi lưu lại.")
+
+
 def _assert_config_current(target, html):
     """Gọi trong WRITE_LOCK. Bản lưu phải mang đúng cấu hình đang có trên đĩa (đã kiểm hợp lệ ở validate_html)."""
     if not target.exists():
@@ -305,10 +324,11 @@ def _assert_config_current(target, html):
                              "Chưa lưu để không ghi đè cài đặt mới: tải lại trang (F5) rồi sửa và lưu lại.")
 
 
-def save_with_backup(name, html):
+def save_with_backup(name, html, expected_revision=None):
     """Backup + ghi nguyên tử, tuần tự hóa toàn bộ chuỗi để các request đồng thời không giẫm lên nhau."""
     target = BASE_DIR / name
     with WRITE_LOCK:
+        _assert_revision(target, expected_revision)
         _assert_config_current(target, html)
         backup = backup_existing(target)
         atomic_write(target, html)
@@ -343,20 +363,56 @@ def update_settings(changes):
             rendered, counts = SITE.render_pages(pages, new_cfg, diffs)
             for name, html in rendered.items():
                 validate_html(name, html)
-            backups = []
-            for name, html in rendered.items():
-                backup = backup_existing(BASE_DIR / name)
-                if backup is not None:
-                    backups.append(backup.name)
-                atomic_write(BASE_DIR / name, html)
+            backups = _write_all_or_nothing(rendered)
     except SITE.ConfigError as err:
         raise SaveError(400, str(err))
-    creators = {}
-    for name in SITE.FINALS:
-        ok, reason = sync_creator(name)
-        creators[name] = "ok" if ok else reason
+    creators = {name: "ok" for name in SITE.FINALS}
     return {"status": "ok", "changed": [d for d, _, _ in diffs], "counts": counts, "backups": backups,
-            "creator_synced": all(v == "ok" for v in creators.values()), "creators": creators}
+            "creator_synced": True, "creators": creators,
+            "revisions": {name: file_revision(BASE_DIR / name) for name in SITE.FINALS}}
+
+
+def _write_all_or_nothing(rendered):
+    """Gọi trong WRITE_LOCK. Ghi mọi file Final + Creator tương ứng như MỘT giao dịch: bất kỳ bước nào lỗi (ghi file,
+    sinh Creator) thì trả TẤT CẢ file đã đụng về nội dung cũ rồi báo lỗi — không bao giờ để Portfolio và CV lệch cấu hình."""
+    originals = {}   # đường dẫn -> bytes cũ (None nếu file chưa có)
+
+    def remember(path):
+        if path not in originals:
+            originals[path] = path.read_bytes() if path.exists() else None
+
+    backups = []
+    try:
+        for name, html in rendered.items():
+            target = BASE_DIR / name
+            remember(target)
+            backup = backup_existing(target)
+            if backup is not None:
+                backups.append(backup.name)
+            atomic_write(target, html)
+        if SYNC is None:
+            raise SaveError(500, "Không nạp được tools/sync_creators.py.")
+        for name in rendered:
+            dst_rel, text = SYNC.creator_for(name, root=BASE_DIR)
+            target = BASE_DIR / dst_rel
+            remember(target)
+            atomic_write(target, text)
+        return backups
+    except BaseException as err:
+        failed = []
+        for path, data in originals.items():
+            try:
+                if data is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    atomic_write(path, data.decode("utf-8"))
+            except OSError:
+                failed.append(path.name)
+        detail = err.message if isinstance(err, SaveError) else (getattr(err, "strerror", None) or str(err) or type(err).__name__)
+        if failed:
+            raise SaveError(500, f"Lưu cài đặt thất bại ({detail}) và KHÔNG khôi phục được: {', '.join(failed)}. "
+                                 f"Dùng bản sao lưu trong .w17_backups hoặc nhờ Claude khôi phục.")
+        raise SaveError(500, f"Lưu cài đặt thất bại ({detail}); đã khôi phục nguyên trạng cả Portfolio và CV, không file nào đổi.")
 
 
 def sync_creator(final_name):
@@ -535,6 +591,18 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
                 return
             self._send_json(200, {"status": "ok", "token": SESSION_TOKEN, "files": sorted(ALLOWED_FILES)})
             return
+        if path == "/api/revision":
+            if not self._same_origin_ok():
+                self._send_json(403, {"status": "error", "message": "Chỉ trang editor cùng origin mới đọc được phiên bản."})
+                return
+            name = (parse_qs(urlsplit(self.path).query).get("file") or [""])[0]
+            if name not in ALLOWED_FILES:
+                self._send_json(400, {"status": "error", "message": "Tên file không nằm trong allowlist."})
+                return
+            with WRITE_LOCK:
+                rev = file_revision(BASE_DIR / name)
+            self._send_json(200, {"status": "ok", "file": name, "revision": rev})
+            return
         if path == "/api/settings":
             if not self._same_origin_ok():
                 self._send_json(403, {"status": "error", "message": "Chỉ trang editor cùng origin mới đọc được cài đặt."})
@@ -667,10 +735,15 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
             targets = list(dict.fromkeys(targets))
             for name in targets:
                 validate_html(name, html)
+            # Phiên bản file lúc tab editor mở (chuỗi khi chỉ 1 file, hoặc {file: phiên bản}). Có gửi mà lệch -> 409.
+            expected = data.get("expected_revision")
+            if expected is not None and not isinstance(expected, (str, dict)):
+                raise SaveError(400, "expected_revision phải là chuỗi hoặc object.")
 
             saved, backups = [], []
             for name in targets:
-                backup = save_with_backup(name, html)
+                exp = expected.get(name) if isinstance(expected, dict) else expected
+                backup = save_with_backup(name, html, exp)
                 saved.append(name)
                 if backup is not None:
                     backups.append(backup.name)
@@ -681,7 +754,8 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
                 creators[name] = "ok" if ok else reason
                 creator_synced = creator_synced and ok
             self._send_json(200, {"status": "ok", "saved": saved, "backups": backups, "bytes": len(html.encode("utf-8")),
-                                  "creator_synced": creator_synced, "creators": creators})
+                                  "creator_synced": creator_synced, "creators": creators,
+                                  "revisions": {name: file_revision(BASE_DIR / name) for name in saved}})
         except SaveError as err:
             self._discard_unread_body()
             self._send_json(err.status, {"status": "error", "saved": [], "message": err.message})

@@ -218,16 +218,15 @@ def t_cv_known_ids(b, env):
         first, second, third = sol[0], sol[1], sol[2]
         keep_tags = [{"id": tags[1], "i18nKey": None, "text": "X"}]
         scenarios = [
-            # (nhãn, knownIds, thứ tự thẻ mong đợi, tag mong đợi)
-            ("thẻ/tag mới (không có trong knownIds) được giữ, đặt cuối", [second, first, tags[1]], [second, first, third], [tags[1], tags[0]] + tags[2:]),
-            ("thẻ/tag đã xóa (có trong knownIds) bị xóa", [second, first, third] + tags, [second, first], [tags[1]]),
-            ("bản nháp cũ không có knownIds: xóa như trước", None, [second, first], [tags[1]]),
+            # (nhãn, trường thêm vào bản nháp, thứ tự thẻ mong đợi, tag mong đợi)
+            ("không có trong thứ tự, không ghi nhận xóa: giữ, đặt cuối", {}, [second, first, third], [tags[1], tags[0]] + tags[2:]),
+            ("ghi nhận xóa tường minh (deletedIds): gỡ", {"deletedIds": [third, tags[0]]}, [second, first], [tags[1]] + tags[2:]),
+            ("nháp P0-1 chỉ có knownIds: KHÔNG suy 'vắng = đã xóa'", {"knownIds": [second, first, third] + tags}, [second, first, third], [tags[1], tags[0]] + tags[2:]),
         ]
-        for label, known, want_sol, want_tags in scenarios:
+        for label, extra, want_sol, want_tags in scenarios:
             state = {"schema": 1, "solutionsOrder": [second, first],
                      "skillTagsByGroup": {"skill_grp_1": keep_tags}}
-            if known is not None:
-                state["knownIds"] = known
+            state.update(extra)
             pg.evaluate("([k, v]) => localStorage.setItem(k, v)", [key, json.dumps(state)])
             pg.reload(wait_until="load")
             pg.wait_for_timeout(600)
@@ -236,14 +235,17 @@ def t_cv_known_ids(b, env):
                 bad.append(f"{label}: thẻ {got['sol']} (cần {want_sol})")
             if sorted(got["tags"]) != sorted(want_tags) or got["tags"][0] != tags[1]:
                 bad.append(f"{label}: tag {got['tags']} (cần {want_tags})")
-        pg.evaluate("() => saveCurrentState()")
-        saved = json.loads(pg.evaluate("(k) => localStorage.getItem(k)", key) or "{}")
-        if not isinstance(saved.get("knownIds"), list) or third not in saved["knownIds"]:
-            bad.append(f"bản nháp mới thiếu knownIds đủ mã: {saved.get('knownIds')}")
+            if "deletedIds" in extra:
+                pg.evaluate("() => saveCurrentState()")
+                saved = json.loads(pg.evaluate("(k) => localStorage.getItem(k)", key) or "{}")
+                if sorted(saved.get("deletedIds") or []) != sorted(extra["deletedIds"]):
+                    bad.append(f"bản nháp mới không giữ deletedIds: {saved.get('deletedIds')}")
+                if pg.evaluate("document.getElementById('cv-trash-count') ? document.getElementById('cv-trash-count').textContent : null") != "2":
+                    bad.append("thẻ đã xóa không vào thùng rác khi khôi phục nháp")
         pg.evaluate("(k) => localStorage.removeItem(k)", key)
     ctx.close()
     env.reset_work()
-    R.record("R6", "R6-04 CV: khôi phục bản nháp giữ thẻ/tag mới (đặt cuối), vẫn xóa thẻ người dùng đã xóa; bản nháp cũ giữ cách cũ; bản nháp mới có knownIds", not bad, " | ".join(bad))
+    R.record("R6", "R6-04 CV: khôi phục nháp chỉ gỡ thẻ/tag có trong deletedIds (vào thùng rác); thẻ vắng mặt không bị coi là đã xóa (kể cả nháp chỉ có knownIds)", not bad, " | ".join(bad))
 
 
 def t_settings_dialog(b, env):
