@@ -256,3 +256,22 @@ Quyết định của chủ hồ sơ: property GA4 mới riêng (Claude tự t�
 | Ô "GA4 Measurement ID" trong ⚙ (để trống = tắt) | Tự quản lý không cần Claude |
 
 **Kiểm tra (2026-11-20):** R8-01..04 PASS — giả lập web công khai trong Chromium, chặn mọi request tới Google (không có dữ liệu thật/giả nào gửi lên GA4). Toàn bộ STATIC, F01–F10, N, R3–R8, CONTENT, NAV, RESP, ZOOM PASS (46/46 + 8/8 + F03 4/4 + ZOOM 3/3). Ảnh banner 375px không tràn ngang. Lỗi tìm được khi test và đã sửa: script trong `<head>` nhận nhầm trang CV là Portfolio. Chưa kiểm (cần chủ hồ sơ/GA thật): Realtime/DebugView sau khi deploy, khách thật ở EEA.
+
+### Vòng 4 — P0-4 (2026-11-20): bố cục Portfolio, menu động, nút chuyển Portfolio | CV
+
+Chủ hồ sơ duyệt qua nhiều vòng ảnh demo trước khi làm.
+
+| Đổi | Vì sao |
+|---|---|
+| Tách "Hệ sinh thái GA4" thành 3 mục: Dịch vụ, Các website tiêu biểu, GA4 Tracking; thứ tự Giới thiệu → Dịch vụ → Dashboard mẫu → Website → GA4 Tracking → Liên hệ | Nói mình làm gì trước, rồi tới ví dụ; menu rõ nghĩa; khối GA4 nằm sau 4 website |
+| Menu: Giới thiệu · Dịch vụ · Dashboard · Website · GA4 Tracking · Liên hệ, dựng theo thứ tự mục | Đổi chỗ/ẩn mục thì menu tự đổi, không có link chết |
+| Editor: nút ⬆ ⬇ Ẩn/Hiện trên mỗi mục, lưu nháp, ghi vào HTML khi lưu | Chủ hồ sơ tự sắp xếp, không cần Claude |
+| Nút chuyển `Portfolio \| CV` cùng vị trí ở hai trang, bỏ "Quay lại"; điện thoại giấu chữ tên | Gửi link CV hay Portfolio thì người nhận đều thấy hai trang ngang hàng |
+| Nút ở phần Giới thiệu: Xem dịch vụ ↓ · Xem GitHub ↗ · Xem CV | Nút cũ "Xem Dashboard Demo" chỉ dẫn tới 1/6 dịch vụ |
+| Dịch vụ 6 → "Quảng cáo & Đo lường hiệu suất": nhận chạy Google/Meta Ads theo yêu cầu, ngân sách thử, tài khoản thuộc khách, báo cáo chi phí mỗi khách tiềm năng | Quyết định mới của chủ hồ sơ; không nêu kết quả chưa có |
+| Nút thẻ dịch vụ "Chi tiết dịch vụ" (bỏ "[📊 Xem bảng chi tiết ↗]" và dòng chữ nhỏ lặp tên) | Chữ cũ gợi ý bảng số / trang mới, sai với cửa sổ phạm vi & bàn giao |
+| "Các website tiêu biểu"; WRP "Website dịch vụ thuế Mỹ"; Operation 0 "· 4 ngôn ngữ"; nút "Xem trang ↗" | Đúng sự thật, không dùng "demo"/"mẫu" |
+| GA4 Tracking: "hơn 10 website cá nhân, gom về một nơi"; ghi chú nguồn bỏ "phễu thuế mẫu" | Kiểm repo: GA4 có ở ~12 dự án, WRP không có GA4 |
+| Bỏ "1040" khỏi chữ giới thiệu (Portfolio + CV); tên trang thật trong bảng GA4 giữ nguyên | Khách hiểu "Thuế Mỹ" là đủ |
+
+**Kiểm tra (2026-11-20):** R9-01..04 PASS. Toàn bộ STATIC, F01–F10, N, R3–R9, CONTENT, NAV, RESP, ZOOM PASS (46/46 + 12/12 + F03 4/4 + ZOOM 3/3). Test cập nhật theo cấu trúc mới: chọn thẻ dịch vụ bằng `#services`, server bắt buộc `services/website/ga4-tracking`, `sync_creators` 2 link CV ở Portfolio, "GA4 Tracking" vào danh sách cụm tiếng Anh được phép. Ảnh chụp thật: đầu trang, Dịch vụ, Website, GA4, editor có nút điều khiển. Chưa kiểm: bản dịch ES/ZH mới do Claude viết, chưa có người bản ngữ rà.

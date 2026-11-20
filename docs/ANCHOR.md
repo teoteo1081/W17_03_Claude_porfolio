@@ -17,7 +17,7 @@ Lý do từng thay đổi nằm ở `docs/CHANGE_RATIONALE.md`.
 
 ## 1. Anchor định vị (A1–A3)
 
-**A1 (cập nhật vòng 4). Sáu dịch vụ** — chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`; chuyên ngành: `3. Hỗ trợ văn phòng thuế Mỹ (1040)`, `4. Lương thưởng, hoa hồng & KPI`; nhận làm: `5. Website & Trang đích`, `6. Đo lường hiệu suất quảng cáo`. Khóa cũ `eco_card3/4`, `modal_p3/p4` hiển thị số 5/6; khóa mới `eco_card5/6`, `modal_p5/p6`. Kiểm: test CONTENT. Nội dung A1 gốc bên dưới chỉ còn giá trị lịch sử (vòng 3d đã bỏ "đang học").
+**A1 (cập nhật vòng 4, P0-4). Sáu dịch vụ** — dịch vụ 6 nay là **`6. Quảng cáo & Đo lường hiệu suất`** (nhãn "Theo yêu cầu • Quảng cáo"): nhận thiết lập và chạy Google Ads / Meta Ads **theo yêu cầu**, ngân sách thử nhỏ, tài khoản thuộc khách, báo cáo chi phí trên mỗi khách tiềm năng; **không nêu kết quả hay kinh nghiệm chưa có**. Quyết định của chủ hồ sơ 2026-11-20, thay quyết định vòng 3d ("không ghi nhận chạy quảng cáo"). Chữ "1040" bỏ khỏi chữ giới thiệu ở Portfolio và CV (tên trang thật trong bảng GA4 giữ nguyên). Các dịch vụ — chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`; chuyên ngành: `3. Hỗ trợ văn phòng thuế Mỹ (1040)`, `4. Lương thưởng, hoa hồng & KPI`; nhận làm: `5. Website & Trang đích`, `6. Đo lường hiệu suất quảng cáo`. Khóa cũ `eco_card3/4`, `modal_p3/p4` hiển thị số 5/6; khóa mới `eco_card5/6`, `modal_p5/p6`. Kiểm: test CONTENT. Nội dung A1 gốc bên dưới chỉ còn giá trị lịch sử (vòng 3d đã bỏ "đang học").
 
 **A1 gốc (vòng 2, không còn áp dụng). Dữ liệu là chính; website nhận làm; đo lường theo yêu cầu; Digital Marketing đang học.**
 - Chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`.
@@ -33,6 +33,7 @@ grep -nE "~60%|500\+|12 Vùng|12 Regions|12 Regiones|12 个战区|80–90%" inde
 grep -nE "ROAS|CPA|CVR" index.html index_portfolio_clean.html
 grep -nE "Google Ads|Meta Ads|TikTok" index.html index_portfolio_clean.html
 ```
+Ngoại lệ vòng 4 (P0-4): "Google Ads / Meta Ads" **được phép** trong thẻ và cửa sổ chi tiết dịch vụ 6 (`eco_card4_desc`, `modal_p4_item2`) vì đó là phạm vi nhận làm theo yêu cầu, không phải tuyên bố kết quả.
 Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WRP Tax Services (Certified Public Accountant / Enrolled Agent, không phải chỉ số quảng cáo) và một dòng nằm trong chuỗi ảnh nhúng base64; cả hai chấp nhận được. Tên Prudential, Chubb Life, AIA **được phép** xuất hiện (chủ hồ sơ cho phép ở vòng 2); chúng chỉ nằm trong `sol_desc` của CV.
 
 **A3. Số liệu GA4 là của các trang do chính chủ hồ sơ xây.** Nguồn ghi là "thuộc tính GA4 của các trang do TJ xây dựng"; `hub_desc` nói số liệu lấy từ chính các trang này. Các con số (174 người dùng, 1.684 lượt xem, 10.465 sự kiện) và dữ liệu phễu mẫu **không đổi**.
@@ -67,6 +68,8 @@ python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Crea
 **A12. CV → PDF/QR (vòng 4, P0-2).** Hero CV có nút theo thứ tự `Zalo | GitHub | Portfolio`; link Portfolio là `data-w17-link="portfolio"` = địa chỉ web công khai (do `tools/site_config.py` đặt). Khối `#cv-print-contact` chỉ hiện khi in: QR (vẽ lúc mở trang từ `w17-site-config`, thư viện qrcode-generator 1.4.4 MIT nhúng sẵn, không gọi dịch vụ ngoài) trỏ địa chỉ web + `utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv`; link chữ + nút hero trong PDF mang `utm_medium=pdf`. Trên màn hình link Portfolio không có UTM. Nút "📄 Tải CV (PDF)" cho khách mở hộp thoại in. Số trang PDF A4 không đổi (4). Kiểm: test R7-01..04 (PDF thật bằng Chromium, đọc link bằng PyMuPDF, giải mã QR bằng OpenCV).
 
 **A13. GA4 cho Portfolio + CV (vòng 4, P0-3).** Property "TJ Portfolio & CV" (565302376), luồng web `teoteo1081.github.io` (16382251060), Measurement ID `G-501ZEXPEVQ` trong `w17-site-config` (đổi/tắt ở ⚙). Dùng `gtag.js` trực tiếp, không GTM. Tag chỉ tải trên https + đúng host của địa chỉ web công khai; không chạy ở editor, localhost, file://, trình duyệt tự động. Consent Mode v2 theo lựa chọn 2b: mặc định từ chối đo lường ở EEA/Anh/Thụy Sĩ, cho phép nơi khác; quảng cáo luôn từ chối; banner tự hiện khi múi giờ châu Âu, nút "Quyền riêng tư & cookie" ở chân 2 trang. Đo lường nâng cao trên GA chỉ bật lượt xem trang (tắt đếm theo lịch sử trình duyệt) + cuộn. Sự kiện: contact_phone/email/zalo_click, cv_from_portfolio_click, portfolio_from_cv_click, github_click, project_demo_click, service_detail_open, ga4_detail_open, cv_pdf_export_click, contact_mailto_open (không phải "gửi thành công"), language_change; tham số chỉ là mã ngắn, không gửi chữ người dùng gõ. Dữ liệu GA4 trưng bày trên Portfolio (property WordLoop Hub, ảnh chụp thủ công) KHÔNG đổi và không trộn với property này. Không tuyên bố tuân thủ pháp luật. Kiểm: R8-01..04 (giả lập web công khai, chặn mọi request tới Google).
+
+**A14. Bố cục Portfolio & menu (vòng 4, P0-4).** Thứ tự mặc định: Giới thiệu (`#about`, luôn đầu) → Dịch vụ (`#services`) → Dashboard mẫu (`#dashboard`) → Các website tiêu biểu (`#website`) → GA4 Tracking (`#ga4-tracking`) → Liên hệ (`#contact`, luôn cuối). Điểm neo cũ `#ga4-ecosystem`, `#live-projects` vẫn nằm trong Dịch vụ. Mỗi mục giữa có `data-w17-section` + `data-w17-nav` (khóa nhãn menu); menu máy tính và điện thoại (`data-w17-nav-list`) dựng theo thứ tự mục, bỏ mục có `data-w17-hidden`. Mục ẩn không hiện trên web; trong editor hiện mờ có viền. Editor: nút ⬆ ⬇ Ẩn/Hiện trên mỗi mục (`w17-layout-script`), lưu nháp ở trường `layout`; khi lưu, thứ tự + `data-w17-hidden` ghi thẳng vào HTML; server từ chối bản còn `.w17-section-controls`. Nút chuyển `Portfolio | CV` (`#w17-page-switch`) cùng vị trí ở hai trang, trang đang xem là chữ (aria-current), không còn "Quay lại". Kiểm: R9-01..04.
 
 ## 5. Lệnh kiểm tổng
 
@@ -103,4 +106,5 @@ Chủ hồ sơ duyệt phase P0-1 và việc cập nhật Anchor. Thay đổi so
 - P0-2 (CV/số điện thoại/PDF/QR/nút tải PDF) đã duyệt và làm xong (A6, A12).
 - Test F04/R3/CONTENT theo chữ chủ hồ sơ sửa qua editor; 4 cụm tiếng Anh được giữ cố ý (Freelance & Remote, End-to-End Operations Automation, Website & Landing Page, Rubric Engineering).
 - P0-3 (GA4 + consent 2b) đã duyệt và làm xong (A13); chủ hồ sơ cho phép Claude tự tạo property GA4 bằng phiên Chrome đang đăng nhập.
-- Các phase sau (P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.
+- P0-4 (tách mục, thứ tự mới, menu động, ẩn/hiện + di chuyển mục, nút chuyển, chữ dịch vụ 6, bỏ 1040) đã duyệt qua ảnh demo và làm xong (A1, A14).
+- Các phase sau (P1: SEO kỹ thuật, dịch Gemini, thêm thẻ/kinh nghiệm làm việc, URL đa ngôn ngữ; P2) chưa được duyệt; chưa làm.

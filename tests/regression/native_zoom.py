@@ -85,7 +85,7 @@ def main():
                 for lang in R.LOCALES:
                     R.set_lang(pg2, lang)
                     for svc, idx in [("p1", 0), ("p2", 1), ("p5", 2), ("p6", 3), ("p3", 4), ("p4", 5)]:
-                        btn = pg2.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(idx)
+                        btn = pg2.locator("#services button[aria-controls='ga4-drilldown-modal']").nth(idx)
                         btn.scroll_into_view_if_needed()
                         btn.click()
                         pg2.wait_for_timeout(750)

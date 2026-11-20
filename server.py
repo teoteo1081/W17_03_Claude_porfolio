@@ -50,7 +50,8 @@ MAX_BODY_BYTES = 12 * 1024 * 1024  # file Final ~0.3MB; chừa chỗ cho ảnh �
 # mỗi id đúng một lần; cùng kích thước tối thiểu. Bản ghi quá nhỏ so với file hiện có cũng bị từ chối.
 ALLOWED_FILES = {
     "index.html": {
-        "main-navbar": "header", "ga4-ecosystem": "section", "pbi-ga4-dashboard": "div", "core-portfolio-script": "script",
+        "main-navbar": "header", "services": "section", "website": "section", "ga4-tracking": "section",
+        "pbi-ga4-dashboard": "div", "core-portfolio-script": "script", "w17-layout-script": "script",
         "visual-editor-script": "script", "w17-baked-edits": "script", "ga4-drilldown-modal": "div",
         "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script",
     },
@@ -151,6 +152,8 @@ class _PageProbe(HTMLParser):
             self.body_tags += 1
             if "is-editing" in (a.get("class") or "").split():
                 self.editor_attrs.append("body.is-editing")
+        if "w17-section-controls" in (a.get("class") or "").split():
+            self.editor_attrs.append(".w17-section-controls")
         if "contenteditable" in a:
             self.editor_attrs.append(f"{tag}[contenteditable]")
         if a.get("id"):

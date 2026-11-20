@@ -48,7 +48,7 @@ STATIC_JS = r"""async (rel) => {
 
 
 # Cụm tiếng Anh chủ hồ sơ CỐ Ý giữ trong bản VI/ES/ZH (quyết định 2026-11-20); chỉ miễn đúng cụm này, từ đơn lẻ vẫn bị bắt.
-ALLOWED_PHRASES = ("Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering")
+ALLOWED_PHRASES = ("GA4 Tracking", "Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering")
 
 
 def _deny_hits(strings):
@@ -189,14 +189,14 @@ def t_n07_comment(env):
     st, _, body = R.http("GET", base + "/api/session", {"Origin": base, "Host": host})
     token = json.loads(body)["token"]
     hdr = {"Content-Type": "application/json", "Origin": base, "X-W17-Token": token}
-    ids = ["main-navbar", "ga4-ecosystem", "pbi-ga4-dashboard", "core-portfolio-script", "visual-editor-script", "w17-baked-edits", "ga4-drilldown-modal"]
+    ids = ["main-navbar", "services", "pbi-ga4-dashboard", "core-portfolio-script", "visual-editor-script", "w17-baked-edits", "ga4-drilldown-modal"]
     pad = "x" * 200000
     good = (env.pristine / "index.html").read_text(encoding="utf-8")
     cases = {
         "all-ids-in-comment": "<!doctype html><html><body><!-- " + " ".join('id="%s"' % i for i in ids) + " -->" + pad + "</body></html>",
         "ids-in-script-string": "<!doctype html><html><body><script>var s = '" + " ".join('id=%s' % i for i in ids) + "';</script>" + pad + "</body></html>",
         "ids-on-wrong-tags": "<!doctype html><html><body>" + "".join('<p id="%s">x</p>' % i for i in ids) + pad + "</body></html>",
-        "duplicate-ids": good.replace("</body>", '<div id="ga4-ecosystem"></div></body>', 1),
+        "duplicate-ids": good.replace("</body>", '<div id="services"></div></body>', 1),
     }
     bad = []
     for label, html in cases.items():

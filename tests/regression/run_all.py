@@ -40,6 +40,8 @@ import extra_cases_r7 as X7  # noqa: E402
 X7.R = sys.modules[__name__]
 import extra_cases_r8 as X8  # noqa: E402
 X8.R = sys.modules[__name__]
+import extra_cases_r9 as X9  # noqa: E402
+X9.R = sys.modules[__name__]
 
 REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
@@ -311,7 +313,7 @@ def t_f03(b, env, quick, shots):
                 for svc, idx in cards:
                     # bấm đúng thẻ dịch vụ (người dùng thật), không gọi hàm trực tiếp
                     pg.evaluate("window.scrollTo(0,0)")
-                    card_btn = pg.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(idx)
+                    card_btn = pg.locator("#services button[aria-controls='ga4-drilldown-modal']").nth(idx)
                     card_btn.scroll_into_view_if_needed()
                     card_btn.click()
                     pg.wait_for_timeout(750)
@@ -351,7 +353,7 @@ def t_f03_keyboard(b, env):
     ctx = b.new_context(locale="vi-VN", viewport={"width": 375, "height": 600})
     pg = new_page(ctx)
     open_page(pg, env, FINAL_PORTFOLIO)
-    btn = pg.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(3)
+    btn = pg.locator("#services button[aria-controls='ga4-drilldown-modal']").nth(3)
     btn.scroll_into_view_if_needed()
     btn.focus()
     pg.keyboard.press("Enter")
@@ -374,7 +376,7 @@ def t_f03_keyboard(b, env):
     pg.keyboard.press("PageDown"); pg.wait_for_timeout(300)
     after_down = pg.evaluate("document.getElementById('ga4-modal-dialog').scrollTop")
     pg.keyboard.press("Escape"); pg.wait_for_timeout(200)
-    back = pg.evaluate("document.activeElement === document.querySelectorAll('#ga4-ecosystem button[aria-controls=\"ga4-drilldown-modal\"]')[3]")
+    back = pg.evaluate("document.activeElement === document.querySelectorAll('#services button[aria-controls=\"ga4-drilldown-modal\"]')[3]")
     ok = focused == "ga4-modal-close-btn" and not escaped and after_up < before and after_down > after_up and back
     record("F03", "bàn phím: Enter mở modal, focus vào nút đóng, bẫy focus, PageUp/PageDown cuộn được, Escape trả focus về thẻ",
            ok, f"focused={focused} escaped={escaped} before={before} up={after_up} down={after_down} back={back}")
@@ -1030,17 +1032,17 @@ def t_f10(env):
 
 # ======================================================================= static content / overflow / nav
 BADGES = {  # thứ tự hiển thị: 2 chính, 2 chuyên ngành, 2 nhận làm
-    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Chuyên ngành • Thuế Mỹ", "Chuyên ngành • Bảo hiểm & bán hàng", "Nhận làm • Website", "Theo yêu cầu • Đo lường"],
-    "en": ["Core • Automation", "Second • Data & BI", "Specialist • US Tax", "Specialist • Insurance & Sales", "Available • Website", "On request • Tracking"],
-    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Especializado • Fiscal EE. UU.", "Especializado • Seguros y ventas", "Disponible • Web", "Bajo pedido • Medición"],
-    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 效果衡量"],
+    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Chuyên ngành • Thuế Mỹ", "Chuyên ngành • Bảo hiểm & bán hàng", "Nhận làm • Website", "Theo yêu cầu • Quảng cáo"],
+    "en": ["Core • Automation", "Second • Data & BI", "Specialist • US Tax", "Specialist • Insurance & Sales", "Available • Website", "On request • Ads"],
+    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Especializado • Fiscal EE. UU.", "Especializado • Seguros y ventas", "Disponible • Web", "Bajo pedido • Publicidad"],
+    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 广告"],
 }
 SERVICE_TITLES = {
     # vi: theo chữ chủ hồ sơ sửa qua editor (2026-11-20, giữ "Landing Page", bỏ "(1040)")
-    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Landing Page", "6. Đo lường hiệu suất quảng cáo"],
-    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. US Tax Office Back-Office (1040)", "4. Sales Compensation, Commissions & KPIs", "5. Website & Landing Page", "6. Ad Performance Tracking"],
-    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Back-office para Despachos Fiscales de EE. UU. (1040)", "4. Compensación Comercial, Comisiones y KPI", "5. Sitio Web y Página de Aterrizaje", "6. Medición del Rendimiento Publicitario"],
-    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 美国报税事务所后台支持（1040）", "4. 销售薪酬、佣金与 KPI", "5. 网站与落地页", "6. 广告效果衡量"],
+    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Landing Page", "6. Quảng cáo & Đo lường hiệu suất"],
+    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. US Tax Office Back-Office", "4. Sales Compensation, Commissions & KPIs", "5. Website & Landing Page", "6. Ads & Performance Tracking"],
+    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Back-office para Despachos Fiscales de EE. UU.", "4. Compensación Comercial, Comisiones y KPI", "5. Sitio Web y Página de Aterrizaje", "6. Publicidad y Medición del Rendimiento"],
+    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 美国报税事务所后台支持", "4. 销售薪酬、佣金与 KPI", "5. 网站与落地页", "6. 广告投放与效果衡量"],
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 # Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
@@ -1061,13 +1063,13 @@ def t_content(b, env):
         for l in LOCALES:
             set_lang(pg, l)
             info = pg.evaluate("""() => ({
-              badges: [...document.querySelectorAll('#ga4-ecosystem [data-i18n^=eco_badge_]')].map((e) => e.textContent.trim()),
-              titles: [...document.querySelectorAll('#ga4-ecosystem h3[data-i18n^=eco_card]')].map((e) => e.textContent.trim()),
-              cards: document.querySelectorAll('#ga4-ecosystem div[onclick*="is-editing"][onclick*="openGA4DrilldownModal"]').length,
+              badges: [...document.querySelectorAll('#services [data-i18n^=eco_badge_]')].map((e) => e.textContent.trim()),
+              titles: [...document.querySelectorAll('#services h3[data-i18n^=eco_card]')].map((e) => e.textContent.trim()),
+              cards: document.querySelectorAll('#services div[onclick*="is-editing"][onclick*="openGA4DrilldownModal"]').length,
               pbi: !!document.getElementById('pbi-ga4-dashboard'),
               apps: ['WRP Tax Services', 'Operation 0', 'TJ WordLoop', 'TJ Courses Hub'].map((n) => document.body.innerText.includes(n)),
               pos: document.querySelector('[data-i18n=hero_positioning]').textContent,
-              nocommit: document.querySelector('[data-i18n=eco_card4_desc]').textContent.includes(({vi: 'so sánh hiệu quả từng kênh quảng cáo', en: 'comparing each ad channel', es: 'cada canal publicitario', zh: '各广告渠道效果对比'})[document.documentElement.lang]),
+              nocommit: document.querySelector('[data-i18n=eco_card4_desc]').textContent.includes(({vi: 'chi phí trên mỗi khách tiềm năng', en: 'cost per lead', es: 'costo por cliente potencial', zh: '每个潜在客户的成本'})[document.documentElement.lang]),
               pkgs: document.querySelectorAll('#modal-service-packages [data-service-pkg]').length })""")
             if info["badges"] != BADGES[l]:
                 bad.append(f"{rel}/{l}: badge {info['badges']}")
@@ -1193,6 +1195,7 @@ def main():
                 ("R6", lambda: (X6.t_static_config(env), X6.t_settings_api(env), X6.t_stale_save(env), X6.t_cv_known_ids(b, env), X6.t_settings_dialog(b, env))),
                 ("R7", lambda: (X7.t_contact(b, env), X7.t_pdf_links(b, env), X7.t_qr(b, env), X7.t_clean_final(b, env))),
                 ("R8", lambda: (X8.t_no_tracking_local(b, env), X8.t_public_events(b, env), X8.t_consent_europe(b, env), X8.t_debug_and_clean(b, env))),
+                ("R9", lambda: (X9.t_structure(b, env), X9.t_hidden_public(b, env), X9.t_editor_layout(b, env), X9.t_mobile_switch(b, env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

@@ -596,9 +596,7 @@
 
     <!-- ==================== [TOP HEADER NAVIGATION: QUAY LẠI PORTFOLIO SHOWCASE] ==================== -->
     <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[#0c1322]/90 border border-[#1a2740] shadow-lg no-print">
-      <a href="./editor_portfolio.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 hover:border-emerald-400 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
-        <span data-i18n="nav_back" class="editable-node">← Quay lại Portfolio</span>
-      </a>
+      <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="inline-flex items-center rounded-xl border border-slate-700 dark:border-slate-700 bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><a href="./editor_portfolio.html" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Portfolio</a><span aria-current="page" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950">CV</span></div>
       <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
         <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
           <span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>
@@ -848,7 +846,7 @@
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-400 font-bold shrink-0" data-node-id="12">✓</span>
-                  <span data-i18n="sol_card3_p5" class="editable-node">Back-office văn phòng thuế Mỹ (1040): kiểm hồ sơ trước <strong class="text-white">CCH Autoflow</strong>, rà bookmark workpaper, đối soát phí E-Upsafe.</span>
+                  <span data-i18n="sol_card3_p5" class="editable-node">Back-office văn phòng thuế Mỹ: kiểm hồ sơ trước <strong class="text-white">CCH Autoflow</strong>, rà bookmark workpaper, đối soát phí E-Upsafe.</span>
                 </li>
               </ul>
             </div>
@@ -1255,10 +1253,10 @@
         "zh": "📎 未写入项目：没有 /api/save 服务器。文件已下载；运行 \"python dev_server.py\" 并通过 http://localhost:8000 打开页面即可直接写入。"
       },
       "ui_back": {
-        "vi": "← Quay lại Portfolio",
-        "en": "← Back to Portfolio",
-        "es": "← Volver al Portafolio",
-        "zh": "← 返回作品集"
+        "vi": "🌐 Portfolio",
+        "en": "🌐 Portfolio",
+        "es": "🌐 Portafolio",
+        "zh": "🌐 作品集"
       },
       "ui_change_photo": {
         "vi": "Đổi ảnh",
@@ -1662,6 +1660,7 @@
     const translationsCV = {
       vi: {
         nav_back: "← Quay lại Portfolio",
+        aria_page_switch: "Chuyển giữa Portfolio và CV",
         top_capability_badge: "CV & Hồ sơ năng lực",
         pill_loc: "📍 TP. Hồ Chí Minh",
         pill_work: "🌐 Làm việc từ xa / Freelance",
@@ -1698,7 +1697,7 @@
         sol_card3_p2: "Tự động hóa nhập liệu và đối soát, loại trừ sai sót.",
         sol_card3_p3: "Tích hợp bộ ba <strong class=\"text-white\">tác nhân AI</strong> (Claude Code, Codex, AGY) để tăng tốc xây dựng quy trình dữ liệu và kiểm thử code.",
         sol_card3_p4: "Quản lý mã nguồn chuẩn mực Git, đảm bảo quy chuẩn bảo mật dữ liệu doanh nghiệp và vận hành ổn định.",
-        sol_card3_p5: "Back-office văn phòng thuế Mỹ (1040): kiểm hồ sơ trước <strong class=\"text-white\">CCH Autoflow</strong>, rà bookmark workpaper, đối soát phí E-Upsafe.",
+        sol_card3_p5: "Back-office văn phòng thuế Mỹ: kiểm hồ sơ trước <strong class=\"text-white\">CCH Autoflow</strong>, rà bookmark workpaper, đối soát phí E-Upsafe.",
         sol_card3_btn: ">_ Xem Quy trình & Luồng công việc tự động",
         metric_val_1: "Bước 1",
         metric_title_1: "Khảo sát việc đang làm tay",
@@ -1751,6 +1750,7 @@
       },
       en: {
         nav_back: "← Back to Portfolio",
+        aria_page_switch: "Switch between Portfolio and CV",
         top_capability_badge: "CV & Capability Profile",
         pill_loc: "📍 Ho Chi Minh City",
         pill_work: "🌐 Remote / Freelance",
@@ -1794,7 +1794,7 @@
         sol_card3_p2: "Automate data entry and reconciliations, eliminating manual discrepancies.",
         sol_card3_p3: "Integrate the trio of <strong class=\"text-white\">AI Agents</strong> (Claude Code, Codex, AGY) to accelerate pipeline development and code testing.",
         sol_card3_p4: "Standardized Git version control, guaranteeing corporate data security standards and robust uptime.",
-        sol_card3_p5: "US tax office back-office (1040): pre-funnel QA before <strong class=\"text-white\">CCH Autoflow</strong>, workpaper bookmark audits, E-Upsafe fee reconciliation.",
+        sol_card3_p5: "US tax office back-office: pre-funnel QA before <strong class=\"text-white\">CCH Autoflow</strong>, workpaper bookmark audits, E-Upsafe fee reconciliation.",
         sol_card3_btn: ">_ View Automated Pipeline & Workflow",
         metric_val_1: "Step 1",
         metric_title_1: "Map the Manual Work",
@@ -1840,6 +1840,7 @@
       },
       es: {
         nav_back: "← Volver al Portafolio",
+        aria_page_switch: "Cambiar entre Portafolio y CV",
         top_capability_badge: "CV y Perfil de Capacidades",
         pill_loc: "📍 Ciudad Ho Chi Minh",
         pill_work: "🌐 Remoto / Freelance",
@@ -1876,7 +1877,7 @@
         sol_card3_p2: "Automatización de entrada y conciliación de datos, eliminando errores manuales.",
         sol_card3_p3: "Integración de agentes <strong class=\"text-white\">AI</strong> (Claude Code, Codex, AGY) para acelerar pipelines y pruebas de código.",
         sol_card3_p4: "Control de versiones Git estandarizado, garantizando seguridad de datos empresariales y alta disponibilidad.",
-        sol_card3_p5: "Back-office para despachos fiscales de EE. UU. (1040): revisión previa a <strong class=\"text-white\">CCH Autoflow</strong>, auditoría de marcadores de papeles de trabajo, conciliación de honorarios en E-Upsafe.",
+        sol_card3_p5: "Back-office para despachos fiscales de EE. UU.: revisión previa a <strong class=\"text-white\">CCH Autoflow</strong>, auditoría de marcadores de papeles de trabajo, conciliación de honorarios en E-Upsafe.",
         sol_card3_btn: ">_ Ver Flujo de Trabajo Automatizado",
         metric_val_1: "Paso 1",
         metric_title_1: "Mapear el Trabajo Manual",
@@ -1929,6 +1930,7 @@
       },
       zh: {
         nav_back: "← 返回作品集",
+        aria_page_switch: "在作品集与简历之间切换",
         top_capability_badge: "简历与能力档案",
         pill_loc: "📍 胡志明市",
         pill_work: "🌐 远程办公 / 自由职业",
@@ -1972,7 +1974,7 @@
         sol_card3_p2: "自动化数据录入与财务对账，杜绝人工低级错误。",
         sol_card3_p3: "深度整合 <strong class=\"text-white\">AI 智能体</strong>（Claude Code、Codex、AGY），数倍加速数据管道构建与代码测试。",
         sol_card3_p4: "规范化 Git 源码与版本管理，严格遵循企业数据安全合规标准，保障高可用稳定运行。",
-        sol_card3_p5: "美国报税事务所后台（1040）：导入 <strong class=\"text-white\">CCH Autoflow</strong> 前资料检查、工作底稿书签审核、E-Upsafe 费用核对。",
+        sol_card3_p5: "美国报税事务所后台：导入 <strong class=\"text-white\">CCH Autoflow</strong> 前资料检查、工作底稿书签审核、E-Upsafe 费用核对。",
         sol_card3_btn: ">_ 查看自动化管道与工作流",
         metric_val_1: "步骤 1",
         metric_title_1: "梳理现有手工流程",

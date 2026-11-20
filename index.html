@@ -253,6 +253,13 @@
       }
     }
   </style>
+  <style id="w17-layout-style">
+    /* Mục bị ẩn: không hiện trên web; trong editor hiện mờ có viền để còn bật lại */
+    html:not([data-w17-mode="creator"]) [data-w17-hidden] { display: none !important; }
+    html[data-w17-mode="creator"] section[data-w17-hidden] { opacity: .5; outline: 2px dashed #f59e0b; outline-offset: 12px; border-radius: 12px; }
+    .w17-section-controls { position: absolute; top: -2.75rem; right: 0; z-index: 30; }
+    @media print { .w17-section-controls { display: none !important; } }
+  </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 selection:bg-emerald-500 selection:text-white font-sans antialiased">
 
@@ -261,22 +268,26 @@
     <div class="max-w-7xl mx-auto px-3 sm:px-6 xl:px-8 h-20 flex items-center justify-between gap-2">
       
       <!-- Brand Logo -->
-      <a href="#about" class="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded-xl min-w-0">
-        <span class="brand-title editable-node shrink-0 w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-sm group-hover:scale-105 transition-transform" data-node-id="0">
-          TJ
-        </span>
-        <span class="brand-title editable-node truncate font-bold text-sm sm:text-xl lg:text-lg xl:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-          Thao Nguyen <span class="brand-title editable-node hidden sm:inline lg:hidden xl:inline text-xs font-semibold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 ml-1" data-i18n="brand_tag">Portfolio</span>
-        </span>
-      </a>
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="#about" class="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded-xl min-w-0">
+          <span class="brand-title editable-node shrink-0 w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-sm group-hover:scale-105 transition-transform" data-node-id="0">
+            TJ
+          </span>
+          <span class="brand-title editable-node hidden sm:block truncate font-bold text-sm sm:text-xl lg:text-lg xl:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            Thao Nguyen
+          </span>
+        </a>
+        <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="inline-flex items-center rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><span aria-current="page" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950">Portfolio</span><a href="./index_portfolio_clean.html" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">CV</a></div>
+      </div>
 
       <!-- Desktop Nav Links -->
-      <nav aria-label="Điều hướng chính" data-i18n-aria="aria_primary_nav" class="hidden lg:flex items-center gap-3 xl:gap-6 whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-300">
-        <a href="#about" data-i18n="nav_about" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Giới thiệu</a>
-        <a href="#dashboard" data-i18n="nav_dashboard" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Mô phỏng Phễu</a>
-        <a href="#ga4-ecosystem" data-i18n="nav_ecosystem" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Hệ Sinh Thái GA4</a>
-        <a href="./index_portfolio_clean.html" data-i18n="nav_capability" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors font-semibold text-emerald-700 dark:text-emerald-400">CV</a>
-        <a href="#contact" data-i18n="nav_contact" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Liên hệ</a>
+      <nav aria-label="Điều hướng chính" data-i18n-aria="aria_primary_nav" data-w17-nav-list="desktop" class="hidden lg:flex items-center gap-3 xl:gap-6 whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-300">
+        <a href="#about" data-i18n="nav_about" data-w17-nav-fixed="start" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Giới thiệu</a>
+        <a href="#services" data-i18n="nav_services" data-w17-nav-dynamic="" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Dịch vụ</a>
+        <a href="#dashboard" data-i18n="nav_dashboard" data-w17-nav-dynamic="" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Dashboard</a>
+        <a href="#website" data-i18n="nav_website" data-w17-nav-dynamic="" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Website</a>
+        <a href="#ga4-tracking" data-i18n="nav_ga4" data-w17-nav-dynamic="" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">GA4 Tracking</a>
+        <a href="#contact" data-i18n="nav_contact" data-w17-nav-fixed="end" class="editable-node hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded px-1 transition-colors">Liên hệ</a>
       </nav>
 
       <!-- Desktop Controls & CTA -->
@@ -323,12 +334,13 @@
 
     <!-- Mobile Collapsible Menu -->
     <div id="mobileMenu" class="hidden lg:hidden border-b border-slate-200 dark:border-zinc-800 bg-white/95 dark:bg-slate-950/95 px-6 py-6 transition-all">
-      <nav aria-label="Điều hướng di động" data-i18n-aria="aria_mobile_nav" class="flex flex-col gap-4 text-base font-medium text-slate-800 dark:text-slate-200">
-        <a href="#about" onclick="toggleMobileMenu()" data-i18n="nav_about" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Giới thiệu</a>
-        <a href="#dashboard" onclick="toggleMobileMenu()" data-i18n="nav_dashboard" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Mô phỏng Phễu</a>
-        <a href="#ga4-ecosystem" onclick="toggleMobileMenu()" data-i18n="nav_ecosystem" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Hệ Sinh Thái GA4</a>
-        <a href="./index_portfolio_clean.html" onclick="toggleMobileMenu()" data-i18n="nav_capability" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded font-semibold text-emerald-700 dark:text-emerald-400">CV</a>
-        <a href="#contact" onclick="toggleMobileMenu()" data-i18n="nav_contact" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Liên hệ</a>
+      <nav aria-label="Điều hướng di động" data-i18n-aria="aria_mobile_nav" data-w17-nav-list="mobile" class="flex flex-col gap-4 text-base font-medium text-slate-800 dark:text-slate-200">
+        <a href="#about" onclick="toggleMobileMenu()" data-i18n="nav_about" data-w17-nav-fixed="start" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Giới thiệu</a>
+        <a href="#services" onclick="toggleMobileMenu()" data-i18n="nav_services" data-w17-nav-dynamic="" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Dịch vụ</a>
+        <a href="#dashboard" onclick="toggleMobileMenu()" data-i18n="nav_dashboard" data-w17-nav-dynamic="" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Dashboard</a>
+        <a href="#website" onclick="toggleMobileMenu()" data-i18n="nav_website" data-w17-nav-dynamic="" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Website</a>
+        <a href="#ga4-tracking" onclick="toggleMobileMenu()" data-i18n="nav_ga4" data-w17-nav-dynamic="" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">GA4 Tracking</a>
+        <a href="#contact" onclick="toggleMobileMenu()" data-i18n="nav_contact" data-w17-nav-fixed="end" class="hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded">Liên hệ</a>
         <a href="#contact" onclick="toggleMobileMenu()" data-i18n="nav_cta" class="inline-flex items-center justify-center mt-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Liên hệ ngay</a>
       </nav>
     </div>
@@ -363,9 +375,9 @@
 
         <!-- 3 CTA Action Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <a href="#dashboard" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus-visible:from-emerald-300 focus-visible:to-cyan-300 shadow-md shadow-emerald-500/20 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+          <a href="#services" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus-visible:from-emerald-300 focus-visible:to-cyan-300 shadow-md shadow-emerald-500/20 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-3" class="lucide lucide-bar-chart-3 w-4 h-4"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
-            <span data-i18n="hero_btn_dashboard" class="editable-node">Xem Dashboard Demo</span>
+            <span data-i18n="hero_btn_dashboard" class="editable-node">Xem dịch vụ ↓</span>
           </a>
           <a href="https://github.com/teoteo1081" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-slate-800 dark:text-slate-200 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-emerald-500/50 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
             <span data-i18n="hero_btn_github" class="editable-node">🐙 Xem GitHub ↗</span>
@@ -378,13 +390,153 @@
       </div>
     </section>
 
+    <!-- ==================== (4) SECTION 4: HỆ SINH THÁI ĐO LƯỜNG THỰC CHIẾN (GA4 ECOSYSTEM HUB) ==================== -->
+    <!-- ==================== (4) SECTION 4: HỆ SINH THÁI DỊCH VỤ & GIẢI PHÁP THỰC CHIẾN ==================== -->
+    <section id="services" data-w17-section="services" data-w17-nav="nav_services" class="space-y-10 relative scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
+      <!-- điểm neo cũ: link đã gửi đi trước đây (#ga4-ecosystem, #live-projects) vẫn nhảy đúng phần Dịch vụ -->
+      <div id="ga4-ecosystem" class="scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;"></div>
+      <div id="live-projects" class="scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;"></div>
+      <!-- Ambient Background Glow -->
+      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-56 sm:w-[32rem] max-w-full h-64 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+      <!-- Section Heading -->
+      <div class="text-center max-w-4xl mx-auto space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30 max-w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="radar" class="lucide lucide-radar w-3.5 h-3.5 shrink-0"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"></path><path d="M4 6h.01"></path><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"></path><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"></path><path d="M12 18h.01"></path><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle><path d="m13.41 10.59 5.66-5.66"></path></svg>
+          <span data-i18n="eco_badge" data-tail="" class="editable-node text-balance">HỆ SINH THÁI DỊCH VỤ &amp; GIẢI PHÁP <span class="inline-block" data-auto-tail="">THỰC CHIẾN</span></span>
+        </div>
+        <h2 data-i18n="eco_title" class="editable-node text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight text-balance">Dịch vụ &amp; Giải pháp</h2>
+        <p data-i18n="eco_property" data-tail="" class="editable-node text-balance text-xs sm:text-sm font-mono font-semibold text-cyan-700 dark:text-cyan-400">Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng & hoa hồng | Nhận làm: Website, Quảng cáo & Đo lường</p>
+      </div>
+
+      <!-- 1. CỤM 6 DỊCH VỤ (lưới 3 cột: 2 chính, 2 chuyên ngành, 2 nhận làm) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Thẻ 1: End-to-End Operational -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p1')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mouse-pointer-click" class="lucide lucide-mouse-pointer-click w-5 h-5"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
+              </div>
+              <span data-i18n="eco_badge_1" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Dịch vụ chính • Tự động hóa</span>
+            </div>
+            <h3 data-i18n="eco_card1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">1. Tự động hóa Vận hành</h3>
+            <p data-i18n="eco_card1_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p1')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thẻ 2: Data Analyst & BI Dashboard -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('countries', this.querySelector('button'), 'p2')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="globe-2" class="lucide lucide-globe-2 w-5 h-5"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"></path><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"></path><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path><circle cx="12" cy="12" r="10"></circle></svg>
+              </div>
+              <span data-i18n="eco_badge_2" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Dịch vụ thứ hai • Dữ liệu &amp; BI</span>
+            </div>
+            <h3 data-i18n="eco_card2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">2. Phân tích Dữ liệu &amp; Dashboard BI</h3>
+            <p data-i18n="eco_card2_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('countries', this, 'p2')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thẻ 5: chuyên ngành -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p5')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check-2" class="lucide lucide-file-check-2 w-5 h-5"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m3 15 2 2 4-4"></path></svg>
+              </div>
+              <span data-i18n="eco_badge_5" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Chuyên ngành • Thuế Mỹ</span>
+            </div>
+            <h3 data-i18n="eco_card5_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">3. Hỗ trợ văn phòng thuế Mỹ</h3>
+            <p data-i18n="eco_card5_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p5')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thẻ 6: chuyên ngành -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p6')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calculator" class="lucide lucide-calculator w-5 h-5"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+              </div>
+              <span data-i18n="eco_badge_6" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Chuyên ngành • Bảo hiểm &amp; bán hàng</span>
+            </div>
+            <h3 data-i18n="eco_card6_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">4. Lương thưởng, hoa hồng &amp; KPI</h3>
+            <p data-i18n="eco_card6_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p6')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thẻ 3: Website & Landing Page -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('powerbi', this.querySelector('button'), 'p3')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="share-2" class="lucide lucide-share-2 w-5 h-5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
+              </div>
+              <span data-i18n="eco_badge_3" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Nhận làm • Website</span>
+            </div>
+            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">5. Website &amp; Landing Page</h3>
+            <p data-i18n="eco_card3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('powerbi', this, 'p3')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thẻ 4: Tracking Performance -->
+        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p4')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+          <div class="space-y-3 pb-2">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="workflow" class="lucide lucide-workflow w-5 h-5"><rect width="8" height="8" x="3" y="3" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="2"></rect></svg>
+              </div>
+              <span data-i18n="eco_badge_4" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Theo yêu cầu • Quảng cáo</span>
+            </div>
+            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">6. Quảng cáo & Đo lường hiệu suất</h3>
+            <p data-i18n="eco_card4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Nhận thiết lập và vận hành chiến dịch Google Ads / Meta Ads khi khách cần. Gắn đo lường chuyển đổi từ ngày đầu, chạy thử với ngân sách nhỏ, báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng.</p>
+          </div>
+          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
+            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p4')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
+              <span data-i18n="eco_btn_detail">Chi tiết dịch vụ</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
     <!-- ==================== (2) SECTION 2: INTERACTIVE PERFORMANCE DASHBOARD (#dashboard) ==================== -->
-    <section id="dashboard" class="space-y-8 scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
+    <section id="dashboard" data-w17-section="dashboard" data-w17-nav="nav_dashboard" class="relative space-y-8 scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div class="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-emerald-700 dark:text-emerald-400 font-bold mb-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="activity" class="lucide lucide-activity w-3.5 h-3.5"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg>
-            <span data-i18n="dash_tag" class="editable-node">Dữ liệu mẫu • Mô phỏng</span>
+            <span data-i18n="dash_tag" class="editable-node">Dữ liệu mẫu • Dashboard BI & KPI</span>
           </div>
           <h2 data-i18n="dash_title" class="editable-node text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white text-balance">Phân Tích Hiệu Suất &amp; Phễu <span class="inline-block">Chuyển Đổi</span></h2>
           <p data-i18n="dash_disclaimer" class="editable-node text-sm font-medium text-amber-700 dark:text-amber-300 mt-1">* Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào. Ví dụ cho dịch vụ 4: lương thưởng &amp; hoa hồng.</p>
@@ -537,148 +689,112 @@
       </div>
     </section>
 
-    <!-- ==================== (4) SECTION 4: HỆ SINH THÁI ĐO LƯỜNG THỰC CHIẾN (GA4 ECOSYSTEM HUB) ==================== -->
-    <!-- ==================== (4) SECTION 4: HỆ SINH THÁI DỊCH VỤ & GIẢI PHÁP THỰC CHIẾN ==================== -->
-    <section id="ga4-ecosystem" class="space-y-10 relative scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
-      <div id="live-projects" class="scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;"></div>
-      <!-- Ambient Background Glow -->
-      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-56 sm:w-[32rem] max-w-full h-64 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <!-- ==================== CÁC WEBSITE TIÊU BIỂU (#website) ==================== -->
+    <section id="website" data-w17-section="website" data-w17-nav="nav_website" class="relative scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
+      <!-- 2. KHUNG HỆ SINH THÁI TRUNG TÂM (HUB & SPOKES ARCHITECTURE) -->
+      <div class="p-6 sm:p-10 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-cyan-500/30 shadow-2xl space-y-8 relative overflow-hidden">
+        <!-- Decorative Top Gradient Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-500"></div>
 
-      <!-- Section Heading -->
-      <div class="text-center max-w-4xl mx-auto space-y-3">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30 max-w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="radar" class="lucide lucide-radar w-3.5 h-3.5 shrink-0"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"></path><path d="M4 6h.01"></path><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"></path><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"></path><path d="M12 18h.01"></path><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle><path d="m13.41 10.59 5.66-5.66"></path></svg>
-          <span data-i18n="eco_badge" data-tail="" class="editable-node text-balance">HỆ SINH THÁI DỊCH VỤ &amp; GIẢI PHÁP <span class="inline-block" data-auto-tail="">THỰC CHIẾN</span></span>
+        <!-- Hub Header -->
+        <div class="text-center max-w-4xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/25 text-cyan-700 dark:text-cyan-400 text-xs font-mono font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cpu" class="lucide lucide-cpu w-3.5 h-3.5"><rect width="16" height="16" x="4" y="4" rx="2"></rect><rect width="6" height="6" x="9" y="9" rx="1"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
+            <span data-i18n="spoke_section_badge" class="editable-node">Website • Sản phẩm tự xây</span>
+          </div>
+          <h3 data-i18n="hub_title" class="editable-node text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white text-balance">Các website tiêu biểu</h3>
+          <p data-i18n="hub_desc" class="editable-node text-xs sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed text-balance">Một số website tự xây: trang dịch vụ, ứng dụng học, game, cổng khóa học.</p>
         </div>
-        <h2 data-i18n="eco_title" class="editable-node text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight text-balance">Dịch vụ &amp; Giải pháp</h2>
-        <p data-i18n="eco_property" data-tail="" class="editable-node text-balance text-xs sm:text-sm font-mono font-semibold text-cyan-700 dark:text-cyan-400">Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương&nbsp;thưởng &amp; hoa&nbsp;hồng | Nhận làm: Website, Đo lường hiệu suất <span class="inline-block" data-auto-tail="">quảng cáo</span></p>
+
+        <!-- Lưới 4 Phân hệ con (Grid 2x2) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- [Phân hệ 1: WRP Tax Services — Lead Funnel] -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
+            <div class="space-y-3.5">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span data-i18n="spoke1_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Fintech & Thuế Mỹ</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark" class="lucide lucide-landmark w-5 h-5 text-emerald-600 dark:text-emerald-400"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="18" y2="11"></line><line x1="10" x2="10" y1="18" y2="11"></line><line x1="14" x2="14" y1="18" y2="11"></line><line x1="18" x2="18" y1="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
+              </div>
+              <h4 data-i18n="spoke1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">WRP Tax Services — Website dịch vụ thuế Mỹ</h4>
+              <p data-i18n="spoke1_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Có công cụ tính thuế và form để khách để lại thông tin nhận tư vấn.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
+              <a href="https://teoteo1081.github.io/w15-website-us-tax/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke1_btn_demo" class="editable-node">Xem trang ↗</span>
+              </a>
+              <a href="https://github.com/teoteo1081/w15-website-us-tax" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- [Phân hệ 2: Operation 0 — 1,000 Chunks Engine] -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
+            <div class="space-y-3.5">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span data-i18n="spoke2_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Audio 4 Ngôn Ngữ</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="headphones" class="lucide lucide-headphones w-5 h-5 text-cyan-600 dark:text-cyan-400"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
+              </div>
+              <h4 data-i18n="spoke2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Operation 0 — 1.000 Chunk · 4 ngôn ngữ</h4>
+              <p data-i18n="spoke2_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Hệ thống học phản xạ 1.000 câu chuyên sâu qua âm thanh (EN-ES-CN-VN) cho Business, Marketing và Thuế.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
+              <a href="https://teoteo1081.github.io/L00_ES-CN/Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v4.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke2_btn_demo" class="editable-node">Xem trang ↗</span>
+              </a>
+              <a href="https://github.com/teoteo1081/L00_ES-CN" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-cyan-500 dark:hover:border-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all">
+                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- [Phân hệ 3: TJ WordLoop Multiplayer Game] -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
+            <div class="space-y-3.5">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span data-i18n="spoke3_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Game hóa &amp; Giữ chân người dùng</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="gamepad-2" class="lucide lucide-gamepad-2 w-5 h-5 text-emerald-600 dark:text-emerald-400"><line x1="6" x2="10" y1="11" y2="11"></line><line x1="8" x2="8" y1="9" y2="13"></line><line x1="15" x2="15.01" y1="12" y2="12"></line><line x1="18" x2="18.01" y1="10" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></svg>
+              </div>
+              <h4 data-i18n="spoke3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">TJ WordLoop — Game nhiều người chơi</h4>
+              <p data-i18n="spoke3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Trò chơi tương tác từ vựng TOEIC/IELTS với phòng chờ nhiều người chơi thời gian thực, bảng xếp hạng và điểm số.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
+              <a href="https://teoteo1081.github.io/W02-tj-wordloop-hub/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke3_btn_demo" class="editable-node">Xem trang ↗</span>
+              </a>
+              <a href="https://github.com/teoteo1081/W02-tj-wordloop-hub" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- [Phân hệ 4: TJ Courses Hub — Academy] -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
+            <div class="space-y-3.5">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span data-i18n="spoke4_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Ưu tiên di động 390px</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="graduation-cap" class="lucide lucide-graduation-cap w-5 h-5 text-cyan-600 dark:text-cyan-400"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
+              </div>
+              <h4 data-i18n="spoke4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">TJ Courses Hub — Học viện</h4>
+              <p data-i18n="spoke4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Cổng điều phối 4 chương trình thực chiến (EA Thuế Mỹ, Digital Marketing, IELTS, TOEIC) trắc nghiệm 1 chạm.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
+              <a href="https://teoteo1081.github.io/tj-courses/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+                <span data-i18n="spoke4_btn_demo" class="editable-node">Xem trang ↗</span>
+              </a>
+              <a href="https://github.com/teoteo1081/tj-courses" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-cyan-500 dark:hover:border-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all">
+                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
+    </section>
 
-      <!-- 1. CỤM 6 DỊCH VỤ (lưới 3 cột: 2 chính, 2 chuyên ngành, 2 nhận làm) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        
-        <!-- Thẻ 1: End-to-End Operational -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p1')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mouse-pointer-click" class="lucide lucide-mouse-pointer-click w-5 h-5"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
-              </div>
-              <span data-i18n="eco_badge_1" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Dịch vụ chính • Tự động hóa</span>
-            </div>
-            <h3 data-i18n="eco_card1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">1. Tự động hóa Vận hành</h3>
-            <p data-i18n="eco_card1_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p1')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_pages" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Tự động hóa quy trình</span>
-          </div>
-        </div>
-
-        <!-- Thẻ 2: Data Analyst & BI Dashboard -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('countries', this.querySelector('button'), 'p2')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="globe-2" class="lucide lucide-globe-2 w-5 h-5"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"></path><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"></path><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path><circle cx="12" cy="12" r="10"></circle></svg>
-              </div>
-              <span data-i18n="eco_badge_2" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Dịch vụ thứ hai • Dữ liệu &amp; BI</span>
-            </div>
-            <h3 data-i18n="eco_card2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">2. Phân tích Dữ liệu &amp; Dashboard BI</h3>
-            <p data-i18n="eco_card2_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('countries', this, 'p2')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_countries" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">BI cho điều hành</span>
-          </div>
-        </div>
-
-        <!-- Thẻ 5: chuyên ngành -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p5')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check-2" class="lucide lucide-file-check-2 w-5 h-5"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m3 15 2 2 4-4"></path></svg>
-              </div>
-              <span data-i18n="eco_badge_5" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Chuyên ngành • Thuế Mỹ</span>
-            </div>
-            <h3 data-i18n="eco_card5_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">3. Hỗ trợ văn phòng thuế Mỹ</h3>
-            <p data-i18n="eco_card5_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ (1040) trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p5')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_tax" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Back-office thuế Mỹ</span>
-          </div>
-        </div>
-
-        <!-- Thẻ 6: chuyên ngành -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p6')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calculator" class="lucide lucide-calculator w-5 h-5"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
-              </div>
-              <span data-i18n="eco_badge_6" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Chuyên ngành • Bảo hiểm &amp; bán hàng</span>
-            </div>
-            <h3 data-i18n="eco_card6_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">4. Lương thưởng, hoa hồng &amp; KPI</h3>
-            <p data-i18n="eco_card6_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p6')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_comp" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Lương thưởng &amp; KPI</span>
-          </div>
-        </div>
-
-        <!-- Thẻ 3: Website & Landing Page -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('powerbi', this.querySelector('button'), 'p3')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="share-2" class="lucide lucide-share-2 w-5 h-5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
-              </div>
-              <span data-i18n="eco_badge_3" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Nhận làm • Website</span>
-            </div>
-            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">5. Website &amp; Landing Page</h3>
-            <p data-i18n="eco_card3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('powerbi', this, 'p3')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_trend" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Dựng web tinh gọn</span>
-          </div>
-        </div>
-
-        <!-- Thẻ 4: Tracking Performance -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p4')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
-          <div class="space-y-3 pb-2">
-            <div class="flex items-center justify-between">
-              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="workflow" class="lucide lucide-workflow w-5 h-5"><rect width="8" height="8" x="3" y="3" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="2"></rect></svg>
-              </div>
-              <span data-i18n="eco_badge_4" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Theo yêu cầu • Đo lường</span>
-            </div>
-            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">6. Đo lường hiệu suất quảng cáo</h3>
-            <p data-i18n="eco_card4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Gắn và kiểm tra đo lường GA4/GTM (sự kiện, chuyển đổi, UTM), sửa lỗi trùng sự kiện, dựng báo cáo so sánh hiệu quả từng kênh quảng cáo.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
-            <button type="button" aria-haspopup="dialog" aria-controls="ga4-drilldown-modal" onclick="event.stopPropagation(); openGA4DrilldownModal('pages', this, 'p4')" class="no-edit inline-flex items-center gap-1 text-xs font-bold text-cyan-700 dark:text-cyan-400 hover:text-emerald-600 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded transition-colors cursor-pointer">
-              <span data-i18n="eco_btn_detail">[📊 Xem bảng chi tiết ↗]</span>
-            </button>
-            <span data-i18n="eco_sub_bq" class="no-edit text-[10px] font-mono text-slate-500 dark:text-slate-400">Đo lường quảng cáo</span>
-          </div>
-        </div>
-
-      </div>
-
+    <!-- ==================== GA4 TRACKING (#ga4-tracking) — số liệu thật 28 ngày, cập nhật thủ công ==================== -->
+    <section id="ga4-tracking" data-w17-section="ga4" data-w17-nav="nav_ga4" class="relative scroll-mt-32 md:scroll-mt-36" style="scroll-margin-top: 8.5rem;">
       <!-- 1.5 KHỐI DASHBOARD GA4 (số liệu 28 ngày, cập nhật thủ công) -->
       <div id="pbi-ga4-dashboard" class="no-edit rounded-lg bg-slate-900 dark:bg-slate-950 border border-slate-700/80 text-slate-100 shadow-2xl overflow-hidden">
         <!-- Power BI Top Header & Slicers Bar -->
@@ -686,9 +802,10 @@
           <div class="flex items-center gap-3 flex-wrap">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-mono font-bold">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-3" class="lucide lucide-bar-chart-3 w-3.5 h-3.5"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
-              <span data-i18n="pbi_badge">GA4 • SẢN PHẨM CÁ NHÂN</span>
+              <span data-i18n="pbi_badge">GA4 Tracking • Số liệu thật</span>
             </span>
-            <h3 data-i18n="pbi_report_title" class="text-sm sm:text-base font-bold text-white tracking-tight">Báo cáo điều hành GA4 — TJ WordLoop &amp; Hệ sinh thái đa sản phẩm</h3>
+            <h3 data-i18n="pbi_report_title" class="text-sm sm:text-base font-bold text-white tracking-tight">GA4 Tracking — gắn đo lường và đọc số đúng bản chất</h3>
+            <p data-i18n="pbi_subtitle" class="basis-full text-xs text-slate-300 leading-relaxed">Tự gắn GA4 cho hơn 10 website cá nhân (học tập, game, cổng khóa học), gom về một nơi để theo dõi chung. Số liệu thật 28 ngày, kèm cách đọc.</p>
           </div>
 
           <!-- Slicers: Date Range Dropdown + Country Filter Buttons + Modal Trigger -->
@@ -767,7 +884,7 @@
               <span data-i18n="pbi_note_title">Cách đọc số liệu này</span>
             </h4>
             <ul class="space-y-2 text-xs sm:text-[13px] text-slate-300 leading-relaxed">
-              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">1.</span><span data-i18n="pbi_note_1">Nguồn: GA4 của 4 sản phẩm cá nhân do TJ tự xây (game, khóa học, phễu thuế mẫu), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.</span></li>
+              <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">1.</span><span data-i18n="pbi_note_1">Nguồn: GA4 của hơn 10 website cá nhân do TJ tự xây (game, khóa học, ứng dụng học ngôn ngữ), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.</span></li>
               <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">2.</span><span data-i18n="pbi_note_2">Việt Nam: 58 người dùng, 155 phiên, trung bình 35m 11s mỗi người dùng, chiếm 89,8% số sự kiện. Game WordLoop chiếm 80,6% tổng sự kiện.</span></li>
               <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">3.</span><span data-i18n="pbi_note_3">Hoa Kỳ: 80 người dùng nhưng chỉ 41 phiên, trung bình 11 giây mỗi người dùng. Mẫu hình này thường là lưu lượng tự động (bot, trình thu thập) và chưa được lọc khỏi tổng. Vì vậy 174 người dùng và 12m 30s không nên đọc là quy mô khán giả thật.</span></li>
               <li class="flex items-start gap-2"><span class="text-cyan-400 shrink-0" aria-hidden="true">4.</span><span data-i18n="pbi_note_4">Số liệu chụp đến hết 10/11/2026, cập nhật thủ công, không phải thời gian thực.</span></li>
@@ -1211,106 +1328,6 @@
         </div>
       </div>
 
-      <!-- 2. KHUNG HỆ SINH THÁI TRUNG TÂM (HUB & SPOKES ARCHITECTURE) -->
-      <div class="p-6 sm:p-10 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-cyan-500/30 shadow-2xl space-y-8 relative overflow-hidden">
-        <!-- Decorative Top Gradient Line -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-500"></div>
-
-        <!-- Hub Header -->
-        <div class="text-center max-w-4xl mx-auto space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/25 text-cyan-700 dark:text-cyan-400 text-xs font-mono font-bold">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cpu" class="lucide lucide-cpu w-3.5 h-3.5"><rect width="16" height="16" x="4" y="4" rx="2"></rect><rect width="6" height="6" x="9" y="9" rx="1"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
-            <span data-i18n="spoke_section_badge" class="editable-node">DỰ ÁN CÁ NHÂN &amp; ĐO LƯỜNG GA4</span>
-          </div>
-          <h3 data-i18n="hub_title" class="editable-node text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white text-balance">4 Dự Án Cá Nhân — Đo Lường Hành Vi <span class="inline-block">Người Dùng</span></h3>
-          <p data-i18n="hub_desc" class="editable-node text-xs sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed text-balance">Bốn sản phẩm web tương tác độc lập (Fintech, EdTech, Game) do chính TJ xây dựng và tự gắn đo lường về Google Analytics 4. Số liệu bên dưới lấy từ <span class="inline-block">chính các trang này.</span></p>
-        </div>
-
-        <!-- Lưới 4 Phân hệ con (Grid 2x2) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          <!-- [Phân hệ 1: WRP Tax Services — Lead Funnel] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
-            <div class="space-y-3.5">
-              <div class="flex items-center justify-between gap-2 flex-wrap">
-                <span data-i18n="spoke1_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Fintech &amp; Thuế Mỹ 1040</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark" class="lucide lucide-landmark w-5 h-5 text-emerald-600 dark:text-emerald-400"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="18" y2="11"></line><line x1="10" x2="10" y1="18" y2="11"></line><line x1="14" x2="14" y1="18" y2="11"></line><line x1="18" x2="18" y1="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
-              </div>
-              <h4 data-i18n="spoke1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">WRP Tax Services — Phễu khách hàng tiềm năng</h4>
-              <p data-i18n="spoke1_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Website dịch vụ thuế Mỹ tích hợp bộ tính thuế tự động, đóng vai trò phễu thu thập Lead tư vấn CPA/EA.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
-              <a href="https://teoteo1081.github.io/w15-website-us-tax/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke1_btn_demo" class="editable-node">🚀 Mở Web Demo ↗</span>
-              </a>
-              <a href="https://github.com/teoteo1081/w15-website-us-tax" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- [Phân hệ 2: Operation 0 — 1,000 Chunks Engine] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
-            <div class="space-y-3.5">
-              <div class="flex items-center justify-between gap-2 flex-wrap">
-                <span data-i18n="spoke2_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Audio 4 Ngôn Ngữ</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="headphones" class="lucide lucide-headphones w-5 h-5 text-cyan-600 dark:text-cyan-400"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
-              </div>
-              <h4 data-i18n="spoke2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Operation 0 — 1.000 Chunk</h4>
-              <p data-i18n="spoke2_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Hệ thống học phản xạ 1.000 câu chuyên sâu qua âm thanh (EN-ES-CN-VN) cho Business, Marketing và Thuế.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
-              <a href="https://teoteo1081.github.io/L00_ES-CN/Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v4.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke2_btn_demo" class="editable-node">🚀 Mở Web Demo ↗</span>
-              </a>
-              <a href="https://github.com/teoteo1081/L00_ES-CN" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-cyan-500 dark:hover:border-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all">
-                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- [Phân hệ 3: TJ WordLoop Multiplayer Game] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
-            <div class="space-y-3.5">
-              <div class="flex items-center justify-between gap-2 flex-wrap">
-                <span data-i18n="spoke3_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Game hóa &amp; Giữ chân người dùng</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="gamepad-2" class="lucide lucide-gamepad-2 w-5 h-5 text-emerald-600 dark:text-emerald-400"><line x1="6" x2="10" y1="11" y2="11"></line><line x1="8" x2="8" y1="9" y2="13"></line><line x1="15" x2="15.01" y1="12" y2="12"></line><line x1="18" x2="18.01" y1="10" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></svg>
-              </div>
-              <h4 data-i18n="spoke3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">TJ WordLoop — Game nhiều người chơi</h4>
-              <p data-i18n="spoke3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Trò chơi tương tác từ vựng TOEIC/IELTS với phòng chờ nhiều người chơi thời gian thực, bảng xếp hạng và điểm số.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
-              <a href="https://teoteo1081.github.io/W02-tj-wordloop-hub/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke3_btn_demo" class="editable-node">🎮 Vào Chơi Thử Live ↗</span>
-              </a>
-              <a href="https://github.com/teoteo1081/W02-tj-wordloop-hub" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- [Phân hệ 4: TJ Courses Hub — Academy] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
-            <div class="space-y-3.5">
-              <div class="flex items-center justify-between gap-2 flex-wrap">
-                <span data-i18n="spoke4_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Ưu tiên di động 390px</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="graduation-cap" class="lucide lucide-graduation-cap w-5 h-5 text-cyan-600 dark:text-cyan-400"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
-              </div>
-              <h4 data-i18n="spoke4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">TJ Courses Hub — Học viện</h4>
-              <p data-i18n="spoke4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Cổng điều phối 4 chương trình thực chiến (EA Thuế Mỹ, Digital Marketing, IELTS, TOEIC) trắc nghiệm 1 chạm.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
-              <a href="https://teoteo1081.github.io/tj-courses/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
-                <span data-i18n="spoke4_btn_demo" class="editable-node">🚀 Mở Web Demo ↗</span>
-              </a>
-              <a href="https://github.com/teoteo1081/tj-courses" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-cyan-500 dark:hover:border-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 transition-all">
-                <span data-i18n="spoke_btn_github" class="editable-node">🐙 GitHub ↗</span>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </section>
 
     <!-- ==================== (5) SECTION 5: CONTACT & FOOTER (#contact) ==================== -->
@@ -1775,7 +1792,7 @@
             <td class="py-3 px-4 text-slate-500">3</td>
             <td class="py-3 px-4 font-sans">
               <div class="font-bold text-white">Đại diện thuế đã đăng ký IRS (EA 2026) · Luyện Thi &amp; Hành Nghề Thuế Mỹ</div>
-              <div class="text-[11px] text-cyan-400 font-mono">Fintech &amp; US Tax 1040</div>
+              <div class="text-[11px] text-cyan-400 font-mono">Fintech &amp; Thuế Mỹ</div>
             </td>
             <td class="py-3 px-4 text-right font-bold text-emerald-300">26</td>
             <td class="py-3 px-4">
@@ -1935,7 +1952,7 @@
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h4 data-i18n="modal_pkg_heading" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Thêm Chuyên Ngành Thuế Mỹ &amp; Lương Thưởng</h4>
             </div>
-            <span data-i18n="modal_pkg_note" class="text-[11px] font-mono text-slate-400">* Chính: tự động hóa vận hành &amp; Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng &amp; hoa hồng • Nhận làm: website, đo lường hiệu suất quảng cáo</span>
+            <span data-i18n="modal_pkg_note" class="text-[11px] font-mono text-slate-400">* Chính: tự động hóa vận hành & Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng & hoa hồng • Nhận làm: website, quảng cáo & đo lường</span>
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -1968,7 +1985,7 @@
             <!-- Gói 5 (chuyên ngành) -->
             <div id="modal-pkg-p5" data-service-pkg="p5" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p5_title" class="font-bold text-emerald-400 text-xs sm:text-sm">3. Hỗ trợ văn phòng thuế Mỹ (1040)</span>
+                <span data-i18n="modal_p5_title" class="font-bold text-emerald-400 text-xs sm:text-sm">3. Hỗ trợ văn phòng thuế Mỹ</span>
                 <span data-i18n="modal_p5_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Chuyên ngành</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -2007,13 +2024,13 @@
             <!-- Gói 4 -->
             <div id="modal-pkg-p4" data-service-pkg="p4" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">6. Đo lường hiệu suất quảng cáo (theo yêu cầu)</span>
+                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">6. Quảng cáo & Đo lường hiệu suất (theo yêu cầu)</span>
                 <span data-i18n="modal_p4_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Theo yêu cầu</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
-                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item1">(1) Kiểm lỗi đo lường GA4 &amp; GTM, sửa lỗi trùng sự kiện. Bàn giao: báo cáo lỗi và danh sách đã sửa</span></li>
-                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item2">(2) Chuẩn hóa đường dẫn &amp; nguồn khách (UTM). Bàn giao: bảng quy ước UTM</span></li>
-                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item3">(3) Dashboard so sánh hiệu quả từng kênh quảng cáo (truy cập, chuyển đổi; chi phí nếu khách cấp dữ liệu). Bàn giao: dashboard và hướng dẫn đọc số</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item1">(1) Gắn đo lường GA4/GTM: sự kiện chuyển đổi, UTM cho từng kênh, sửa lỗi trùng sự kiện. Bàn giao: danh sách sự kiện và bảng quy ước UTM</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item2">(2) Thiết lập và chạy chiến dịch Google Ads / Meta Ads theo yêu cầu, bắt đầu với ngân sách thử nhỏ; tài khoản quảng cáo thuộc quyền sở hữu của khách. Bàn giao: chiến dịch đã thiết lập và quyền quản trị</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-indigo-400">✓</span><span data-i18n="modal_p4_item3">(3) Báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng, so sánh hiệu quả từng kênh. Bàn giao: bảng theo dõi chi phí – khách tiềm năng và ghi chú điều chỉnh</span></li>
               </ul>
             </div>
           </div>
@@ -2037,17 +2054,17 @@
   <div id="toast-notification" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-[70] px-4 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs sm:text-sm shadow-2xl no-print hidden"></div>
 
   <!-- Chỉnh sửa đã nhúng khi xuất Final (dữ liệu JSON thuần, không thực thi): mở lại với cache trống vẫn giữ nội dung -->
-  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"\u003cspan class=\"inline-block\"\u003eTôi hỗ trợ doanh nghiệp xử lý các quy trình vận hành và dữ liệu từ đầu đến cuối: khảo sát yêu cầu, chuẩn hóa dữ liệu, tự động hóa công việc lặp lại, xây dựng dashboard và kiểm tra kết quả. Mỗi giải pháp được triển khai theo phạm vi thống nhất, có sản phẩm bàn giao và hướng dẫn sử dụng.\u003c/span\u003e","hero_positioning":"End-to-End Operations Automation • Data Analytics • Dashboard BI","eco_card5_title":"3. Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ (1040) trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.","hero_title":"Tự động hóa trọn quy trình vận hành, từ dữ liệu đầu vào đến báo cáo bàn giao.","hero_btn_capability":"📄 Xem CV","nav_capability":"CV","hero_btn_dashboard":"Xem Dashboard Demo","hero_badge":"Nhận dự án Freelance \u0026 Remote","eco_card3_title":"5. Website \u0026 Landing Page","spoke2_title":"Operation 0 — 1.000 Chunk","eco_title":"Dịch vụ \u0026 Giải pháp"}}}</script>
+  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"\u003cspan class=\"inline-block\"\u003eTôi hỗ trợ doanh nghiệp xử lý các quy trình vận hành và dữ liệu từ đầu đến cuối: khảo sát yêu cầu, chuẩn hóa dữ liệu, tự động hóa công việc lặp lại, xây dựng dashboard và kiểm tra kết quả. Mỗi giải pháp được triển khai theo phạm vi thống nhất, có sản phẩm bàn giao và hướng dẫn sử dụng.\u003c/span\u003e","hero_positioning":"End-to-End Operations Automation • Data Analytics • Dashboard BI","eco_card5_title":"3. Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.","hero_title":"Tự động hóa trọn quy trình vận hành, từ dữ liệu đầu vào đến báo cáo bàn giao.","hero_btn_capability":"📄 Xem CV","nav_capability":"CV","hero_btn_dashboard":"Xem dịch vụ ↓","hero_badge":"Nhận dự án Freelance \u0026 Remote","eco_card3_title":"5. Website \u0026 Landing Page","spoke2_title":"Operation 0 — 1.000 Chunk · 4 ngôn ngữ","eco_title":"Dịch vụ \u0026 Giải pháp"}}}</script>
 
   <!-- Translations & Core Logic -->
   <script id="core-portfolio-script">
     const translations = {
       vi: {
-        modal_p4_item3: "(3) Dashboard so sánh hiệu quả từng kênh quảng cáo (truy cập, chuyển đổi; chi phí nếu khách cấp dữ liệu). Bàn giao: dashboard và hướng dẫn đọc số",
-        modal_p4_item2: "(2) Chuẩn hóa đường dẫn & nguồn khách (UTM). Bàn giao: bảng quy ước UTM",
-        modal_p4_item1: "(1) Kiểm lỗi đo lường GA4 & GTM, sửa lỗi trùng sự kiện. Bàn giao: báo cáo lỗi và danh sách đã sửa",
-        modal_p4_title: "6. Đo lường hiệu suất quảng cáo (theo yêu cầu)",
-        modal_p5_title: "3. Hỗ trợ văn phòng thuế Mỹ (1040)",
+        modal_p4_item3: "(3) Báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng, so sánh hiệu quả từng kênh. Bàn giao: bảng theo dõi chi phí – khách tiềm năng và ghi chú điều chỉnh",
+        modal_p4_item2: "(2) Thiết lập và chạy chiến dịch Google Ads / Meta Ads theo yêu cầu, bắt đầu với ngân sách thử nhỏ; tài khoản quảng cáo thuộc quyền sở hữu của khách. Bàn giao: chiến dịch đã thiết lập và quyền quản trị",
+        modal_p4_item1: "(1) Gắn đo lường GA4/GTM: sự kiện chuyển đổi, UTM cho từng kênh, sửa lỗi trùng sự kiện. Bàn giao: danh sách sự kiện và bảng quy ước UTM",
+        modal_p4_title: "6. Quảng cáo & Đo lường hiệu suất (theo yêu cầu)",
+        modal_p5_title: "3. Hỗ trợ văn phòng thuế Mỹ",
         modal_p5_badge: "Chuyên ngành",
         modal_p5_item1: "(1) Kiểm hồ sơ trước khi funnel vào CCH Autoflow. Bàn giao: bảng phân loại từng trang, danh sách hồ sơ trùng, sai năm, TIN lạ; số trang khớp 100%",
         modal_p5_item2: "(2) Rà và sửa bookmark workpaper theo 26 nhóm chuẩn CCH. Bàn giao: báo cáo lỗi theo từng trang và file workpaper mới, nội dung trang giữ nguyên",
@@ -2069,11 +2086,15 @@
         modal_p1_item2: "(2) Đối soát & làm sạch dữ liệu định kỳ. Bàn giao: báo cáo chênh lệch và danh sách dòng cần kiểm",
         modal_p1_item1: "(1) Tự động hóa nhập liệu & đồng bộ dữ liệu (Python, Playwright, Google Sheets). Bàn giao: script hoặc Sheet chạy được",
         modal_p1_title: "1. Tự động hóa Vận hành",
-        modal_pkg_note: "* Chính: tự động hóa vận hành & Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng & hoa hồng • Nhận làm: website, đo lường hiệu suất quảng cáo",
+        modal_pkg_note: "* Chính: tự động hóa vận hành & Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng & hoa hồng • Nhận làm: website, quảng cáo & đo lường",
         modal_pkg_heading: "Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Thêm Chuyên Ngành Thuế Mỹ & Lương Thưởng",
         nav_about: "Giới thiệu",
+        aria_page_switch: "Chuyển giữa Portfolio và CV",
+        nav_services: "Dịch vụ",
         nav_metrics: "Chỉ số",
-        nav_dashboard: "Mô phỏng Phễu",
+        nav_dashboard: "Dashboard",
+        nav_website: "Website",
+        nav_ga4: "GA4 Tracking",
         nav_ecosystem: "Hệ Sinh Thái GA4",
         nav_capability: "CV & Năng lực",
         nav_contact: "Liên hệ",
@@ -2082,11 +2103,11 @@
         hero_title: "Tự động hóa việc lặp lại, dữ liệu sạch,<br class='hidden md:inline'> dashboard rõ ràng cho <span class='inline-block'>chủ doanh nghiệp</span>",
         hero_headline: "Dữ Liệu Chuẩn Xác • Ra Quyết Định Đúng<br class='hidden md:inline'> Tối Ưu Ngân Sách & Tăng Trưởng <span class='inline-block'>Doanh Thu</span>",
         hero_positioning: "Chuyên viên Vận hành & Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI",
-        hero_desc: "Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ văn phòng thuế Mỹ (1040) và cơ chế lương thưởng ngành bảo hiểm. Làm việc từ xa, bàn giao file chạy được <span class='inline-block'>kèm hướng dẫn.</span>",
-        hero_btn_dashboard: "Xem Dashboard Tương Tác",
+        hero_desc: "Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ văn phòng thuế Mỹ và cơ chế lương thưởng ngành bảo hiểm. Làm việc từ xa, bàn giao file chạy được <span class='inline-block'>kèm hướng dẫn.</span>",
+        hero_btn_dashboard: "Xem dịch vụ ↓",
         hero_btn_github: "🐙 Xem GitHub ↗",
         hero_btn_capability: "📄 Xem CV & hồ sơ năng lực",
-        dash_tag: "Dữ liệu mẫu • Mô phỏng",
+        dash_tag: "Dữ liệu mẫu • Dashboard BI & KPI",
         dash_title: "Phân Tích Hiệu Suất & Phễu <span class='inline-block'>Chuyển Đổi</span>",
         dash_disclaimer: "* Toàn bộ số trong khối này là dữ liệu mẫu để minh họa bộ lọc KPI và phễu bán hàng. Đây không phải kết quả thật của khách hàng nào. Ví dụ cho dịch vụ 4: lương thưởng & hoa hồng.",
         filter_all: "Tất cả khu vực",
@@ -2108,31 +2129,32 @@
         funnel_stage3: "3. Chốt hợp đồng & Ký kết",
         eco_badge: "HỆ SINH THÁI DỊCH VỤ & GIẢI PHÁP THỰC CHIẾN",
         eco_title: "Hệ Sinh Thái Sản Phẩm & Dịch Vụ Của TJ",
-        eco_property: "Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng & hoa hồng | Nhận làm: Website, Đo lường hiệu suất quảng cáo",
+        eco_property: "Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng & hoa hồng | Nhận làm: Website, Quảng cáo & Đo lường",
         eco_card1_title: "1. Tự động hóa Vận hành",
         eco_card1_desc: "Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.",
         eco_card2_title: "2. Phân tích Dữ liệu & Dashboard BI",
         eco_card2_desc: "Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.",
         eco_card3_title: "5. Website & Trang đích",
         eco_card3_desc: "Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.",
-        eco_card4_title: "6. Đo lường hiệu suất quảng cáo",
-        eco_card4_desc: "Gắn và kiểm tra đo lường GA4/GTM (sự kiện, chuyển đổi, UTM), sửa lỗi trùng sự kiện, dựng báo cáo so sánh hiệu quả từng kênh quảng cáo.",
+        eco_card4_title: "6. Quảng cáo & Đo lường hiệu suất",
+        eco_card4_desc: "Nhận thiết lập và vận hành chiến dịch Google Ads / Meta Ads khi khách cần. Gắn đo lường chuyển đổi từ ngày đầu, chạy thử với ngân sách nhỏ, báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng.",
         eco_badge_5: "Chuyên ngành • Thuế Mỹ",
         eco_badge_6: "Chuyên ngành • Bảo hiểm & bán hàng",
-        eco_card5_title: "3. Hỗ trợ văn phòng thuế Mỹ (1040)",
+        eco_card5_title: "3. Hỗ trợ văn phòng thuế Mỹ",
         eco_card5_desc: "Kiểm hồ sơ khách trước khi đưa vào CCH Autoflow (phân loại từng trang, bắt hồ sơ trùng, sai năm, sai người), rà và sửa bookmark workpaper PDF theo chuẩn CCH, tìm đúng bản tờ khai, đối soát phí với E-Upsafe và Google Sheet.",
         eco_sub_tax: "Back-office thuế Mỹ",
         eco_card6_title: "4. Lương thưởng, hoa hồng & KPI",
         eco_card6_desc: "Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.",
         eco_sub_comp: "Lương thưởng & KPI",
-        eco_btn_detail: "[📊 Xem bảng chi tiết ↗]",
+        eco_btn_detail: "Chi tiết dịch vụ",
         eco_sub_pages: "Tự động hóa quy trình",
         eco_sub_countries: "BI cho điều hành",
         eco_sub_trend: "Dựng web tinh gọn",
         eco_sub_bq: "Đo lường quảng cáo",
-        pbi_report_title: "Báo cáo điều hành GA4 — TJ WordLoop & Hệ sinh thái đa sản phẩm",
+        pbi_report_title: "GA4 Tracking — gắn đo lường và đọc số đúng bản chất",
+        pbi_subtitle: "Tự gắn GA4 cho hơn 10 website cá nhân (học tập, game, cổng khóa học), gom về một nơi để theo dõi chung. Số liệu thật 28 ngày, kèm cách đọc.",
         pbi_note_title: "Cách đọc số liệu này",
-        pbi_note_1: "Nguồn: GA4 của 4 sản phẩm cá nhân do TJ tự xây (game, khóa học, phễu thuế mẫu), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.",
+        pbi_note_1: "Nguồn: GA4 của hơn 10 website cá nhân do TJ tự xây (game, khóa học, ứng dụng học ngôn ngữ), giai đoạn 14/10 – 10/11/2026. Đây không phải dữ liệu của khách hàng và không chứng minh doanh thu.",
         pbi_note_2: "Việt Nam: 58 người dùng, 155 phiên, trung bình 35m 11s mỗi người dùng, chiếm 89,8% số sự kiện. Game WordLoop chiếm 80,6% tổng sự kiện.",
         pbi_note_3: "Hoa Kỳ: 80 người dùng nhưng chỉ 41 phiên, trung bình 11 giây mỗi người dùng. Mẫu hình này thường là lưu lượng tự động (bot, trình thu thập) và chưa được lọc khỏi tổng. Vì vậy 174 người dùng và 12m 30s không nên đọc là quy mô khán giả thật.",
         pbi_note_4: "Số liệu chụp đến hết 10/11/2026, cập nhật thủ công, không phải thời gian thực.",
@@ -2199,24 +2221,24 @@
         ga4_modal_footer_source: "Nguồn: Google Analytics 4 (các trang do TJ xây dựng)",
         ga4_modal_esc_hint: "Bấm phím <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> để đóng",
         ga4_modal_btn_close: "Đóng [✕]",
-        hub_title: "4 Dự Án Cá Nhân — Đo Lường Hành Vi <span class='inline-block'>Người Dùng</span>",
-        hub_desc: "Bốn sản phẩm web tương tác độc lập (Fintech, EdTech, Game) do chính TJ xây dựng và tự gắn đo lường về Google Analytics 4. Số liệu bên dưới lấy từ <span class='inline-block'>chính các trang này.</span>",
-        spoke1_badge: "Fintech & Thuế Mỹ 1040",
-        spoke1_title: "WRP Tax Services — Phễu khách hàng tiềm năng",
-        spoke1_desc: "Website dịch vụ thuế Mỹ tích hợp bộ tính thuế tự động, đóng vai trò phễu thu thập Lead tư vấn CPA/EA.",
-        spoke1_btn_demo: "🚀 Mở Web Demo ↗",
+        hub_title: "Các website tiêu biểu",
+        hub_desc: "Một số website tự xây: trang dịch vụ, ứng dụng học, game, cổng khóa học.",
+        spoke1_badge: "Fintech & Thuế Mỹ",
+        spoke1_title: "WRP Tax Services — Website dịch vụ thuế Mỹ",
+        spoke1_desc: "Có công cụ tính thuế và form để khách để lại thông tin nhận tư vấn.",
+        spoke1_btn_demo: "Xem trang ↗",
         spoke2_badge: "Audio 4 Ngôn Ngữ",
-        spoke2_title: "Operation 0 — Động cơ 1.000 Chunk",
+        spoke2_title: "Operation 0 — 1.000 Chunk · 4 ngôn ngữ",
         spoke2_desc: "Hệ thống học phản xạ 1.000 câu chuyên sâu qua âm thanh (EN-ES-CN-VN) cho Business, Marketing và Thuế.",
-        spoke2_btn_demo: "🚀 Mở Web Demo ↗",
+        spoke2_btn_demo: "Xem trang ↗",
         spoke3_badge: "Game hóa & Giữ chân người dùng",
         spoke3_title: "TJ WordLoop — Game nhiều người chơi",
         spoke3_desc: "Trò chơi tương tác từ vựng TOEIC/IELTS với phòng chờ nhiều người chơi thời gian thực, bảng xếp hạng và điểm số.",
-        spoke3_btn_demo: "🎮 Vào Chơi Thử Live ↗",
+        spoke3_btn_demo: "Xem trang ↗",
         spoke4_badge: "Ưu tiên di động 390px",
         spoke4_title: "TJ Courses Hub — Học viện",
         spoke4_desc: "Cổng điều phối 4 chương trình thực chiến (EA Thuế Mỹ, Digital Marketing, IELTS, TOEIC) trắc nghiệm 1 chạm.",
-        spoke4_btn_demo: "🚀 Mở Web Demo ↗",
+        spoke4_btn_demo: "Xem trang ↗",
         spoke_btn_github: "🐙 GitHub ↗",
         contact_section_title: "Liên Hệ",
         contact_section_sub: "Gửi Việc Đang Làm Tay, <span class='inline-block'>Nhận Đề Xuất Cách Làm</span>",
@@ -2246,11 +2268,11 @@
         eco_badge_1: "Dịch vụ chính • Tự động hóa",
         eco_badge_2: "Dịch vụ thứ hai • Dữ liệu & BI",
         eco_badge_3: "Nhận làm • Website",
-        eco_badge_4: "Theo yêu cầu • Đo lường",
+        eco_badge_4: "Theo yêu cầu • Quảng cáo",
         chart_axis_multiple: "Bội số (x)",
         chart_axis_throughput: "Thông lượng %",
-        pbi_badge: "GA4 • SẢN PHẨM CÁ NHÂN",
-        spoke_section_badge: "DỰ ÁN CÁ NHÂN & ĐO LƯỜNG GA4",
+        pbi_badge: "GA4 Tracking • Số liệu thật",
+        spoke_section_badge: "Website • Sản phẩm tự xây",
         footer_rights: "Bảo lưu mọi quyền.",
         privacy_settings: "Quyền riêng tư & cookie",
         ga4_live_badge: "GA4 • CHI TIẾT",
@@ -2267,11 +2289,11 @@
         meta_desc: "Hồ sơ của TJ — freelancer Vận hành & Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu."
       },
       en: {
-        modal_p4_item3: "(3) Dashboard comparing each ad channel (traffic, conversions; cost if the client shares the data). Delivered: dashboard and a guide to reading it",
-        modal_p4_item2: "(2) Standardizing links and traffic sources (UTM). Delivered: a UTM naming convention sheet",
-        modal_p4_item1: "(1) Checking GA4 and GTM tracking and fixing duplicate events. Delivered: an issue report and a list of fixes",
-        modal_p4_title: "6. Ad Performance Tracking (on request)",
-        modal_p5_title: "3. US Tax Office Back-Office (1040)",
+        modal_p4_item3: "(3) Weekly reports on cost per lead, comparing each channel. Delivered: a cost-and-leads tracker with adjustment notes",
+        modal_p4_item2: "(2) Setting up and running Google Ads / Meta Ads campaigns on request, starting with a small test budget; the ad accounts stay owned by the client. Delivered: configured campaigns and admin access",
+        modal_p4_item1: "(1) GA4/GTM measurement: conversion events, UTM per channel, duplicate-event fixes. Delivered: an event list and a UTM naming sheet",
+        modal_p4_title: "6. Ads & Performance Tracking (on request)",
+        modal_p5_title: "3. US Tax Office Back-Office",
         modal_p5_badge: "Specialist",
         modal_p5_item1: "(1) Pre-funnel QA before CCH Autoflow. Delivered: a page-by-page sorting sheet, a list of duplicates, wrong-year pages and unknown TINs; page counts reconciled 100%",
         modal_p5_item2: "(2) Workpaper bookmark audit and fix against the 26 CCH categories. Delivered: a page-level issue report and a corrected workpaper file, page content unchanged",
@@ -2293,11 +2315,15 @@
         modal_p1_item2: "(2) Recurring reconciliation and data cleaning. Delivered: a variance report and a list of rows to review",
         modal_p1_item1: "(1) Automating data entry and data sync (Python, Playwright, Google Sheets). Delivered: a working script or Sheet",
         modal_p1_title: "1. Operations Automation",
-        modal_pkg_note: "* Core: operations automation & BI dashboards • Specialist: US tax back-office, sales compensation • Also available: websites, ad performance tracking",
+        modal_pkg_note: "* Core: operations automation & BI dashboards • Specialist: US tax back-office, sales compensation • Also available: websites, ads & performance tracking",
         modal_pkg_heading: "TJ's Service Scope: Data First, Plus US Tax & Compensation Specialties",
         nav_about: "About",
+        aria_page_switch: "Switch between Portfolio and CV",
+        nav_services: "Services",
         nav_metrics: "Metrics",
-        nav_dashboard: "Funnel Simulation",
+        nav_dashboard: "Dashboard",
+        nav_website: "Websites",
+        nav_ga4: "GA4 Tracking",
         nav_ecosystem: "GA4 Ecosystem",
         nav_capability: "CV & Capabilities",
         nav_contact: "Contact",
@@ -2306,11 +2332,11 @@
         hero_title: "Automate Repetitive Work, Clean Data,<br class='hidden md:inline'> Clear Dashboards for <span class='inline-block'>Business Owners</span>",
         hero_headline: "Accurate Data • Confident Decisions<br class='hidden md:inline'> Budget Optimization & <span class='inline-block'>Revenue Growth</span>",
         hero_positioning: "Operations & Data Analyst • Process Automation • BI Dashboards",
-        hero_desc: "I automate data entry, reconciliation and sync across Excel, Google Sheets and business systems, then clean the data and build executive dashboards in Power BI. Lean websites and ad performance tracking (GA4/GTM) on request. Domain know-how in US tax office (1040) operations and insurance sales compensation. Fully remote, delivered as working files with a <span class='inline-block'>handover guide.</span>",
-        hero_btn_dashboard: "Explore Live Dashboard",
+        hero_desc: "I automate data entry, reconciliation and sync across Excel, Google Sheets and business systems, then clean the data and build executive dashboards in Power BI. Lean websites and ad performance tracking (GA4/GTM) on request. Domain know-how in US tax office operations and insurance sales compensation. Fully remote, delivered as working files with a <span class='inline-block'>handover guide.</span>",
+        hero_btn_dashboard: "View services ↓",
         hero_btn_github: "🐙 View GitHub Profile ↗",
         hero_btn_capability: "📄 View CV & capability profile",
-        dash_tag: "Sample data • Simulation",
+        dash_tag: "Sample data • BI & KPI dashboard",
         dash_title: "Performance & <span class='inline-block'>Funnel Analytics</span>",
         dash_disclaimer: "* Every figure in this block is sample data illustrating KPI filters and a sales funnel. They are not real results from any client. Example for service 4: sales compensation & commissions.",
         filter_all: "All Regions",
@@ -2332,31 +2358,32 @@
         funnel_stage3: "3. Final Close & Contract Won",
         eco_badge: "SERVICE ECOSYSTEM & PRAGMATIC SOLUTIONS",
         eco_title: "TJ's Product & Service Ecosystem",
-        eco_property: "Core: Operations automation • BI dashboards | Specialist: US tax back-office, Sales compensation | Also available: Websites, Ad performance tracking",
+        eco_property: "Core: Operations automation • BI dashboards | Specialist: US tax back-office, Sales compensation | Also available: Websites, Ads & performance tracking",
         eco_card1_title: "1. Operations Automation",
         eco_card1_desc: "Automation of data entry, invoice reconciliation and data sync between Excel, Google Sheets and other systems (Python, Playwright). Delivered as a working file with error logs and a usage guide.",
         eco_card2_title: "2. Data Analyst & BI Dashboard",
         eco_card2_desc: "Cleaning raw data, standardizing metrics and building executive dashboards (Power BI) so owners can follow cash flow and operational performance.",
         eco_card3_title: "5. Website & Landing Page",
         eco_card3_desc: "Lean company pages and landing pages that load fast, with forms that feed Google Sheets.",
-        eco_card4_title: "6. Ad Performance Tracking",
-        eco_card4_desc: "Set up and audit GA4/GTM tracking (events, conversions, UTM), fix duplicate events, and build reports comparing each ad channel.",
+        eco_card4_title: "6. Ads & Performance Tracking",
+        eco_card4_desc: "Google Ads / Meta Ads campaigns set up and run on request: conversion tracking from day one, a small test budget first, and weekly reports on cost per lead.",
         eco_badge_5: "Specialist • US Tax",
         eco_badge_6: "Specialist • Insurance & Sales",
-        eco_card5_title: "3. US Tax Office Back-Office (1040)",
+        eco_card5_title: "3. US Tax Office Back-Office",
         eco_card5_desc: "Pre-funnel QA of client documents before CCH Autoflow (page-by-page sorting, catching duplicates, wrong-year and wrong-taxpayer pages), workpaper PDF bookmark audit and fix to CCH standards, locating the correct return copies, and fee reconciliation against E-Upsafe and Google Sheets.",
         eco_sub_tax: "US tax back-office",
         eco_card6_title: "4. Sales Compensation, Commissions & KPIs",
         eco_card6_desc: "Design and calculate incentive and commission schemes for sales teams: compensation cost models, payout scenario testing, cost versus revenue, and payout reconciliation each period. Experience from Prudential, Chubb Life and AIA.",
         eco_sub_comp: "Compensation & KPIs",
-        eco_btn_detail: "[📊 View Detailed Table ↗]",
+        eco_btn_detail: "Service details",
         eco_sub_pages: "Workflow Automation",
         eco_sub_countries: "Executive BI",
         eco_sub_trend: "Lean Web Build",
         eco_sub_bq: "Ad tracking",
-        pbi_report_title: "GA4 Executive Report — TJ WordLoop & Multi-Product Ecosystem",
+        pbi_report_title: "GA4 Tracking — measurement set up and read honestly",
+        pbi_subtitle: "GA4 set up across 10+ personal websites (learning, game, course portal), consolidated in one property. Real 28-day data, with notes on how to read it.",
         pbi_note_title: "How to read these numbers",
-        pbi_note_1: "Source: GA4 of four personal products TJ built (a game, a course hub, a sample tax funnel), Oct 14 – Nov 10, 2026. This is not client data and does not prove revenue.",
+        pbi_note_1: "Source: GA4 of 10+ personal websites TJ built (a game, course sites, language-learning apps), Oct 14 – Nov 10, 2026. This is not client data and does not prove revenue.",
         pbi_note_2: "Vietnam: 58 users, 155 sessions, 35m 11s average per user, 89.8% of all events. The WordLoop game accounts for 80.6% of total events.",
         pbi_note_3: "United States: 80 users but only 41 sessions, 11 seconds per user on average. This pattern usually means automated traffic (bots, crawlers) and it has not been filtered out of the totals. So 174 users and 12m 30s should not be read as the size of a real audience.",
         pbi_note_4: "Figures captured through Nov 10, 2026, updated manually, not real-time.",
@@ -2423,24 +2450,24 @@
         ga4_modal_footer_source: "Source: Google Analytics 4 (sites built by TJ)",
         ga4_modal_esc_hint: "Press <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> to close",
         ga4_modal_btn_close: "Close [✕]",
-        hub_title: "4 Personal Projects — Measuring User <span class='inline-block'>Behavior</span>",
-        hub_desc: "Four independent interactive web products (Fintech, EdTech, Game) built by TJ and instrumented with Google Analytics 4. The figures below come from <span class='inline-block'>these very sites.</span>",
-        spoke1_badge: "Fintech & US Tax 1040",
-        spoke1_title: "WRP Tax Services — Lead Funnel",
-        spoke1_desc: "US Tax services portal featuring an automated tax estimator, engineered as a high-intent CPA/EA lead generation funnel.",
-        spoke1_btn_demo: "🚀 Open Live Demo ↗",
+        hub_title: "Featured websites",
+        hub_desc: "A few self-built websites: a service site, a learning app, a game and a course portal.",
+        spoke1_badge: "Fintech & US Tax",
+        spoke1_title: "WRP Tax Services — US Tax Services Website",
+        spoke1_desc: "Includes a tax calculator and a form for visitors to request a consultation.",
+        spoke1_btn_demo: "Visit site ↗",
         spoke2_badge: "4-Language Audio Engine",
-        spoke2_title: "Operation 0 — 1,000 Chunks Engine",
+        spoke2_title: "Operation 0 — 1,000 Chunks · 4 languages",
         spoke2_desc: "1,000-sentence audio reflex training system (EN-ES-CN-VN) tailored for Business, Marketing, and US Tax.",
-        spoke2_btn_demo: "🚀 Open Live Demo ↗",
+        spoke2_btn_demo: "Visit site ↗",
         spoke3_badge: "Gamification & Retention",
         spoke3_title: "TJ WordLoop Multiplayer Game",
         spoke3_desc: "Interactive TOEIC/IELTS vocabulary game featuring real-time multiplayer lobbies, leaderboards, and live scoring.",
-        spoke3_btn_demo: "🎮 Play Live Game ↗",
+        spoke3_btn_demo: "Visit site ↗",
         spoke4_badge: "Mobile-First 390px",
         spoke4_title: "TJ Courses Hub — Academy",
         spoke4_desc: "Central learning hub coordinating 4 practical tracks (US Tax EA, Digital Marketing, IELTS, TOEIC) with 1-tap quizzes.",
-        spoke4_btn_demo: "🚀 Open Live Demo ↗",
+        spoke4_btn_demo: "Visit site ↗",
         spoke_btn_github: "🐙 GitHub ↗",
         contact_section_title: "Get in Touch",
         contact_section_sub: "Send the Manual Task, <span class='inline-block'>Get a Proposed Approach</span>",
@@ -2470,11 +2497,11 @@
         eco_badge_1: "Core • Automation",
         eco_badge_2: "Second • Data & BI",
         eco_badge_3: "Available • Website",
-        eco_badge_4: "On request • Tracking",
+        eco_badge_4: "On request • Ads",
         chart_axis_multiple: "Multiple (x)",
         chart_axis_throughput: "Throughput %",
-        pbi_badge: "GA4 • PERSONAL PRODUCTS",
-        spoke_section_badge: "PERSONAL PROJECTS & GA4 TRACKING",
+        pbi_badge: "GA4 Tracking • Real data",
+        spoke_section_badge: "Websites • Self-built",
         footer_rights: "All rights reserved.",
         privacy_settings: "Privacy & cookies",
         ga4_live_badge: "GA4 • DETAIL",
@@ -2491,11 +2518,11 @@
         meta_desc: "Profile of TJ — freelance Operations & Data Analyst: automating data entry and reconciliation, building executive BI dashboards. Lean web pages and GA4/GTM tracking checks available on request."
       },
       es: {
-        modal_p4_item3: "(3) Panel que compara cada canal publicitario (tráfico, conversiones; costo si el cliente comparte los datos). Entrega: panel y guía de lectura",
-        modal_p4_item2: "(2) Estandarización de enlaces y fuentes de tráfico (UTM). Entrega: tabla de convenciones UTM",
-        modal_p4_item1: "(1) Revisión de medición GA4 y GTM y corrección de eventos duplicados. Entrega: informe de errores y lista de correcciones",
-        modal_p4_title: "6. Medición del Rendimiento Publicitario (bajo pedido)",
-        modal_p5_title: "3. Back-office para Despachos Fiscales de EE. UU. (1040)",
+        modal_p4_item3: "(3) Informes semanales del costo por cliente potencial, comparando cada canal. Entrega: tablero de costos y clientes potenciales con notas de ajuste",
+        modal_p4_item2: "(2) Configuración y gestión de campañas de Google Ads / Meta Ads bajo pedido, empezando con un presupuesto de prueba pequeño; las cuentas son propiedad del cliente. Entrega: campañas configuradas y acceso de administrador",
+        modal_p4_item1: "(1) Medición GA4/GTM: eventos de conversión, UTM por canal y corrección de eventos duplicados. Entrega: lista de eventos y tabla de convenciones UTM",
+        modal_p4_title: "6. Publicidad y Medición del Rendimiento (bajo pedido)",
+        modal_p5_title: "3. Back-office para Despachos Fiscales de EE. UU.",
         modal_p5_badge: "Especializado",
         modal_p5_item1: "(1) Revisión previa a CCH Autoflow. Entrega: tabla de clasificación página por página, lista de duplicados, páginas de año incorrecto y TIN desconocidos; conteo de páginas cuadrado al 100 %",
         modal_p5_item2: "(2) Auditoría y corrección de marcadores de papeles de trabajo según las 26 categorías CCH. Entrega: informe de errores por página y archivo corregido, sin alterar el contenido",
@@ -2517,11 +2544,15 @@
         modal_p1_item2: "(2) Conciliación y limpieza periódica de datos. Entrega: informe de diferencias y lista de filas a revisar",
         modal_p1_item1: "(1) Automatización de ingreso y sincronización de datos (Python, Playwright, Google Sheets). Entrega: script o Sheet funcional",
         modal_p1_title: "1. Automatización Operativa",
-        modal_pkg_note: "* Principal: automatización operativa y paneles BI • Especializado: back-office fiscal EE. UU., compensación comercial • También: sitios web, medición del rendimiento publicitario",
+        modal_pkg_note: "* Principal: automatización operativa y paneles BI • Especializado: back-office fiscal EE. UU., compensación comercial • También: sitios web, publicidad y medición",
         modal_pkg_heading: "Alcance de Servicios de TJ: Datos Primero, Más Fiscalidad EE. UU. y Compensación",
         nav_about: "Sobre mí",
+        aria_page_switch: "Cambiar entre Portafolio y CV",
+        nav_services: "Servicios",
         nav_metrics: "Métricas",
-        nav_dashboard: "Simulación de Embudo",
+        nav_dashboard: "Dashboard",
+        nav_website: "Sitios web",
+        nav_ga4: "GA4 Tracking",
         nav_ecosystem: "Ecosistema GA4",
         nav_capability: "CV y Capacidades",
         nav_contact: "Contacto",
@@ -2530,11 +2561,11 @@
         hero_title: "Automatiza lo repetitivo, datos limpios,<br class='hidden md:inline'> paneles claros para <span class='inline-block'>dueños de negocio</span>",
         hero_headline: "Datos Precisos • Decisiones Acertadas<br class='hidden md:inline'> Optimización de Presupuesto y <span class='inline-block'>Crecimiento Real</span>",
         hero_positioning: "Analista de Operaciones y Datos • Automatización de Procesos • Paneles BI",
-        hero_desc: "Automatización de ingreso de datos, conciliación y sincronización entre Excel, Google Sheets y sistemas de negocio. Limpieza de datos y paneles ejecutivos en Power BI. Sitios web ligeros y medición del rendimiento publicitario (GA4/GTM) bajo pedido. Conocimiento del back-office de despachos fiscales de EE. UU. (1040) y de la compensación comercial en seguros. Trabajo 100 % remoto, con archivos funcionales y <span class='inline-block'>guía de entrega.</span>",
-        hero_btn_dashboard: "Ver Panel Interactivo",
+        hero_desc: "Automatización de ingreso de datos, conciliación y sincronización entre Excel, Google Sheets y sistemas de negocio. Limpieza de datos y paneles ejecutivos en Power BI. Sitios web ligeros y medición del rendimiento publicitario (GA4/GTM) bajo pedido. Conocimiento del back-office de despachos fiscales de EE. UU. y de la compensación comercial en seguros. Trabajo 100 % remoto, con archivos funcionales y <span class='inline-block'>guía de entrega.</span>",
+        hero_btn_dashboard: "Ver servicios ↓",
         hero_btn_github: "🐙 Perfil de GitHub ↗",
         hero_btn_capability: "📄 Ver CV y perfil de capacidades",
-        dash_tag: "Datos de muestra • Simulación",
+        dash_tag: "Datos de ejemplo • Panel BI y KPI",
         dash_title: "Análisis de Rendimiento y <span class='inline-block'>Embudo Comercial</span>",
         dash_disclaimer: "* Todas las cifras de este bloque son datos de muestra que ilustran filtros de KPI y un embudo de ventas. No son resultados reales de ningún cliente. Ejemplo del servicio 4: compensación y comisiones.",
         filter_all: "Todas las Regiones",
@@ -2556,31 +2587,32 @@
         funnel_stage3: "3. Cierre Definitivo y Contratos Ganados",
         eco_badge: "ECOSISTEMA DE SERVICIOS Y SOLUCIONES PRÁCTICAS",
         eco_title: "Ecosistema de Productos y Servicios de TJ",
-        eco_property: "Principal: Automatización operativa • Paneles BI | Especializado: Back-office fiscal EE. UU., Compensación comercial | También: Sitios web, Medición del rendimiento publicitario",
+        eco_property: "Principal: Automatización operativa • Paneles BI | Especializado: Back-office fiscal EE. UU., Compensación comercial | También: Sitios web, Publicidad y medición",
         eco_card1_title: "1. Automatización Operativa",
         eco_card1_desc: "Automatización de ingreso de datos, conciliación de facturas y sincronización entre Excel, Google Sheets y otros sistemas (Python, Playwright). Se entrega funcionando, con registro de errores y guía de uso.",
         eco_card2_title: "2. Análisis de Datos y Dashboard BI",
         eco_card2_desc: "Limpieza de datos en bruto, estandarización de métricas y paneles ejecutivos (Power BI) para que el dueño siga el flujo de caja y el desempeño operativo.",
         eco_card3_title: "5. Sitio Web y Página de Aterrizaje",
         eco_card3_desc: "Páginas de presentación y de aterrizaje ligeras y rápidas, con formularios que envían datos a Google Sheets.",
-        eco_card4_title: "6. Medición del Rendimiento Publicitario",
-        eco_card4_desc: "Configuración y revisión de la medición GA4/GTM (eventos, conversiones, UTM), corrección de eventos duplicados e informes que comparan cada canal publicitario.",
+        eco_card4_title: "6. Publicidad y Medición del Rendimiento",
+        eco_card4_desc: "Configuración y gestión de campañas de Google Ads / Meta Ads bajo pedido: medición de conversiones desde el primer día, un presupuesto de prueba pequeño e informes semanales del costo por cliente potencial.",
         eco_badge_5: "Especializado • Fiscal EE. UU.",
         eco_badge_6: "Especializado • Seguros y ventas",
-        eco_card5_title: "3. Back-office para Despachos Fiscales de EE. UU. (1040)",
+        eco_card5_title: "3. Back-office para Despachos Fiscales de EE. UU.",
         eco_card5_desc: "Revisión de documentos del cliente antes de CCH Autoflow (clasificación página por página, detección de duplicados, año o contribuyente incorrecto), auditoría y corrección de marcadores de los PDF de papeles de trabajo según el estándar CCH, localización de las copias correctas de la declaración y conciliación de honorarios con E-Upsafe y Google Sheets.",
         eco_sub_tax: "Back-office fiscal",
         eco_card6_title: "4. Compensación Comercial, Comisiones y KPI",
         eco_card6_desc: "Diseño y cálculo de esquemas de incentivos y comisiones para equipos comerciales: modelos de costo de compensación, prueba de escenarios de pago, costo frente a ingresos y conciliación de pagos en cada periodo. Experiencia en Prudential, Chubb Life y AIA.",
         eco_sub_comp: "Compensación y KPI",
-        eco_btn_detail: "[📊 Ver tabla detallada ↗]",
+        eco_btn_detail: "Detalles del servicio",
         eco_sub_pages: "Automatización de procesos",
         eco_sub_countries: "BI ejecutivo",
         eco_sub_trend: "Desarrollo web ligero",
         eco_sub_bq: "Medición publicitaria",
-        pbi_report_title: "Informe Ejecutivo GA4 — Ecosistema TJ WordLoop",
+        pbi_report_title: "GA4 Tracking — medición configurada y leída con rigor",
+        pbi_subtitle: "GA4 configurado en más de 10 sitios web personales (aprendizaje, juego, portal de cursos), unificados en una sola propiedad. Datos reales de 28 días, con notas de lectura.",
         pbi_note_title: "Cómo leer estas cifras",
-        pbi_note_1: "Fuente: GA4 de cuatro productos personales creados por TJ (un juego, un hub de cursos, un embudo fiscal de muestra), 14 oct – 10 nov 2026. No son datos de clientes y no prueban ingresos.",
+        pbi_note_1: "Fuente: GA4 de más de 10 sitios web personales creados por TJ (un juego, sitios de cursos, apps de idiomas), 14 oct – 10 nov 2026. No son datos de clientes y no prueban ingresos.",
         pbi_note_2: "Vietnam: 58 usuarios, 155 sesiones, 35m 11s de media por usuario, 89,8 % de todos los eventos. El juego WordLoop genera el 80,6 % del total de eventos.",
         pbi_note_3: "EE. UU.: 80 usuarios pero solo 41 sesiones, 11 segundos de media por usuario. Este patrón suele indicar tráfico automático (bots, rastreadores) y no se ha filtrado de los totales. Por eso 174 usuarios y 12m 30s no deben leerse como el tamaño de una audiencia real.",
         pbi_note_4: "Cifras tomadas hasta el 10 nov 2026, actualización manual, no en tiempo real.",
@@ -2647,24 +2679,24 @@
         ga4_modal_footer_source: "Fuente: Google Analytics 4 (sitios creados por TJ)",
         ga4_modal_esc_hint: "Pulse <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> para cerrar",
         ga4_modal_btn_close: "Cerrar [✕]",
-        hub_title: "4 Proyectos Personales — Medición del Comportamiento del <span class='inline-block'>Usuario</span>",
-        hub_desc: "Cuatro productos web interactivos independientes (Fintech, EdTech, Juego) creados por TJ y medidos con Google Analytics 4. Las cifras de abajo provienen de <span class='inline-block'>estos mismos sitios.</span>",
-        spoke1_badge: "Fintech e Impuestos EE. UU. 1040",
-        spoke1_title: "WRP Tax Services — Embudo de leads",
-        spoke1_desc: "Portal de servicios fiscales de EE. UU. con calculadora automática como embudo de captación de leads CPA/EA.",
-        spoke1_btn_demo: "🚀 Abrir Demo Web ↗",
+        hub_title: "Sitios web destacados",
+        hub_desc: "Algunos sitios web propios: un sitio de servicios, una app de aprendizaje, un juego y un portal de cursos.",
+        spoke1_badge: "Fintech e Impuestos EE. UU.",
+        spoke1_title: "WRP Tax Services — Sitio de servicios fiscales de EE. UU.",
+        spoke1_desc: "Incluye una calculadora de impuestos y un formulario para solicitar asesoría.",
+        spoke1_btn_demo: "Ver sitio ↗",
         spoke2_badge: "Audio en 4 Idiomas",
-        spoke2_title: "Operation 0 — Motor de 1.000 Chunks",
+        spoke2_title: "Operation 0 — 1.000 Chunks · 4 idiomas",
         spoke2_desc: "Sistema de aprendizaje reflexivo de 1.000 frases con audio (EN-ES-CN-VN) para Negocios, Marketing e Impuestos.",
-        spoke2_btn_demo: "🚀 Abrir Demo Web ↗",
+        spoke2_btn_demo: "Ver sitio ↗",
         spoke3_badge: "Gamificación y Retención",
         spoke3_title: "TJ WordLoop — Juego multijugador",
         spoke3_desc: "Juego interactivo de vocabulario TOEIC/IELTS con salas multijugador en tiempo real y clasificación.",
-        spoke3_btn_demo: "🎮 Jugar en Vivo ↗",
+        spoke3_btn_demo: "Ver sitio ↗",
         spoke4_badge: "Diseño móvil primero 390px",
         spoke4_title: "TJ Courses Hub — Academia",
         spoke4_desc: "Portal de 4 programas prácticos (Impuestos EE. UU. EA, Marketing Digital, IELTS, TOEIC) con cuestionarios de 1 toque.",
-        spoke4_btn_demo: "🚀 Abrir Demo Web ↗",
+        spoke4_btn_demo: "Ver sitio ↗",
         spoke_btn_github: "🐙 GitHub ↗",
         contact_section_title: "Contacto",
         contact_section_sub: "Cuéntame la Tarea Manual, <span class='inline-block'>Recibe una Propuesta</span>",
@@ -2694,11 +2726,11 @@
         eco_badge_1: "Principal • Automatización",
         eco_badge_2: "Segundo • Datos y BI",
         eco_badge_3: "Disponible • Web",
-        eco_badge_4: "Bajo pedido • Medición",
+        eco_badge_4: "Bajo pedido • Publicidad",
         chart_axis_multiple: "Múltiplo (x)",
         chart_axis_throughput: "Rendimiento %",
-        pbi_badge: "GA4 • PRODUCTOS PERSONALES",
-        spoke_section_badge: "PROYECTOS PERSONALES Y MEDICIÓN GA4",
+        pbi_badge: "GA4 Tracking • Datos reales",
+        spoke_section_badge: "Sitios web • Desarrollo propio",
         footer_rights: "Todos los derechos reservados.",
         privacy_settings: "Privacidad y cookies",
         ga4_live_badge: "GA4 • DETALLE",
@@ -2715,11 +2747,11 @@
         meta_desc: "Perfil de TJ — analista freelance de Operaciones y Datos: automatización de ingreso de datos y conciliación, paneles BI ejecutivos. Webs ligeras y revisión GA4/GTM bajo pedido."
       },
       zh: {
-        modal_p4_item3: "(3) 各广告渠道效果对比看板（访问、转化；如客户提供数据则含成本）。交付：看板及解读说明",
-        modal_p4_item2: "(2) 规范链接与流量来源（UTM）。交付：UTM 命名规范表",
-        modal_p4_item1: "(1) 检查 GA4 与 GTM 埋点并修复重复事件。交付：问题报告与修复清单",
-        modal_p4_title: "6. 广告效果衡量（按需）",
-        modal_p5_title: "3. 美国报税事务所后台支持（1040）",
+        modal_p4_item3: "(3) 每周按每个潜在客户的成本汇报，对比各渠道效果。交付：成本与潜在客户跟踪表及调整说明",
+        modal_p4_item2: "(2) 按需搭建并运营 Google Ads / Meta Ads 广告，先用小额预算测试；广告账户归客户所有。交付：已配置的广告系列与管理员权限",
+        modal_p4_item1: "(1) GA4/GTM 埋点：转化事件、各渠道 UTM、修复重复事件。交付：事件清单与 UTM 命名规范表",
+        modal_p4_title: "6. 广告投放与效果衡量（按需）",
+        modal_p5_title: "3. 美国报税事务所后台支持",
         modal_p5_badge: "专业服务",
         modal_p5_item1: "(1) 导入 CCH Autoflow 前的资料检查。交付：逐页分类表，重复、年份错误及未知 TIN 清单；页数 100% 核对一致",
         modal_p5_item2: "(2) 按 CCH 26 类标准审核并修复工作底稿书签。交付：逐页问题报告与修正后的底稿文件，页面内容不变",
@@ -2741,11 +2773,15 @@
         modal_p1_item2: "(2) 定期对账与数据清洗。交付：差异报告与待核查行清单",
         modal_p1_item1: "(1) 自动化数据录入与同步（Python、Playwright、Google Sheets）。交付：可运行的脚本或表格",
         modal_p1_title: "1. 运营自动化",
-        modal_pkg_note: "* 核心：运营自动化与 BI 看板 • 专业：美国报税后台、销售薪酬与佣金 • 可承接：网站、广告效果衡量",
+        modal_pkg_note: "* 核心：运营自动化与 BI 看板 • 专业：美国报税后台、销售薪酬与佣金 • 可承接：网站、广告投放与效果衡量",
         modal_pkg_heading: "TJ 的服务范围：以数据为主，兼具美国报税与薪酬激励专长",
         nav_about: "关于我",
+        aria_page_switch: "在作品集与简历之间切换",
+        nav_services: "服务",
         nav_metrics: "关键指标",
-        nav_dashboard: "漏斗模拟",
+        nav_dashboard: "数据看板",
+        nav_website: "网站",
+        nav_ga4: "GA4 Tracking",
         nav_ecosystem: "GA4 生态系统",
         nav_capability: "简历与能力",
         nav_contact: "联系方式",
@@ -2754,11 +2790,11 @@
         hero_title: "自动化重复工作，数据干净，<br class='hidden md:inline'> 为企业主打造清晰<span class='inline-block'>经营看板</span>",
         hero_headline: "精准数据洞察 • 科学业务决策<br class='hidden md:inline'> 预算精准调优与<span class='inline-block'>业绩确定性增长</span>",
         hero_positioning: "运营与数据分析师 • 流程自动化 • BI 看板",
-        hero_desc: "自动化数据录入、对账，并在 Excel、Google Sheets 与业务系统之间同步；清洗数据，用 Power BI 搭建经营看板。轻量网站与广告效果衡量（GA4/GTM）按需承接。熟悉美国报税事务所（1040）后台流程与保险销售薪酬激励机制。全程远程协作，交付可运行的文件并<span class='inline-block'>附使用说明。</span>",
-        hero_btn_dashboard: "浏览交互式看板",
+        hero_desc: "自动化数据录入、对账，并在 Excel、Google Sheets 与业务系统之间同步；清洗数据，用 Power BI 搭建经营看板。轻量网站与广告效果衡量（GA4/GTM）按需承接。熟悉美国报税事务所后台流程与保险销售薪酬激励机制。全程远程协作，交付可运行的文件并<span class='inline-block'>附使用说明。</span>",
+        hero_btn_dashboard: "查看服务 ↓",
         hero_btn_github: "🐙 访问GitHub主页 ↗",
         hero_btn_capability: "📄 查看简历与能力档案",
-        dash_tag: "示例数据 • 模拟",
+        dash_tag: "示例数据 • BI 与 KPI 看板",
         dash_title: "业务绩效与<span class='inline-block'>转化漏斗分析</span>",
         dash_disclaimer: "* 本区块所有数字均为示例数据，用于演示 KPI 筛选与销售漏斗，并非任何客户的真实成果。示例对应服务 4：薪酬与佣金。",
         filter_all: "全部区域",
@@ -2780,31 +2816,32 @@
         funnel_stage3: "3. 最终签单与合同达成",
         eco_badge: "实战服务与解决方案生态系统",
         eco_title: "TJ 产品与实战服务生态",
-        eco_property: "核心：运营自动化 • BI 看板 | 专业：美国报税后台、销售薪酬与佣金 | 可承接：网站、广告效果衡量",
+        eco_property: "核心：运营自动化 • BI 看板 | 专业：美国报税后台、销售薪酬与佣金 | 可承接：网站、广告投放与效果衡量",
         eco_card1_title: "1. 运营自动化",
         eco_card1_desc: "自动化数据录入、发票对账，以及 Excel、Google Sheets 与其他系统之间的数据同步（Python、Playwright）。交付可运行文件，附错误日志与使用说明。",
         eco_card2_title: "2. 数据分析与 BI 看板",
         eco_card2_desc: "清洗原始数据、统一指标口径，并搭建经营看板（Power BI），帮助企业主跟踪现金流与运营表现。",
         eco_card3_title: "5. 网站与落地页",
         eco_card3_desc: "搭建轻量、加载快的介绍页与落地页，表单数据直接写入 Google Sheets。",
-        eco_card4_title: "6. 广告效果衡量",
-        eco_card4_desc: "部署并检查 GA4/GTM 埋点（事件、转化、UTM），修复重复事件，并制作各广告渠道效果对比报告。",
+        eco_card4_title: "6. 广告投放与效果衡量",
+        eco_card4_desc: "按需搭建并运营 Google Ads / Meta Ads 广告：首日即部署转化跟踪，先用小额预算测试，每周按每个潜在客户的成本汇报。",
         eco_badge_5: "专业 • 美国报税",
         eco_badge_6: "专业 • 保险与销售",
-        eco_card5_title: "3. 美国报税事务所后台支持（1040）",
+        eco_card5_title: "3. 美国报税事务所后台支持",
         eco_card5_desc: "在导入 CCH Autoflow 前检查客户资料（逐页分类，识别重复、年份错误、纳税人不符的页面），按 CCH 标准审核并修复工作底稿 PDF 书签，找准报税表副本，并与 E-Upsafe 和 Google Sheets 核对费用。",
         eco_sub_tax: "报税后台",
         eco_card6_title: "4. 销售薪酬、佣金与 KPI",
         eco_card6_desc: "为销售团队设计并测算奖励与佣金机制：薪酬成本模型、支付方案情景测试、成本与营收对比，以及每期支付核对。经验来自 Prudential、Chubb Life、AIA。",
         eco_sub_comp: "薪酬与 KPI",
-        eco_btn_detail: "[📊 查看详细数据表 ↗]",
+        eco_btn_detail: "服务详情",
         eco_sub_pages: "流程自动化",
         eco_sub_countries: "高管 BI 看板",
         eco_sub_trend: "精益建站",
         eco_sub_bq: "广告衡量",
-        pbi_report_title: "GA4 高管数据看板 — TJ WordLoop 多产品矩阵",
+        pbi_report_title: "GA4 Tracking — 部署埋点，如实解读数据",
+        pbi_subtitle: "为 10 多个个人网站（学习、游戏、课程门户）部署 GA4，统一汇总到一个媒体资源。28 天真实数据，附解读说明。",
         pbi_note_title: "如何解读这些数据",
-        pbi_note_1: "来源：TJ 自建的 4 个个人产品（游戏、课程中心、示例税务漏斗）的 GA4 数据，2026 年 10 月 14 日 – 11 月 10 日。这不是客户数据，也不能证明营收。",
+        pbi_note_1: "来源：TJ 自建的 10 多个个人网站（游戏、课程网站、语言学习应用）的 GA4 数据，2026 年 10 月 14 日 – 11 月 10 日。这不是客户数据，也不能证明营收。",
         pbi_note_2: "越南：58 位用户、155 次会话，人均平均互动 35分11秒，占全部事件的 89.8%。WordLoop 游戏占总事件的 80.6%。",
         pbi_note_3: "美国：80 位用户但只有 41 次会话，人均平均互动 11 秒。这种模式通常是自动化流量（机器人、爬虫），且尚未从总数中剔除。因此 174 位用户和 12m 30s 不应被理解为真实受众规模。",
         pbi_note_4: "数据截至 2026 年 11 月 10 日，手动更新，非实时。",
@@ -2871,24 +2908,24 @@
         ga4_modal_footer_source: "来源：Google Analytics 4（TJ 自建站点）",
         ga4_modal_esc_hint: "按 <kbd class='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>Esc</kbd> 键关闭",
         ga4_modal_btn_close: "关闭 [✕]",
-        hub_title: "4 个个人项目 — 用户行为<span class='inline-block'>测量</span>",
-        hub_desc: "四个独立的互动网页产品（金融科技、教育科技、游戏），均由 TJ 自建并接入 Google Analytics 4。下方数据来自<span class='inline-block'>这些站点本身。</span>",
-        spoke1_badge: "金融科技与美国税务 1040",
-        spoke1_title: "WRP Tax Services — 获客漏斗",
-        spoke1_desc: "集成自动税务估算器的美国税务服务网站，作为获取 CPA/EA 咨询潜客的核心转化漏斗。",
-        spoke1_btn_demo: "🚀 打开网页演示 ↗",
+        hub_title: "代表性网站",
+        hub_desc: "部分自主开发的网站：服务网站、学习应用、游戏和课程门户。",
+        spoke1_badge: "金融科技与美国税务",
+        spoke1_title: "WRP Tax Services — 美国报税服务网站",
+        spoke1_desc: "内置税费计算器和咨询表单，访客可留下联系方式。",
+        spoke1_btn_demo: "访问网站 ↗",
         spoke2_badge: "四国语言音频引擎",
-        spoke2_title: "Operation 0 — 1,000 语块引擎",
+        spoke2_title: "Operation 0 — 1,000 语块 · 4 种语言",
         spoke2_desc: "涵盖商务、营销与税务场景的 1,000 句四语（英-西-中-越）音频反射训练系统。",
-        spoke2_btn_demo: "🚀 打开网页演示 ↗",
+        spoke2_btn_demo: "访问网站 ↗",
         spoke3_badge: "游戏化与留存",
         spoke3_title: "TJ WordLoop — 多人对战游戏",
         spoke3_desc: "支持实时多人等候室、排行榜与积分系统的 TOEIC/IELTS 互动词汇竞技游戏。",
-        spoke3_btn_demo: "🎮 进入在线试玩 ↗",
+        spoke3_btn_demo: "访问网站 ↗",
         spoke4_badge: "移动端优先 390px",
         spoke4_title: "TJ Courses Hub — 学院",
         spoke4_desc: "统筹 4 大实战课程体系（美国税务 EA、数字营销、IELTS、TOEIC）的一键式测验门户。",
-        spoke4_btn_demo: "🚀 打开网页演示 ↗",
+        spoke4_btn_demo: "访问网站 ↗",
         spoke_btn_github: "🐙 GitHub ↗",
         contact_section_title: "联系我",
         contact_section_sub: "说说手工任务，<span class='inline-block'>获得方案建议</span>",
@@ -2918,11 +2955,11 @@
         eco_badge_1: "核心 • 自动化",
         eco_badge_2: "第二 • 数据与 BI",
         eco_badge_3: "可承接 • 网站",
-        eco_badge_4: "按需 • 效果衡量",
+        eco_badge_4: "按需 • 广告",
         chart_axis_multiple: "倍数 (x)",
         chart_axis_throughput: "吞吐率 %",
-        pbi_badge: "GA4 • 个人产品",
-        spoke_section_badge: "个人项目与 GA4 测量",
+        pbi_badge: "GA4 Tracking • 真实数据",
+        spoke_section_badge: "网站 • 自主开发",
         footer_rights: "保留所有权利。",
         privacy_settings: "隐私与 Cookie",
         ga4_live_badge: "GA4 • 明细",
@@ -3697,7 +3734,7 @@
       pages: [
         { rank: 1, title: { vi: "TJ WordLoop · Trò chơi", en: "TJ WordLoop · Game", es: "TJ WordLoop · Juego", zh: "TJ WordLoop · 游戏" }, category: { vi: "Game hóa & Giữ chân người dùng", en: "Gamification & Retention", es: "Gamificación y Retención", zh: "游戏化与留存" }, views: 911, pct: 54.10, users: 60, time: "33m 38s", events: 8432 },
         { rank: 2, title: { vi: "TJ WordLoop Hub", en: "TJ WordLoop Hub", es: "TJ WordLoop Hub", zh: "TJ WordLoop 中心" }, category: { vi: "Trung tâm hệ sinh thái cốt lõi", en: "Core Ecosystem Hub", es: "Hub Central del Ecosistema", zh: "核心生态枢纽" }, views: 655, pct: 38.90, users: 59, time: "2m 07s", events: 1612 },
-        { rank: 3, title: { vi: "Đại diện thuế đã đăng ký IRS (EA 2026) · Luyện Thi & Hành Nghề Thuế Mỹ", en: "IRS Enrolled Agent (EA 2026) · US Tax Exam & Practice", es: "Agente Inscrito del IRS (EA 2026) · Impuestos de EE. UU.", zh: "IRS 注册税务师 (EA 2026) · 美国税务备考与实务" }, category: { vi: "Fintech & US Tax 1040", en: "Fintech & US Tax 1040", es: "Fintech e Impuestos 1040", zh: "金融科技与美国 1040 税务" }, views: 26, pct: 1.54, users: 20, time: "3m 12s", events: 118 },
+        { rank: 3, title: { vi: "Đại diện thuế đã đăng ký IRS (EA 2026) · Luyện Thi & Hành Nghề Thuế Mỹ", en: "IRS Enrolled Agent (EA 2026) · US Tax Exam & Practice", es: "Agente Inscrito del IRS (EA 2026) · Impuestos de EE. UU.", zh: "IRS 注册税务师 (EA 2026) · 美国税务备考与实务" }, category: { vi: "Fintech & Thuế Mỹ", en: "Fintech & US Tax", es: "Fintech e Impuestos EE. UU.", zh: "金融科技与美国税务" }, views: 26, pct: 1.54, users: 20, time: "3m 12s", events: 118 },
         { rank: 4, title: { vi: "Hệ Sinh Thái Khoá Học TJ 2026", en: "TJ Course Ecosystem 2026", es: "Ecosistema de Cursos TJ 2026", zh: "TJ 2026 课程生态系统" }, category: { vi: "Học viện công nghệ giáo dục", en: "EdTech Academy", es: "Academia EdTech", zh: "教育科技学院" }, views: 21, pct: 1.25, users: 16, time: "2m 45s", events: 84 },
         { rank: 5, title: { vi: "Tiếp thị số thực chiến 2026", en: "Practical Digital Marketing 2026", es: "Marketing Digital Práctico 2026", zh: "2026 实战数字营销" }, category: { vi: "Tiếp thị hiệu suất", en: "Performance Marketing", es: "Marketing de Resultados", zh: "效果营销" }, views: 19, pct: 1.13, users: 17, time: "2m 18s", events: 72 },
         { rank: 6, title: { vi: "TOEIC 4 Kỹ Năng Thực Chiến", en: "TOEIC 4-Skill Practical Training", es: "TOEIC 4 Habilidades Prácticas", zh: "TOEIC 四项技能实战" }, category: { vi: "Đào tạo ngôn ngữ", en: "Language Training", es: "Entrenamiento de Idiomas", zh: "语言培训" }, views: 16, pct: 0.95, users: 14, time: "1m 55s", events: 56 },
@@ -4554,7 +4591,7 @@
         cloneNavbar.classList.add('top-0');
       }
 
-      cloneDoc.querySelectorAll('#visual-toolbar, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('#visual-toolbar, .w17-section-controls, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
 
       const cloneToast = cloneDoc.querySelector('#toast-notification');
       if (cloneToast) {
@@ -4734,6 +4771,161 @@
     }
   </script>
 
+  <script id="w17-layout-script">
+    // Sắp xếp & ẩn/hiện các mục nằm giữa "Giới thiệu" (luôn đầu) và "Liên hệ" (luôn cuối).
+    // Menu máy tính + điện thoại dựng lại theo thứ tự mục; mục ẩn không có trên menu và không hiện trên web.
+    // Trong editor: mỗi mục có nút ⬆ ⬇ Ẩn/Hiện. Thay đổi lưu vào bản nháp (trường "layout" của khóa nháp editor)
+    // cho tới khi bấm Lưu/Đăng: lúc đó thứ tự và thuộc tính data-w17-hidden được ghi thẳng vào HTML Final.
+    (function () {
+      const SEL = '#portfolio-main > section[data-w17-section]';
+      const KEY = 'w17_03_portfolio_edits_v1';
+      const IS_CREATOR = document.documentElement.getAttribute('data-w17-mode') === 'creator';
+      const T = {
+        up: { vi: 'Lên', en: 'Up', es: 'Subir', zh: '上移' },
+        down: { vi: 'Xuống', en: 'Down', es: 'Bajar', zh: '下移' },
+        hide: { vi: 'Ẩn mục', en: 'Hide', es: 'Ocultar', zh: '隐藏' },
+        show: { vi: 'Hiện mục', en: 'Show', es: 'Mostrar', zh: '显示' },
+        hidden: { vi: 'Đang ẩn trên web', en: 'Hidden on the website', es: 'Oculto en el sitio', zh: '网站上已隐藏' },
+        upAria: { vi: 'Đưa mục lên trên', en: 'Move section up', es: 'Subir sección', zh: '将该部分上移' },
+        downAria: { vi: 'Đưa mục xuống dưới', en: 'Move section down', es: 'Bajar sección', zh: '将该部分下移' }
+      };
+      const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
+      const t = (k) => (T[k][lang()] || T[k].vi);
+      const sections = () => [...document.querySelectorAll(SEL)];
+      const draftsOk = () => typeof w17DraftsAllowed === 'function' && w17DraftsAllowed();
+      const navLabel = (key) => {
+        try { const d = translations[currentLang] || translations.vi; return d[key] || translations.vi[key] || key; } catch (e) { return key; }
+      };
+
+      function renderNav() {
+        document.querySelectorAll('[data-w17-nav-list]').forEach((nav) => {
+          const first = nav.querySelector('a[data-w17-nav-fixed="start"]');
+          if (!first) return;
+          nav.querySelectorAll('a[data-w17-nav-dynamic]').forEach((a) => a.remove());
+          let after = first;
+          sections().filter((s) => !s.hasAttribute('data-w17-hidden')).forEach((s) => {
+            const a = first.cloneNode(false);
+            a.removeAttribute('data-w17-nav-fixed');
+            a.removeAttribute('contenteditable');
+            a.removeAttribute('spellcheck');
+            a.setAttribute('data-w17-nav-dynamic', '');
+            a.setAttribute('href', '#' + s.id);
+            a.setAttribute('data-i18n', s.getAttribute('data-w17-nav'));
+            a.textContent = navLabel(s.getAttribute('data-w17-nav'));
+            after.after(a);
+            after = a;
+          });
+        });
+      }
+
+      function readDraft() {
+        try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && typeof s === 'object' ? s : {}; } catch (e) { return {}; }
+      }
+
+      function saveDraft() {
+        if (!draftsOk()) return;
+        try {
+          const s = readDraft();
+          s.schema = s.schema || 1;
+          const ids = sections().map((x) => x.id);
+          const known = (s.layout && Array.isArray(s.layout.known)) ? s.layout.known : [];
+          s.layout = {
+            order: ids,
+            hidden: sections().filter((x) => x.hasAttribute('data-w17-hidden')).map((x) => x.id),
+            known: Array.from(new Set(known.concat(ids)))
+          };
+          localStorage.setItem(KEY, JSON.stringify(s));
+        } catch (e) {}
+      }
+
+      // Bản nháp chưa lưu: áp thứ tự + ẩn/hiện. Mục mới (bản nháp chưa biết) giữ nguyên, đứng sau các mục đã sắp.
+      function applyDraft() {
+        if (!draftsOk()) return;
+        const l = readDraft().layout;
+        if (!l || !Array.isArray(l.order)) return;
+        const end = document.getElementById('contact');
+        if (!end) return;
+        const byId = new Map(sections().map((s) => [s.id, s]));
+        l.order.forEach((id) => { const s = byId.get(String(id)); if (s) end.before(s); });
+        sections().filter((s) => !l.order.includes(s.id)).forEach((s) => end.before(s));
+        const hidden = new Set(Array.isArray(l.hidden) ? l.hidden.map(String) : []);
+        const known = new Set(Array.isArray(l.known) ? l.known.map(String) : l.order.map(String));
+        sections().forEach((s) => {
+          if (!known.has(s.id)) return;
+          if (hidden.has(s.id)) s.setAttribute('data-w17-hidden', '1');
+          else s.removeAttribute('data-w17-hidden');
+        });
+      }
+
+      function button(cls, onClick) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer ' + cls;
+        b.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); onClick(b); });
+        return b;
+      }
+
+      function refreshControls() {
+        const list = sections();
+        list.forEach((s, i) => {
+          const box = s.querySelector(':scope > .w17-section-controls');
+          if (!box) return;
+          const [name, note, up, down, tog] = box.children;
+          name.textContent = navLabel(s.getAttribute('data-w17-nav'));
+          const hidden = s.hasAttribute('data-w17-hidden');
+          note.textContent = hidden ? '• ' + t('hidden') : '';
+          up.textContent = '⬆ ' + t('up');
+          down.textContent = '⬇ ' + t('down');
+          up.setAttribute('aria-label', t('upAria') + ': ' + name.textContent);
+          down.setAttribute('aria-label', t('downAria') + ': ' + name.textContent);
+          up.disabled = i === 0;
+          down.disabled = i === list.length - 1;
+          tog.textContent = hidden ? '👁 ' + t('show') : '🚫 ' + t('hide');
+          tog.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+        });
+      }
+
+      function changed(s, btn) {
+        renderNav();
+        refreshControls();
+        saveDraft();
+        s.scrollIntoView({ block: 'start' });
+        if (btn && !btn.disabled) btn.focus();
+      }
+
+      function addControls() {
+        if (!IS_CREATOR) return;
+        sections().forEach((s) => {
+          if (s.querySelector(':scope > .w17-section-controls')) return;
+          const box = document.createElement('div');
+          box.className = 'w17-section-controls no-print no-edit flex flex-wrap items-center gap-1.5 px-2 py-1.5 rounded-xl bg-slate-900/95 border border-amber-500/50 shadow-lg text-slate-100';
+          const name = document.createElement('span');
+          name.className = 'no-edit text-xs font-bold text-amber-300 px-1';
+          const note = document.createElement('span');
+          note.className = 'no-edit text-[11px] text-amber-200';
+          const up = button('bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700', (b) => {
+            const list = sections(); const i = list.indexOf(s); if (i > 0) { list[i - 1].before(s); changed(s, b); }
+          });
+          const down = button('bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700', (b) => {
+            const list = sections(); const i = list.indexOf(s); if (i < list.length - 1) { list[i + 1].after(s); changed(s, b); }
+          });
+          const tog = button('bg-amber-500/15 border-amber-500/50 text-amber-200 hover:bg-amber-500/25', (b) => {
+            if (s.hasAttribute('data-w17-hidden')) s.removeAttribute('data-w17-hidden'); else s.setAttribute('data-w17-hidden', '1');
+            changed(s, b);
+          });
+          box.append(name, note, up, down, tog);
+          s.prepend(box);
+        });
+        refreshControls();
+        new MutationObserver(refreshControls).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+      }
+
+      window.w17RenderNav = renderNav;
+      function init() { applyDraft(); renderNav(); addControls(); }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+    })();
+  </script>
   <script id="w17-settings-script">
     // ⚙ Cài đặt dùng chung (email, Zalo, GitHub, địa chỉ web) — chỉ chạy trong editor mở bằng MO_EDITOR (máy chủ trên máy).
     // Máy chủ đổi giá trị ở CẢ HAI trang (Portfolio + CV) rồi trang tự tải lại. Mã này giống hệt nhau ở hai trang.

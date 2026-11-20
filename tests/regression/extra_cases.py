@@ -279,7 +279,7 @@ def t_f03_wheel(b, env):
             ctx = b.new_context(locale="vi-VN", viewport={"width": w, "height": h})
             pg = R.new_page(ctx)
             R.open_page(pg, env, rel)
-            btn = pg.locator("#ga4-ecosystem button[aria-controls='ga4-drilldown-modal']").nth(0)
+            btn = pg.locator("#services button[aria-controls='ga4-drilldown-modal']").nth(0)
             btn.scroll_into_view_if_needed(); btn.click(); pg.wait_for_timeout(800)
             pos = pg.evaluate(SCROLLER_JS)
             pg.mouse.move(pos["x"], pos["y"])

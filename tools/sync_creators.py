@@ -34,7 +34,7 @@ JOBS = [
     (
         "index.html",
         "editor_workspace/editor_portfolio.html",
-        [('href="./index_portfolio_clean.html"', 'href="./editor_cv.html"', 3)],
+        [('href="./index_portfolio_clean.html"', 'href="./editor_cv.html"', 2)],
     ),
     (
         "index_portfolio_clean.html",

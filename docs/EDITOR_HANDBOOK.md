@@ -23,7 +23,20 @@ Mở file HTML bằng cách bấm đúp, hoặc mở editor trên web thật, th
 
 Sửa ở tiếng Việt thì chỉ bản tiếng Việt đổi. Bản EN/ES/ZH: đổi ngôn ngữ trong editor rồi sửa tay, hoặc nhờ Claude dịch (chức năng dịch tự động chưa có).
 
-## 3. Lưu vào máy và Đăng lên web khác nhau thế nào
+## 3. Di chuyển và ẩn/hiện các mục trên Portfolio
+
+Trong editor Portfolio, mỗi mục (Dịch vụ, Dashboard, Website, GA4 Tracking) có thanh nhỏ màu cam ở góc trên bên phải:
+
+- **⬆ Lên / ⬇ Xuống**: đổi chỗ mục với mục bên trên/bên dưới. "Giới thiệu" luôn ở đầu, "Liên hệ" luôn ở cuối.
+- **🚫 Ẩn mục / 👁 Hiện mục**: mục bị ẩn **không hiện trên web** và **không có trên menu**; trong editor vẫn thấy mờ mờ có viền cam để bật lại khi cần. Ẩn không xóa nội dung.
+- Menu (máy tính và điện thoại) tự đổi theo ngay.
+- Tải lại trang vẫn giữ thay đổi (bản nháp). Bấm **🚀 Lưu & đăng lên web** để đưa lên web.
+
+## 3b. Chuyển giữa Portfolio và CV
+
+Cả hai trang có nút **`Portfolio | CV`** ở góc trên bên trái; nấc đang xem được tô xanh. Gửi link trang nào cũng được, người nhận tự chuyển sang trang kia.
+
+## 3c. Lưu vào máy và Đăng lên web khác nhau thế nào
 
 | Nút | Làm gì |
 |---|---|
@@ -103,7 +116,7 @@ Mọi việc ở mục 1–9 tự làm được, không cần Claude. Cần Clau
 
 ## Chưa có (đang trong kế hoạch)
 
-Di chuyển/ẩn mục và thẻ ở Portfolio, thêm thẻ mới, kinh nghiệm làm việc, dịch tự động bằng Gemini, Search Console. Khi làm xong phần nào, sổ tay này sẽ thêm hướng dẫn phần đó.
+Di chuyển từng thẻ bên trong một mục (ở Portfolio), thêm thẻ mới, kinh nghiệm làm việc, dịch tự động bằng Gemini, Search Console. Khi làm xong phần nào, sổ tay này sẽ thêm hướng dẫn phần đó.
 
 ## Giải thích từ ngữ
 
