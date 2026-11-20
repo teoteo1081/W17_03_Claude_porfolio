@@ -120,6 +120,7 @@ class _PageProbe(HTMLParser):
         self.editor_attrs = []   # contenteditable / toolbar / is-editing
         self.script_chars = 0
         self.baked_json = []
+        self.foreign = []        # nút do tiện ích trình duyệt chèn vào (chrome-extension://, eJOY, ...)
         self._cur_script = None
 
     def handle_starttag(self, tag, attrs):
@@ -137,6 +138,11 @@ class _PageProbe(HTMLParser):
             self.ids.setdefault(a["id"], []).append(tag)
             if a["id"] in ("visual-toolbar", "floating-toolbar"):
                 self.editor_attrs.append("#" + a["id"])
+        src = a.get("src") or a.get("href") or ""
+        if src.lower().startswith(("chrome-extension://", "moz-extension://", "safari-web-extension://")):
+            self.foreign.append(f"<{tag}> {src[:60]}")
+        if (a.get("id") or "").lower().startswith(("ejoy", "__ejoy")):
+            self.foreign.append("#" + a["id"])
         if tag == "script":
             self._cur_script = {"id": a.get("id"), "type": (a.get("type") or "").lower(), "chars": 0, "data": []}
 
@@ -190,6 +196,9 @@ def validate_html(filename, html):
                 raise SaveError(422, "Khối w17-baked-edits không phải JSON hợp lệ.")
             if not isinstance(parsed, dict):
                 raise SaveError(422, "Khối w17-baked-edits phải là object JSON.")
+    if probe.foreign:
+        raise SaveError(422, "Bản lưu còn mã do tiện ích trình duyệt chèn vào (" + ", ".join(sorted(set(probe.foreign))[:5])
+                        + "); từ chối ghi. Tải lại trang editor (Ctrl+F5) rồi lưu lại, hoặc tắt tiện ích đó khi chỉnh sửa.")
     if probe.editor_attrs:
         raise SaveError(422, "Bản Final còn trạng thái editor (" + ", ".join(sorted(set(probe.editor_attrs))) + "); từ chối ghi.")
     size = len(html.encode("utf-8"))

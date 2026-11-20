@@ -3000,11 +3000,31 @@
     }
 
     // File lưu ra luôn ở dạng chuẩn: chữ tĩnh tiếng Việt, <html lang="vi" class="dark scroll-smooth">, dù đang xem EN hay giao diện sáng.
+    // Tiện ích trình duyệt (eJOY, SweetAlert của tiện ích, ...) tự chèn style/script/div và thuộc tính vào trang đang mở.
+    // Chúng không thuộc trang: không lưu vào file Final (script chrome-extension:// còn gây lỗi tải trên máy khách).
+    function stripBrowserExtensionNodesCV(cloneDoc, keepHtmlAttrs) {
+      const extUrl = /^(chrome|moz|safari-web)-extension:\/\//i;
+      cloneDoc.querySelectorAll('[src], [href]').forEach((el) => {
+        if (extUrl.test(el.getAttribute('src') || el.getAttribute('href') || '')) el.remove();
+      });
+      cloneDoc.querySelectorAll('[id^="eJOY" i], [id^="__ejoy" i], [class*="eJOY__"]').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('style').forEach((st) => {
+        if (/\.swal2-|\.ejoy-|eJOY|body\[unresolved\]/i.test(st.textContent || '')) st.remove();
+      });
+      Array.from(cloneDoc.attributes).forEach((at) => {
+        if (!keepHtmlAttrs.includes(at.name)) cloneDoc.removeAttribute(at.name);
+      });
+      Array.from(cloneDoc.children).forEach((el) => {
+        if (el.tagName !== 'HEAD' && el.tagName !== 'BODY') el.remove();
+      });
+    }
+
     function cloneCleanHtmlCV() {
       const cloneDoc = document.documentElement.cloneNode(true);
       cloneDoc.removeAttribute('data-w17-mode');
       cloneDoc.setAttribute('lang', 'vi');
       cloneDoc.setAttribute('class', 'dark scroll-smooth');
+      stripBrowserExtensionNodesCV(cloneDoc, ['lang', 'class', 'data-palette']);
       // Tailwind (CDN) tự chèn một khối <style> mỗi lần trang mở; không lưu khối đó, nếu không file phình thêm ~38KB mỗi lần lưu.
       cloneDoc.querySelectorAll('style').forEach((st) => { if (/--tw-border-spacing-x/.test(st.textContent || '')) st.remove(); });
       const cloneBody = cloneDoc.querySelector('body');
