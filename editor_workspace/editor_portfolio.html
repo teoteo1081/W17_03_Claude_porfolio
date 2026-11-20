@@ -5,7 +5,7 @@
   <title>Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</title>
   <meta name="description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
   <link rel="canonical" href="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
-  <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"}}</script>
+  <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"}}</script>
   
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI">
@@ -1216,6 +1216,9 @@
             </a>
             <a href="mailto:teoteo108@gmail.com" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-zinc-800 hover:border-emerald-500 border border-slate-300 dark:border-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
               <span data-i18n="contact_btn_email">✉️ teoteo108@gmail.com</span>
+            </a>
+            <a href="tel:+84855239805" class="sm:col-span-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-zinc-800 hover:border-emerald-500 border border-slate-300 dark:border-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-colors">
+              <span class="no-edit">📞 +84 855 239 805</span>
             </a>
           </div>
         </div>
@@ -4580,6 +4583,8 @@
         title: { vi: 'Cài đặt dùng chung', en: 'Shared settings', es: 'Ajustes compartidos', zh: '通用设置' },
         intro: { vi: 'Đổi ở đây sẽ đổi ở cả Portfolio và CV (mọi ngôn ngữ). Sau khi lưu, bấm 🚀 Lưu & đăng lên web để đưa lên web.', en: 'Changes apply to both Portfolio and CV (all languages). After saving, press 🚀 Save & publish to put them online.', es: 'Los cambios se aplican al Portafolio y al CV (todos los idiomas). Después pulse 🚀 Guardar y publicar.', zh: '修改会同时作用于作品集和简历（所有语言）。保存后请点击 🚀 保存并发布。' },
         email: { vi: 'Email công việc', en: 'Work email', es: 'Correo de trabajo', zh: '工作邮箱' },
+        phone: { vi: 'Số điện thoại công việc (dạng quốc tế)', en: 'Work phone (international format)', es: 'Teléfono de trabajo (formato internacional)', zh: '工作电话（国际格式）' },
+        phoneHint: { vi: 'Ví dụ: +84 855 239 805. Hiện ở mục Liên hệ, CV và bản PDF; link gọi điện tự đổi theo.', en: 'Example: +84 855 239 805. Shown in Contact, the CV and the PDF; the call link follows.', es: 'Ejemplo: +84 855 239 805. Se muestra en Contacto, el CV y el PDF; el enlace de llamada se actualiza.', zh: '例如：+84 855 239 805。显示在联系方式、简历和 PDF 中，拨号链接同步更新。' },
         zalo: { vi: 'Link Zalo', en: 'Zalo link', es: 'Enlace de Zalo', zh: 'Zalo 链接' },
         github: { vi: 'Link GitHub (trang cá nhân)', en: 'GitHub profile link', es: 'Perfil de GitHub', zh: 'GitHub 个人主页' },
         base: { vi: 'Địa chỉ web công khai (Portfolio)', en: 'Public website address (Portfolio)', es: 'Dirección pública del sitio (Portafolio)', zh: '公开网址（作品集）' },
@@ -4595,6 +4600,7 @@
       };
       const FIELDS = [
         ['contact.email', 'email', 'email', null],
+        ['contact.phone', 'phone', 'tel', 'phoneHint'],
         ['contact.zaloUrl', 'zalo', 'url', null],
         ['contact.githubUrl', 'github', 'url', null],
         ['site.baseUrl', 'base', 'url', 'baseHint']

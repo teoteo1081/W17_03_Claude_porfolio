@@ -22,12 +22,14 @@ R = None  # gán bởi run_all
 
 OLD = {
     "contact.email": "teoteo108@gmail.com",
+    "contact.phone": "+84 855 239 805",
     "contact.zaloUrl": "https://zalo.me/0855239805",
     "contact.githubUrl": "https://github.com/teoteo1081",
     "site.baseUrl": "https://teoteo1081.github.io/W17_03_Claude_porfolio/",
 }
 NEW = {
     "contact.email": "tj.work@example.com",
+    "contact.phone": "+1 415 555 0100",
     "contact.zaloUrl": "https://zalo.me/0900000001",
     "contact.githubUrl": "https://github.com/tj-new-account",
     "site.baseUrl": "https://tj.example.com/portfolio/",
@@ -103,6 +105,8 @@ def t_settings_api(env):
         ("thiếu token", {"changes": {"contact.email": NEW["contact.email"]}}, False, None, 401),
         ("origin lạ", {"changes": {"contact.email": NEW["contact.email"]}}, None, "http://evil.example", 403),
         ("email sai", {"changes": {"contact.email": "a\"><script>x</script>@b.c"}}, None, None, 400),
+        ("điện thoại không có mã nước", {"changes": {"contact.phone": "0855 239 805"}}, None, None, 400),
+        ("điện thoại quá ngắn", {"changes": {"contact.phone": "+84 12"}}, None, None, 400),
         ("github kèm repo", {"changes": {"contact.githubUrl": "https://github.com/teoteo1081/repo"}}, None, None, 400),
         ("web localhost", {"changes": {"site.baseUrl": "https://localhost/x/"}}, None, None, 400),
         ("web repo GitHub", {"changes": {"site.baseUrl": "https://github.com/teoteo1081/W17/"}}, None, None, 400),
@@ -128,9 +132,13 @@ def t_settings_api(env):
         bad.append(f"đổi hợp lệ -> {st} {str(data)[:200]}")
     pages = {n: _raw(env.work / n) for n in FINALS}
     for name, html in pages.items():
-        for key in ("contact.email", "contact.zaloUrl"):
-            if OLD[key] in html:
-                bad.append(f"{name}: còn {OLD[key]}")
+        for old in (OLD["contact.email"], OLD["contact.zaloUrl"], OLD["contact.phone"], "tel:+84855239805"):
+            if old in html:
+                bad.append(f"{name}: còn {old}")
+        if 'href="tel:+14155550100"' not in html or "+1 415 555 0100" not in html:
+            bad.append(f"{name}: thiếu số điện thoại mới / link tel")
+        if "https://tj.example.com/portfolio/" not in html:
+            bad.append(f"{name}: thiếu địa chỉ web mới")
         if 'href="https://github.com/teoteo1081"' in html:
             bad.append(f"{name}: còn href GitHub cũ")
         if NEW["contact.email"] not in html or NEW["contact.zaloUrl"] not in html:

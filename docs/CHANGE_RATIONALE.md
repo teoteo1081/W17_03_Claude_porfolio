@@ -221,3 +221,21 @@ Chủ hồ sơ duyệt phase P0-1 của Master Upgrade Spec và việc cập nh�
 - R3-01..05: chữ tiếng Anh trong bản VI ("Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page").
 - CONTENT: tên dịch vụ 5 đổi thành "Website & Landing Page".
 Chưa chạy: F03, F08, native_zoom (không đụng modal/chữ hiển thị).
+
+### Vòng 4 — P0-2 (2026-11-20): CV, số điện thoại, PDF, QR
+
+Quyết định của chủ hồ sơ: (1a) giữ chữ đã sửa qua editor kể cả cụm tiếng Anh, test theo chữ đó; số 0855239805 hiển thị `+84 855 239 805`; có nút tải PDF cho khách.
+
+| Đổi | Vì sao |
+|---|---|
+| Trường `contact.phone` trong `w17-site-config` và ô "Số điện thoại" trong ⚙; đổi số thì đổi cả chữ hiển thị lẫn `tel:` | Đổi một lần ở mọi chỗ, không gõ tay nhiều nơi |
+| Portfolio: nút 📞 ở mục Liên hệ. CV: 📞 cạnh email ở hero; email hero thành link `mailto:` | Khách quốc tế bấm gọi được; email trong PDF bấm được |
+| CV hero thêm "🌐 Xem Portfolio" (Zalo, GitHub, Portfolio) trỏ địa chỉ công khai | Người đọc CV/PDF sang được Portfolio |
+| Khối chỉ hiện khi in: QR 3,4 cm nền trắng có vùng trắng 4 ô, nhãn "Quét để xem Portfolio", tên miền, email, số điện thoại | PDF giấy vẫn dẫn được về web; nền PDF tối nên QR cần ô trắng |
+| UTM: link trong PDF `utm_medium=pdf`, QR `utm_medium=qr` (cùng `utm_source=cv_pdf`); link trên màn hình không gắn UTM | Phân biệt bấm link PDF và quét QR khi có GA4; UTM trên link nội bộ làm GA4 tách phiên sai nguồn |
+| QR vẽ bằng SVG/DOM từ thư viện qrcode-generator 1.4.4 (MIT, SRI khớp cdnjs) nhúng sẵn | Không phụ thuộc dịch vụ tạo QR bên ngoài lúc in; không innerHTML |
+| Nút "📄 Tải CV (PDF)" ở thanh trên CV (4 ngôn ngữ) mở hộp thoại in | Khách tự lấy CV; chỉ đo được lượt bấm, không đo được việc lưu file |
+| Bản Final lưu từ editor không mang QR đã vẽ | QR luôn vẽ lại từ cấu hình hiện tại |
+| `docs/EDITOR_HANDBOOK.md` | Hướng dẫn tự làm các chức năng đã có |
+
+**Kiểm tra (2026-11-20):** R7-01..04 PASS (PDF A4 thật bằng Chromium: mọi link tuyệt đối, không localhost; QR giải mã bằng OpenCV từ ảnh PDF 200 dpi đúng URL; đổi địa chỉ web thì PDF mới mang QR/link mới). Toàn bộ nhóm STATIC, F01–F10, N, R3–R7, CONTENT, NAV, RESP, ZOOM: PASS (42/42 + 8/8 + F03 4/4 + ZOOM 3/3). Số trang PDF trước/sau: 4/4. Chưa kiểm: quét QR bằng điện thoại thật trên bản in giấy (chủ hồ sơ tự thử, xem sổ tay mục 6); hộp thoại in của Safari/Firefox (test dùng Chromium).

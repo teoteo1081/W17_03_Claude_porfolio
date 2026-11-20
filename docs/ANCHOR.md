@@ -45,7 +45,7 @@ Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WR
 
 ## 3. Anchor riêng tư (A6)
 
-**A6 (cập nhật vòng 4). Số điện thoại ĐƯỢC công khai** theo quyết định mới của chủ hồ sơ (2026-11-20), nhưng **chỉ** khi chủ hồ sơ xác nhận số và định dạng (phase P0-2); số được quản lý trong khối `w17-site-config`, không tự lấy số trong link Zalo. Tới khi đó trang vẫn chưa hiển thị số. Nội dung A6 gốc bên dưới là lịch sử.
+**A6 (cập nhật vòng 4, P0-2). Số điện thoại công khai `+84 855 239 805`** (chủ hồ sơ xác nhận 2026-11-20: đúng số 0855239805, hiển thị dạng quốc tế), link `tel:+84855239805`; ở mục Liên hệ Portfolio, hero CV và khối in PDF. Quản lý ở trường `contact.phone` của `w17-site-config`. Kiểm: test R7-01, R6-02. Nội dung A6 gốc bên dưới là lịch sử.
 
 **A6 gốc (vòng 2). Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html index_portfolio_clean.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
 
@@ -63,6 +63,8 @@ python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Crea
 **A10. Cấu hình dùng chung một nguồn (vòng 4).** Email, link Zalo, link GitHub (trang cá nhân) và địa chỉ web công khai nằm trong khối `<script type="application/json" id="w17-site-config">` **giống hệt nhau** ở hai file Final. Đổi qua nút ⚙ Cài đặt của editor (`POST /api/settings`) thì server thay giá trị cũ → mới ở mọi chỗ của cả hai file (giữ nguyên link repo `github.com/<tên>/<repo>`), đặt lại canonical/og:url, sinh lại Creator. `/api/save` trả 409 nếu bản lưu mang cấu hình khác bản trên đĩa (trang mở trước khi đổi cài đặt). Canonical Portfolio = địa chỉ web; canonical CV = địa chỉ web + `index_portfolio_clean.html`; không còn `og:url` trỏ `https://teoteo1081.github.io/` (404). Kiểm: `python -X utf8 tools/site_config.py --check`, test R6-01..03, R6-05.
 
 **A11. Khôi phục bản nháp CV không làm mất thẻ mới (vòng 4).** Bản nháp lưu `knownIds` (mọi mã thẻ/tag từng thấy). Khi khôi phục: thẻ có trong `knownIds` mà không có trong thứ tự → đã bị xóa → xóa; thẻ không có trong `knownIds` → thẻ mới thêm vào file → giữ, đặt cuối nhóm. Bản nháp cũ không có `knownIds` giữ cách xử lý cũ. Kiểm: test R6-04.
+
+**A12. CV → PDF/QR (vòng 4, P0-2).** Hero CV có nút theo thứ tự `Zalo | GitHub | Portfolio`; link Portfolio là `data-w17-link="portfolio"` = địa chỉ web công khai (do `tools/site_config.py` đặt). Khối `#cv-print-contact` chỉ hiện khi in: QR (vẽ lúc mở trang từ `w17-site-config`, thư viện qrcode-generator 1.4.4 MIT nhúng sẵn, không gọi dịch vụ ngoài) trỏ địa chỉ web + `utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv`; link chữ + nút hero trong PDF mang `utm_medium=pdf`. Trên màn hình link Portfolio không có UTM. Nút "📄 Tải CV (PDF)" cho khách mở hộp thoại in. Số trang PDF A4 không đổi (4). Kiểm: test R7-01..04 (PDF thật bằng Chromium, đọc link bằng PyMuPDF, giải mã QR bằng OpenCV).
 
 ## 5. Lệnh kiểm tổng
 
@@ -96,4 +98,6 @@ Chủ hồ sơ duyệt phase P0-1 và việc cập nhật Anchor. Thay đổi so
 - A6 → số điện thoại được phép công khai sau khi chủ hồ sơ xác nhận số (P0-2).
 - Phạm vi "ngoài phạm vi: `server.py`, `tools/`, logic JS" không còn đúng; phạm vi theo từng phase được duyệt.
 - Thêm A10 (cấu hình dùng chung) và A11 (khôi phục bản nháp CV).
-- Các phase sau (P0-2 CV/PDF/QR, P0-3 GA4, P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.
+- P0-2 (CV/số điện thoại/PDF/QR/nút tải PDF) đã duyệt và làm xong (A6, A12).
+- Test F04/R3/CONTENT theo chữ chủ hồ sơ sửa qua editor; 4 cụm tiếng Anh được giữ cố ý (Freelance & Remote, End-to-End Operations Automation, Website & Landing Page, Rubric Engineering).
+- Các phase sau (P0-3 GA4, P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.
