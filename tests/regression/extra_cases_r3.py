@@ -47,10 +47,16 @@ STATIC_JS = r"""async (rel) => {
 }"""
 
 
+# Cụm tiếng Anh chủ hồ sơ CỐ Ý giữ trong bản VI/ES/ZH (quyết định 2026-11-20); chỉ miễn đúng cụm này, từ đơn lẻ vẫn bị bắt.
+ALLOWED_PHRASES = ("Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering")
+
+
 def _deny_hits(strings):
     hits = []
     for s in strings:
-        plain = re.sub(r"<[^>]+>", " ", s)
+        plain = re.sub(r"<[^>]+>", " ", s).replace("&amp;", "&")
+        for phrase in ALLOWED_PHRASES:
+            plain = plain.replace(phrase, " ")
         m = re.search(DENY_RE, plain)
         if m:
             hits.append("%r in %r" % (m.group(0), plain[:70]))

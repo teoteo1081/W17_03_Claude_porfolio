@@ -424,7 +424,8 @@ def t_f04_cta(b, env):
             bad.append(f"{rel}: CTA không đổi theo locale {texts}")
         for l in LOCALES:
             set_lang(pg, l)
-            hero_ok = pg.evaluate("""() => { const h = document.querySelector('h1[data-i18n=hero_title]'); return h.querySelectorAll('br').length >= 1 && h.querySelectorAll('span.inline-block').length >= 1; }""")
+            # span bảo vệ đuôi câu luôn bắt buộc; <br> chỉ bắt buộc khi chuỗi của locale đó có <br> (chủ hồ sơ có thể bỏ ngắt dòng cứng)
+            hero_ok = pg.evaluate("""() => { const h = document.querySelector('h1[data-i18n=hero_title]'); const wantBr = /<br/i.test(((translations[currentLang] || {}).hero_title) || ''); return h.querySelectorAll('span.inline-block').length >= 1 && (!wantBr || h.querySelectorAll('br').length >= 1); }""")
             if not hero_ok:
                 bad.append(f"{rel}/{l}: Hero mất br/span")
     record("F04", "6 CTA 'Xem bảng chi tiết' dịch theo locale ở Final và Creator; Hero giữ <br> và span.inline-block sau khi đổi ngôn ngữ", not bad, " | ".join(bad))
@@ -1031,12 +1032,19 @@ BADGES = {  # thứ tự hiển thị: 2 chính, 2 chuyên ngành, 2 nhận làm
     "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 效果衡量"],
 }
 SERVICE_TITLES = {
-    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ (1040)", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Trang đích", "6. Đo lường hiệu suất quảng cáo"],
+    # vi: theo chữ chủ hồ sơ sửa qua editor (2026-11-20, giữ "Landing Page", bỏ "(1040)")
+    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Landing Page", "6. Đo lường hiệu suất quảng cáo"],
     "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. US Tax Office Back-Office (1040)", "4. Sales Compensation, Commissions & KPIs", "5. Website & Landing Page", "6. Ad Performance Tracking"],
     "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Back-office para Despachos Fiscales de EE. UU. (1040)", "4. Compensación Comercial, Comisiones y KPI", "5. Sitio Web y Página de Aterrizaje", "6. Medición del Rendimiento Publicitario"],
     "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 美国报税事务所后台支持（1040）", "4. 销售薪酬、佣金与 KPI", "5. 网站与落地页", "6. 广告效果衡量"],
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
+# Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
+POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Vận hành và Phân tích Dữ liệu"}
+
+
+def positioning(l, page):
+    return POSITIONING_VI[page] if l == "vi" else POSITIONING[l]
 
 
 def t_content(b, env):
@@ -1061,7 +1069,7 @@ def t_content(b, env):
                 bad.append(f"{rel}/{l}: badge {info['badges']}")
             if info["titles"] != SERVICE_TITLES[l]:
                 bad.append(f"{rel}/{l}: tên dịch vụ {info['titles']}")
-            if POSITIONING[l] not in info["pos"]:
+            if positioning(l, "portfolio") not in info["pos"]:
                 bad.append(f"{rel}/{l}: sai định vị {info['pos']!r}")
             if info["cards"] != 6 or not info["pbi"] or not all(info["apps"]) or info["pkgs"] != 6 or not info["nocommit"]:
                 bad.append(f"{rel}/{l}: {info}")
@@ -1070,7 +1078,7 @@ def t_content(b, env):
         for l in LOCALES:
             set_lang(pg, l)
             t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent")
-            if POSITIONING[l] not in t:
+            if positioning(l, "cv") not in t:
                 bad.append(f"{rel}/{l}: sai định vị {t!r}")
     record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
     ctx.close()
