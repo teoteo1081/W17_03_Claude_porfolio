@@ -200,8 +200,8 @@
 
         <!-- Headline & Name -->
         <div class="space-y-4 max-w-5xl mx-auto">
-          <h1 data-i18n="hero_title" class="editable-node text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug md:leading-snug lg:leading-snug max-w-5xl mx-auto text-center text-balance mb-6">Tự động hóa việc lặp lại, dữ liệu sạch,<br class="hidden md:inline"> dashboard rõ ràng cho <span class="inline-block">chủ doanh nghiệp</span></h1>
-          <p data-i18n="hero_positioning" data-tail="" class="editable-node text-balance text-base sm:text-xl font-semibold bg-gradient-to-r from-emerald-700 to-cyan-700 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">End to end: Vận hành &amp; Phân tích Dữ liệu • Tự động hóa Quy trình • <span class="inline-block" data-auto-tail="">Dashboard BI</span></p>
+          <h1 data-i18n="hero_title" class="editable-node text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug md:leading-snug lg:leading-snug max-w-5xl mx-auto text-center text-balance mb-6">Giảm việc thủ công. Chuẩn hóa dữ liệu. Đơn giản hóa vận hành.</h1>
+          <p data-i18n="hero_positioning" data-tail="" class="editable-node text-balance text-base sm:text-xl font-semibold bg-gradient-to-r from-emerald-700 to-cyan-700 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">Trọn gói: Vận hành &amp; Phân tích Dữ liệu • Tự động hóa Quy trình • <span class="inline-block" data-auto-tail="">Dashboard BI</span></p>
         </div>
 
         <!-- Narrative Description -->
@@ -238,10 +238,10 @@
 
         <!-- Filter Buttons -->
         <div role="group" aria-label="Bộ lọc khu vực Dashboard" data-i18n-aria="aria_region_filter" class="flex flex-wrap items-center gap-2 p-1.5 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl">
-          <button type="button" onclick="filterDashboard('all')" id="btn-filter-all" aria-pressed="true" data-i18n="filter_all" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">Tất cả khu vực</button>
-          <button type="button" onclick="filterDashboard('north')" id="btn-filter-north" aria-pressed="false" data-i18n="filter_north" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">Miền Bắc</button>
-          <button type="button" onclick="filterDashboard('south')" id="btn-filter-south" aria-pressed="false" data-i18n="filter_south" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">Miền Nam</button>
-          <button type="button" onclick="filterDashboard('direct')" id="btn-filter-direct" aria-pressed="false" data-i18n="filter_direct" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">Kênh Trực Tiếp</button>
+          <button type="button" onclick="filterDashboard('all')" id="btn-filter-all" aria-pressed="true" data-i18n="filter_all" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Tất cả khu vực</button>
+          <button type="button" onclick="filterDashboard('north')" id="btn-filter-north" aria-pressed="false" data-i18n="filter_north" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Miền Bắc</button>
+          <button type="button" onclick="filterDashboard('south')" id="btn-filter-south" aria-pressed="false" data-i18n="filter_south" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Miền Nam</button>
+          <button type="button" onclick="filterDashboard('direct')" id="btn-filter-direct" aria-pressed="false" data-i18n="filter_direct" class="filter-btn px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Kênh Trực Tiếp</button>
         </div>
       </div>
 
@@ -254,9 +254,7 @@
             <span data-i18n="kpi_active_label" class="editable-node">Tỷ Lệ Hoạt Động</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" class="lucide lucide-check-circle-2 w-4 h-4 text-emerald-400"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
           </div>
-          <div id="kpi-active" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3">
-            78.4%
-          </div>
+          <div id="kpi-active" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3">78.4%</div>
           <p data-i18n="kpi_active_desc" class="editable-node text-xs text-slate-500 dark:text-slate-400 mt-2">Tỷ lệ nhân viên kinh doanh phát sinh doanh số thực tế</p>
         </div>
 
@@ -266,9 +264,7 @@
             <span data-i18n="kpi_roi_label" class="editable-node">ROI Cơ Chế Thưởng</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" class="lucide lucide-trending-up w-4 h-4 text-cyan-400"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
           </div>
-          <div id="kpi-roi" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3">
-            3.4x
-          </div>
+          <div id="kpi-roi" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3">3.4x</div>
           <p data-i18n="kpi_roi_desc" class="editable-node text-xs text-slate-500 dark:text-slate-400 mt-2">Doanh thu gia tăng ròng trên mỗi đồng ngân sách thưởng</p>
         </div>
 
@@ -278,9 +274,7 @@
             <span data-i18n="kpi_lift_label" class="editable-node">Tăng Trưởng Chuyển Đổi Phễu</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap" class="lucide lucide-zap w-4 h-4 text-emerald-400"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
           </div>
-          <div id="kpi-lift" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3 text-emerald-700 dark:text-emerald-400">
-            +24.8%
-          </div>
+          <div id="kpi-lift" class="editable-node text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono mt-3 text-emerald-700 dark:text-emerald-400">+24.8%</div>
           <p data-i18n="kpi_lift_desc" class="editable-node text-xs text-slate-500 dark:text-slate-400 mt-2">Mức cải thiện so với mức chuẩn ban đầu chưa tối ưu</p>
         </div>
 
@@ -1885,7 +1879,7 @@
   <div id="toast-notification" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-[70] px-4 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs sm:text-sm shadow-2xl no-print hidden"></div>
 
   <!-- Chỉnh sửa đã nhúng khi xuất Final (dữ liệu JSON thuần, không thực thi): mở lại với cache trống vẫn giữ nội dung -->
-  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ funneling/autoflow/organizing/bookmark cho văn phòng thuế Mỹ và thiết kế chính sách thu nhập dài hạn và chương trình thi đua ngắn hạn trong ngành bảo hiểm nhân thọ. Làm việc từ xa, bàn giao file chạy được \u003cspan class=\"inline-block\"\u003ekèm hướng dẫn.\u003c/span\u003e","hero_positioning":"End to end: Vận hành \u0026 Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI","eco_card5_title":"3. Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Kiểm hồ sơ khách và funnel (phân loại từng form, bắt hồ sơ trùng, sai năm, sai người) trước khi đưa vào CCH Autoflow , rà và sửa bookmark workpaper PDF theo đúng form thuế và organige đúng folder cho từng hồ sơ hoàn thuế.  Đối soát phí với E-Upsafe và Google Sheet."}}}</script>
+  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"Tự động hóa nhập liệu, đối soát và đồng bộ giữa Excel, Google Sheets và các hệ thống. Làm sạch dữ liệu và dựng dashboard điều hành bằng Power BI. Nhận thêm website gọn nhẹ và đo lường hiệu suất quảng cáo (GA4/GTM). Am hiểu nghiệp vụ funneling/autoflow/organizing/bookmark cho văn phòng thuế Mỹ và thiết kế chính sách thu nhập dài hạn và chương trình thi đua ngắn hạn trong ngành bảo hiểm nhân thọ. Làm việc từ xa, bàn giao file chạy được \u003cspan class=\"inline-block\"\u003ekèm hướng dẫn.\u003c/span\u003e","hero_positioning":"Trọn gói: Vận hành \u0026 Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI","eco_card5_title":"3. Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Kiểm hồ sơ khách và funnel (phân loại từng form, bắt hồ sơ trùng, sai năm, sai người) trước khi đưa vào CCH Autoflow , rà và sửa bookmark workpaper PDF theo đúng form thuế và organige đúng folder cho từng hồ sơ hoàn thuế.  Đối soát phí với E-Upsafe và Google Sheet.","hero_title":"Giảm việc thủ công. Chuẩn hóa dữ liệu. Đơn giản hóa vận hành."}}}</script>
 
   <!-- Translations & Core Logic -->
   <script id="core-portfolio-script">
