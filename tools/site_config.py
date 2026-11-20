@@ -39,6 +39,7 @@ CV_PATH = "index_portfolio_clean.html"   # đường dẫn CV tính từ địa 
 SCHEMA = 1
 CONFIG_RE = re.compile(r'(<script type="application/json" id="w17-site-config">)(.*?)(</script>)', re.S)
 SETTINGS_SCRIPT_RE = re.compile(r'<script id="w17-settings-script">.*?</script>', re.S)
+ANALYTICS_SCRIPT_RE = re.compile(r'<script id="w17-analytics-script">.*?</script>', re.S)
 CANONICAL_RE = re.compile(r'<link rel="canonical" href="[^"]*">')
 OG_URL_RE = re.compile(r'<meta property="og:url" content="[^"]*">')
 
@@ -66,6 +67,11 @@ FIELDS = {
         "msg": "Link GitHub phải có dạng https://github.com/<tên tài khoản> (không kèm tên repo).",
         # sau giá trị không được là '/', để link repo github.com/<tên>/<repo> không bị đổi theo
         "before": r"A-Za-z0-9._/-", "after": r"A-Za-z0-9_/-",
+    },
+    "ga4.measurementId": {
+        # để trống = tắt đo lường; không phải bí mật (nằm công khai trong trang)
+        "re": re.compile(r"^(G-[A-Z0-9]{6,12})?$"),
+        "msg": "Measurement ID GA4 có dạng G-XXXXXXXXXX (để trống nếu muốn tắt đo lường).",
     },
     "site.baseUrl": {
         "re": re.compile(r"^https://[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:/[A-Za-z0-9._~-]+)*/$"),
@@ -168,6 +174,8 @@ def managed_links(cfg):
 
 def replacement_pairs(dotted, old, new):
     """(cũ, mới, lớp ký tự không được đứng trước, mẫu không được đứng sau) cho một trường đã đổi."""
+    if dotted == "ga4.measurementId":
+        return []  # chỉ nằm trong khối cấu hình; script GA4 đọc từ đó
     if dotted == "contact.phone":
         return [(old, new, r"0-9+", r"[0-9]| [0-9]"), (phone_e164(old), phone_e164(new), r"0-9+", r"[0-9]")]
     spec = FIELDS[dotted]
@@ -284,15 +292,19 @@ def check(root=ROOT):
         for m in MANAGED_TEXT_RE.finditer(html):
             if m.group(0) != m.group(1) + links["portfolio-domain"] + m.group(2):
                 problems.append(f"{name}: chữ tên miền in trong PDF không khớp địa chỉ web")
-        found = SETTINGS_SCRIPT_RE.findall(html)
-        if len(found) != 1:
-            problems.append(f"{name}: cần đúng một <script id=\"w17-settings-script\">, thực tế {len(found)}")
-        else:
-            scripts[name] = found[0]
+        shared = []
+        for sid, rx in (("w17-settings-script", SETTINGS_SCRIPT_RE), ("w17-analytics-script", ANALYTICS_SCRIPT_RE)):
+            found = rx.findall(html)
+            if len(found) != 1:
+                problems.append(f"{name}: cần đúng một <script id=\"{sid}\">, thực tế {len(found)}")
+            else:
+                shared.append(found[0])
+        if len(shared) == 2:
+            scripts[name] = shared
     if len(configs) == 2 and configs[PORTFOLIO] != configs[CV]:
         problems.append("Khối w17-site-config của Portfolio và CV khác nhau")
     if len(scripts) == 2 and scripts[PORTFOLIO] != scripts[CV]:
-        problems.append("Mã w17-settings-script của Portfolio và CV khác nhau")
+        problems.append("Mã w17-settings-script / w17-analytics-script của Portfolio và CV khác nhau")
     return problems
 
 

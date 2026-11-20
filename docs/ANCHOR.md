@@ -66,6 +66,8 @@ python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Crea
 
 **A12. CV → PDF/QR (vòng 4, P0-2).** Hero CV có nút theo thứ tự `Zalo | GitHub | Portfolio`; link Portfolio là `data-w17-link="portfolio"` = địa chỉ web công khai (do `tools/site_config.py` đặt). Khối `#cv-print-contact` chỉ hiện khi in: QR (vẽ lúc mở trang từ `w17-site-config`, thư viện qrcode-generator 1.4.4 MIT nhúng sẵn, không gọi dịch vụ ngoài) trỏ địa chỉ web + `utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv`; link chữ + nút hero trong PDF mang `utm_medium=pdf`. Trên màn hình link Portfolio không có UTM. Nút "📄 Tải CV (PDF)" cho khách mở hộp thoại in. Số trang PDF A4 không đổi (4). Kiểm: test R7-01..04 (PDF thật bằng Chromium, đọc link bằng PyMuPDF, giải mã QR bằng OpenCV).
 
+**A13. GA4 cho Portfolio + CV (vòng 4, P0-3).** Property "TJ Portfolio & CV" (565302376), luồng web `teoteo1081.github.io` (16382251060), Measurement ID `G-501ZEXPEVQ` trong `w17-site-config` (đổi/tắt ở ⚙). Dùng `gtag.js` trực tiếp, không GTM. Tag chỉ tải trên https + đúng host của địa chỉ web công khai; không chạy ở editor, localhost, file://, trình duyệt tự động. Consent Mode v2 theo lựa chọn 2b: mặc định từ chối đo lường ở EEA/Anh/Thụy Sĩ, cho phép nơi khác; quảng cáo luôn từ chối; banner tự hiện khi múi giờ châu Âu, nút "Quyền riêng tư & cookie" ở chân 2 trang. Đo lường nâng cao trên GA chỉ bật lượt xem trang (tắt đếm theo lịch sử trình duyệt) + cuộn. Sự kiện: contact_phone/email/zalo_click, cv_from_portfolio_click, portfolio_from_cv_click, github_click, project_demo_click, service_detail_open, ga4_detail_open, cv_pdf_export_click, contact_mailto_open (không phải "gửi thành công"), language_change; tham số chỉ là mã ngắn, không gửi chữ người dùng gõ. Dữ liệu GA4 trưng bày trên Portfolio (property WordLoop Hub, ảnh chụp thủ công) KHÔNG đổi và không trộn với property này. Không tuyên bố tuân thủ pháp luật. Kiểm: R8-01..04 (giả lập web công khai, chặn mọi request tới Google).
+
 ## 5. Lệnh kiểm tổng
 
 ```bash
@@ -100,4 +102,5 @@ Chủ hồ sơ duyệt phase P0-1 và việc cập nhật Anchor. Thay đổi so
 - Thêm A10 (cấu hình dùng chung) và A11 (khôi phục bản nháp CV).
 - P0-2 (CV/số điện thoại/PDF/QR/nút tải PDF) đã duyệt và làm xong (A6, A12).
 - Test F04/R3/CONTENT theo chữ chủ hồ sơ sửa qua editor; 4 cụm tiếng Anh được giữ cố ý (Freelance & Remote, End-to-End Operations Automation, Website & Landing Page, Rubric Engineering).
-- Các phase sau (P0-3 GA4, P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.
+- P0-3 (GA4 + consent 2b) đã duyệt và làm xong (A13); chủ hồ sơ cho phép Claude tự tạo property GA4 bằng phiên Chrome đang đăng nhập.
+- Các phase sau (P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.

@@ -5,7 +5,159 @@
   <title>Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</title>
   <meta name="description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
   <link rel="canonical" href="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
-  <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"}}</script>
+  <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"},"ga4":{"measurementId":"G-501ZEXPEVQ"}}</script>
+  <script id="w17-analytics-script">
+    // GA4 cho Portfolio + CV (Measurement ID trong w17-site-config, đổi ở ⚙ Cài đặt; để trống = tắt).
+    // CHỈ chạy trên địa chỉ web công khai (https + đúng host của site.baseUrl); KHÔNG chạy trong editor, localhost, file://
+    // hay trình duyệt tự động (Playwright). Thêm ?ga_debug=1 vào địa chỉ để xem sự kiện trong GA4 DebugView.
+    // Đồng ý (Consent Mode v2): mặc định TỪ CHỐI đo lường với EEA/Anh/Thụy Sĩ (Google xác định vùng theo IP), CHO PHÉP nơi khác;
+    // quảng cáo luôn từ chối. Banner tự hiện khi múi giờ trình duyệt thuộc châu Âu; nút "Quyền riêng tư & cookie" ở chân trang
+    // mở lại banner cho mọi người. Sự kiện chỉ mang giá trị cố định (mã nút, vị trí): KHÔNG gửi chữ người dùng gõ,
+    // email/số điện thoại của khách hay link mailto có nội dung. Mã này giống hệt nhau ở hai trang.
+    (function () {
+      const KEY = 'w17_03_consent';
+      const EEA = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+        'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH'];
+      const T = {
+        title: { vi: 'Quyền riêng tư', en: 'Privacy', es: 'Privacidad', zh: '隐私' },
+        body: {
+          vi: 'Trang dùng Google Analytics để đếm lượt truy cập và lượt bấm (không quảng cáo, không bán dữ liệu). Không ghi tên, email hay số điện thoại của bạn. Bạn có cho phép đo lường không?',
+          en: 'This site uses Google Analytics to count visits and clicks (no ads, no data selling). It does not record your name, email or phone number. Do you allow analytics?',
+          es: 'Este sitio usa Google Analytics para contar visitas y clics (sin publicidad ni venta de datos). No registra su nombre, correo ni teléfono. ¿Permite la analítica?',
+          zh: '本网站使用 Google Analytics 统计访问和点击（无广告，不出售数据），不记录您的姓名、邮箱或电话。是否允许统计分析？'
+        },
+        accept: { vi: 'Đồng ý', en: 'Accept', es: 'Aceptar', zh: '同意' },
+        decline: { vi: 'Từ chối', en: 'Decline', es: 'Rechazar', zh: '拒绝' },
+        granted: { vi: 'Lựa chọn hiện tại: đồng ý.', en: 'Current choice: accepted.', es: 'Elección actual: aceptado.', zh: '当前选择：同意。' },
+        denied: { vi: 'Lựa chọn hiện tại: từ chối.', en: 'Current choice: declined.', es: 'Elección actual: rechazado.', zh: '当前选择：拒绝。' }
+      };
+      let cfg = null;
+      try { cfg = JSON.parse(document.getElementById('w17-site-config').textContent); } catch (e) {}
+      const id = cfg && cfg.ga4 && cfg.ga4.measurementId;
+      const base = cfg && cfg.site && cfg.site.baseUrl;
+      const host = typeof base === 'string' ? base.split('/')[2] : '';
+      // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo đường dẫn
+      const page = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
+      const active = typeof id === 'string' && /^G-[A-Z0-9]{6,12}$/.test(id) && location.protocol === 'https:' && location.hostname === host
+        && document.documentElement.getAttribute('data-w17-mode') !== 'creator' && !navigator.webdriver;
+      const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
+      const t = (k) => (T[k] && (T[k][lang()] || T[k].vi)) || k;
+      const stored = () => {
+        try { const v = localStorage.getItem(KEY); return v === 'granted' || v === 'denied' ? v : null; } catch (e) { return null; }
+      };
+
+      window.w17Track = function () {};
+      if (active) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        const noAds = { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' };
+        gtag('consent', 'default', Object.assign({ analytics_storage: 'denied', region: EEA, wait_for_update: 500 }, noAds));
+        gtag('consent', 'default', Object.assign({ analytics_storage: 'granted' }, noAds));
+        const choice = stored();
+        if (choice) gtag('consent', 'update', { analytics_storage: choice });
+        gtag('set', 'ads_data_redaction', true);
+        gtag('js', new Date());
+        const debug = /[?&]ga_debug=1(?:&|$)/.test(location.search);
+        const conf = { content_group: page, site_lang: lang(), allow_google_signals: false, allow_ad_personalization_signals: false };
+        if (debug) conf.debug_mode = true;
+        gtag('config', id, conf);
+        const tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+        document.head.appendChild(tag);
+        // Chỉ nhận tham số là mã ngắn (chữ, số, _ . -): không thể lọt email, số điện thoại hay chữ tự do.
+        window.w17Track = function (name, params) {
+          const p = { content_group: page, site_lang: lang() };
+          Object.keys(params || {}).forEach((k) => {
+            const v = params[k];
+            if (typeof v === 'string' && /^[A-Za-z0-9_.-]{1,40}$/.test(v)) p[k] = v;
+          });
+          if (debug) p.debug_mode = true;
+          gtag('event', name, p);
+        };
+      }
+
+      function where(node) {
+        if (node.closest('#cv-print-contact')) return 'print';
+        if (node.closest('#mobileMenu')) return 'nav_mobile';
+        if (node.closest('#main-navbar')) return 'nav';
+        if (node.closest('footer')) return 'footer';
+        const sec = node.closest('section[id]');
+        if (sec) return sec.id;
+        const first = document.querySelector('#portfolio-root > section');
+        if (first && first.contains(node)) return 'hero';
+        return page === 'cv' ? 'topbar' : 'page';
+      }
+
+      // Bắt ở pha capture để vẫn ghi nhận khi trang chặn lan truyền sự kiện. Click ≠ kết quả (bấm Zalo chưa chắc đã nhắn).
+      document.addEventListener('click', (ev) => {
+        const node = ev.target && ev.target.closest ? ev.target.closest('a[href], button') : null;
+        if (!node) return;
+        const href = node.getAttribute('href') || '';
+        const loc = where(node);
+        const link = node.getAttribute('data-w17-link');
+        if (node.id === 'btn-cv-pdf') return w17Track('cv_pdf_export_click', { link_location: loc });
+        if (href.startsWith('tel:')) return w17Track('contact_phone_click', { link_location: loc });
+        if (href.startsWith('mailto:')) return w17Track('contact_email_click', { link_location: loc });
+        if (/^https:\/\/zalo\.me\//.test(href)) return w17Track('contact_zalo_click', { link_location: loc });
+        if (link === 'portfolio' || link === 'portfolio-pdf' || (page === 'cv' && /(^|\/)(index|editor_portfolio)\.html$/.test(href))) {
+          return w17Track('portfolio_from_cv_click', { link_location: loc });
+        }
+        if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        const demo = node.querySelector('[data-i18n$="_btn_demo"]');
+        if (demo) return w17Track('project_demo_click', { project_id: demo.getAttribute('data-i18n').split('_')[0] });
+        if (/^https:\/\/github\.com\//.test(href)) {
+          return w17Track('github_click', { link_location: loc, link_type: href.replace(/\/+$/, '').split('/').length > 4 ? 'repo' : 'profile' });
+        }
+      }, true);
+      // Form liên hệ chỉ MỞ ứng dụng email (mailto); không biết thư có được gửi hay không, nên không gọi là "submit thành công".
+      document.addEventListener('submit', (ev) => {
+        if (ev.target && ev.target.id === 'contactForm') w17Track('contact_mailto_open', { link_location: 'contact' });
+      }, true);
+
+      function choose(value, box) {
+        try { localStorage.setItem(KEY, value); } catch (e) {}
+        if (active) gtag('consent', 'update', { analytics_storage: value });
+        box.remove();
+      }
+
+      function banner(opener) {
+        if (document.getElementById('w17-consent-banner')) return;
+        const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+        const box = mk('div', 'no-print fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-4 sm:bottom-4 sm:max-w-md z-[70] rounded-2xl border border-slate-700 bg-slate-900/95 text-slate-100 shadow-2xl p-4 space-y-3');
+        box.id = 'w17-consent-banner';
+        box.setAttribute('role', 'region');
+        box.setAttribute('aria-labelledby', 'w17-consent-title');
+        const h = mk('p', 'text-sm font-bold text-white', t('title'));
+        h.id = 'w17-consent-title';
+        box.append(h, mk('p', 'text-xs text-slate-300 leading-relaxed', t('body')));
+        const s = stored();
+        if (s) box.append(mk('p', 'text-[11px] text-slate-400', t(s)));
+        const row = mk('div', 'flex flex-wrap justify-end gap-2');
+        const no = mk('button', 'inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 cursor-pointer', t('decline'));
+        const yes = mk('button', 'inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 cursor-pointer', t('accept'));
+        no.type = 'button';
+        yes.type = 'button';
+        no.id = 'w17-consent-decline';
+        yes.id = 'w17-consent-accept';
+        no.addEventListener('click', () => { choose('denied', box); if (opener && document.contains(opener)) opener.focus(); });
+        yes.addEventListener('click', () => { choose('granted', box); if (opener && document.contains(opener)) opener.focus(); });
+        row.append(no, yes);
+        box.append(row);
+        document.body.appendChild(box);
+        if (opener) yes.focus();
+      }
+      window.w17OpenConsent = banner;
+
+      let tz = '';
+      try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+      const europe = /^Europe\//.test(tz) || ['Atlantic/Reykjavik', 'Atlantic/Canary', 'Atlantic/Madeira', 'Atlantic/Azores', 'Atlantic/Faroe', 'Arctic/Longyearbyen'].includes(tz);
+      if (active && europe && !stored()) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => banner(null));
+        else banner(null);
+      }
+    })();
+  </script>
   
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI">
@@ -1241,6 +1393,7 @@
         <p class="editable-node text-xs text-slate-600 dark:text-slate-400">
           © <span class="editable-node" data-node-id="3">2026</span> <span class="editable-node" data-node-id="4">Thao Nguyen (TJ).</span> <span data-i18n="footer_rights" class="editable-node">Bảo lưu mọi quyền.</span>
         </p>
+        <p><button type="button" data-w17-consent-open onclick="w17OpenConsent(this)" class="no-print text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 underline underline-offset-2 hover:text-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded cursor-pointer"><span data-i18n="privacy_settings">Quyền riêng tư & cookie</span></button></p>
       </footer>
     </section>
 
@@ -2099,6 +2252,7 @@
         pbi_badge: "GA4 • SẢN PHẨM CÁ NHÂN",
         spoke_section_badge: "DỰ ÁN CÁ NHÂN & ĐO LƯỜNG GA4",
         footer_rights: "Bảo lưu mọi quyền.",
+        privacy_settings: "Quyền riêng tư & cookie",
         ga4_live_badge: "GA4 • CHI TIẾT",
         modal_p1_badge: "Dịch vụ chính",
         modal_p2_badge: "Dịch vụ thứ hai",
@@ -2322,6 +2476,7 @@
         pbi_badge: "GA4 • PERSONAL PRODUCTS",
         spoke_section_badge: "PERSONAL PROJECTS & GA4 TRACKING",
         footer_rights: "All rights reserved.",
+        privacy_settings: "Privacy & cookies",
         ga4_live_badge: "GA4 • DETAIL",
         modal_p1_badge: "Core service",
         modal_p2_badge: "Second service",
@@ -2545,6 +2700,7 @@
         pbi_badge: "GA4 • PRODUCTOS PERSONALES",
         spoke_section_badge: "PROYECTOS PERSONALES Y MEDICIÓN GA4",
         footer_rights: "Todos los derechos reservados.",
+        privacy_settings: "Privacidad y cookies",
         ga4_live_badge: "GA4 • DETALLE",
         modal_p1_badge: "Servicio principal",
         modal_p2_badge: "Segundo servicio",
@@ -2768,6 +2924,7 @@
         pbi_badge: "GA4 • 个人产品",
         spoke_section_badge: "个人项目与 GA4 测量",
         footer_rights: "保留所有权利。",
+        privacy_settings: "隐私与 Cookie",
         ga4_live_badge: "GA4 • 明细",
         modal_p1_badge: "核心服务",
         modal_p2_badge: "第二服务",
@@ -3242,6 +3399,7 @@
 
     function switchLanguage(lang, isManualSwitch = false) {
       if (!translations[lang]) lang = 'vi';
+      if (isManualSwitch && window.w17Track) window.w17Track('language_change', { language: lang });
       currentLang = lang;
       document.documentElement.lang = lang;
       w17ApplyMeta(lang);
@@ -3776,6 +3934,7 @@
     function openGA4DrilldownModal(defaultTab = 'countries', triggerEl = null, serviceId = null) {
       const modal = document.getElementById('ga4-drilldown-modal');
       if (!modal) return;
+      if (window.w17Track) window.w17Track(serviceId ? 'service_detail_open' : 'ga4_detail_open', serviceId ? { service_id: String(serviceId) } : { detail_tab: String(defaultTab) });
       lastGA4ModalTrigger = triggerEl || document.activeElement;
       modal.classList.remove('hidden');
       modal.setAttribute('aria-hidden', 'false');
@@ -4395,7 +4554,7 @@
         cloneNavbar.classList.add('top-0');
       }
 
-      cloneDoc.querySelectorAll('#visual-toolbar, #w17-settings-dialog').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('#visual-toolbar, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
 
       const cloneToast = cloneDoc.querySelector('#toast-notification');
       if (cloneToast) {
@@ -4589,6 +4748,8 @@
         github: { vi: 'Link GitHub (trang cá nhân)', en: 'GitHub profile link', es: 'Perfil de GitHub', zh: 'GitHub 个人主页' },
         base: { vi: 'Địa chỉ web công khai (Portfolio)', en: 'Public website address (Portfolio)', es: 'Dirección pública del sitio (Portafolio)', zh: '公开网址（作品集）' },
         baseHint: { vi: 'Dùng cho canonical, link trong PDF và mã QR. Không dùng localhost.', en: 'Used for canonical, PDF links and the QR code. Never localhost.', es: 'Se usa para canonical, enlaces del PDF y el código QR. Nunca localhost.', zh: '用于 canonical、PDF 链接和二维码，不可使用 localhost。' },
+        ga4: { vi: 'GA4 Measurement ID', en: 'GA4 Measurement ID', es: 'ID de medición de GA4', zh: 'GA4 衡量 ID' },
+        ga4Hint: { vi: 'Dạng G-XXXXXXXXXX. Để trống = tắt đo lường. Chỉ đo trên địa chỉ web công khai, không đo khi sửa trong editor.', en: 'Format G-XXXXXXXXXX. Leave empty to turn analytics off. Only measured on the public site, never in the editor.', es: 'Formato G-XXXXXXXXXX. Vacío = analítica desactivada. Solo mide en el sitio público, nunca en el editor.', zh: '格式 G-XXXXXXXXXX。留空即关闭统计。仅在公开网址统计，编辑器中不统计。' },
         save: { vi: 'Lưu cài đặt', en: 'Save settings', es: 'Guardar ajustes', zh: '保存设置' },
         cancel: { vi: 'Đóng', en: 'Close', es: 'Cerrar', zh: '关闭' },
         loading: { vi: 'Đang đọc cài đặt…', en: 'Loading settings…', es: 'Cargando ajustes…', zh: '正在读取设置…' },
@@ -4603,7 +4764,8 @@
         ['contact.phone', 'phone', 'tel', 'phoneHint'],
         ['contact.zaloUrl', 'zalo', 'url', null],
         ['contact.githubUrl', 'github', 'url', null],
-        ['site.baseUrl', 'base', 'url', 'baseHint']
+        ['site.baseUrl', 'base', 'url', 'baseHint'],
+        ['ga4.measurementId', 'ga4', 'text', 'ga4Hint']
       ];
       const t = (k) => { const e = T[k] || {}; const l = (document.documentElement.lang || 'vi').slice(0, 2); return e[l] || e.vi || k; };
       const isLocal = () => /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);

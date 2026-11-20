@@ -26,6 +26,7 @@ OLD = {
     "contact.zaloUrl": "https://zalo.me/0855239805",
     "contact.githubUrl": "https://github.com/teoteo1081",
     "site.baseUrl": "https://teoteo1081.github.io/W17_03_Claude_porfolio/",
+    "ga4.measurementId": "G-501ZEXPEVQ",
 }
 NEW = {
     "contact.email": "tj.work@example.com",
@@ -33,6 +34,7 @@ NEW = {
     "contact.zaloUrl": "https://zalo.me/0900000001",
     "contact.githubUrl": "https://github.com/tj-new-account",
     "site.baseUrl": "https://tj.example.com/portfolio/",
+    "ga4.measurementId": "G-TEST123456",
 }
 FINALS = ["index.html", "index_portfolio_clean.html"]
 
@@ -111,7 +113,8 @@ def t_settings_api(env):
         ("web localhost", {"changes": {"site.baseUrl": "https://localhost/x/"}}, None, None, 400),
         ("web repo GitHub", {"changes": {"site.baseUrl": "https://github.com/teoteo1081/W17/"}}, None, None, 400),
         ("web http", {"changes": {"site.baseUrl": "http://tj.example.com/"}}, None, None, 400),
-        ("trường lạ", {"changes": {"ga4.measurementId": "G-XXXX"}}, None, None, 400),
+        ("GA4 ID sai dạng", {"changes": {"ga4.measurementId": "UA-12345-1"}}, None, None, 400),
+        ("trường lạ", {"changes": {"ga4.hosts": "x"}}, None, None, 400),
         ("changes không phải object", {"changes": "x"}, None, None, 400),
     ]
     for label, payload, token, origin, want in cases:

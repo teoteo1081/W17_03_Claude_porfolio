@@ -38,6 +38,8 @@ import extra_cases_r6 as X6  # noqa: E402
 X6.R = sys.modules[__name__]
 import extra_cases_r7 as X7  # noqa: E402
 X7.R = sys.modules[__name__]
+import extra_cases_r8 as X8  # noqa: E402
+X8.R = sys.modules[__name__]
 
 REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
@@ -1190,6 +1192,7 @@ def main():
                 ("R5", lambda: (X5.t_editor_strips(b, env), X5.t_server_rejects(env))),
                 ("R6", lambda: (X6.t_static_config(env), X6.t_settings_api(env), X6.t_stale_save(env), X6.t_cv_known_ids(b, env), X6.t_settings_dialog(b, env))),
                 ("R7", lambda: (X7.t_contact(b, env), X7.t_pdf_links(b, env), X7.t_qr(b, env), X7.t_clean_final(b, env))),
+                ("R8", lambda: (X8.t_no_tracking_local(b, env), X8.t_public_events(b, env), X8.t_consent_europe(b, env), X8.t_debug_and_clean(b, env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

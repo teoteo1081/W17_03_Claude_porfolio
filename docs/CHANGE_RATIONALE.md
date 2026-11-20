@@ -239,3 +239,20 @@ Quyết định của chủ hồ sơ: (1a) giữ chữ đã sửa qua editor k�
 | `docs/EDITOR_HANDBOOK.md` | Hướng dẫn tự làm các chức năng đã có |
 
 **Kiểm tra (2026-11-20):** R7-01..04 PASS (PDF A4 thật bằng Chromium: mọi link tuyệt đối, không localhost; QR giải mã bằng OpenCV từ ảnh PDF 200 dpi đúng URL; đổi địa chỉ web thì PDF mới mang QR/link mới). Toàn bộ nhóm STATIC, F01–F10, N, R3–R7, CONTENT, NAV, RESP, ZOOM: PASS (42/42 + 8/8 + F03 4/4 + ZOOM 3/3). Số trang PDF trước/sau: 4/4. Chưa kiểm: quét QR bằng điện thoại thật trên bản in giấy (chủ hồ sơ tự thử, xem sổ tay mục 6); hộp thoại in của Safari/Firefox (test dùng Chromium).
+
+### Vòng 4 — P0-3 (2026-11-20): GA4 cho Portfolio + CV
+
+Quyết định của chủ hồ sơ: property GA4 mới riêng (Claude tự tạo trong tài khoản đang đăng nhập), consent 2b (chỉ hỏi khách EEA/Anh).
+
+| Đổi | Vì sao |
+|---|---|
+| Property "TJ Portfolio & CV" (565302376), luồng web teoteo1081.github.io, ID `G-501ZEXPEVQ`, múi giờ VN | Không trộn với số liệu trang học (WordLoop/L00) |
+| Đo lường nâng cao: chỉ lượt xem trang + cuộn; tắt liên kết ngoài, biểu mẫu, tìm kiếm, video, tải tệp, đếm theo lịch sử trình duyệt | Tránh đếm trùng với sự kiện tự định nghĩa; form chỉ mở mailto nên "form_submit" của GA sẽ sai; bấm menu #mục không phải lượt xem mới |
+| Script `w17-analytics-script` giống nhau ở 2 trang, `gtag.js` trực tiếp | Một phương án, không GTM, không sự kiện trùng |
+| Chỉ chạy trên https + host công khai, không editor/localhost/Playwright | Không đếm sai lượt của chính chủ khi sửa và của bộ kiểm thử |
+| Consent Mode v2: EEA/UK/CH mặc định từ chối, nơi khác cho phép; quảng cáo luôn từ chối; banner theo múi giờ châu Âu + nút chân trang | Đúng lựa chọn 2b; ai cũng tự đổi được |
+| Sự kiện chỉ mang mã ngắn (bộ lọc ký tự), `content_group` = portfolio/cv, `site_lang` | Không thể lọt email/số điện thoại/nội dung form; phân biệt hai trang không cần custom dimension |
+| `contact_mailto_open` thay cho `contact_form_submit` | Không biết thư có được gửi; click ≠ kết quả |
+| Ô "GA4 Measurement ID" trong ⚙ (để trống = tắt) | Tự quản lý không cần Claude |
+
+**Kiểm tra (2026-11-20):** R8-01..04 PASS — giả lập web công khai trong Chromium, chặn mọi request tới Google (không có dữ liệu thật/giả nào gửi lên GA4). Toàn bộ STATIC, F01–F10, N, R3–R8, CONTENT, NAV, RESP, ZOOM PASS (46/46 + 8/8 + F03 4/4 + ZOOM 3/3). Ảnh banner 375px không tràn ngang. Lỗi tìm được khi test và đã sửa: script trong `<head>` nhận nhầm trang CV là Portfolio. Chưa kiểm (cần chủ hồ sơ/GA thật): Realtime/DebugView sau khi deploy, khách thật ở EEA.

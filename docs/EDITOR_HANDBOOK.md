@@ -59,16 +59,36 @@ Link "Xem Portfolio" trong PDF có đuôi `?utm_source=cv_pdf&utm_medium=pdf…`
 
 **Lưu ý:** PDF đã gửi đi **không tự cập nhật**. Đổi số điện thoại hay địa chỉ web thì chỉ những bản PDF xuất **sau đó** mới mang thông tin mới.
 
-## 6. Kiểm tra mã QR
+## 6. Đo lượt truy cập bằng GA4
+
+- GA4 property: **TJ Portfolio & CV** (trong tài khoản "TJ Sai Gon Project"). Measurement ID `G-501ZEXPEVQ` nằm ở ⚙ Cài đặt; để trống ô đó = tắt đo lường.
+- Chỉ đo khi mở **trang web thật**. Sửa trong editor, mở bằng MO_EDITOR hay bấm đúp file thì **không** đếm.
+- **Xem ngay có hoạt động không:** mở trang thật kèm đuôi `?ga_debug=1`, ví dụ `https://teoteo1081.github.io/W17_03_Claude_porfolio/?ga_debug=1`, bấm vài nút; trong GA4 vào **Quản trị → DebugView** sẽ thấy sự kiện sau vài giây. Hoặc xem **Báo cáo → Thời gian thực**.
+- **Tách Portfolio và CV trong báo cáo:** dùng chiều **Nhóm nội dung** (`portfolio` / `cv`).
+- **Sự kiện có sẵn:** bấm số điện thoại / email / Zalo, sang CV, sang Portfolio, GitHub, xem demo dự án, mở chi tiết dịch vụ, bấm Tải CV (PDF), mở ứng dụng email từ form liên hệ, đổi ngôn ngữ. Đây là **lượt bấm**, không phải kết quả (bấm Zalo chưa chắc đã nhắn).
+- **Quyền riêng tư:** khách ở châu Âu/Anh/Thụy Sĩ mặc định không bị đo cho tới khi bấm Đồng ý; nút **Quyền riêng tư & cookie** ở chân trang để bất kỳ ai đổi lựa chọn. Vì vậy GA4 đếm **ít hơn** số khách thật.
+
+## 7. Tạo link có UTM (biết khách đến từ kênh nào)
+
+Thêm đuôi vào địa chỉ khi đăng link ở một kênh, ví dụ đăng trên LinkedIn:
+
+`https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=linkedin&utm_medium=social&utm_campaign=profile`
+
+- `utm_source`: nơi đăng (linkedin, facebook, email_signature…), `utm_medium`: loại kênh (social, email, referral…), `utm_campaign`: tên đợt.
+- Chỉ viết chữ thường, không dấu, không khoảng trắng; **không** đưa tên/email/số điện thoại vào đuôi.
+- Không gắn UTM cho link giữa Portfolio và CV (làm GA4 tách phiên sai). PDF và QR đã có sẵn UTM riêng.
+- Kết quả xem ở **Báo cáo → Thu nạp → Thu nạp lưu lượng truy cập**, chiều "Nguồn/phương tiện của phiên".
+
+## 8. Kiểm tra mã QR
 
 Mở camera điện thoại, quét mã QR trên PDF (trên màn hình hoặc bản in giấy). Điện thoại phải mở đúng trang Portfolio. Nếu in giấy, in ở cỡ thật (100%), không thu nhỏ trang.
 
-## 7. Sao lưu và khôi phục
+## 9. Sao lưu và khôi phục
 
 - Mỗi lần lưu, máy chủ tự giữ **5 bản cũ gần nhất** trong thư mục ẩn `.w17_backups`.
 - Mọi lần đăng lên web đều là một commit trên GitHub, nên luôn quay lại được bản cũ (nhờ Claude hoặc dùng lịch sử GitHub).
 
-## 8. Khi gặp lỗi
+## 10. Khi gặp lỗi
 
 | Thông báo | Cách xử lý |
 |---|---|
@@ -77,13 +97,13 @@ Mở camera điện thoại, quét mã QR trên PDF (trên màn hình hoặc b�
 | "Cài đặt dùng chung vừa được đổi…" | Bấm F5 ở tab đó rồi sửa lại. |
 | Nút ⚙ báo "Chỉ đổi được khi mở editor bằng MO_EDITOR.bat" | Đóng trang, bấm đúp `MO_EDITOR.bat` để mở lại. |
 
-## 9. Hết lượt dùng Claude thì sao
+## 11. Hết lượt dùng Claude thì sao
 
-Mọi việc ở mục 1–7 tự làm được, không cần Claude. Cần Claude khi: đổi bố cục/màu, thêm loại nội dung mới chưa có mẫu, gộp bản khi GitHub có bản mới hơn, sửa lỗi máy chủ.
+Mọi việc ở mục 1–9 tự làm được, không cần Claude. Cần Claude khi: đổi bố cục/màu, thêm loại nội dung mới chưa có mẫu, gộp bản khi GitHub có bản mới hơn, sửa lỗi máy chủ.
 
 ## Chưa có (đang trong kế hoạch)
 
-Di chuyển/ẩn mục và thẻ ở Portfolio, thêm thẻ mới, kinh nghiệm làm việc, dịch tự động bằng Gemini, đo lượt truy cập GA4, Search Console. Khi làm xong phần nào, sổ tay này sẽ thêm hướng dẫn phần đó.
+Di chuyển/ẩn mục và thẻ ở Portfolio, thêm thẻ mới, kinh nghiệm làm việc, dịch tự động bằng Gemini, Search Console. Khi làm xong phần nào, sổ tay này sẽ thêm hướng dẫn phần đó.
 
 ## Giải thích từ ngữ
 
@@ -97,5 +117,8 @@ Di chuyển/ẩn mục và thẻ ở Portfolio, thêm thẻ mới, kinh nghiệm
 | i18n | Hệ thống đa ngôn ngữ (VI/EN/ES/ZH) |
 | Canonical | Thẻ báo cho Google "đây là địa chỉ chính thức của trang" |
 | UTM | Đuôi gắn sau link để biết khách đến từ đâu (vd. từ PDF, từ QR) |
+| GA4 | Google Analytics 4 — công cụ đếm lượt truy cập và lượt bấm |
+| Consent | Sự đồng ý của khách cho phép đo lường |
+| DebugView | Màn hình trong GA4 xem sự kiện gần như ngay lập tức để kiểm tra |
 | QR | Mã vuông quét bằng camera để mở link |
 | PDF hyperlink | Link bấm được bên trong file PDF |

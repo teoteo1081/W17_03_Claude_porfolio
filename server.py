@@ -52,12 +52,12 @@ ALLOWED_FILES = {
     "index.html": {
         "main-navbar": "header", "ga4-ecosystem": "section", "pbi-ga4-dashboard": "div", "core-portfolio-script": "script",
         "visual-editor-script": "script", "w17-baked-edits": "script", "ga4-drilldown-modal": "div",
-        "w17-site-config": "script", "w17-settings-script": "script",
+        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script",
     },
     "index_portfolio_clean.html": {
         "portfolio-root": "main", "reorderable-sections": "div", "interactive-editor-script": "script",
         "w17-baked-edits": "script", "solutions-grid": "div", "education-grid": "div",
-        "w17-site-config": "script", "w17-settings-script": "script",
+        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script",
     },
 }
 MIN_SCRIPT_CHARS = 20000   # tổng độ dài các <script> thực thi (không tính JSON nhúng)
