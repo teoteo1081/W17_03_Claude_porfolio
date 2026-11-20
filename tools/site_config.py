@@ -12,6 +12,12 @@ Nguồn: khối <script type="application/json" id="w17-site-config"> nằm GI�
   * đặt lại <link rel="canonical"> và og:url theo địa chỉ web công khai;
   * ghi khối cấu hình mới vào cả hai file.
 
+Liên kết do cấu hình quản lý (đặt lại mỗi lần đổi địa chỉ web):
+    <a href="…" data-w17-link="portfolio">          -> địa chỉ web (nút "Xem Portfolio" trong CV)
+    <a href="…" data-w17-link="portfolio-pdf">      -> địa chỉ web + UTM nguồn PDF (khối chỉ hiện khi in)
+    <span data-w17-text="portfolio-domain">…</span>  -> địa chỉ web dạng dễ đọc (không https://, không / cuối)
+QR in trong PDF được trang CV vẽ lúc mở trang từ khối cấu hình (UTM nguồn QR), không lưu sẵn trong file.
+
 Dùng:
     python tools/site_config.py --check    # kiểm hai file: khối cấu hình hợp lệ, giống nhau, canonical/og:url đúng
     python tools/site_config.py --show     # in cấu hình hiện tại
@@ -44,6 +50,12 @@ FIELDS = {
         # ký tự có thể nằm sát trước/sau một địa chỉ email mà vẫn là một phần của chuỗi dài hơn
         "before": r"A-Za-z0-9._%+-", "after": r"A-Za-z0-9_-",
     },
+    "contact.phone": {
+        # dạng quốc tế, chỉ chữ số và khoảng trắng: +84 855 239 805
+        "re": re.compile(r"^\+[1-9][0-9 ]{6,20}[0-9]$"),
+        "msg": "Số điện thoại phải ở dạng quốc tế, bắt đầu bằng + và mã nước (ví dụ: +84 855 239 805).",
+        "digits": (8, 15),
+    },
     "contact.zaloUrl": {
         "re": re.compile(r"^https://zalo\.me/[A-Za-z0-9._-]{3,64}$"),
         "msg": "Link Zalo phải có dạng https://zalo.me/<số hoặc tên>.",
@@ -60,6 +72,10 @@ FIELDS = {
         "msg": "Địa chỉ web phải bắt đầu bằng https://, kết thúc bằng dấu /, không chứa ? # & hay khoảng trắng.",
     },
 }
+UTM_PDF = "utm_source=cv_pdf&utm_medium=pdf&utm_campaign=cv"
+UTM_QR = "utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv"
+MANAGED_LINK_RE = re.compile(r'href="[^"]*"(\s+data-w17-link="(portfolio|portfolio-pdf)")')
+MANAGED_TEXT_RE = re.compile(r'(<span data-w17-text="portfolio-domain"[^>]*>)[^<]*(</span>)')
 BLOCKED_HOSTS = ("localhost", "127.0.0.1", "0.0.0.0", "github.com", "www.github.com")
 
 
@@ -103,6 +119,10 @@ def validate_value(dotted, value):
     value = value.strip()
     if not spec["re"].match(value):
         raise ConfigError(spec["msg"])
+    if "digits" in spec:
+        lo, hi = spec["digits"]
+        if not lo <= len(re.sub(r"\D", "", value)) <= hi:
+            raise ConfigError(spec["msg"])
     if dotted == "site.baseUrl":
         host = value.split("/")[2]
         if host in BLOCKED_HOSTS or host.startswith("127."):
@@ -133,15 +153,38 @@ def parse_config(html):
     return validate_config(cfg)
 
 
+def phone_e164(display):
+    return "+" + re.sub(r"\D", "", display)
+
+
+def managed_links(cfg):
+    base = cfg["site"]["baseUrl"]
+    return {
+        "portfolio": base,
+        "portfolio-pdf": base + "?" + UTM_PDF.replace("&", "&amp;"),
+        "portfolio-domain": base.split("://", 1)[1].rstrip("/"),
+    }
+
+
+def replacement_pairs(dotted, old, new):
+    """(cũ, mới, lớp ký tự không được đứng trước, mẫu không được đứng sau) cho một trường đã đổi."""
+    if dotted == "contact.phone":
+        return [(old, new, r"0-9+", r"[0-9]| [0-9]"), (phone_e164(old), phone_e164(new), r"0-9+", r"[0-9]")]
+    spec = FIELDS[dotted]
+    if "before" not in spec:
+        return []  # địa chỉ web: đặt lại ở canonical/og:url/liên kết quản lý, không thay chuỗi tự do
+    return [(old, new, spec["before"], f"[{spec['after']}]")]
+
+
 def page_urls(cfg):
     base = cfg["site"]["baseUrl"]
     return {PORTFOLIO: base, CV: base + CV_PATH}
 
 
-def _replace_bounded(text, old, new, spec):
+def _replace_bounded(text, old, new, before, after):
     if old == new:
         return text, 0
-    pattern = re.compile(f"(?<![{spec['before']}])" + re.escape(old) + f"(?![{spec['after']}])")
+    pattern = re.compile(f"(?<![{before}])" + re.escape(old) + f"(?!{after})")
     return pattern.subn(lambda _m: new, text)
 
 
@@ -157,6 +200,9 @@ def apply_site_tags(html, name, cfg):
             raise ConfigError(f"{name}: không tìm thấy thẻ meta description để đặt canonical ngay sau.")
         html = html[:anchor.end()] + "\n  " + canonical + html[anchor.end():]
     html = OG_URL_RE.sub(lambda _m: f'<meta property="og:url" content="{url}">', html)
+    links = managed_links(cfg)
+    html = MANAGED_LINK_RE.sub(lambda m: f'href="{links[m.group(2)]}"' + m.group(1), html)
+    html = MANAGED_TEXT_RE.sub(lambda m: m.group(1) + links["portfolio-domain"] + m.group(2), html)
     return html
 
 
@@ -194,11 +240,11 @@ def render_pages(pages, cfg, diffs):
     out, counts = {}, {}
     for name, html in pages.items():
         for dotted, old, new in diffs:
-            spec = FIELDS[dotted]
-            if "before" not in spec:
-                continue  # địa chỉ web chỉ nằm ở canonical/og:url, đặt lại bên dưới
-            html, n = _replace_bounded(html, old, new, spec)
-            counts.setdefault(dotted, {})[name] = n
+            total = 0
+            for o, n_, before, after in replacement_pairs(dotted, old, new):
+                html, n = _replace_bounded(html, o, n_, before, after)
+                total += n
+            counts.setdefault(dotted, {})[name] = total
         html = apply_site_tags(html, name, cfg)
         html = write_config_block(html, cfg)
         out[name] = html
@@ -226,9 +272,18 @@ def check(root=ROOT):
         for og in OG_URL_RE.findall(html):
             if og != f'<meta property="og:url" content="{url}">':
                 problems.append(f"{name}: og:url sai ({og})")
-        for dotted, spec in FIELDS.items():
-            if "before" in spec and get(cfg, dotted) not in html.replace(CONFIG_RE.search(html).group(0), ""):
-                problems.append(f"{name}: giá trị {dotted} không xuất hiện ở đâu ngoài khối cấu hình")
+        body = html.replace(CONFIG_RE.search(html).group(0), "")
+        for dotted in FIELDS:
+            for value, _, _, _ in replacement_pairs(dotted, get(cfg, dotted), get(cfg, dotted)):
+                if value not in body:
+                    problems.append(f"{name}: giá trị {value} ({dotted}) không xuất hiện ở đâu ngoài khối cấu hình")
+        links = managed_links(cfg)
+        for m in MANAGED_LINK_RE.finditer(html):
+            if m.group(0) != f'href="{links[m.group(2)]}"' + m.group(1):
+                problems.append(f"{name}: liên kết data-w17-link=\"{m.group(2)}\" không khớp địa chỉ web")
+        for m in MANAGED_TEXT_RE.finditer(html):
+            if m.group(0) != m.group(1) + links["portfolio-domain"] + m.group(2):
+                problems.append(f"{name}: chữ tên miền in trong PDF không khớp địa chỉ web")
         found = SETTINGS_SCRIPT_RE.findall(html)
         if len(found) != 1:
             problems.append(f"{name}: cần đúng một <script id=\"w17-settings-script\">, thực tế {len(found)}")
