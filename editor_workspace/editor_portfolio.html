@@ -4,12 +4,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</title>
   <meta name="description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
+  <link rel="canonical" href="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
+  <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"}}</script>
   
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI">
   <meta property="og:description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://teoteo1081.github.io/">
+  <meta property="og:url" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
 
   <!-- Tailwind CDN, then class-based dark mode config -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -3380,6 +3382,16 @@
       }
     };
 
+    // Email nhận thư lấy từ khối cấu hình dùng chung (⚙ Cài đặt); khối hỏng/thiếu thì dùng email mặc định.
+    function w17ContactEmail() {
+      try {
+        const cfg = JSON.parse((document.getElementById('w17-site-config') || {}).textContent || '{}');
+        const em = cfg && cfg.contact && cfg.contact.email;
+        if (typeof em === 'string' && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(em)) return em;
+      } catch (e) {}
+      return 'teoteo108@gmail.com';
+    }
+
     function handleContactSubmit(e) {
       e.preventDefault();
       const nameInput = document.getElementById('formName');
@@ -3399,7 +3411,7 @@
         `${tpl.contentLabel}:`,
         messageBody
       ];
-      const mailtoUrl = `mailto:teoteo108@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+      const mailtoUrl = `mailto:${w17ContactEmail()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
 
       const fallbackLink = document.getElementById('contactMailtoFallback');
       if (fallbackLink) {
@@ -3948,6 +3960,12 @@
         "es": "Restablecer",
         "zh": "恢复默认"
       },
+      "ui_settings": {
+        "vi": "Cài đặt",
+        "en": "Settings",
+        "es": "Ajustes",
+        "zh": "设置"
+      },
       "confirm_reset": {
         "vi": "Khôi phục toàn bộ nội dung trang về mặc định ban đầu?",
         "en": "Reset all page content to the original defaults?",
@@ -4225,6 +4243,9 @@
             <button type="button" onclick="resetVisualChanges()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 border border-slate-700 transition-all cursor-pointer">
               <span>↺</span><span data-ui="ui_reset">Khôi phục</span>
             </button>
+            <button type="button" id="btn-site-settings" onclick="w17OpenSiteSettings(this)" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 border border-slate-700 transition-all cursor-pointer">
+              <span>⚙</span><span data-ui="ui_settings">Cài đặt</span>
+            </button>
           </div>
         </div>
       `;
@@ -4371,7 +4392,7 @@
         cloneNavbar.classList.add('top-0');
       }
 
-      cloneDoc.querySelectorAll('#visual-toolbar').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('#visual-toolbar, #w17-settings-dialog').forEach((el) => el.remove());
 
       const cloneToast = cloneDoc.querySelector('#toast-notification');
       if (cloneToast) {
@@ -4551,5 +4572,138 @@
     }
   </script>
 
+  <script id="w17-settings-script">
+    // ⚙ Cài đặt dùng chung (email, Zalo, GitHub, địa chỉ web) — chỉ chạy trong editor mở bằng MO_EDITOR (máy chủ trên máy).
+    // Máy chủ đổi giá trị ở CẢ HAI trang (Portfolio + CV) rồi trang tự tải lại. Mã này giống hệt nhau ở hai trang.
+    (function () {
+      const T = {
+        title: { vi: 'Cài đặt dùng chung', en: 'Shared settings', es: 'Ajustes compartidos', zh: '通用设置' },
+        intro: { vi: 'Đổi ở đây sẽ đổi ở cả Portfolio và CV (mọi ngôn ngữ). Sau khi lưu, bấm 🚀 Lưu & đăng lên web để đưa lên web.', en: 'Changes apply to both Portfolio and CV (all languages). After saving, press 🚀 Save & publish to put them online.', es: 'Los cambios se aplican al Portafolio y al CV (todos los idiomas). Después pulse 🚀 Guardar y publicar.', zh: '修改会同时作用于作品集和简历（所有语言）。保存后请点击 🚀 保存并发布。' },
+        email: { vi: 'Email công việc', en: 'Work email', es: 'Correo de trabajo', zh: '工作邮箱' },
+        zalo: { vi: 'Link Zalo', en: 'Zalo link', es: 'Enlace de Zalo', zh: 'Zalo 链接' },
+        github: { vi: 'Link GitHub (trang cá nhân)', en: 'GitHub profile link', es: 'Perfil de GitHub', zh: 'GitHub 个人主页' },
+        base: { vi: 'Địa chỉ web công khai (Portfolio)', en: 'Public website address (Portfolio)', es: 'Dirección pública del sitio (Portafolio)', zh: '公开网址（作品集）' },
+        baseHint: { vi: 'Dùng cho canonical, link trong PDF và mã QR. Không dùng localhost.', en: 'Used for canonical, PDF links and the QR code. Never localhost.', es: 'Se usa para canonical, enlaces del PDF y el código QR. Nunca localhost.', zh: '用于 canonical、PDF 链接和二维码，不可使用 localhost。' },
+        save: { vi: 'Lưu cài đặt', en: 'Save settings', es: 'Guardar ajustes', zh: '保存设置' },
+        cancel: { vi: 'Đóng', en: 'Close', es: 'Cerrar', zh: '关闭' },
+        loading: { vi: 'Đang đọc cài đặt…', en: 'Loading settings…', es: 'Cargando ajustes…', zh: '正在读取设置…' },
+        saving: { vi: 'Đang lưu…', en: 'Saving…', es: 'Guardando…', zh: '正在保存…' },
+        nochange: { vi: 'Chưa có gì thay đổi.', en: 'Nothing changed.', es: 'No hay cambios.', zh: '没有修改。' },
+        saved: { vi: 'Đã lưu vào máy. Trang sẽ tự tải lại…', en: 'Saved on this computer. Reloading…', es: 'Guardado en este equipo. Recargando…', zh: '已保存到本机，正在重新加载…' },
+        local: { vi: 'Chỉ đổi được khi mở editor bằng MO_EDITOR.bat (máy chủ trên máy).', en: 'Only available when the editor is opened with MO_EDITOR.bat (local server).', es: 'Solo disponible al abrir el editor con MO_EDITOR.bat (servidor local).', zh: '仅在通过 MO_EDITOR.bat（本地服务器）打开编辑器时可用。' },
+        failed: { vi: 'Không lưu được: ', en: 'Could not save: ', es: 'No se pudo guardar: ', zh: '保存失败：' }
+      };
+      const FIELDS = [
+        ['contact.email', 'email', 'email', null],
+        ['contact.zaloUrl', 'zalo', 'url', null],
+        ['contact.githubUrl', 'github', 'url', null],
+        ['site.baseUrl', 'base', 'url', 'baseHint']
+      ];
+      const t = (k) => { const e = T[k] || {}; const l = (document.documentElement.lang || 'vi').slice(0, 2); return e[l] || e.vi || k; };
+      const isLocal = () => /^https?:$/.test(location.protocol) && ['localhost', '127.0.0.1'].includes(location.hostname);
+      const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+
+      async function api(method, path, body) {
+        const init = { method, headers: {}, cache: 'no-store' };
+        if (body !== undefined) {
+          const s = await fetch('/api/session', { cache: 'no-store' });
+          const token = (await s.json()).token || '';
+          init.headers = { 'Content-Type': 'application/json', 'X-W17-Token': token };
+          init.body = JSON.stringify(body);
+        }
+        const r = await fetch(path, init);
+        let data = {};
+        try { data = await r.json(); } catch (e) {}
+        if (!r.ok || data.status !== 'ok') throw new Error(data.message || ('HTTP ' + r.status));
+        return data;
+      }
+
+      function close(dlg, opener) {
+        if (dlg.open) dlg.close();
+        dlg.remove();
+        if (opener && document.contains(opener)) opener.focus();
+      }
+
+      window.w17OpenSiteSettings = async function (opener) {
+        document.querySelectorAll('#w17-settings-dialog').forEach((d) => d.remove());
+        const dlg = el('dialog', 'no-print w-[min(92vw,34rem)] rounded-2xl bg-slate-900 text-slate-100 border border-slate-700 p-0 shadow-2xl backdrop:bg-black/60');
+        dlg.id = 'w17-settings-dialog';
+        dlg.setAttribute('aria-labelledby', 'w17-settings-title');
+        const form = el('form', 'p-5 sm:p-6 space-y-4');
+        form.setAttribute('method', 'dialog');
+        form.noValidate = true;
+        const h = el('h2', 'text-base sm:text-lg font-bold text-white', '⚙ ' + t('title'));
+        h.id = 'w17-settings-title';
+        form.append(h, el('p', 'text-xs text-slate-300 leading-relaxed', t('intro')));
+        const status = el('p', 'text-xs font-semibold text-amber-300 min-h-[1rem]', t('loading'));
+        status.setAttribute('role', 'status');
+        status.id = 'w17-settings-status';
+        const inputs = {};
+        FIELDS.forEach(([path, label, type, hint]) => {
+          const wrap = el('div', 'space-y-1');
+          const id = 'w17-set-' + path.replace('.', '-');
+          const lab = el('label', 'block text-xs font-semibold text-slate-200', t(label));
+          lab.htmlFor = id;
+          const inp = el('input', 'w-full rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 disabled:opacity-60');
+          inp.id = id;
+          inp.type = type;
+          inp.name = path;
+          inp.autocomplete = 'off';
+          inp.spellcheck = false;
+          inp.disabled = true;
+          inp.setAttribute('aria-describedby', 'w17-settings-status');
+          wrap.append(lab, inp);
+          if (hint) wrap.append(el('p', 'text-[11px] text-slate-400', t(hint)));
+          form.append(wrap);
+          inputs[path] = inp;
+        });
+        const row = el('div', 'flex flex-wrap justify-end gap-2 pt-1');
+        const cancel = el('button', 'inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 cursor-pointer', t('cancel'));
+        cancel.type = 'button';
+        const save = el('button', 'inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer', t('save'));
+        save.type = 'submit';
+        save.id = 'w17-settings-save';
+        save.disabled = true;
+        row.append(cancel, save);
+        form.append(status, row);
+        dlg.append(form);
+        document.body.appendChild(dlg);
+        cancel.addEventListener('click', () => close(dlg, opener));
+        dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(dlg, opener); });
+        dlg.showModal();
+
+        if (!isLocal()) { status.textContent = t('local'); cancel.focus(); return; }
+        let current = {};
+        try {
+          current = (await api('GET', '/api/settings')).values || {};
+          FIELDS.forEach(([path]) => { inputs[path].value = current[path] || ''; inputs[path].disabled = false; });
+          save.disabled = false;
+          status.textContent = '';
+          inputs['contact.email'].focus();
+        } catch (err) {
+          status.textContent = t('failed') + err.message;
+          cancel.focus();
+          return;
+        }
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const changes = {};
+          FIELDS.forEach(([path]) => { const v = inputs[path].value.trim(); if (v !== (current[path] || '')) changes[path] = v; });
+          if (!Object.keys(changes).length) { status.textContent = t('nochange'); return; }
+          save.disabled = true;
+          status.textContent = t('saving');
+          try {
+            await api('POST', '/api/settings', { changes });
+            status.textContent = t('saved');
+            setTimeout(() => location.reload(), 1200);
+          } catch (err) {
+            status.textContent = t('failed') + err.message;
+            save.disabled = false;
+          }
+        });
+      };
+    })();
+  </script>
 
 </body></html>

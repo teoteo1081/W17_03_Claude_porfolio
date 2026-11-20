@@ -200,3 +200,24 @@ Chủ hồ sơ chọn cách B (4 → 6 dịch vụ), cho phép nêu tên phần 
 | CV: thẻ "Tự động hóa Quy trình" thêm dòng back-office thuế Mỹ | Đồng bộ CV với portfolio |
 
 Khóa i18n giữ nguyên cho dịch vụ cũ (eco_card3/4, modal_p3/4 nay hiển thị số 5/6); dịch vụ mới dùng eco_card5/6, eco_badge_5/6, eco_sub_tax/comp, modal_p5/p6. Test CONTENT/F03/F04 đổi sang 6 thẻ, 6 gói, thứ tự hiển thị p1, p2, p5, p6, p3, p4.
+
+### Vòng 4 — P0-1 (2026-11-20): an toàn dữ liệu & cấu hình dùng chung
+
+Chủ hồ sơ duyệt phase P0-1 của Master Upgrade Spec và việc cập nhật Anchor (A1 sáu dịch vụ, A6 cho phép công khai số điện thoại ở P0-2, thêm A10/A11).
+
+| Đổi | Vì sao |
+|---|---|
+| Khối `w17-site-config` (email, Zalo, GitHub, địa chỉ web công khai) giống hệt nhau ở 2 file Final; `tools/site_config.py` (`--check`, `--show`) | Đổi một lần, cả Portfolio và CV (mọi ngôn ngữ) đổi theo; email nằm cả trong chuỗi dịch nên dùng thay thế có ranh giới thay vì gắn bằng JS |
+| Nút ⚙ Cài đặt trong editor + `GET/POST /api/settings` (cùng lớp bảo vệ token/origin như `/api/save`) | Chủ hồ sơ tự đổi thông tin liên hệ, không cần Claude |
+| `/api/save` trả 409 khi bản lưu mang cấu hình khác bản trên đĩa | Tab editor mở từ trước không ghi đè được cài đặt mới |
+| `<link rel="canonical">` cho 2 trang; `og:url` Portfolio = `https://teoteo1081.github.io/W17_03_Claude_porfolio/` | `og:url` cũ trỏ `https://teoteo1081.github.io/` đang trả 404 |
+| Form liên hệ lấy email nhận thư từ khối cấu hình | Không còn email viết cứng trong JS |
+| CV: bản nháp lưu `knownIds`; khôi phục giữ thẻ/tag mới, chỉ xóa thẻ người dùng đã xóa | Lỗi cũ: thẻ/tag không có trong thứ tự đã lưu bị `remove()` — thẻ thêm vào file sau khi có bản nháp sẽ biến mất trên máy có nháp cũ |
+
+**Kiểm tra (2026-11-20):** `sync_creators --check` OK; `site_config --check` OK. R6-01..05 PASS (5/5). STATIC, F01, F02, F04 (2/3), F05, F06, F10, N, R3 (4/5), R4, R5, NAV: PASS; F07, F09, RESP 6/6 PASS; SAFETY PASS. Ảnh chụp hộp thoại ⚙ ở 375px và 1280px, không tràn ngang.
+
+**FAIL có sẵn từ trước P0-1** (đã đối chiếu: baseline chạy trước khi sửa, F04 chạy trên bản HEAD `9eb3bd0` gốc) — do nội dung tiếng Việt chủ hồ sơ sửa qua editor lệch với chuỗi kỳ vọng của test, P0-1 không đụng tới:
+- F04: `hero_title` mới không còn `<br>`/`span.inline-block` (quy tắc chống rớt chữ AGENTS §1).
+- R3-01..05: chữ tiếng Anh trong bản VI ("Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page").
+- CONTENT: tên dịch vụ 5 đổi thành "Website & Landing Page".
+Chưa chạy: F03, F08, native_zoom (không đụng modal/chữ hiển thị).

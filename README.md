@@ -17,6 +17,7 @@ Lưu ý:
 - Mở editor trên web thật hoặc bấm đúp file HTML thì chỉ là **bản xem thử** (có dòng nhắc màu vàng), không lưu và không đăng được.
 - Nếu báo "Trên GitHub có bản mới hơn", nội dung vẫn đã lưu và commit trên máy; nhờ Claude gộp rồi đăng lại.
 - Nút **💾 Chỉ lưu vào máy** chỉ lưu file trong thư mục, không đẩy lên web.
+- **Đổi email, link Zalo, link GitHub hoặc địa chỉ web:** bấm **⚙ Cài đặt** trên thanh công cụ editor, sửa rồi bấm **Lưu cài đặt**. Máy chủ đổi ở cả Portfolio và CV (mọi ngôn ngữ), trang tự tải lại; sau đó bấm **🚀 Lưu & đăng lên web**. Nếu một tab editor khác mở từ trước báo "Cài đặt dùng chung vừa được đổi", bấm F5 ở tab đó rồi lưu lại (để không ghi đè cài đặt mới).
 - Nên mở editor ở cửa sổ không bật tiện ích trình duyệt (eJOY, Grammarly, ...). Editor tự lọc mã tiện ích đã biết khi lưu; nếu máy chủ báo "còn mã do tiện ích trình duyệt chèn vào", bấm Ctrl+F5 rồi lưu lại.
 
 ---
@@ -82,6 +83,7 @@ Sau đó mở trình duyệt tại địa chỉ:
 ```bash
 python tools/sync_creators.py          # ghi lại hai Creator sau khi sửa Final
 python tools/sync_creators.py --check  # báo lệch (dùng trong kiểm thử)
+python tools/site_config.py --check    # khối cấu hình dùng chung (w17-site-config) hợp lệ, giống nhau ở 2 trang; canonical đúng
 ```
 Dữ liệu chỉnh sửa được lưu theo schema (không còn snapshot `innerHTML`) và được nhúng vào file Final khi xuất, nên mở lại bằng cache trống vẫn đủ nội dung.
 

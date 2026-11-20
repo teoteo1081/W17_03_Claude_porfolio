@@ -10,14 +10,16 @@
 | Bản này | `W17_03_Claude_porfolio`, repo Git độc lập, lịch sử bắt đầu từ commit khởi tạo của bản này |
 | Mục tiêu | Đổi định vị từ "ứng viên có nhiều dịch vụ" sang **freelancer về dữ liệu, nhận ít dịch vụ, làm được và chứng minh được** |
 | Quyết định của chủ hồ sơ (vòng 2) | Dịch vụ là **dữ liệu**; Digital Marketing **đang học**, không nhận chạy quảng cáo. Nhận làm website, không cam kết doanh thu. Được dùng tên công ty cũ. Xóa số điện thoại. Dữ liệu demo và GA4 (trang do chính chủ làm) dùng bình thường |
-| Phạm vi sửa | Chỉ **nội dung chữ** (4 locale `vi/en/es/zh`) trong 2 file Final, hai file Creator sinh lại từ Final, và chuỗi kỳ vọng trong `tests/regression/run_all.py` |
-| Ngoài phạm vi | `server.py`, `dev_server.py`, `tools/`, bố cục, màu, số liệu GA4, dữ liệu phễu mẫu, ảnh đại diện, logic JS |
+| Phạm vi sửa (vòng 2–3) | Chỉ **nội dung chữ** (4 locale `vi/en/es/zh`) trong 2 file Final, hai file Creator sinh lại từ Final, và chuỗi kỳ vọng trong `tests/regression/run_all.py` |
+| Phạm vi sửa (vòng 4, từ 2026-11-20) | Theo từng phase của Master Upgrade Spec đã được chủ hồ sơ duyệt; được sửa `server.py`, `tools/`, logic JS, bố cục trong phạm vi phase đó. Số liệu GA4 trưng bày, dữ liệu phễu mẫu, ảnh đại diện vẫn **không đổi** nếu chưa được duyệt riêng |
 
 Lý do từng thay đổi nằm ở `docs/CHANGE_RATIONALE.md`.
 
 ## 1. Anchor định vị (A1–A3)
 
-**A1. Dữ liệu là chính; website nhận làm; đo lường theo yêu cầu; Digital Marketing đang học.**
+**A1 (cập nhật vòng 4). Sáu dịch vụ** — chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`; chuyên ngành: `3. Hỗ trợ văn phòng thuế Mỹ (1040)`, `4. Lương thưởng, hoa hồng & KPI`; nhận làm: `5. Website & Trang đích`, `6. Đo lường hiệu suất quảng cáo`. Khóa cũ `eco_card3/4`, `modal_p3/p4` hiển thị số 5/6; khóa mới `eco_card5/6`, `modal_p5/p6`. Kiểm: test CONTENT. Nội dung A1 gốc bên dưới chỉ còn giá trị lịch sử (vòng 3d đã bỏ "đang học").
+
+**A1 gốc (vòng 2, không còn áp dụng). Dữ liệu là chính; website nhận làm; đo lường theo yêu cầu; Digital Marketing đang học.**
 - Chính: `1. Tự động hóa Vận hành`, `2. Phân tích Dữ liệu & Dashboard BI`.
 - Nhận làm: `3. Website & Trang đích` (không cam kết doanh thu hay lượng khách).
 - Theo yêu cầu: `4. Kiểm lỗi Đo lường` (GA4/GTM, chỉ phần kỹ thuật).
@@ -43,7 +45,9 @@ Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WR
 
 ## 3. Anchor riêng tư (A6)
 
-**A6. Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html index_portfolio_clean.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
+**A6 (cập nhật vòng 4). Số điện thoại ĐƯỢC công khai** theo quyết định mới của chủ hồ sơ (2026-11-20), nhưng **chỉ** khi chủ hồ sơ xác nhận số và định dạng (phase P0-2); số được quản lý trong khối `w17-site-config`, không tự lấy số trong link Zalo. Tới khi đó trang vẫn chưa hiển thị số. Nội dung A6 gốc bên dưới là lịch sử.
+
+**A6 gốc (vòng 2). Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html index_portfolio_clean.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
 
 ## 4. Anchor kỹ thuật (A7–A9)
 
@@ -56,10 +60,15 @@ Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WR
 python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Creator
 ```
 
+**A10. Cấu hình dùng chung một nguồn (vòng 4).** Email, link Zalo, link GitHub (trang cá nhân) và địa chỉ web công khai nằm trong khối `<script type="application/json" id="w17-site-config">` **giống hệt nhau** ở hai file Final. Đổi qua nút ⚙ Cài đặt của editor (`POST /api/settings`) thì server thay giá trị cũ → mới ở mọi chỗ của cả hai file (giữ nguyên link repo `github.com/<tên>/<repo>`), đặt lại canonical/og:url, sinh lại Creator. `/api/save` trả 409 nếu bản lưu mang cấu hình khác bản trên đĩa (trang mở trước khi đổi cài đặt). Canonical Portfolio = địa chỉ web; canonical CV = địa chỉ web + `index_portfolio_clean.html`; không còn `og:url` trỏ `https://teoteo1081.github.io/` (404). Kiểm: `python -X utf8 tools/site_config.py --check`, test R6-01..03, R6-05.
+
+**A11. Khôi phục bản nháp CV không làm mất thẻ mới (vòng 4).** Bản nháp lưu `knownIds` (mọi mã thẻ/tag từng thấy). Khi khôi phục: thẻ có trong `knownIds` mà không có trong thứ tự → đã bị xóa → xóa; thẻ không có trong `knownIds` → thẻ mới thêm vào file → giữ, đặt cuối nhóm. Bản nháp cũ không có `knownIds` giữ cách xử lý cũ. Kiểm: test R6-04.
+
 ## 5. Lệnh kiểm tổng
 
 ```bash
 python -X utf8 tools/sync_creators.py --check
+python -X utf8 tools/site_config.py --check
 python -X utf8 tests/regression/run_all.py --quick
 python -X utf8 tests/regression/native_zoom.py
 ```
@@ -79,3 +88,12 @@ Xem `docs/CHANGE_RATIONALE.md`, mục "Vòng 3". Tóm tắt các anchor bị ả
 Vòng 3b (2026-11-19): ngôn ngữ mặc định theo trình duyệt (kiểm bằng R3-09), CV ghi "Business English", khối phễu ghi rõ dữ liệu mẫu. Giữ nguyên theo chủ hồ sơ: "Hệ sinh thái", "Power BI (Nâng cao)", "Báo cáo thời gian thực" trong CV.
 
 Vòng 3d (2026-11-19): A1/A5 thay đổi theo chủ hồ sơ — trang không còn câu "đang học" / "không cam kết"; dịch vụ 4 là "Đo lường hiệu suất quảng cáo". Chi tiết ở CHANGE_RATIONALE.md, mục Vòng 3d.
+
+## 8. Vòng 4 (2026-11-20) — Master Upgrade, phase P0-1
+
+Chủ hồ sơ duyệt phase P0-1 và việc cập nhật Anchor. Thay đổi so với anchor cũ:
+- A1 → sáu dịch vụ (đã thực hiện ở vòng 3e, nay ghi lại vào anchor).
+- A6 → số điện thoại được phép công khai sau khi chủ hồ sơ xác nhận số (P0-2).
+- Phạm vi "ngoài phạm vi: `server.py`, `tools/`, logic JS" không còn đúng; phạm vi theo từng phase được duyệt.
+- Thêm A10 (cấu hình dùng chung) và A11 (khôi phục bản nháp CV).
+- Các phase sau (P0-2 CV/PDF/QR, P0-3 GA4, P0-4 sắp xếp Portfolio, P1…) chưa được duyệt; chưa làm.

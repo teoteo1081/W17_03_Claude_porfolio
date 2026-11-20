@@ -19,6 +19,10 @@ sau là bản vừa lưu.
 
 POST /api/publish (cùng các lớp bảo vệ như /api/save): commit đúng bốn file trang (PUBLISH_PATHS) rồi
 git push lên nhánh main. Không bao giờ push --force, không tự pull/gộp; GitHub có bản mới hơn thì trả 409.
+
+GET/POST /api/settings: đọc/đổi cấu hình dùng chung (email, Zalo, GitHub, địa chỉ web) trong khối
+w17-site-config của CẢ HAI file Final (tools/site_config.py), rồi sinh lại hai Creator. /api/save từ chối (409)
+bản lưu có khối cấu hình khác bản trên đĩa: trang editor mở từ trước khi đổi cài đặt sẽ không ghi đè được giá trị mới.
 """
 
 import hmac
@@ -48,10 +52,12 @@ ALLOWED_FILES = {
     "index.html": {
         "main-navbar": "header", "ga4-ecosystem": "section", "pbi-ga4-dashboard": "div", "core-portfolio-script": "script",
         "visual-editor-script": "script", "w17-baked-edits": "script", "ga4-drilldown-modal": "div",
+        "w17-site-config": "script", "w17-settings-script": "script",
     },
     "index_portfolio_clean.html": {
         "portfolio-root": "main", "reorderable-sections": "div", "interactive-editor-script": "script",
         "w17-baked-edits": "script", "solutions-grid": "div", "education-grid": "div",
+        "w17-site-config": "script", "w17-settings-script": "script",
     },
 }
 MIN_SCRIPT_CHARS = 20000   # tổng độ dài các <script> thực thi (không tính JSON nhúng)
@@ -84,6 +90,13 @@ def _load_sync_module():
 
 SYNC = _load_sync_module()
 CREATOR_FILES = {dst for _, dst, _ in SYNC.JOBS} if SYNC else set()
+
+# ---- Cấu hình dùng chung (tools/site_config.py) ----
+_SITE_CONFIG_PATH = Path(__file__).resolve().parent / "tools" / "site_config.py"
+_site_spec = importlib.util.spec_from_file_location("w17_site_config", _SITE_CONFIG_PATH)
+SITE = importlib.util.module_from_spec(_site_spec)
+_site_spec.loader.exec_module(SITE)   # thiếu module này thì server không chạy: cấu hình là bắt buộc
+MAX_SETTINGS_BODY = 16 * 1024
 
 # ---- Đăng lên web (git commit + push) ----
 PUBLISH_BRANCH = "main"
@@ -212,6 +225,11 @@ def validate_html(filename, html):
                 raise SaveError(422, "Khối w17-baked-edits không phải JSON hợp lệ.")
             if not isinstance(parsed, dict):
                 raise SaveError(422, "Khối w17-baked-edits phải là object JSON.")
+    try:
+        if SITE.parse_config(html) is None:
+            raise SaveError(422, "Thiếu khối cấu hình w17-site-config.")
+    except SITE.ConfigError as err:
+        raise SaveError(422, f"Khối cấu hình w17-site-config không hợp lệ: {err}")
     if probe.foreign:
         raise SaveError(422, "Bản lưu còn mã do tiện ích trình duyệt chèn vào (" + ", ".join(sorted(set(probe.foreign))[:5])
                         + "); từ chối ghi. Tải lại trang editor (Ctrl+F5) rồi lưu lại, hoặc tắt tiện ích đó khi chỉnh sửa.")
@@ -271,13 +289,71 @@ def atomic_write(target, text):
         raise
 
 
+def _assert_config_current(target, html):
+    """Gọi trong WRITE_LOCK. Bản lưu phải mang đúng cấu hình đang có trên đĩa (đã kiểm hợp lệ ở validate_html)."""
+    if not target.exists():
+        return
+    try:
+        on_disk = SITE.parse_config(SITE.read(target))
+    except SITE.ConfigError:
+        return  # file trên đĩa hỏng cấu hình: cho bản lưu hợp lệ thay thế
+    if on_disk is not None and SITE.parse_config(html) != on_disk:
+        raise SaveError(409, "Cài đặt dùng chung (email/Zalo/GitHub/địa chỉ web) vừa được đổi sau khi trang này mở. "
+                             "Chưa lưu để không ghi đè cài đặt mới: tải lại trang (F5) rồi sửa và lưu lại.")
+
+
 def save_with_backup(name, html):
     """Backup + ghi nguyên tử, tuần tự hóa toàn bộ chuỗi để các request đồng thời không giẫm lên nhau."""
     target = BASE_DIR / name
     with WRITE_LOCK:
+        _assert_config_current(target, html)
         backup = backup_existing(target)
         atomic_write(target, html)
     return backup
+
+
+def current_settings():
+    """Cấu hình đang dùng; hai file Final phải có khối cấu hình giống nhau."""
+    configs = []
+    for name in SITE.FINALS:
+        try:
+            cfg = SITE.parse_config(SITE.read(BASE_DIR / name))
+        except (OSError, SITE.ConfigError) as err:
+            raise SaveError(500, f"{name}: không đọc được cấu hình ({err}).")
+        if cfg is None:
+            raise SaveError(500, f"{name}: thiếu khối cấu hình w17-site-config.")
+        configs.append(cfg)
+    if configs[0] != configs[1]:
+        raise SaveError(409, "Cấu hình của Portfolio và CV đang khác nhau; nhờ Claude kiểm (python tools/site_config.py --check).")
+    return configs[0]
+
+
+def update_settings(changes):
+    """Đổi cấu hình ở cả hai file Final trong một lần khóa; trả kết quả kèm số chỗ đã thay ở từng file."""
+    try:
+        with WRITE_LOCK:
+            cfg = current_settings()
+            new_cfg, diffs = SITE.merge_changes(cfg, changes)
+            if not diffs:
+                return {"status": "ok", "changed": [], "counts": {}}
+            pages = {name: SITE.read(BASE_DIR / name) for name in SITE.FINALS}
+            rendered, counts = SITE.render_pages(pages, new_cfg, diffs)
+            for name, html in rendered.items():
+                validate_html(name, html)
+            backups = []
+            for name, html in rendered.items():
+                backup = backup_existing(BASE_DIR / name)
+                if backup is not None:
+                    backups.append(backup.name)
+                atomic_write(BASE_DIR / name, html)
+    except SITE.ConfigError as err:
+        raise SaveError(400, str(err))
+    creators = {}
+    for name in SITE.FINALS:
+        ok, reason = sync_creator(name)
+        creators[name] = "ok" if ok else reason
+    return {"status": "ok", "changed": [d for d, _, _ in diffs], "counts": counts, "backups": backups,
+            "creator_synced": all(v == "ok" for v in creators.values()), "creators": creators}
 
 
 def sync_creator(final_name):
@@ -456,6 +532,16 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
                 return
             self._send_json(200, {"status": "ok", "token": SESSION_TOKEN, "files": sorted(ALLOWED_FILES)})
             return
+        if path == "/api/settings":
+            if not self._same_origin_ok():
+                self._send_json(403, {"status": "error", "message": "Chỉ trang editor cùng origin mới đọc được cài đặt."})
+                return
+            try:
+                cfg = current_settings()
+                self._send_json(200, {"status": "ok", "values": {k: SITE.get(cfg, k) for k in SITE.FIELDS}})
+            except SaveError as err:
+                self._send_json(err.status, {"status": "error", "message": err.message})
+            return
         if self._path_blocked():
             self._send_json(404, {"status": "error", "message": "Không tìm thấy."})
             return
@@ -538,9 +624,21 @@ class PortfolioEditorHandler(SimpleHTTPRequestHandler):
     def do_POST(self):
         self._body_consumed = False
         path = urlsplit(self.path).path
-        if path not in ("/api/save", "/api/publish"):
+        if path not in ("/api/save", "/api/publish", "/api/settings"):
             self._discard_unread_body()
             self._send_json(404, {"status": "error", "message": "Không tìm thấy endpoint."})
+            return
+        if path == "/api/settings":
+            try:
+                data = self._authorized_json_body(MAX_SETTINGS_BODY)
+                self._send_json(200, update_settings(data.get("changes")))
+            except SaveError as err:
+                self._discard_unread_body()
+                self._send_json(err.status, {"status": "error", "message": err.message})
+            except OSError as err:
+                self._send_json(500, {"status": "error", "message": f"Không ghi được file: {err.strerror or err}"})
+            except Exception:
+                self._send_json(500, {"status": "error", "message": "Lỗi nội bộ khi lưu cài đặt."})
             return
         if path == "/api/publish":
             try:
