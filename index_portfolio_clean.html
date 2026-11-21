@@ -4,7 +4,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NGUYỄN THỊ THU THẢO (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</title>
   <meta name="description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
+  <meta property="og:title" content="NGUYỄN THỊ THU THẢO (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI">
+  <meta property="og:description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html">
+  <meta property="og:image" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/assets/og-cv.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Thao Nguyen (TJ)">
+  <meta property="og:locale" content="vi_VN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/assets/og-cv.png">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html">
+  <script type="application/ld+json" id="w17-jsonld">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#website","url":"https://teoteo1081.github.io/W17_03_Claude_porfolio/","name":"Thao Nguyen (TJ) — Portfolio","inLanguage":["vi","en","es","zh"],"publisher":{"@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#person"}},{"@type":"Person","@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#person","name":"Nguyễn Thị Thu Thảo","alternateName":["Thao Nguyen","TJ"],"jobTitle":"Operations \u0026 Data Analyst (Freelance)","url":"https://teoteo1081.github.io/W17_03_Claude_porfolio/","email":"teoteo108@gmail.com","telephone":"+84855239805","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City","addressCountry":"VN"},"sameAs":["https://github.com/teoteo1081"],"knowsAbout":["Operations automation","Data analytics","Power BI","Python","SQL","Google Sheets","GA4","Google Tag Manager","US tax office back-office (CCH Autoflow)","Sales compensation and KPI","Website and landing page development"]},{"@type":"ProfilePage","@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html#profile","url":"https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html","name":"CV — Nguyễn Thị Thu Thảo","inLanguage":"vi","isPartOf":{"@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#website"},"mainEntity":{"@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#person"}}]}</script>
   <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"},"ga4":{"measurementId":"G-501ZEXPEVQ"}}</script>
   <script id="w17-analytics-script">
     // GA4 cho Portfolio + CV (Measurement ID trong w17-site-config, đổi ở ⚙ Cài đặt; để trống = tắt).
@@ -46,6 +59,16 @@
         try { const v = localStorage.getItem(KEY); return v === 'granted' || v === 'denied' ? v : null; } catch (e) { return null; }
       };
 
+      // Lượt xem của chính chủ: mở trang 1 lần với ?toi_la_chu_trang=1 trên mỗi thiết bị -> traffic_type=internal (bộ lọc
+      // "Internal Traffic" của GA4 loại khỏi báo cáo). ?toi_la_chu_trang=0 để bỏ đánh dấu. Chỉ lưu cờ 0/1, không lưu gì khác.
+      const owner = (() => {
+        try {
+          const m = location.search.match(/[?&]toi_la_chu_trang=([01])(?:&|$)/);
+          if (m) localStorage.setItem('w17_03_internal', m[1]);
+          return localStorage.getItem('w17_03_internal') === '1';
+        } catch (e) { return false; }
+      })();
+
       window.w17Track = function () {};
       if (active) {
         window.dataLayer = window.dataLayer || [];
@@ -60,6 +83,7 @@
         const debug = /[?&]ga_debug=1(?:&|$)/.test(location.search);
         const conf = { content_group: page, site_lang: lang(), allow_google_signals: false, allow_ad_personalization_signals: false };
         if (debug) conf.debug_mode = true;
+        if (owner) { conf.traffic_type = 'internal'; gtag('set', { traffic_type: 'internal' }); }
         gtag('config', id, conf);
         const tag = document.createElement('script');
         tag.async = true;
@@ -104,6 +128,8 @@
           return w17Track('portfolio_from_cv_click', { link_location: loc });
         }
         if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        const webCard = node.closest('[data-w17-card-group="website"] [data-w17-card]');
+        if (webCard && href && !/^https:\/\/github\.com\//.test(href)) return w17Track('project_demo_click', { project_id: webCard.getAttribute('data-w17-card') });
         const demo = node.querySelector('[data-i18n$="_btn_demo"]');
         if (demo) return w17Track('project_demo_click', { project_id: demo.getAttribute('data-i18n').split('_')[0] });
         if (/^https:\/\/github\.com\//.test(href)) {
@@ -530,6 +556,7 @@
       color: #ffffff;
     }
 
+    body:not(.is-editing) .add-edu-btn { display: none !important; }
     body.is-editing .add-tag-btn {
       display: inline-flex;
     }
@@ -1429,6 +1456,30 @@
         "en": "✨ Cards swapped and saved automatically!",
         "es": "✨ Tarjetas intercambiadas y guardadas automáticamente.",
         "zh": "✨ 卡片已交换位置并自动保存！"
+      },
+      "ui_add_edu": {
+        "vi": "+ Thêm học vấn",
+        "en": "+ Add education",
+        "es": "+ Añadir formación",
+        "zh": "+ 添加教育经历"
+      },
+      "ui_new_edu_cat": {
+        "vi": "Loại (vd. Chứng chỉ)",
+        "en": "Type (e.g. Certificate)",
+        "es": "Tipo (p. ej. Certificado)",
+        "zh": "类型（如：证书）"
+      },
+      "ui_new_edu_title": {
+        "vi": "Tên bằng cấp / khóa học — bấm để sửa",
+        "en": "Degree / course name — click to edit",
+        "es": "Título / curso — haz clic para editar",
+        "zh": "学位 / 课程名称——点击编辑"
+      },
+      "ui_del_card_t": {
+        "vi": "Xóa thẻ này (bấm 2 lần, khôi phục được)",
+        "en": "Delete this card (press twice, restorable)",
+        "es": "Eliminar esta tarjeta (pulsa dos veces, se puede restaurar)",
+        "zh": "删除此卡片（按两次，可恢复）"
       },
       "ui_trash": {
         "vi": "Đã xóa",
@@ -2450,6 +2501,16 @@
           });
         }
 
+        // 5b. Dựng lại thẻ học vấn tự thêm (có trong nháp, chưa có trong file)
+        if (Array.isArray(parsed.customEdu)) {
+          const eduGridC = document.getElementById('education-grid');
+          parsed.customEdu.forEach((d) => {
+            if (!eduGridC || !d || typeof d.id !== 'string' || !/^edu_custom_[a-z0-9]{4,16}$/.test(d.id)) return;
+            if (eduGridC.querySelector(`[data-card-id="${CSS.escape(d.id)}"]`)) return;
+            eduGridC.appendChild(makeEduCardCV({ id: d.id, cat: String(d.cat || '').slice(0, 60), title: String(d.title || '').slice(0, 200) }));
+          });
+        }
+
         // 6. Khôi phục thứ tự & các card đã xóa trong Education
         if (Array.isArray(parsed.eduCardsOrder)) {
           const eduGrid = document.getElementById('education-grid');
@@ -2742,6 +2803,10 @@
       // Mọi mã thẻ từng thấy: bản nháp trước + trang lúc mở + trang hiện tại (xem keepOrDropCV)
       state.knownIds = Array.from(new Set([].concat(Array.isArray(state.knownIds) ? state.knownIds : [], initialItemIdsCV, collectItemIdsCV(doc))));
       state.deletedIds = live ? Array.from(deletedIdsCV) : [];
+      // thẻ học vấn tự thêm: đang hiện + đang nằm trong thùng rác (để còn khôi phục sau tải lại)
+      const customEdu = Array.from(doc.querySelectorAll('[data-w17-custom-edu]')).map(eduCardDataCV);
+      if (live) trashCV.forEach((e) => { if (e.node.hasAttribute('data-w17-custom-edu')) customEdu.push(eduCardDataCV(e.node)); });
+      state.customEdu = customEdu;
 
       const parentSec = doc.getElementById('reorderable-sections');
       if (parentSec) {
@@ -3003,6 +3068,34 @@
         }
       });
 
+      // 3b. Nút [✕] trên thẻ giải pháp + thẻ số liệu (xóa có xác nhận, vào thùng rác)
+      root.querySelectorAll('.solution-card-item, .metric-card-item').forEach((card) => {
+        if (card.querySelector(':scope > .delete-btn')) return;
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'delete-btn';
+        del.setAttribute('contenteditable', 'false');
+        del.setAttribute('onclick', 'removeElement(event, this)');
+        del.title = uiCV('ui_del_card_t');
+        del.setAttribute('data-ui-title', 'ui_del_card_t');
+        del.textContent = '✕';
+        card.insertBefore(del, card.firstChild);
+      });
+
+      // 3c. Nút [+ Thêm học vấn] dưới lưới Học vấn
+      const eduGridCtl = document.getElementById('education-grid');
+      if (eduGridCtl && !document.getElementById('btn-add-edu')) {
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.id = 'btn-add-edu';
+        add.className = 'add-edu-btn no-print mt-3 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 cursor-pointer';
+        add.setAttribute('contenteditable', 'false');
+        add.setAttribute('data-ui', 'ui_add_edu');
+        add.textContent = uiCV('ui_add_edu');
+        add.addEventListener('click', (e) => { e.preventDefault(); addEduCardCV(); });
+        eduGridCtl.after(add);
+      }
+
       // 4. Khôi phục nút [✕] trên từng skill-tag và nút [+ Thêm tag] cuối mỗi .tag-list
       root.querySelectorAll('.skill-tag').forEach((tag) => {
         if (!tag.querySelector('.delete-btn')) {
@@ -3147,6 +3240,46 @@
       if (!eduItem || !confirmDeleteCV(btnEl)) return;
       trashItemCV(eduItem, btnEl);
       showToast(uiCV('t_deleted_edu'));
+    }
+
+    // Thẻ học vấn tự thêm: chữ chung mọi ngôn ngữ (chưa dịch), lưu nháp ở customEdu tới khi Lưu (khi đó nằm thẳng trong HTML).
+    function makeEduCardCV(d) {
+      const card = document.createElement('div');
+      card.setAttribute('data-card-id', d.id);
+      card.setAttribute('data-w17-custom-edu', '1');
+      card.className = 'edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-emerald-400 space-y-3';
+      card.setAttribute('draggable', 'true');
+      const cat = document.createElement('span');
+      cat.setAttribute('data-w17-edu-cat', '');
+      cat.className = 'editable-node text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono';
+      cat.textContent = d.cat || uiCV('ui_new_edu_cat');
+      const title = document.createElement('div');
+      title.setAttribute('data-w17-edu-title', '');
+      title.className = 'editable-node text-sm font-bold text-white leading-snug';
+      title.textContent = d.title || uiCV('ui_new_edu_title');
+      card.append(cat, title);
+      return card;
+    }
+
+    function eduCardDataCV(card) {
+      const cat = card.querySelector('[data-w17-edu-cat]');
+      const title = card.querySelector('[data-w17-edu-title]');
+      return { id: card.getAttribute('data-card-id'), cat: cat ? cat.textContent.trim().slice(0, 60) : '', title: title ? title.textContent.trim().slice(0, 200) : '' };
+    }
+
+    function addEduCardCV() {
+      const grid = document.getElementById('education-grid');
+      if (!grid) return;
+      const card = makeEduCardCV({ id: 'edu_custom_' + Date.now().toString(36) });
+      grid.appendChild(card);
+      if (document.body.classList.contains('is-editing')) {
+        card.querySelectorAll('.editable-node').forEach((el) => { el.setAttribute('contenteditable', 'true'); el.setAttribute('spellcheck', 'false'); });
+        ensureEditControls();
+        initDragAndDrop();
+      }
+      saveCurrentState();
+      const title = card.querySelector('[data-w17-edu-title]');
+      if (title) title.focus();
     }
 
     function trashLabelCV(node) {
@@ -3425,7 +3558,7 @@
       }
 
       // Xóa sạch toolbar và các nút điều hướng tạm thời; Alt + E tái tạo lại khi cần sửa tiếp
-      cloneDoc.querySelectorAll('#w17-cv-trash').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('#w17-cv-trash, .add-edu-btn').forEach((el) => el.remove());
       cloneDoc.querySelectorAll('#cv-print-qr').forEach((el) => { el.replaceChildren(); el.removeAttribute('data-qr-url'); });
       cloneDoc.querySelectorAll('a[data-w17-screen-href]').forEach((a) => { a.setAttribute('href', a.getAttribute('data-w17-screen-href')); a.removeAttribute('data-w17-screen-href'); });
       cloneDoc.querySelectorAll('#w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"], #floating-toolbar, .reorder-controls, .reorder-btn, .delete-btn, .add-tag-btn').forEach((el) => el.remove());

@@ -44,6 +44,9 @@ import extra_cases_r9 as X9  # noqa: E402
 X9.R = sys.modules[__name__]
 import extra_cases_r10 as X10  # noqa: E402
 X10.R = sys.modules[__name__]
+import extra_cases_r11 as X11  # noqa: E402
+X11.R = sys.modules[__name__]
+X11.X8 = X8
 
 REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
@@ -1039,12 +1042,13 @@ BADGES = {  # thứ tự hiển thị: 2 chính, 2 chuyên ngành, 2 nhận làm
     "es": ["Principal • Automatización", "Segundo • Datos y BI", "Especializado • Fiscal EE. UU.", "Especializado • Seguros y ventas", "Disponible • Web", "Bajo pedido • Publicidad"],
     "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 广告"],
 }
+# Số thứ tự do CSS (counter) vẽ theo vị trí thẻ, không nằm trong chữ (2026-11-20)
 SERVICE_TITLES = {
     # vi: theo chữ chủ hồ sơ sửa qua editor (2026-11-20, giữ "Landing Page", bỏ "(1040)")
-    "vi": ["1. Tự động hóa Vận hành", "2. Phân tích Dữ liệu & Dashboard BI", "3. Hỗ trợ văn phòng thuế Mỹ", "4. Lương thưởng, hoa hồng & KPI", "5. Website & Landing Page", "6. Quảng cáo & Đo lường hiệu suất"],
-    "en": ["1. Operations Automation", "2. Data Analyst & BI Dashboard", "3. US Tax Office Back-Office", "4. Sales Compensation, Commissions & KPIs", "5. Website & Landing Page", "6. Ads & Performance Tracking"],
-    "es": ["1. Automatización Operativa", "2. Análisis de Datos y Dashboard BI", "3. Back-office para Despachos Fiscales de EE. UU.", "4. Compensación Comercial, Comisiones y KPI", "5. Sitio Web y Página de Aterrizaje", "6. Publicidad y Medición del Rendimiento"],
-    "zh": ["1. 运营自动化", "2. 数据分析与 BI 看板", "3. 美国报税事务所后台支持", "4. 销售薪酬、佣金与 KPI", "5. 网站与落地页", "6. 广告投放与效果衡量"],
+    "vi": ["Tự động hóa Vận hành", "Phân tích Dữ liệu & Dashboard BI", "Hỗ trợ văn phòng thuế Mỹ", "Lương thưởng, hoa hồng & KPI", "Website & Landing Page", "Quảng cáo & Đo lường hiệu suất"],
+    "en": ["Operations Automation", "Data Analyst & BI Dashboard", "US Tax Office Back-Office", "Sales Compensation, Commissions & KPIs", "Website & Landing Page", "Ads & Performance Tracking"],
+    "es": ["Automatización Operativa", "Análisis de Datos y Dashboard BI", "Back-office para Despachos Fiscales de EE. UU.", "Compensación Comercial, Comisiones y KPI", "Sitio Web y Página de Aterrizaje", "Publicidad y Medición del Rendimiento"],
+    "zh": ["运营自动化", "数据分析与 BI 看板", "美国报税事务所后台支持", "销售薪酬、佣金与 KPI", "网站与落地页", "广告投放与效果衡量"],
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 # Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
@@ -1203,6 +1207,7 @@ def main():
                 ("R8", lambda: (X8.t_no_tracking_local(b, env), X8.t_public_events(b, env), X8.t_consent_europe(b, env), X8.t_debug_and_clean(b, env))),
                 ("R9", lambda: (X9.t_structure(b, env), X9.t_hidden_public(b, env), X9.t_editor_layout(b, env), X9.t_mobile_switch(b, env))),
                 ("R10", lambda: (X10.t_stale_tab(b, env), X10.t_cv_legacy_draft(b, env), X10.t_settings_rollback(b, env), X10.t_menu_sections(b, env), X10.t_cv_trash(b, env), X10.t_cdn_blocked(b, env))),
+                ("R11", lambda: (X11.t_seo(b, env), X11.t_portfolio_cards(b, env), X11.t_cv_cards(b, env), X11.t_owner_flag(b, env))),
                 ("CONTENT", lambda: t_content(b, env)),
                 ("NAV", lambda: t_nav(b, env)),
                 ("RESP", lambda: t_overflow(b, env, args.quick)),

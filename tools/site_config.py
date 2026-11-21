@@ -196,6 +196,55 @@ def _replace_bounded(text, old, new, before, after):
     return pattern.subn(lambda _m: new, text)
 
 
+# ---------------- SEO: JSON-LD, ảnh chia sẻ, sitemap (dựng lại từ cấu hình mỗi lần đổi) ----------------
+# Chỉ khai thông tin có thật và đang hiển thị trên trang. KHÔNG thêm đánh giá/xếp hạng, chứng chỉ, khách hàng, kết quả.
+PROFILE = {
+    "name": "Nguyễn Thị Thu Thảo",
+    "alternateName": ["Thao Nguyen", "TJ"],
+    "jobTitle": "Operations & Data Analyst (Freelance)",
+    "addressLocality": "Ho Chi Minh City",
+    "addressCountry": "VN",
+    "knowsAbout": ["Operations automation", "Data analytics", "Power BI", "Python", "SQL", "Google Sheets",
+                   "GA4", "Google Tag Manager", "US tax office back-office (CCH Autoflow)", "Sales compensation and KPI",
+                   "Website and landing page development"],
+}
+OG_IMAGES = {PORTFOLIO: "assets/og-portfolio.png", CV_PATH: "assets/og-cv.png"}
+JSONLD_RE = re.compile(r'(<script type="application/ld\+json" id="w17-jsonld">)(.*?)(</script>)', re.S)
+OG_IMAGE_RE = re.compile(r'<meta property="og:image" content="[^"]*">')
+TW_IMAGE_RE = re.compile(r'<meta name="twitter:image" content="[^"]*">')
+SITEMAP = "sitemap.xml"
+
+
+def jsonld(cfg, name):
+    base = cfg["site"]["baseUrl"]
+    urls = page_urls(cfg)
+    person = {
+        "@type": "Person", "@id": base + "#person", "name": PROFILE["name"], "alternateName": PROFILE["alternateName"],
+        "jobTitle": PROFILE["jobTitle"], "url": base, "email": cfg["contact"]["email"],
+        "telephone": phone_e164(cfg["contact"]["phone"]),
+        "address": {"@type": "PostalAddress", "addressLocality": PROFILE["addressLocality"], "addressCountry": PROFILE["addressCountry"]},
+        "sameAs": [cfg["contact"]["githubUrl"]], "knowsAbout": PROFILE["knowsAbout"],
+    }
+    website = {"@type": "WebSite", "@id": base + "#website", "url": base, "name": "Thao Nguyen (TJ) — Portfolio",
+               "inLanguage": ["vi", "en", "es", "zh"], "publisher": {"@id": base + "#person"}}
+    graph = [website, person]
+    if name == CV:
+        graph.append({"@type": "ProfilePage", "@id": urls[CV] + "#profile", "url": urls[CV], "name": "CV — " + PROFILE["name"],
+                      "inLanguage": "vi", "isPartOf": {"@id": base + "#website"}, "mainEntity": {"@id": base + "#person"}})
+    return {"@context": "https://schema.org", "@graph": graph}
+
+
+def og_image(cfg, name):
+    return cfg["site"]["baseUrl"] + OG_IMAGES[PORTFOLIO if name == PORTFOLIO else CV_PATH]
+
+
+def sitemap_xml(cfg):
+    nl = chr(10)
+    rows = "".join("  <url><loc>" + u + "</loc></url>" + nl for u in page_urls(cfg).values())
+    return ('<?xml version="1.0" encoding="UTF-8"?>' + nl
+            + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + nl + rows + "</urlset>" + nl)
+
+
 def apply_site_tags(html, name, cfg):
     """Đặt canonical (+ og:url nếu trang có thẻ đó) theo địa chỉ web công khai; thêm canonical nếu chưa có."""
     url = page_urls(cfg)[name]
@@ -211,6 +260,15 @@ def apply_site_tags(html, name, cfg):
     links = managed_links(cfg)
     html = MANAGED_LINK_RE.sub(lambda m: f'href="{links[m.group(2)]}"' + m.group(1), html)
     html = MANAGED_TEXT_RE.sub(lambda m: m.group(1) + links["portfolio-domain"] + m.group(2), html)
+    img = og_image(cfg, name)
+    html = OG_IMAGE_RE.sub(lambda _m: f'<meta property="og:image" content="{img}">', html)
+    html = TW_IMAGE_RE.sub(lambda _m: f'<meta name="twitter:image" content="{img}">', html)
+    block = json_for_script(jsonld(cfg, name))
+    if JSONLD_RE.search(html):
+        html = JSONLD_RE.sub(lambda m: m.group(1) + block + m.group(3), html, count=1)
+    else:
+        c = CANONICAL_RE.search(html)
+        html = html[:c.end()] + chr(10) + f'  <script type="application/ld+json" id="w17-jsonld">{block}</script>' + html[c.end():]
     return html
 
 
@@ -292,6 +350,13 @@ def check(root=ROOT):
         for m in MANAGED_TEXT_RE.finditer(html):
             if m.group(0) != m.group(1) + links["portfolio-domain"] + m.group(2):
                 problems.append(f"{name}: chữ tên miền in trong PDF không khớp địa chỉ web")
+        m_ld = JSONLD_RE.search(html)
+        if not m_ld or json.loads(m_ld.group(2)) != json.loads(json_for_script(jsonld(cfg, name))):
+            problems.append(f"{name}: JSON-LD thiếu hoặc lệch cấu hình")
+        for tag in (OG_IMAGE_RE, TW_IMAGE_RE):
+            found_tags = tag.findall(html)
+            if len(found_tags) != 1 or og_image(cfg, name) not in found_tags[0]:
+                problems.append(f"{name}: ảnh chia sẻ (og:image/twitter:image) thiếu hoặc lệch: {found_tags}")
         shared = []
         for sid, rx in (("w17-settings-script", SETTINGS_SCRIPT_RE), ("w17-analytics-script", ANALYTICS_SCRIPT_RE)):
             found = rx.findall(html)
@@ -301,6 +366,12 @@ def check(root=ROOT):
                 shared.append(found[0])
         if len(shared) == 2:
             scripts[name] = shared
+    if PORTFOLIO in configs:
+        try:
+            if (Path(root) / SITEMAP).read_text(encoding="utf-8") != sitemap_xml(configs[PORTFOLIO]):
+                problems.append("sitemap.xml lệch địa chỉ web (chạy: python tools/site_config.py --write-sitemap)")
+        except OSError:
+            problems.append("thiếu sitemap.xml")
     if len(configs) == 2 and configs[PORTFOLIO] != configs[CV]:
         problems.append("Khối w17-site-config của Portfolio và CV khác nhau")
     if len(scripts) == 2 and scripts[PORTFOLIO] != scripts[CV]:
@@ -309,6 +380,10 @@ def check(root=ROOT):
 
 
 def main(argv):
+    if "--write-sitemap" in argv:
+        (ROOT / SITEMAP).write_text(sitemap_xml(parse_config(read(ROOT / PORTFOLIO))), encoding="utf-8", newline=chr(10))
+        print("ĐÃ GHI  sitemap.xml")
+        return 0
     if "--show" in argv:
         print(json.dumps(parse_config(read(ROOT / PORTFOLIO)), ensure_ascii=False, indent=2))
         return 0

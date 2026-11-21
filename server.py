@@ -54,12 +54,12 @@ ALLOWED_FILES = {
         "main-navbar": "header", "services": "section", "website": "section", "ga4-tracking": "section",
         "pbi-ga4-dashboard": "div", "core-portfolio-script": "script", "w17-layout-script": "script",
         "visual-editor-script": "script", "w17-baked-edits": "script", "ga4-drilldown-modal": "div",
-        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script",
+        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script", "w17-jsonld": "script",
     },
     "index_portfolio_clean.html": {
         "portfolio-root": "main", "reorderable-sections": "div", "interactive-editor-script": "script",
         "w17-baked-edits": "script", "solutions-grid": "div", "education-grid": "div",
-        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script",
+        "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script", "w17-jsonld": "script",
     },
 }
 MIN_SCRIPT_CHARS = 20000   # tổng độ dài các <script> thực thi (không tính JSON nhúng)
@@ -102,7 +102,8 @@ MAX_SETTINGS_BODY = 16 * 1024
 
 # ---- Đăng lên web (git commit + push) ----
 PUBLISH_BRANCH = "main"
-PUBLISH_PATHS = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]
+PUBLISH_PATHS = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html",
+                 "sitemap.xml"]
 PUBLISH_LOCK = threading.Lock()
 MAX_PUBLISH_BODY = 64 * 1024
 GIT_TIMEOUT = 30
@@ -363,7 +364,7 @@ def update_settings(changes):
             rendered, counts = SITE.render_pages(pages, new_cfg, diffs)
             for name, html in rendered.items():
                 validate_html(name, html)
-            backups = _write_all_or_nothing(rendered)
+            backups = _write_all_or_nothing(rendered, {SITE.SITEMAP: SITE.sitemap_xml(new_cfg)})
     except SITE.ConfigError as err:
         raise SaveError(400, str(err))
     creators = {name: "ok" for name in SITE.FINALS}
@@ -372,7 +373,7 @@ def update_settings(changes):
             "revisions": {name: file_revision(BASE_DIR / name) for name in SITE.FINALS}}
 
 
-def _write_all_or_nothing(rendered):
+def _write_all_or_nothing(rendered, extra=None):
     """Gọi trong WRITE_LOCK. Ghi mọi file Final + Creator tương ứng như MỘT giao dịch: bất kỳ bước nào lỗi (ghi file,
     sinh Creator) thì trả TẤT CẢ file đã đụng về nội dung cũ rồi báo lỗi — không bao giờ để Portfolio và CV lệch cấu hình."""
     originals = {}   # đường dẫn -> bytes cũ (None nếu file chưa có)
@@ -390,6 +391,10 @@ def _write_all_or_nothing(rendered):
             if backup is not None:
                 backups.append(backup.name)
             atomic_write(target, html)
+        for rel, text in (extra or {}).items():   # vd. sitemap.xml theo địa chỉ web mới
+            target = BASE_DIR / rel
+            remember(target)
+            atomic_write(target, text)
         if SYNC is None:
             raise SaveError(500, "Không nạp được tools/sync_creators.py.")
         for name in rendered:

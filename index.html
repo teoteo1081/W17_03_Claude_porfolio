@@ -5,6 +5,7 @@
   <title>Thao Nguyen (TJ) | Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance) • Tự động hóa Quy trình • Dashboard BI</title>
   <meta name="description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
   <link rel="canonical" href="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
+  <script type="application/ld+json" id="w17-jsonld">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#website","url":"https://teoteo1081.github.io/W17_03_Claude_porfolio/","name":"Thao Nguyen (TJ) — Portfolio","inLanguage":["vi","en","es","zh"],"publisher":{"@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#person"}},{"@type":"Person","@id":"https://teoteo1081.github.io/W17_03_Claude_porfolio/#person","name":"Nguyễn Thị Thu Thảo","alternateName":["Thao Nguyen","TJ"],"jobTitle":"Operations \u0026 Data Analyst (Freelance)","url":"https://teoteo1081.github.io/W17_03_Claude_porfolio/","email":"teoteo108@gmail.com","telephone":"+84855239805","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City","addressCountry":"VN"},"sameAs":["https://github.com/teoteo1081"],"knowsAbout":["Operations automation","Data analytics","Power BI","Python","SQL","Google Sheets","GA4","Google Tag Manager","US tax office back-office (CCH Autoflow)","Sales compensation and KPI","Website and landing page development"]}]}</script>
   <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"teoteo108@gmail.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/W17_03_Claude_porfolio/"},"ga4":{"measurementId":"G-501ZEXPEVQ"}}</script>
   <script id="w17-analytics-script">
     // GA4 cho Portfolio + CV (Measurement ID trong w17-site-config, đổi ở ⚙ Cài đặt; để trống = tắt).
@@ -46,6 +47,16 @@
         try { const v = localStorage.getItem(KEY); return v === 'granted' || v === 'denied' ? v : null; } catch (e) { return null; }
       };
 
+      // Lượt xem của chính chủ: mở trang 1 lần với ?toi_la_chu_trang=1 trên mỗi thiết bị -> traffic_type=internal (bộ lọc
+      // "Internal Traffic" của GA4 loại khỏi báo cáo). ?toi_la_chu_trang=0 để bỏ đánh dấu. Chỉ lưu cờ 0/1, không lưu gì khác.
+      const owner = (() => {
+        try {
+          const m = location.search.match(/[?&]toi_la_chu_trang=([01])(?:&|$)/);
+          if (m) localStorage.setItem('w17_03_internal', m[1]);
+          return localStorage.getItem('w17_03_internal') === '1';
+        } catch (e) { return false; }
+      })();
+
       window.w17Track = function () {};
       if (active) {
         window.dataLayer = window.dataLayer || [];
@@ -60,6 +71,7 @@
         const debug = /[?&]ga_debug=1(?:&|$)/.test(location.search);
         const conf = { content_group: page, site_lang: lang(), allow_google_signals: false, allow_ad_personalization_signals: false };
         if (debug) conf.debug_mode = true;
+        if (owner) { conf.traffic_type = 'internal'; gtag('set', { traffic_type: 'internal' }); }
         gtag('config', id, conf);
         const tag = document.createElement('script');
         tag.async = true;
@@ -104,6 +116,8 @@
           return w17Track('portfolio_from_cv_click', { link_location: loc });
         }
         if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        const webCard = node.closest('[data-w17-card-group="website"] [data-w17-card]');
+        if (webCard && href && !/^https:\/\/github\.com\//.test(href)) return w17Track('project_demo_click', { project_id: webCard.getAttribute('data-w17-card') });
         const demo = node.querySelector('[data-i18n$="_btn_demo"]');
         if (demo) return w17Track('project_demo_click', { project_id: demo.getAttribute('data-i18n').split('_')[0] });
         if (/^https:\/\/github\.com\//.test(href)) {
@@ -164,6 +178,14 @@
   <meta property="og:description" content="Hồ sơ của TJ — freelancer Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu và đối soát, dựng Dashboard BI điều hành. Web gọn nhẹ và kiểm lỗi đo lường GA4/GTM nhận thêm theo yêu cầu.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/">
+  <meta property="og:image" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/assets/og-portfolio.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Thao Nguyen (TJ)">
+  <meta property="og:locale" content="vi_VN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://teoteo1081.github.io/W17_03_Claude_porfolio/assets/og-portfolio.png">
+  <meta name="robots" content="index, follow">
 
   <!-- Tailwind CDN, then class-based dark mode config -->
   <!-- CSS dự phòng trên site: giữ bố cục khi CDN Tailwind bị chặn (tools/build_fallback_css.py) -->
@@ -264,6 +286,14 @@
     html[data-w17-mode="creator"] body.is-editing section[data-w17-hidden] { opacity: .5; outline: 2px dashed #f59e0b; outline-offset: 12px; border-radius: 12px; }
     html[data-w17-mode="creator"] body.is-editing a[data-w17-nav-dynamic][draggable="true"] { cursor: grab; outline: 1px dashed rgba(245, 158, 11, .6); outline-offset: 4px; border-radius: 4px; }
     .w17-section-controls { position: absolute; top: -2.75rem; right: 0; z-index: 30; }
+    /* Số thứ tự thẻ dịch vụ tự đánh theo vị trí (thẻ ẩn không tính) */
+    [data-w17-card-group="services"] { counter-reset: w17svc; }
+    [data-w17-card-group="services"] > [data-w17-card]:not([data-w17-hidden]) { counter-increment: w17svc; }
+    [data-w17-card-group="services"] > [data-w17-card] h3[data-i18n]::before { content: counter(w17svc) ". "; }
+    html[data-w17-mode="creator"] body:not(.is-editing) .w17-card-controls,
+    html[data-w17-mode="creator"] body:not(.is-editing) .w17-card-add,
+    html[data-w17-mode="creator"] body:not(.is-editing) [data-w17-card][data-w17-hidden] { display: none !important; }
+    html[data-w17-mode="creator"] body.is-editing [data-w17-card][data-w17-hidden] { opacity: .5; outline: 2px dashed #f59e0b; outline-offset: 4px; }
     @media print { .w17-section-controls { display: none !important; } }
   </style>
 </head>
@@ -416,10 +446,10 @@
       </div>
 
       <!-- 1. CỤM 6 DỊCH VỤ (lưới 3 cột: 2 chính, 2 chuyên ngành, 2 nhận làm) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div data-w17-card-group="services" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         
         <!-- Thẻ 1: End-to-End Operational -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p1')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p1" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p1')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
@@ -427,7 +457,7 @@
               </div>
               <span data-i18n="eco_badge_1" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Dịch vụ chính • Tự động hóa</span>
             </div>
-            <h3 data-i18n="eco_card1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">1. Tự động hóa Vận hành</h3>
+            <h3 data-i18n="eco_card1_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Tự động hóa Vận hành</h3>
             <p data-i18n="eco_card1_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -438,7 +468,7 @@
         </div>
 
         <!-- Thẻ 2: Data Analyst & BI Dashboard -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('countries', this.querySelector('button'), 'p2')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p2" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('countries', this.querySelector('button'), 'p2')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
@@ -446,7 +476,7 @@
               </div>
               <span data-i18n="eco_badge_2" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Dịch vụ thứ hai • Dữ liệu &amp; BI</span>
             </div>
-            <h3 data-i18n="eco_card2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">2. Phân tích Dữ liệu &amp; Dashboard BI</h3>
+            <h3 data-i18n="eco_card2_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Phân tích Dữ liệu & Dashboard BI</h3>
             <p data-i18n="eco_card2_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -457,7 +487,7 @@
         </div>
 
         <!-- Thẻ 5: chuyên ngành -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p5')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p5" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p5')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
@@ -465,7 +495,7 @@
               </div>
               <span data-i18n="eco_badge_5" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Chuyên ngành • Thuế Mỹ</span>
             </div>
-            <h3 data-i18n="eco_card5_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">3. Hỗ trợ văn phòng thuế Mỹ</h3>
+            <h3 data-i18n="eco_card5_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Hỗ trợ văn phòng thuế Mỹ</h3>
             <p data-i18n="eco_card5_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -476,7 +506,7 @@
         </div>
 
         <!-- Thẻ 6: chuyên ngành -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p6')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p6" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p6')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
@@ -484,7 +514,7 @@
               </div>
               <span data-i18n="eco_badge_6" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Chuyên ngành • Bảo hiểm &amp; bán hàng</span>
             </div>
-            <h3 data-i18n="eco_card6_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">4. Lương thưởng, hoa hồng &amp; KPI</h3>
+            <h3 data-i18n="eco_card6_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Lương thưởng, hoa hồng & KPI</h3>
             <p data-i18n="eco_card6_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -495,7 +525,7 @@
         </div>
 
         <!-- Thẻ 3: Website & Landing Page -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('powerbi', this.querySelector('button'), 'p3')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p3" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('powerbi', this.querySelector('button'), 'p3')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400 shadow-lg shadow-emerald-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
@@ -503,7 +533,7 @@
               </div>
               <span data-i18n="eco_badge_3" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Nhận làm • Website</span>
             </div>
-            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">5. Website &amp; Landing Page</h3>
+            <h3 data-i18n="eco_card3_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Website &amp; Landing Page</h3>
             <p data-i18n="eco_card3_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -514,7 +544,7 @@
         </div>
 
         <!-- Thẻ 4: Tracking Performance -->
-        <div onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p4')" class="cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
+        <div data-w17-card="svc-p4" onclick="if(!document.body.classList.contains('is-editing')) openGA4DrilldownModal('pages', this.querySelector('button'), 'p4')" class="relative cursor-pointer group p-6 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500 dark:hover:border-cyan-400 shadow-lg shadow-cyan-500/5 transition-all flex flex-col justify-between">
           <div class="space-y-3 pb-2">
             <div class="flex items-center justify-between">
               <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
@@ -522,7 +552,7 @@
               </div>
               <span data-i18n="eco_badge_4" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">Theo yêu cầu • Quảng cáo</span>
             </div>
-            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">6. Quảng cáo & Đo lường hiệu suất</h3>
+            <h3 data-i18n="eco_card4_title" class="editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Quảng cáo & Đo lường hiệu suất</h3>
             <p data-i18n="eco_card4_desc" class="editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Nhận thiết lập và vận hành chiến dịch Google Ads / Meta Ads khi khách cần. Gắn đo lường chuyển đổi từ ngày đầu, chạy thử với ngân sách nhỏ, báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800/80 flex items-center justify-between">
@@ -713,10 +743,10 @@
         </div>
 
         <!-- Lưới 4 Phân hệ con (Grid 2x2) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div data-w17-card-group="website" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           <!-- [Phân hệ 1: WRP Tax Services — Lead Funnel] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
+          <div data-w17-card="spoke1" class="relative p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
             <div class="space-y-3.5">
               <div class="flex items-center justify-between gap-2 flex-wrap">
                 <span data-i18n="spoke1_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Fintech & Thuế Mỹ</span>
@@ -736,7 +766,7 @@
           </div>
 
           <!-- [Phân hệ 2: Operation 0 — 1,000 Chunks Engine] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
+          <div data-w17-card="spoke2" class="relative p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
             <div class="space-y-3.5">
               <div class="flex items-center justify-between gap-2 flex-wrap">
                 <span data-i18n="spoke2_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Audio 4 Ngôn Ngữ</span>
@@ -756,7 +786,7 @@
           </div>
 
           <!-- [Phân hệ 3: TJ WordLoop Multiplayer Game] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
+          <div data-w17-card="spoke3" class="relative p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/60 dark:hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-6 group">
             <div class="space-y-3.5">
               <div class="flex items-center justify-between gap-2 flex-wrap">
                 <span data-i18n="spoke3_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Game hóa &amp; Giữ chân người dùng</span>
@@ -776,7 +806,7 @@
           </div>
 
           <!-- [Phân hệ 4: TJ Courses Hub — Academy] -->
-          <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
+          <div data-w17-card="spoke4" class="relative p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-6 group">
             <div class="space-y-3.5">
               <div class="flex items-center justify-between gap-2 flex-wrap">
                 <span data-i18n="spoke4_badge" class="editable-node inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">Ưu tiên di động 390px</span>
@@ -1965,7 +1995,7 @@
             <!-- Gói 1 -->
             <div id="modal-pkg-p1" data-service-pkg="p1" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p1_title" class="font-bold text-emerald-400 text-xs sm:text-sm">1. Tự động hóa Vận hành</span>
+                <span data-i18n="modal_p1_title" class="font-bold text-emerald-400 text-xs sm:text-sm">Tự động hóa Vận hành</span>
                 <span data-i18n="modal_p1_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Dịch vụ chính</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -1978,7 +2008,7 @@
             <!-- Gói 2 -->
             <div id="modal-pkg-p2" data-service-pkg="p2" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p2_title" class="font-bold text-cyan-400 text-xs sm:text-sm">2. Phân tích Dữ liệu &amp; Dashboard BI</span>
+                <span data-i18n="modal_p2_title" class="font-bold text-cyan-400 text-xs sm:text-sm">Phân tích Dữ liệu & Dashboard BI</span>
                 <span data-i18n="modal_p2_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Dịch vụ thứ hai</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -1991,7 +2021,7 @@
             <!-- Gói 5 (chuyên ngành) -->
             <div id="modal-pkg-p5" data-service-pkg="p5" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p5_title" class="font-bold text-emerald-400 text-xs sm:text-sm">3. Hỗ trợ văn phòng thuế Mỹ</span>
+                <span data-i18n="modal_p5_title" class="font-bold text-emerald-400 text-xs sm:text-sm">Hỗ trợ văn phòng thuế Mỹ</span>
                 <span data-i18n="modal_p5_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Chuyên ngành</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -2004,7 +2034,7 @@
             <!-- Gói 6 (chuyên ngành) -->
             <div id="modal-pkg-p6" data-service-pkg="p6" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p6_title" class="font-bold text-cyan-400 text-xs sm:text-sm">4. Lương thưởng, hoa hồng &amp; KPI</span>
+                <span data-i18n="modal_p6_title" class="font-bold text-cyan-400 text-xs sm:text-sm">Lương thưởng, hoa hồng & KPI</span>
                 <span data-i18n="modal_p6_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Chuyên ngành</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -2017,7 +2047,7 @@
             <!-- Gói 3 -->
             <div id="modal-pkg-p3" data-service-pkg="p3" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p3_title" class="font-bold text-amber-400 text-xs sm:text-sm">5. Website &amp; Trang đích</span>
+                <span data-i18n="modal_p3_title" class="font-bold text-amber-400 text-xs sm:text-sm">Website & Trang đích</span>
                 <span data-i18n="modal_p3_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Nhận làm</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -2030,7 +2060,7 @@
             <!-- Gói 4 -->
             <div id="modal-pkg-p4" data-service-pkg="p4" class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2">
               <div class="flex items-center justify-between">
-                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">6. Quảng cáo & Đo lường hiệu suất (theo yêu cầu)</span>
+                <span data-i18n="modal_p4_title" class="font-bold text-indigo-400 text-xs sm:text-sm">Quảng cáo & Đo lường hiệu suất (theo yêu cầu)</span>
                 <span data-i18n="modal_p4_badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Theo yêu cầu</span>
               </div>
               <ul class="space-y-1.5 text-slate-300">
@@ -2060,7 +2090,7 @@
   <div id="toast-notification" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-[70] px-4 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs sm:text-sm shadow-2xl no-print hidden"></div>
 
   <!-- Chỉnh sửa đã nhúng khi xuất Final (dữ liệu JSON thuần, không thực thi): mở lại với cache trống vẫn giữ nội dung -->
-  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"\u003cspan class=\"inline-block\"\u003eTôi hỗ trợ doanh nghiệp xử lý các quy trình vận hành và dữ liệu từ đầu đến cuối: khảo sát yêu cầu, chuẩn hóa dữ liệu, tự động hóa công việc lặp lại, xây dựng dashboard và kiểm tra kết quả. Mỗi giải pháp được triển khai theo phạm vi thống nhất, có sản phẩm bàn giao và hướng dẫn sử dụng.\u003c/span\u003e","hero_positioning":"End-to-End Operations Automation • Data Analytics • Dashboard BI","eco_card5_title":"3. Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.","hero_title":"Tự động hóa trọn quy trình vận hành, từ dữ liệu đầu vào đến báo cáo bàn giao.","hero_btn_capability":"📄 Xem CV","nav_capability":"CV","hero_btn_dashboard":"Xem dịch vụ ↓","hero_badge":"Nhận dự án Freelance \u0026 Remote","eco_card3_title":"5. Website \u0026 Landing Page","spoke2_title":"Operation 0 — 1.000 Chunk · 4 ngôn ngữ","eco_title":"Dịch vụ \u0026 Giải pháp"}}}</script>
+  <script type="application/json" id="w17-baked-edits">{"schema":1,"editsByLang":{"vi":{"hero_desc":"<span class=\"inline-block\">Tôi hỗ trợ doanh nghiệp xử lý các quy trình vận hành và dữ liệu từ đầu đến cuối: khảo sát yêu cầu, chuẩn hóa dữ liệu, tự động hóa công việc lặp lại, xây dựng dashboard và kiểm tra kết quả. Mỗi giải pháp được triển khai theo phạm vi thống nhất, có sản phẩm bàn giao và hướng dẫn sử dụng.</span>","hero_positioning":"End-to-End Operations Automation • Data Analytics • Dashboard BI","eco_card5_title":"Hỗ trợ văn phòng thuế Mỹ","eco_card5_desc":"Hỗ trợ kiểm tra, phân loại và tổ chức chứng từ thuế Mỹ trước bước xử lý bằng CCH Autoflow. Rà soát hồ sơ trùng lặp, sai năm thuế, sai thông tin khách hàng; kiểm tra bookmark workpaper PDF và đối soát phí với E-Upsafe, Google Sheets. Bàn giao hồ sơ được tổ chức theo quy trình, checklist và danh sách ngoại lệ cần xử lý.","hero_title":"Tự động hóa trọn quy trình vận hành, từ dữ liệu đầu vào đến báo cáo bàn giao.","hero_btn_capability":"📄 Xem CV","nav_capability":"CV","hero_btn_dashboard":"Xem dịch vụ ↓","hero_badge":"Nhận dự án Freelance & Remote","eco_card3_title":"Website & Landing Page","spoke2_title":"Operation 0 — 1.000 Chunk · 4 ngôn ngữ","eco_title":"Dịch vụ & Giải pháp"}}}</script>
 
   <!-- Translations & Core Logic -->
   <script id="core-portfolio-script">
@@ -2069,13 +2099,13 @@
         modal_p4_item3: "(3) Báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng, so sánh hiệu quả từng kênh. Bàn giao: bảng theo dõi chi phí – khách tiềm năng và ghi chú điều chỉnh",
         modal_p4_item2: "(2) Thiết lập và chạy chiến dịch Google Ads / Meta Ads theo yêu cầu, bắt đầu với ngân sách thử nhỏ; tài khoản quảng cáo thuộc quyền sở hữu của khách. Bàn giao: chiến dịch đã thiết lập và quyền quản trị",
         modal_p4_item1: "(1) Gắn đo lường GA4/GTM: sự kiện chuyển đổi, UTM cho từng kênh, sửa lỗi trùng sự kiện. Bàn giao: danh sách sự kiện và bảng quy ước UTM",
-        modal_p4_title: "6. Quảng cáo & Đo lường hiệu suất (theo yêu cầu)",
-        modal_p5_title: "3. Hỗ trợ văn phòng thuế Mỹ",
+        modal_p4_title: "Quảng cáo & Đo lường hiệu suất (theo yêu cầu)",
+        modal_p5_title: "Hỗ trợ văn phòng thuế Mỹ",
         modal_p5_badge: "Chuyên ngành",
         modal_p5_item1: "(1) Kiểm hồ sơ trước khi funnel vào CCH Autoflow. Bàn giao: bảng phân loại từng trang, danh sách hồ sơ trùng, sai năm, TIN lạ; số trang khớp 100%",
         modal_p5_item2: "(2) Rà và sửa bookmark workpaper theo 26 nhóm chuẩn CCH. Bàn giao: báo cáo lỗi theo từng trang và file workpaper mới, nội dung trang giữ nguyên",
         modal_p5_item3: "(3) Đối soát phí và hóa đơn với E-Upsafe và Google Sheet. Bàn giao: bảng đối soát từng dòng kèm bằng chứng (trang PDF, tổng phí khớp)",
-        modal_p6_title: "4. Lương thưởng, hoa hồng & KPI",
+        modal_p6_title: "Lương thưởng, hoa hồng & KPI",
         modal_p6_badge: "Chuyên ngành",
         modal_p6_item1: "(1) Mô hình cơ chế thưởng/hoa hồng và chạy thử các kịch bản. Bàn giao: file mô hình kèm bảng giả định",
         modal_p6_item2: "(2) Dự báo doanh thu theo 4 động lực MAPA (nhân lực, tỷ lệ hoạt động, năng suất, quy mô hồ sơ). Bàn giao: file dự báo và cách cập nhật",
@@ -2083,15 +2113,15 @@
         modal_p3_item3: "(3) Web công cụ nhỏ / cổng thông tin nội bộ (Mini Web Portal). Bàn giao: trang chạy được và ghi chú sử dụng",
         modal_p3_item2: "(2) Form thu thập thông tin đổ về Google Sheets/CRM. Bàn giao: form chạy được và lần gửi thử",
         modal_p3_item1: "(1) Dựng trang giới thiệu / landing page gọn nhẹ, hosting miễn phí hoặc chi phí thấp. Bàn giao: mã nguồn và hướng dẫn đăng trang",
-        modal_p3_title: "5. Website & Trang đích",
+        modal_p3_title: "Website & Trang đích",
         modal_p2_item3: "(3) Báo cáo gửi định kỳ qua Email/Zalo. Bàn giao: cấu hình gửi và bước kiểm tra",
         modal_p2_item2: "(2) Phân tích lợi nhuận và chi phí (P&L) theo sản phẩm, kênh, chi nhánh. Bàn giao: file phân tích và ghi chú giả định",
         modal_p2_item1: "(1) Thiết kế Dashboard điều hành (Power BI). Bàn giao: file dashboard và cách cập nhật dữ liệu",
-        modal_p2_title: "2. Phân tích Dữ liệu & Dashboard BI",
+        modal_p2_title: "Phân tích Dữ liệu & Dashboard BI",
         modal_p1_item3: "(3) Chuẩn hóa quy trình & phân quyền file. Bàn giao: SOP ngắn và hướng dẫn sử dụng",
         modal_p1_item2: "(2) Đối soát & làm sạch dữ liệu định kỳ. Bàn giao: báo cáo chênh lệch và danh sách dòng cần kiểm",
         modal_p1_item1: "(1) Tự động hóa nhập liệu & đồng bộ dữ liệu (Python, Playwright, Google Sheets). Bàn giao: script hoặc Sheet chạy được",
-        modal_p1_title: "1. Tự động hóa Vận hành",
+        modal_p1_title: "Tự động hóa Vận hành",
         modal_pkg_note: "* Chính: tự động hóa vận hành & Dashboard BI • Chuyên ngành: thuế Mỹ, lương thưởng & hoa hồng • Nhận làm: website, quảng cáo & đo lường",
         modal_pkg_heading: "Phạm Vi Dịch Vụ Của TJ: Dữ Liệu Là Chính, Thêm Chuyên Ngành Thuế Mỹ & Lương Thưởng",
         nav_about: "Giới thiệu",
@@ -2136,20 +2166,20 @@
         eco_badge: "HỆ SINH THÁI DỊCH VỤ & GIẢI PHÁP THỰC CHIẾN",
         eco_title: "Hệ Sinh Thái Sản Phẩm & Dịch Vụ Của TJ",
         eco_property: "Chính: Tự động hóa vận hành • Dashboard BI | Chuyên ngành: Thuế Mỹ, Lương thưởng & hoa hồng | Nhận làm: Website, Quảng cáo & Đo lường",
-        eco_card1_title: "1. Tự động hóa Vận hành",
+        eco_card1_title: "Tự động hóa Vận hành",
         eco_card1_desc: "Tự động hóa nhập liệu, đối soát hóa đơn và đồng bộ dữ liệu giữa Excel, Google Sheets và các hệ thống (Python, Playwright). Bàn giao file chạy được, có ghi log lỗi và hướng dẫn sử dụng.",
-        eco_card2_title: "2. Phân tích Dữ liệu & Dashboard BI",
+        eco_card2_title: "Phân tích Dữ liệu & Dashboard BI",
         eco_card2_desc: "Làm sạch dữ liệu thô, chuẩn hóa số liệu và dựng Dashboard điều hành (Power BI) để chủ doanh nghiệp theo dõi dòng tiền và hiệu suất vận hành.",
-        eco_card3_title: "5. Website & Trang đích",
+        eco_card3_title: "Website & Trang đích",
         eco_card3_desc: "Dựng trang giới thiệu và landing page gọn nhẹ, tải nhanh, có form đổ dữ liệu về Google Sheets.",
-        eco_card4_title: "6. Quảng cáo & Đo lường hiệu suất",
+        eco_card4_title: "Quảng cáo & Đo lường hiệu suất",
         eco_card4_desc: "Nhận thiết lập và vận hành chiến dịch Google Ads / Meta Ads khi khách cần. Gắn đo lường chuyển đổi từ ngày đầu, chạy thử với ngân sách nhỏ, báo cáo hằng tuần theo chi phí trên mỗi khách tiềm năng.",
         eco_badge_5: "Chuyên ngành • Thuế Mỹ",
         eco_badge_6: "Chuyên ngành • Bảo hiểm & bán hàng",
-        eco_card5_title: "3. Hỗ trợ văn phòng thuế Mỹ",
+        eco_card5_title: "Hỗ trợ văn phòng thuế Mỹ",
         eco_card5_desc: "Kiểm hồ sơ khách trước khi đưa vào CCH Autoflow (phân loại từng trang, bắt hồ sơ trùng, sai năm, sai người), rà và sửa bookmark workpaper PDF theo chuẩn CCH, tìm đúng bản tờ khai, đối soát phí với E-Upsafe và Google Sheet.",
         eco_sub_tax: "Back-office thuế Mỹ",
-        eco_card6_title: "4. Lương thưởng, hoa hồng & KPI",
+        eco_card6_title: "Lương thưởng, hoa hồng & KPI",
         eco_card6_desc: "Thiết kế và tính cơ chế thưởng, hoa hồng cho đội kinh doanh: mô hình chi phí thù lao, chạy thử các kịch bản chi trả, so chi phí với doanh thu, đối soát chi trả mỗi kỳ. Kinh nghiệm từ Prudential, Chubb Life, AIA.",
         eco_sub_comp: "Lương thưởng & KPI",
         eco_btn_detail: "Chi tiết dịch vụ",
@@ -2298,13 +2328,13 @@
         modal_p4_item3: "(3) Weekly reports on cost per lead, comparing each channel. Delivered: a cost-and-leads tracker with adjustment notes",
         modal_p4_item2: "(2) Setting up and running Google Ads / Meta Ads campaigns on request, starting with a small test budget; the ad accounts stay owned by the client. Delivered: configured campaigns and admin access",
         modal_p4_item1: "(1) GA4/GTM measurement: conversion events, UTM per channel, duplicate-event fixes. Delivered: an event list and a UTM naming sheet",
-        modal_p4_title: "6. Ads & Performance Tracking (on request)",
-        modal_p5_title: "3. US Tax Office Back-Office",
+        modal_p4_title: "Ads & Performance Tracking (on request)",
+        modal_p5_title: "US Tax Office Back-Office",
         modal_p5_badge: "Specialist",
         modal_p5_item1: "(1) Pre-funnel QA before CCH Autoflow. Delivered: a page-by-page sorting sheet, a list of duplicates, wrong-year pages and unknown TINs; page counts reconciled 100%",
         modal_p5_item2: "(2) Workpaper bookmark audit and fix against the 26 CCH categories. Delivered: a page-level issue report and a corrected workpaper file, page content unchanged",
         modal_p5_item3: "(3) Fee and invoice reconciliation with E-Upsafe and Google Sheets. Delivered: a line-by-line reconciliation with evidence (PDF page, matching fee totals)",
-        modal_p6_title: "4. Sales Compensation, Commissions & KPIs",
+        modal_p6_title: "Sales Compensation, Commissions & KPIs",
         modal_p6_badge: "Specialist",
         modal_p6_item1: "(1) Incentive/commission scheme model with scenario testing. Delivered: the model file and an assumptions sheet",
         modal_p6_item2: "(2) Revenue forecast on the 4 MAPA drivers (manpower, active ratio, productivity, case size). Delivered: the forecast file and how to update it",
@@ -2312,15 +2342,15 @@
         modal_p3_item3: "(3) Small web tool / internal portal (Mini Web Portal). Delivered: a working page and usage notes",
         modal_p3_item2: "(2) Lead form feeding Google Sheets/CRM. Delivered: a working form and a test submission",
         modal_p3_item1: "(1) Lean showcase or landing page on free or low-cost hosting. Delivered: source code and publishing guide",
-        modal_p3_title: "5. Website & Landing Page",
+        modal_p3_title: "Website & Landing Page",
         modal_p2_item3: "(3) Scheduled reports by Email/Zalo. Delivered: the sending setup and a check procedure",
         modal_p2_item2: "(2) P&L and cost analysis by product, channel and branch. Delivered: the analysis file and notes on assumptions",
         modal_p2_item1: "(1) Designing an executive dashboard (Power BI). Delivered: the dashboard file and how to refresh the data",
-        modal_p2_title: "2. Data Analyst & BI Dashboard",
+        modal_p2_title: "Data Analyst & BI Dashboard",
         modal_p1_item3: "(3) Standardizing the process and file permissions. Delivered: a short SOP and usage guide",
         modal_p1_item2: "(2) Recurring reconciliation and data cleaning. Delivered: a variance report and a list of rows to review",
         modal_p1_item1: "(1) Automating data entry and data sync (Python, Playwright, Google Sheets). Delivered: a working script or Sheet",
-        modal_p1_title: "1. Operations Automation",
+        modal_p1_title: "Operations Automation",
         modal_pkg_note: "* Core: operations automation & BI dashboards • Specialist: US tax back-office, sales compensation • Also available: websites, ads & performance tracking",
         modal_pkg_heading: "TJ's Service Scope: Data First, Plus US Tax & Compensation Specialties",
         nav_about: "About",
@@ -2365,20 +2395,20 @@
         eco_badge: "SERVICE ECOSYSTEM & PRAGMATIC SOLUTIONS",
         eco_title: "Services & Solutions",
         eco_property: "Core: Operations automation • BI dashboards | Specialist: US tax back-office, Sales compensation | Also available: Websites, Ads & performance tracking",
-        eco_card1_title: "1. Operations Automation",
+        eco_card1_title: "Operations Automation",
         eco_card1_desc: "Automation of data entry, invoice reconciliation and data sync between Excel, Google Sheets and other systems (Python, Playwright). Delivered as a working file with error logs and a usage guide.",
-        eco_card2_title: "2. Data Analyst & BI Dashboard",
+        eco_card2_title: "Data Analyst & BI Dashboard",
         eco_card2_desc: "Cleaning raw data, standardizing metrics and building executive dashboards (Power BI) so owners can follow cash flow and operational performance.",
-        eco_card3_title: "5. Website & Landing Page",
+        eco_card3_title: "Website & Landing Page",
         eco_card3_desc: "Lean company pages and landing pages that load fast, with forms that feed Google Sheets.",
-        eco_card4_title: "6. Ads & Performance Tracking",
+        eco_card4_title: "Ads & Performance Tracking",
         eco_card4_desc: "Google Ads / Meta Ads campaigns set up and run on request: conversion tracking from day one, a small test budget first, and weekly reports on cost per lead.",
         eco_badge_5: "Specialist • US Tax",
         eco_badge_6: "Specialist • Insurance & Sales",
-        eco_card5_title: "3. US Tax Office Back-Office",
+        eco_card5_title: "US Tax Office Back-Office",
         eco_card5_desc: "Checking, sorting and organizing US tax documents before CCH Autoflow processing. Reviewing files for duplicates, wrong tax years and incorrect client details; auditing workpaper PDF bookmarks and reconciling fees against E-Upsafe and Google Sheets. Delivered: files organized by workflow, a checklist and a list of exceptions to resolve.",
         eco_sub_tax: "US tax back-office",
-        eco_card6_title: "4. Sales Compensation, Commissions & KPIs",
+        eco_card6_title: "Sales Compensation, Commissions & KPIs",
         eco_card6_desc: "Design and calculate incentive and commission schemes for sales teams: compensation cost models, payout scenario testing, cost versus revenue, and payout reconciliation each period. Experience from Prudential, Chubb Life and AIA.",
         eco_sub_comp: "Compensation & KPIs",
         eco_btn_detail: "Service details",
@@ -2527,13 +2557,13 @@
         modal_p4_item3: "(3) Informes semanales del costo por cliente potencial, comparando cada canal. Entrega: tablero de costos y clientes potenciales con notas de ajuste",
         modal_p4_item2: "(2) Configuración y gestión de campañas de Google Ads / Meta Ads bajo pedido, empezando con un presupuesto de prueba pequeño; las cuentas son propiedad del cliente. Entrega: campañas configuradas y acceso de administrador",
         modal_p4_item1: "(1) Medición GA4/GTM: eventos de conversión, UTM por canal y corrección de eventos duplicados. Entrega: lista de eventos y tabla de convenciones UTM",
-        modal_p4_title: "6. Publicidad y Medición del Rendimiento (bajo pedido)",
-        modal_p5_title: "3. Back-office para Despachos Fiscales de EE. UU.",
+        modal_p4_title: "Publicidad y Medición del Rendimiento (bajo pedido)",
+        modal_p5_title: "Back-office para Despachos Fiscales de EE. UU.",
         modal_p5_badge: "Especializado",
         modal_p5_item1: "(1) Revisión previa a CCH Autoflow. Entrega: tabla de clasificación página por página, lista de duplicados, páginas de año incorrecto y TIN desconocidos; conteo de páginas cuadrado al 100 %",
         modal_p5_item2: "(2) Auditoría y corrección de marcadores de papeles de trabajo según las 26 categorías CCH. Entrega: informe de errores por página y archivo corregido, sin alterar el contenido",
         modal_p5_item3: "(3) Conciliación de honorarios y facturas con E-Upsafe y Google Sheets. Entrega: conciliación línea por línea con evidencia (página PDF, totales cuadrados)",
-        modal_p6_title: "4. Compensación Comercial, Comisiones y KPI",
+        modal_p6_title: "Compensación Comercial, Comisiones y KPI",
         modal_p6_badge: "Especializado",
         modal_p6_item1: "(1) Modelo de incentivos/comisiones con prueba de escenarios. Entrega: archivo del modelo y tabla de supuestos",
         modal_p6_item2: "(2) Previsión de ingresos con los 4 pilares MAPA (fuerza laboral, ratio de actividad, productividad, tamaño de caso). Entrega: archivo de previsión y cómo actualizarlo",
@@ -2541,15 +2571,15 @@
         modal_p3_item3: "(3) Herramienta web pequeña / portal interno (Mini Web Portal). Entrega: página funcional y notas de uso",
         modal_p3_item2: "(2) Formulario que alimenta Google Sheets/CRM. Entrega: formulario funcional y un envío de prueba",
         modal_p3_item1: "(1) Página de presentación o landing ligera en hosting gratuito o de bajo coste. Entrega: código fuente y guía de publicación",
-        modal_p3_title: "5. Sitio Web y Página de Aterrizaje",
+        modal_p3_title: "Sitio Web y Página de Aterrizaje",
         modal_p2_item3: "(3) Informes programados por Email/Zalo. Entrega: configuración de envío y pasos de verificación",
         modal_p2_item2: "(2) Análisis de P&G y costes por producto, canal y sucursal. Entrega: archivo de análisis y notas de supuestos",
         modal_p2_item1: "(1) Diseño de un panel ejecutivo (Power BI). Entrega: archivo del panel y cómo actualizar los datos",
-        modal_p2_title: "2. Análisis de Datos y Dashboard BI",
+        modal_p2_title: "Análisis de Datos y Dashboard BI",
         modal_p1_item3: "(3) Estandarización del proceso y permisos de archivos. Entrega: SOP breve y guía de uso",
         modal_p1_item2: "(2) Conciliación y limpieza periódica de datos. Entrega: informe de diferencias y lista de filas a revisar",
         modal_p1_item1: "(1) Automatización de ingreso y sincronización de datos (Python, Playwright, Google Sheets). Entrega: script o Sheet funcional",
-        modal_p1_title: "1. Automatización Operativa",
+        modal_p1_title: "Automatización Operativa",
         modal_pkg_note: "* Principal: automatización operativa y paneles BI • Especializado: back-office fiscal EE. UU., compensación comercial • También: sitios web, publicidad y medición",
         modal_pkg_heading: "Alcance de Servicios de TJ: Datos Primero, Más Fiscalidad EE. UU. y Compensación",
         nav_about: "Sobre mí",
@@ -2594,20 +2624,20 @@
         eco_badge: "ECOSISTEMA DE SERVICIOS Y SOLUCIONES PRÁCTICAS",
         eco_title: "Servicios y Soluciones",
         eco_property: "Principal: Automatización operativa • Paneles BI | Especializado: Back-office fiscal EE. UU., Compensación comercial | También: Sitios web, Publicidad y medición",
-        eco_card1_title: "1. Automatización Operativa",
+        eco_card1_title: "Automatización Operativa",
         eco_card1_desc: "Automatización de ingreso de datos, conciliación de facturas y sincronización entre Excel, Google Sheets y otros sistemas (Python, Playwright). Se entrega funcionando, con registro de errores y guía de uso.",
-        eco_card2_title: "2. Análisis de Datos y Dashboard BI",
+        eco_card2_title: "Análisis de Datos y Dashboard BI",
         eco_card2_desc: "Limpieza de datos en bruto, estandarización de métricas y paneles ejecutivos (Power BI) para que el dueño siga el flujo de caja y el desempeño operativo.",
-        eco_card3_title: "5. Sitio Web y Página de Aterrizaje",
+        eco_card3_title: "Sitio Web y Página de Aterrizaje",
         eco_card3_desc: "Páginas de presentación y de aterrizaje ligeras y rápidas, con formularios que envían datos a Google Sheets.",
-        eco_card4_title: "6. Publicidad y Medición del Rendimiento",
+        eco_card4_title: "Publicidad y Medición del Rendimiento",
         eco_card4_desc: "Configuración y gestión de campañas de Google Ads / Meta Ads bajo pedido: medición de conversiones desde el primer día, un presupuesto de prueba pequeño e informes semanales del costo por cliente potencial.",
         eco_badge_5: "Especializado • Fiscal EE. UU.",
         eco_badge_6: "Especializado • Seguros y ventas",
-        eco_card5_title: "3. Back-office para Despachos Fiscales de EE. UU.",
+        eco_card5_title: "Back-office para Despachos Fiscales de EE. UU.",
         eco_card5_desc: "Revisión, clasificación y organización de documentos fiscales de EE. UU. antes del procesamiento en CCH Autoflow. Detección de duplicados, años fiscales y datos de cliente incorrectos; revisión de marcadores en los PDF de papeles de trabajo y conciliación de honorarios con E-Upsafe y Google Sheets. Entrega: expedientes organizados por proceso, checklist y lista de excepciones por resolver.",
         eco_sub_tax: "Back-office fiscal",
-        eco_card6_title: "4. Compensación Comercial, Comisiones y KPI",
+        eco_card6_title: "Compensación Comercial, Comisiones y KPI",
         eco_card6_desc: "Diseño y cálculo de esquemas de incentivos y comisiones para equipos comerciales: modelos de costo de compensación, prueba de escenarios de pago, costo frente a ingresos y conciliación de pagos en cada periodo. Experiencia en Prudential, Chubb Life y AIA.",
         eco_sub_comp: "Compensación y KPI",
         eco_btn_detail: "Detalles del servicio",
@@ -2756,13 +2786,13 @@
         modal_p4_item3: "(3) 每周按每个潜在客户的成本汇报，对比各渠道效果。交付：成本与潜在客户跟踪表及调整说明",
         modal_p4_item2: "(2) 按需搭建并运营 Google Ads / Meta Ads 广告，先用小额预算测试；广告账户归客户所有。交付：已配置的广告系列与管理员权限",
         modal_p4_item1: "(1) GA4/GTM 埋点：转化事件、各渠道 UTM、修复重复事件。交付：事件清单与 UTM 命名规范表",
-        modal_p4_title: "6. 广告投放与效果衡量（按需）",
-        modal_p5_title: "3. 美国报税事务所后台支持",
+        modal_p4_title: "广告投放与效果衡量（按需）",
+        modal_p5_title: "美国报税事务所后台支持",
         modal_p5_badge: "专业服务",
         modal_p5_item1: "(1) 导入 CCH Autoflow 前的资料检查。交付：逐页分类表，重复、年份错误及未知 TIN 清单；页数 100% 核对一致",
         modal_p5_item2: "(2) 按 CCH 26 类标准审核并修复工作底稿书签。交付：逐页问题报告与修正后的底稿文件，页面内容不变",
         modal_p5_item3: "(3) 与 E-Upsafe 和 Google Sheets 核对费用与发票。交付：逐行核对表并附证据（PDF 页面、费用合计一致）",
-        modal_p6_title: "4. 销售薪酬、佣金与 KPI",
+        modal_p6_title: "销售薪酬、佣金与 KPI",
         modal_p6_badge: "专业服务",
         modal_p6_item1: "(1) 奖励/佣金机制模型及情景测试。交付：模型文件与假设表",
         modal_p6_item2: "(2) 基于 MAPA 4 大驱动（人力、活动率、人均产能、件均保费）的营收预测。交付：预测文件及更新方法",
@@ -2770,15 +2800,15 @@
         modal_p3_item3: "(3) 小型网页工具/内部门户（Mini Web Portal）。交付：可用页面及使用备注",
         modal_p3_item2: "(2) 将表单数据写入 Google Sheets/CRM。交付：可用表单及一次测试提交",
         modal_p3_item1: "(1) 轻量展示页或落地页，使用免费或低成本托管。交付：源码与发布说明",
-        modal_p3_title: "5. 网站与落地页",
+        modal_p3_title: "网站与落地页",
         modal_p2_item3: "(3) 通过邮件/Zalo 定期发送报表。交付：发送配置与检查步骤",
         modal_p2_item2: "(2) 按产品、渠道、分公司的损益（P&L）与成本分析。交付：分析文件及假设说明",
         modal_p2_item1: "(1) 设计经营看板（Power BI）。交付：看板文件及数据更新方法",
-        modal_p2_title: "2. 数据分析与 BI 看板",
+        modal_p2_title: "数据分析与 BI 看板",
         modal_p1_item3: "(3) 规范流程与文件权限。交付：简短 SOP 与使用说明",
         modal_p1_item2: "(2) 定期对账与数据清洗。交付：差异报告与待核查行清单",
         modal_p1_item1: "(1) 自动化数据录入与同步（Python、Playwright、Google Sheets）。交付：可运行的脚本或表格",
-        modal_p1_title: "1. 运营自动化",
+        modal_p1_title: "运营自动化",
         modal_pkg_note: "* 核心：运营自动化与 BI 看板 • 专业：美国报税后台、销售薪酬与佣金 • 可承接：网站、广告投放与效果衡量",
         modal_pkg_heading: "TJ 的服务范围：以数据为主，兼具美国报税与薪酬激励专长",
         nav_about: "关于我",
@@ -2823,20 +2853,20 @@
         eco_badge: "实战服务与解决方案生态系统",
         eco_title: "服务与解决方案",
         eco_property: "核心：运营自动化 • BI 看板 | 专业：美国报税后台、销售薪酬与佣金 | 可承接：网站、广告投放与效果衡量",
-        eco_card1_title: "1. 运营自动化",
+        eco_card1_title: "运营自动化",
         eco_card1_desc: "自动化数据录入、发票对账，以及 Excel、Google Sheets 与其他系统之间的数据同步（Python、Playwright）。交付可运行文件，附错误日志与使用说明。",
-        eco_card2_title: "2. 数据分析与 BI 看板",
+        eco_card2_title: "数据分析与 BI 看板",
         eco_card2_desc: "清洗原始数据、统一指标口径，并搭建经营看板（Power BI），帮助企业主跟踪现金流与运营表现。",
-        eco_card3_title: "5. 网站与落地页",
+        eco_card3_title: "网站与落地页",
         eco_card3_desc: "搭建轻量、加载快的介绍页与落地页，表单数据直接写入 Google Sheets。",
-        eco_card4_title: "6. 广告投放与效果衡量",
+        eco_card4_title: "广告投放与效果衡量",
         eco_card4_desc: "按需搭建并运营 Google Ads / Meta Ads 广告：首日即部署转化跟踪，先用小额预算测试，每周按每个潜在客户的成本汇报。",
         eco_badge_5: "专业 • 美国报税",
         eco_badge_6: "专业 • 保险与销售",
-        eco_card5_title: "3. 美国报税事务所后台支持",
+        eco_card5_title: "美国报税事务所后台支持",
         eco_card5_desc: "在 CCH Autoflow 处理前，检查、分类并整理美国税务资料。排查重复文件、税年错误和客户信息错误；审核工作底稿 PDF 书签，并与 E-Upsafe、Google Sheets 核对费用。交付：按流程整理的资料、检查清单及待处理例外清单。",
         eco_sub_tax: "报税后台",
-        eco_card6_title: "4. 销售薪酬、佣金与 KPI",
+        eco_card6_title: "销售薪酬、佣金与 KPI",
         eco_card6_desc: "为销售团队设计并测算奖励与佣金机制：薪酬成本模型、支付方案情景测试、成本与营收对比，以及每期支付核对。经验来自 Prudential、Chubb Life、AIA。",
         eco_sub_comp: "薪酬与 KPI",
         eco_btn_detail: "服务详情",
@@ -4598,7 +4628,7 @@
       }
 
       cloneDoc.querySelectorAll('a[data-w17-nav-dynamic]').forEach((a) => { a.removeAttribute('draggable'); a.removeAttribute('title'); });
-      cloneDoc.querySelectorAll('#visual-toolbar, .w17-section-controls, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
+      cloneDoc.querySelectorAll('#visual-toolbar, .w17-card-controls, .w17-card-add, .w17-section-controls, #w17-settings-dialog, #w17-consent-banner, script[src*="googletagmanager.com/gtag/js"]').forEach((el) => el.remove());
 
       const cloneToast = cloneDoc.querySelector('#toast-notification');
       if (cloneToast) {
@@ -4842,12 +4872,12 @@
       function saveLayout() {
         writeDraft((s) => {
           const ids = sections().map((x) => x.id);
-          s.layout = {
+          s.layout = Object.assign({}, s.layout, {
             order: ids,
             hidden: sections().filter((x) => x.hasAttribute('data-w17-hidden')).map((x) => x.id),
             custom: sections().filter((x) => x.hasAttribute('data-w17-custom')).map(customData),
             removed: Array.from(new Set(((s.layout && s.layout.removed) || []).filter((id) => !ids.includes(id))))
-          };
+          });
         });
       }
 
@@ -5111,15 +5141,216 @@
         refreshControls();
       }
 
+
+      // ---------- thẻ BÊN TRONG mục: Dịch vụ (số thứ tự tự đánh) & Website (thêm được thẻ) ----------
+      const TC = {
+        prev: { vi: 'Trước', en: 'Earlier', es: 'Antes', zh: '前移' },
+        next: { vi: 'Sau', en: 'Later', es: 'Después', zh: '后移' },
+        addWeb: { vi: '＋ Thêm website', en: '＋ Add website', es: '＋ Añadir sitio web', zh: '＋ 添加网站' },
+        newWebTitle: { vi: 'Website mới', en: 'New website', es: 'Nuevo sitio web', zh: '新网站' },
+        newWebDesc: { vi: 'Mô tả ngắn — bấm để sửa.', en: 'Short description — click to edit.', es: 'Descripción breve: haz clic para editar.', zh: '简短描述——点击编辑。' },
+        visit: { vi: 'Xem trang ↗', en: 'Visit site ↗', es: 'Ver sitio ↗', zh: '访问网站 ↗' },
+        url: { vi: 'Link trang (https://…)', en: 'Site link (https://…)', es: 'Enlace (https://…)', zh: '网站链接（https://…）' }
+      };
+      const tc = (k) => (TC[k][lang()] || TC[k].vi);
+      const cardGroups = () => [...document.querySelectorAll('[data-w17-card-group]')];
+      const cardsOf = (g) => [...g.querySelectorAll(':scope > [data-w17-card]')];
+      const safeUrl = (u) => (/^https:\/\/[^\s"'<>]+$/.test(String(u || '').trim()) ? String(u).trim() : '');
+
+      function webCardData(c) {
+        const h = c.querySelector('[data-w17-cc-title]'), p = c.querySelector('[data-w17-cc-desc]'), a = c.querySelector('a[data-w17-cc-link]');
+        return { id: c.getAttribute('data-w17-card'), title: h ? h.textContent.trim() : '', desc: p ? p.textContent.trim() : '', url: a ? (a.getAttribute('href') || '') : '' };
+      }
+
+      function setWebLink(c, url) {
+        const a = c.querySelector('a[data-w17-cc-link]');
+        if (!a) return;
+        const u = safeUrl(url);
+        if (u) { a.setAttribute('href', u); a.classList.remove('hidden'); }
+        else { a.removeAttribute('href'); a.classList.add('hidden'); }
+      }
+
+      function makeWebCard(d) {
+        const c = document.createElement('div');
+        c.setAttribute('data-w17-card', d.id);
+        c.setAttribute('data-w17-custom-card', '1');
+        c.className = 'relative p-6 sm:p-7 rounded-2xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 flex flex-col justify-between gap-5';
+        const top = document.createElement('div');
+        top.className = 'space-y-3.5';
+        const h = document.createElement('h4');
+        h.setAttribute('data-w17-cc-title', '');
+        h.className = 'editable-node text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white';
+        h.textContent = d.title || tc('newWebTitle');
+        const p = document.createElement('p');
+        p.setAttribute('data-w17-cc-desc', '');
+        p.className = 'editable-node text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed';
+        p.textContent = d.desc || tc('newWebDesc');
+        top.append(h, p);
+        const row = document.createElement('div');
+        row.className = 'flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800/80';
+        const a = document.createElement('a');
+        a.setAttribute('data-w17-cc-link', '');
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.className = 'inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400';
+        a.textContent = tc('visit');
+        row.append(a);
+        c.append(top, row);
+        setWebLink(c, d.url);
+        return c;
+      }
+
+      function saveCards() {
+        writeDraft((st) => {
+          st.layout = st.layout || {};
+          const cards = {};
+          cardGroups().forEach((g) => {
+            const list = cardsOf(g);
+            cards[g.getAttribute('data-w17-card-group')] = {
+              order: list.map((c) => c.getAttribute('data-w17-card')),
+              hidden: list.filter((c) => c.hasAttribute('data-w17-hidden')).map((c) => c.getAttribute('data-w17-card')),
+              custom: list.filter((c) => c.hasAttribute('data-w17-custom-card')).map(webCardData)
+            };
+          });
+          const prevRemoved = Array.isArray(st.layout.removedCards) ? st.layout.removedCards : [];
+          const present = new Set(cardGroups().flatMap((g) => cardsOf(g).map((c) => c.getAttribute('data-w17-card'))));
+          st.layout.cards = cards;
+          st.layout.removedCards = prevRemoved.filter((id) => !present.has(id));
+        });
+      }
+
+      function applyCardsDraft() {
+        if (!draftsOk()) return;
+        const l = readDraft().layout;
+        if (!l || !l.cards || typeof l.cards !== 'object') return;
+        const removed = new Set(Array.isArray(l.removedCards) ? l.removedCards.map(String) : []);
+        cardGroups().forEach((g) => {
+          const d = l.cards[g.getAttribute('data-w17-card-group')];
+          if (!d || !Array.isArray(d.order)) return;
+          cardsOf(g).filter((c) => c.hasAttribute('data-w17-custom-card') && removed.has(c.getAttribute('data-w17-card'))).forEach((c) => c.remove());
+          if (g.getAttribute('data-w17-card-group') === 'website') {
+            (Array.isArray(d.custom) ? d.custom : []).forEach((x) => {
+              if (!x || typeof x.id !== 'string' || !/^web-[a-z0-9]{4,16}$/.test(x.id) || g.querySelector('[data-w17-card="' + CSS.escape(x.id) + '"]')) return;
+              g.appendChild(makeWebCard({ id: x.id, title: String(x.title || '').slice(0, 120), desc: String(x.desc || '').slice(0, 600), url: x.url }));
+            });
+          }
+          const byId = new Map(cardsOf(g).map((c) => [c.getAttribute('data-w17-card'), c]));
+          d.order.forEach((id) => { const c = byId.get(String(id)); if (c) g.appendChild(c); });
+          cardsOf(g).filter((c) => !d.order.includes(c.getAttribute('data-w17-card'))).forEach((c) => g.appendChild(c));
+          const hid = new Set(Array.isArray(d.hidden) ? d.hidden.map(String) : []);
+          const listed = new Set(d.order.map(String));
+          cardsOf(g).forEach((c) => {
+            const id = c.getAttribute('data-w17-card');
+            if (!listed.has(id)) return;
+            if (hid.has(id)) c.setAttribute('data-w17-hidden', '1'); else c.removeAttribute('data-w17-hidden');
+          });
+        });
+      }
+
+      function refreshCardControls() {
+        cardGroups().forEach((g) => {
+          const list = cardsOf(g);
+          list.forEach((c, i) => {
+            const box = c.querySelector(':scope > .w17-card-controls');
+            if (!box) return;
+            const q = (r) => box.querySelector('[data-role="' + r + '"]');
+            q('prev').textContent = '⬅ ' + tc('prev');
+            q('next').textContent = tc('next') + ' ➡';
+            q('prev').disabled = i === 0;
+            q('next').disabled = i === list.length - 1;
+            const hidden = c.hasAttribute('data-w17-hidden');
+            q('toggle').textContent = hidden ? '👁 ' + t('show') : '🚫 ' + t('hide');
+            q('toggle').setAttribute('aria-pressed', hidden ? 'true' : 'false');
+            const del = q('del');
+            if (del && del.getAttribute('data-armed') !== '1') del.textContent = '🗑 ' + t('del');
+            const url = q('url');
+            if (url) url.setAttribute('placeholder', tc('url'));
+          });
+          const add = g.nextElementSibling && g.nextElementSibling.classList.contains('w17-card-add') ? g.nextElementSibling : null;
+          if (add) add.textContent = tc('addWeb');
+        });
+      }
+
+      function cardChanged(c, focusEl) {
+        refreshCardControls();
+        saveCards();
+        if (focusEl && !focusEl.disabled) focusEl.focus();
+      }
+
+      function addCardControls() {
+        if (!IS_CREATOR) return;
+        cardGroups().forEach((g) => {
+          cardsOf(g).forEach((c) => {
+            if (c.querySelector(':scope > .w17-card-controls')) return;
+            const box = document.createElement('div');
+            box.className = 'w17-card-controls no-print no-edit absolute top-2 right-2 z-20 flex flex-wrap items-center justify-end gap-1 max-w-[95%]';
+            box.addEventListener('click', (e) => e.stopPropagation());
+            const prev = button('bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700', (b) => { const p = c.previousElementSibling; if (p && p.hasAttribute('data-w17-card')) { p.before(c); cardChanged(c, b); } });
+            const next = button('bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700', (b) => { const n = c.nextElementSibling; if (n && n.hasAttribute('data-w17-card')) { n.after(c); cardChanged(c, b); } });
+            const tog = button('bg-amber-500/15 border-amber-500/50 text-amber-200 hover:bg-amber-500/25', (b) => {
+              if (c.hasAttribute('data-w17-hidden')) c.removeAttribute('data-w17-hidden'); else c.setAttribute('data-w17-hidden', '1');
+              cardChanged(c, b);
+            });
+            prev.setAttribute('data-role', 'prev');
+            next.setAttribute('data-role', 'next');
+            tog.setAttribute('data-role', 'toggle');
+            box.append(prev, next, tog);
+            if (c.hasAttribute('data-w17-custom-card')) {
+              const url = document.createElement('input');
+              url.type = 'url';
+              url.setAttribute('data-role', 'url');
+              url.className = 'no-edit w-44 rounded-md bg-slate-950 border border-slate-600 px-2 py-1 text-xs text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300';
+              const a = c.querySelector('a[data-w17-cc-link]');
+              url.value = a ? (a.getAttribute('href') || '') : '';
+              url.addEventListener('change', () => { setWebLink(c, url.value); saveCards(); });
+              const del = button('bg-rose-500/15 border-rose-500/50 text-rose-200 hover:bg-rose-500/25', (b) => {
+                if (b.getAttribute('data-armed') !== '1') {
+                  b.setAttribute('data-armed', '1');
+                  b.textContent = '⚠ ' + t('delConfirm');
+                  setTimeout(() => { b.removeAttribute('data-armed'); refreshCardControls(); }, 4000);
+                  return;
+                }
+                const id = c.getAttribute('data-w17-card');
+                c.remove();
+                writeDraft((st) => { st.layout = st.layout || {}; st.layout.removedCards = Array.from(new Set((st.layout.removedCards || []).concat([id]))); });
+                refreshCardControls();
+                saveCards();
+              });
+              del.setAttribute('data-role', 'del');
+              box.append(url, del);
+            }
+            c.prepend(box);
+          });
+          if (g.getAttribute('data-w17-card-group') === 'website' && !(g.nextElementSibling && g.nextElementSibling.classList.contains('w17-card-add'))) {
+            const add = button('w17-card-add no-print no-edit mt-4 bg-emerald-500/15 border-emerald-500/50 text-emerald-200 hover:bg-emerald-500/25', () => {
+              const c = makeWebCard({ id: 'web-' + Date.now().toString(36) });
+              g.appendChild(c);
+              if (editing()) c.querySelectorAll('[data-w17-cc-title], [data-w17-cc-desc]').forEach((el) => { el.setAttribute('contenteditable', 'true'); el.setAttribute('spellcheck', 'false'); });
+              addCardControls();
+              cardChanged(c, c.querySelector('[data-role="url"]'));
+              c.scrollIntoView({ block: 'center' });
+            });
+            g.after(add);
+          }
+        });
+        refreshCardControls();
+      }
+
+      document.addEventListener('input', (e) => {
+        if (e.target.closest && e.target.closest('[data-w17-custom-card]') && (e.target.hasAttribute('data-w17-cc-title') || e.target.hasAttribute('data-w17-cc-desc'))) saveCards();
+      });
+
       window.w17RenderNav = renderNav;
       function init() {
         applyDraft();
+        applyCardsDraft();
         renderNav();
         addControls();
-        new MutationObserver(refreshControls).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        addCardControls();
+        new MutationObserver(() => { refreshControls(); refreshCardControls(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
         new MutationObserver(() => {
           armNav();
-          if (editing()) document.querySelectorAll('section[data-w17-custom] [data-w17-custom-title], section[data-w17-custom] [data-w17-custom-body]').forEach((el) => el.setAttribute('contenteditable', 'true'));
+          if (editing()) document.querySelectorAll('section[data-w17-custom] [data-w17-custom-title], section[data-w17-custom] [data-w17-custom-body], [data-w17-custom-card] [data-w17-cc-title], [data-w17-custom-card] [data-w17-cc-desc]').forEach((el) => el.setAttribute('contenteditable', 'true'));
         }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
       }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
