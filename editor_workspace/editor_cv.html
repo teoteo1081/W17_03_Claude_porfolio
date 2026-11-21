@@ -579,7 +579,23 @@
     }
 
     /* 4. SỬA LỖI XUẤT PDF BỊ ĐEN THUI (FIX PRINT CSS CHUẨN MÀU) */
+    /* Lề trang = 0: trình duyệt không còn chỗ in đầu/chân trang tự động
+       (ngày giờ, tiêu đề, địa chỉ web, số trang); khoảng cách mép do main tự đệm
+       và lặp lại ở mỗi trang (box-decoration-break: clone). */
+    @page { size: A4; margin: 0; }
     @media print {
+      main#portfolio-root {
+        padding: 9mm 0 !important;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+      /* Tiêu đề mục không bị bỏ trơ ở cuối trang, tách khỏi nội dung bên dưới */
+      .reorderable-section > div:first-child,
+      .reorderable-section h2 {
+        break-inside: avoid !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
       #floating-toolbar,
       #floating-palette-pill,
       #toast-notification,
@@ -601,9 +617,6 @@
       body {
         background-color: #060b14 !important;
         color: #f8fafc !important;
-      }
-      main#portfolio-root {
-        padding-top: 0.5rem !important;
       }
       .surface-card {
         background-color: #0c1322 !important;
