@@ -1036,11 +1036,11 @@ def t_f10(env):
 
 
 # ======================================================================= static content / overflow / nav
-BADGES = {  # thứ tự hiển thị: 2 chính, 2 chuyên ngành, 2 nhận làm
-    "vi": ["Dịch vụ chính • Tự động hóa", "Dịch vụ thứ hai • Dữ liệu & BI", "Chuyên ngành • Thuế Mỹ", "Chuyên ngành • Bảo hiểm & bán hàng", "Nhận làm • Website", "Theo yêu cầu • Quảng cáo"],
-    "en": ["Core • Automation", "Second • Data & BI", "Specialist • US Tax", "Specialist • Insurance & Sales", "Available • Website", "On request • Ads"],
-    "es": ["Principal • Automatización", "Segundo • Datos y BI", "Especializado • Fiscal EE. UU.", "Especializado • Seguros y ventas", "Disponible • Web", "Bajo pedido • Publicidad"],
-    "zh": ["核心 • 自动化", "第二 • 数据与 BI", "专业 • 美国报税", "专业 • 保险与销售", "可承接 • 网站", "按需 • 广告"],
+BADGES = {  # nhãn lĩnh vực, không còn chữ nhóm "Dịch vụ chính/thứ hai/Chuyên ngành" (chủ hồ sơ duyệt 2026-11-20)
+    "vi": ["Tự động hóa", "Dữ liệu & BI", "Thuế Mỹ", "Lương thưởng & KPI", "Website", "Quảng cáo"],
+    "en": ["Automation", "Data & BI", "US Tax", "Compensation & KPIs", "Website", "Ads"],
+    "es": ["Automatización", "Datos y BI", "Fiscal EE. UU.", "Compensación y KPI", "Web", "Publicidad"],
+    "zh": ["自动化", "数据与 BI", "美国报税", "薪酬与 KPI", "网站", "广告"],
 }
 # Số thứ tự do CSS (counter) vẽ theo vị trí thẻ, không nằm trong chữ (2026-11-20)
 SERVICE_TITLES = {
