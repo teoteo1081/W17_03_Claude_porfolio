@@ -17,7 +17,7 @@
 | Người xem dùng ngôn ngữ nào? | Phương diện **Ngôn ngữ trang** / **Ngôn ngữ chuyển sang** | `site_lang`, `language_change` + `language` |
 | Từ Portfolio sang CV và ngược lại? | Sự kiện | `cv_from_portfolio_click`, `portfolio_from_cv_click` |
 | Người ta có tải CV PDF không? | Sự kiện | `cv_pdf_export_click` |
-| Đến từ link nào TJ gửi? | Báo cáo → Thu nạp → **Phiên theo nguồn/phương tiện/chiến dịch** | link có `utm_…` (xem [EDITOR_HANDBOOK.md](EDITOR_HANDBOOK.md) mục UTM) |
+| Đến từ link nào TJ gửi? | Báo cáo → Thu nạp → **Phiên theo nguồn/phương tiện/chiến dịch** | link có `utm_…` (bảng ngay dưới + link dùng sẵn ở [EDITOR_HANDBOOK.md](EDITOR_HANDBOOK.md) mục 7) |
 
 - **Lượt xem của chính TJ không bị tính:** bộ lọc "Internal Traffic" đã **bật** (20/11/2026). Mỗi trình duyệt/máy TJ dùng, mở trang 1 lần với `?toi_la_chu_trang=1`; muốn tắt thì `?toi_la_chu_trang=0`. Chrome chính của TJ đã được đánh dấu.
 - Các phương diện tùy chỉnh chỉ có số liệu **từ ngày tạo trở đi** (20/11/2026), không tính ngược.
@@ -28,6 +28,26 @@
 1. Thứ Hai: mở **Sự kiện quan trọng** → ghi số liên hệ tuần trước vào 1 dòng Google Sheet (ngày, Zalo, email, phone, nguồn chính).
 2. Xem **Thu nạp** → nguồn nào mang tới liên hệ (không phải nguồn nào nhiều lượt xem nhất).
 3. Mỗi tháng: xem `service_id` → dịch vụ nào được mở chi tiết nhiều nhưng ít liên hệ → sửa mô tả dịch vụ đó trước.
+
+### Link gửi đi phải có UTM (bắt buộc với app chat)
+
+Zalo, Viber, Messenger (và nhiều ứng dụng email) mở link **không kèm nguồn** → GA4 ghi "(direct) / (none)", không biết khách từ đâu. Facebook/LinkedIn có báo nguồn nhưng không tách được hồ sơ / bài đăng / tin nhắn. Vì vậy **mọi link TJ tự gửi đều lấy từ bảng dùng sẵn** ở [EDITOR_HANDBOOK.md mục 7](EDITOR_HANDBOOK.md#7-link-có-utm-biết-khách-đến-từ-kênh-nào). Tóm tắt quy ước để đọc báo cáo:
+
+| Kênh | `utm_source` | `utm_medium` | `utm_campaign` | Trang đích | GA4 xếp vào nhóm kênh |
+|---|---|---|---|---|---|
+| Zalo | `zalo` | `social` | `chat` / `post` / `apply` | Portfolio (chat, post), CV (apply) | Mạng xã hội không phải trả tiền |
+| Viber | `viber` | `social` | `chat` / `apply` | Portfolio / CV | Mạng xã hội không phải trả tiền |
+| Facebook | `facebook` | `social` | `profile` / `post` / `group` | Portfolio | Mạng xã hội không phải trả tiền |
+| Messenger | `messenger` | `social` | `chat` / `apply` | Portfolio / CV | Mạng xã hội không phải trả tiền |
+| LinkedIn | `linkedin` | `social` | `profile` / `post` / `chat` / `apply` | Portfolio (profile, post, chat), CV (apply) | Mạng xã hội không phải trả tiền |
+| Email | `email` | `email` | `signature` / `proposal` / `apply` | Portfolio (signature, proposal), CV (apply) | Email |
+| Upwork, Fiverr | `upwork`, `fiverr` | `referral` | `profile` | Portfolio | Giới thiệu |
+| TopCV, ITviec | `topcv`, `itviec` | `referral` | `apply` | CV | Giới thiệu |
+| CV PDF (tự động) | `cv_pdf` | `pdf` / `qr` | `cv` | Portfolio | (không thuộc nhóm mặc định — xem theo nguồn) |
+
+- `utm_campaign` cho biết **kiểu gửi**: `chat` (nhắn 1-1), `post`/`group` (bài đăng), `profile` (gắn cố định), `signature`, `proposal` (chào giá), `apply` (ứng tuyển). Thử nghiệm T1–T4 ở mục 4 đọc kết quả theo đúng các giá trị này.
+- Muốn so sánh từng bài đăng: thêm `&utm_content=<ngày hoặc chủ đề>` (vd. `2026-11-24`).
+- Một kênh mới chưa có trong bảng: thêm dòng vào bảng ở Handbook trước, rồi mới gửi — giữ một cách viết duy nhất cho mỗi nguồn.
 
 ---
 

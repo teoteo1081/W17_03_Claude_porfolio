@@ -86,7 +86,7 @@ Bản PDF có:
 - Khối **"Quét để xem Portfolio"**: mã QR + tên miền dễ đọc + email + số điện thoại.
 - Không có nút của editor.
 
-Link "Xem Portfolio" trong PDF có đuôi `?utm_source=cv_pdf&utm_medium=pdf…`, mã QR có `…utm_medium=qr…`: để sau này (khi cài GA4) phân biệt khách đến từ bấm link PDF hay quét QR. Đuôi này không chứa thông tin cá nhân.
+Link "Xem Portfolio" trong PDF có đuôi `?utm_source=cv_pdf&utm_medium=pdf…`, mã QR có `…utm_medium=qr…`: để GA4 phân biệt khách đến từ bấm link PDF hay quét QR. Đuôi này không chứa thông tin cá nhân.
 
 **Lưu ý:** PDF đã gửi đi **không tự cập nhật**. Đổi số điện thoại hay địa chỉ web thì chỉ những bản PDF xuất **sau đó** mới mang thông tin mới.
 
@@ -109,16 +109,59 @@ Bản ES/ZH do Claude dịch, **chưa có người bản ngữ duyệt** — n�
 - **Sự kiện có sẵn:** bấm số điện thoại / email / Zalo, sang CV, sang Portfolio, GitHub, xem demo dự án, mở chi tiết dịch vụ, bấm Tải CV (PDF), mở ứng dụng email từ form liên hệ, đổi ngôn ngữ. Đây là **lượt bấm**, không phải kết quả (bấm Zalo chưa chắc đã nhắn).
 - **Quyền riêng tư:** khách ở châu Âu/Anh/Thụy Sĩ mặc định không bị đo cho tới khi bấm Đồng ý; nút **Quyền riêng tư & cookie** ở chân trang để bất kỳ ai đổi lựa chọn. Vì vậy GA4 đếm **ít hơn** số khách thật.
 
-## 7. Tạo link có UTM (biết khách đến từ kênh nào)
+## 7. Link có UTM (biết khách đến từ kênh nào)
 
-Thêm đuôi vào địa chỉ khi đăng link ở một kênh, ví dụ đăng trên LinkedIn:
+**Gửi link qua app chat thì BẮT BUỘC dùng link có UTM.** Zalo, Viber, Messenger (và nhiều khi cả email) mở link mà **không báo cho trang biết khách đến từ đâu**; GA4 ghi là "(direct) / (none)", lẫn với người tự gõ địa chỉ. Facebook, LinkedIn thường có báo nguồn, nhưng không phân biệt được khách bấm từ hồ sơ, bài đăng hay tin nhắn. Có đuôi UTM thì phân biệt được hết.
 
-`https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=linkedin&utm_medium=social&utm_campaign=profile`
+### Bảng link dùng sẵn (copy nguyên dòng)
 
-- `utm_source`: nơi đăng (linkedin, facebook, email_signature…), `utm_medium`: loại kênh (social, email, referral…), `utm_campaign`: tên đợt.
-- Chỉ viết chữ thường, không dấu, không khoảng trắng; **không** đưa tên/email/số điện thoại vào đuôi.
-- Không gắn UTM cho link giữa Portfolio và CV (làm GA4 tách phiên sai). PDF và QR đã có sẵn UTM riêng.
-- Kết quả xem ở **Báo cáo → Thu nạp → Thu nạp lưu lượng truy cập**, chiều "Nguồn/phương tiện của phiên".
+Link **Portfolio** (gửi khách thuê làm dịch vụ):
+
+| Gửi ở đâu | Link |
+|---|---|
+| Zalo — nhắn tin 1-1 | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=zalo&utm_medium=social&utm_campaign=chat` |
+| Zalo — bài đăng nhật ký / nhóm | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=zalo&utm_medium=social&utm_campaign=post` |
+| Viber — nhắn tin | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=viber&utm_medium=social&utm_campaign=chat` |
+| Facebook — mục Giới thiệu trên trang cá nhân | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=facebook&utm_medium=social&utm_campaign=profile` |
+| Facebook — bài đăng trên tường | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=facebook&utm_medium=social&utm_campaign=post` |
+| Facebook — bài trong nhóm nghề | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=facebook&utm_medium=social&utm_campaign=group` |
+| Messenger — nhắn tin | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=messenger&utm_medium=social&utm_campaign=chat` |
+| LinkedIn — hồ sơ (Featured / Contact info) | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=linkedin&utm_medium=social&utm_campaign=profile` |
+| LinkedIn — bài đăng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=linkedin&utm_medium=social&utm_campaign=post` |
+| LinkedIn — tin nhắn / InMail | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=linkedin&utm_medium=social&utm_campaign=chat` |
+| Email — chữ ký | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=email&utm_medium=email&utm_campaign=signature` |
+| Email — chào giá khách | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=email&utm_medium=email&utm_campaign=proposal` |
+| Upwork — hồ sơ | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=upwork&utm_medium=referral&utm_campaign=profile` |
+| Fiverr — hồ sơ | `https://teoteo1081.github.io/W17_03_Claude_porfolio/?utm_source=fiverr&utm_medium=referral&utm_campaign=profile` |
+
+Link **CV** (gửi nhà tuyển dụng):
+
+| Gửi ở đâu | Link |
+|---|---|
+| Zalo — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=zalo&utm_medium=social&utm_campaign=apply` |
+| Viber — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=viber&utm_medium=social&utm_campaign=apply` |
+| Messenger — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=messenger&utm_medium=social&utm_campaign=apply` |
+| LinkedIn — tin nhắn ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=linkedin&utm_medium=social&utm_campaign=apply` |
+| Email — thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=email&utm_medium=email&utm_campaign=apply` |
+| TopCV — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=topcv&utm_medium=referral&utm_campaign=apply` |
+| ITviec — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=itviec&utm_medium=referral&utm_campaign=apply` |
+
+**File CV PDF: KHÔNG tự thêm UTM.** Link "Xem Portfolio" và mã QR trong PDF đã tự mang `utm_source=cv_pdf&utm_medium=pdf&utm_campaign=cv` (bấm link) và `utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv` (quét QR). Gửi file PDF qua kênh nào thì trong GA4 vẫn hiện là `cv_pdf`; muốn biết kênh thì gửi **thêm** link CV ở bảng trên.
+
+### Quy ước (khi cần tạo link mới)
+
+| Phần | Ý nghĩa | Giá trị đang dùng |
+|---|---|---|
+| `utm_source` | Nơi gửi / đăng | `zalo`, `viber`, `facebook`, `messenger`, `linkedin`, `email`, `upwork`, `fiverr`, `topcv`, `itviec`, `cv_pdf` (tự động) |
+| `utm_medium` | Loại kênh | `social` (mạng xã hội **và** app chat), `email`, `referral` (trang việc làm / nền tảng freelance), `pdf`, `qr` (tự động) |
+| `utm_campaign` | Gửi theo kiểu nào | `chat` (nhắn 1-1), `post` (bài đăng), `group` (nhóm), `profile` (gắn cố định trên hồ sơ), `signature` (chữ ký email), `proposal` (chào giá), `apply` (ứng tuyển), `cv` (tự động) |
+| `utm_content` *(tùy chọn)* | Phân biệt từng bài / từng lần gửi | ví dụ `&utm_content=2026-11-24` hoặc `&utm_content=bai-power-bi` |
+
+- Chỉ chữ thường, không dấu, không khoảng trắng; **không** đưa tên/email/số điện thoại của ai vào đuôi.
+- Giữ đúng chính tả đã dùng (`linkedin`, không phải `LinkedIn` hay `linked_in`) — GA4 coi khác chữ là khác nguồn.
+- App chat để `utm_medium=social` để GA4 xếp vào nhóm "Mạng xã hội không phải trả tiền" (GA4 không có nhóm riêng cho app chat); muốn tách Zalo/Viber thì xem theo **nguồn**.
+- Không gắn UTM cho link giữa Portfolio và CV trên chính trang (làm GA4 tách phiên sai).
+- Kết quả xem ở **Báo cáo → Thu nạp → Thu nạp lưu lượng truy cập**, đổi chiều thành **"Nguồn/phương tiện của phiên"** hoặc **"Chiến dịch của phiên"**. Liên hệ đến từ kênh nào: bảng tự do với phương diện "Nguồn/phương tiện của phiên" + sự kiện quan trọng.
 
 ### Không đếm lượt xem của chính mình
 
@@ -163,7 +206,7 @@ Thêm thẻ dịch vụ mới, mục Kinh nghiệm làm việc (cần dữ liệ
 | UI / UX | Giao diện / trải nghiệm người dùng |
 | i18n | Hệ thống đa ngôn ngữ (VI/EN/ES/ZH) |
 | Canonical | Thẻ báo cho Google "đây là địa chỉ chính thức của trang" |
-| UTM | Đuôi gắn sau link để biết khách đến từ đâu (vd. từ PDF, từ QR) |
+| UTM | Đuôi gắn sau link để biết khách đến từ đâu (vd. từ Zalo, từ PDF, từ QR) — bảng link dùng sẵn ở mục 7 |
 | GA4 | Google Analytics 4 — công cụ đếm lượt truy cập và lượt bấm |
 | Consent | Sự đồng ý của khách cho phép đo lường |
 | DebugView | Màn hình trong GA4 xem sự kiện gần như ngay lập tức để kiểm tra |
