@@ -1049,10 +1049,14 @@ SERVICE_TITLES = {
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 # Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
 POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Vận hành và Phân tích Dữ liệu"}
+# Bản EN/ES/ZH của câu định vị Portfolio dịch theo câu VI mới (2026-11-20); CV vẫn dùng POSITIONING.
+POSITIONING_PORTFOLIO = {"en": "End-to-End Operations Automation", "es": "Automatización de Operaciones de Principio a Fin", "zh": "端到端运营自动化"}
 
 
 def positioning(l, page):
-    return POSITIONING_VI[page] if l == "vi" else POSITIONING[l]
+    if l == "vi":
+        return POSITIONING_VI[page]
+    return POSITIONING_PORTFOLIO[l] if page == "portfolio" else POSITIONING[l]
 
 
 def t_content(b, env):

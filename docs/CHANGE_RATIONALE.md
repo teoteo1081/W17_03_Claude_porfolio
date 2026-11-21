@@ -290,3 +290,10 @@ Chủ hồ sơ duyệt qua nhiều vòng ảnh demo trước khi làm.
 **Kiểm tra:** STATIC, F01–F10, N, R3–R10, CONTENT, NAV, RESP, ZOOM: PASS (41/41 + 12/12 + 15/15 + ZOOM 3/3). Không gọi API thật trong test (GA4 giả lập, Google bị chặn).
 
 **Còn thiếu (báo thẳng):** Portfolio chưa có đổi chỗ / thêm thẻ BÊN TRONG một mục (6 thẻ dịch vụ, 4 thẻ website) — sắp xếp mục không thay được việc này. CV chưa có thêm thẻ giải pháp/học vấn mới và chưa có nút xóa thẻ giải pháp/số liệu (từ trước). Mục tự thêm ở Portfolio có chữ chung cho 4 ngôn ngữ (chưa dịch). Thùng rác CV chỉ khôi phục được tới khi Lưu; sau Lưu dùng `.w17_backups`/Git. Phiên bản file chỉ chặn khi editor gửi `expected_revision` (editor luôn gửi; client API khác không gửi thì không bị chặn). SEO kỹ thuật (P1) và dịch Gemini (P1) chưa làm.
+
+### Dịch EN/ES/ZH theo bản VI chủ hồ sơ sửa (2026-11-20)
+
+- Dịch lại 23 khóa (7 Portfolio, 16 CV) có bản VI đã sửa qua editor mà EN/ES/ZH còn ý cũ (hero, câu định vị, mô tả, "Dịch vụ & Giải pháp", thẻ dịch vụ 3, tiểu sử CV, kỹ năng, học vấn). Bản VI không đổi.
+- `tools/i18n_stale.py` + `i18n/translated_from.json`: dấu vân tay bản VI lúc dịch; báo khóa cần dịch lại khi VI đổi.
+- Skill cục bộ `w17-translate` (trên máy, không tải skill bên thứ ba): quy trình, bảng thuật ngữ, giọng văn, danh sách kiểm. Không gọi API dịch trả phí.
+- Test CONTENT: câu định vị EN/ES/ZH của Portfolio theo câu VI mới. F04/F06/F08/R3/CONTENT/STATIC/N/RESP/F09/R9/R10/ZOOM PASS. Chưa có người bản ngữ duyệt ES/ZH.

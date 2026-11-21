@@ -21,7 +21,7 @@ Mở file HTML bằng cách bấm đúp, hoặc mở editor trên web thật, th
 2. Bấm vào chữ muốn sửa và gõ trực tiếp.
 3. Bấm **🚀 Lưu & đăng lên web**. Khoảng 1–2 phút sau web cập nhật (bấm Ctrl+F5 để xem).
 
-Sửa ở tiếng Việt thì chỉ bản tiếng Việt đổi. Bản EN/ES/ZH: đổi ngôn ngữ trong editor rồi sửa tay, hoặc nhờ Claude dịch (chức năng dịch tự động chưa có).
+Sửa ở tiếng Việt thì chỉ bản tiếng Việt đổi. Bản EN/ES/ZH: xem mục 5b.
 
 ## 3. Di chuyển và ẩn/hiện các mục trên Portfolio
 
@@ -79,6 +79,16 @@ Bản PDF có:
 Link "Xem Portfolio" trong PDF có đuôi `?utm_source=cv_pdf&utm_medium=pdf…`, mã QR có `…utm_medium=qr…`: để sau này (khi cài GA4) phân biệt khách đến từ bấm link PDF hay quét QR. Đuôi này không chứa thông tin cá nhân.
 
 **Lưu ý:** PDF đã gửi đi **không tự cập nhật**. Đổi số điện thoại hay địa chỉ web thì chỉ những bản PDF xuất **sau đó** mới mang thông tin mới.
+
+## 5b. Cập nhật bản EN / ES / ZH sau khi sửa tiếng Việt
+
+Sửa chữ tiếng Việt qua editor thì bản tiếng Anh, Tây Ban Nha, Trung **không tự đổi**. Để biết chỗ nào cần dịch lại:
+
+1. Mở cửa sổ lệnh trong thư mục dự án, chạy `python -X utf8 tools/i18n_stale.py --show` → danh sách khóa cần dịch kèm chữ hiện tại.
+2. Nhờ Claude: nói **"dịch"** hoặc gõ **/w17-translate** — Claude dùng bảng thuật ngữ cố định của dự án (không gọi dịch vụ trả phí), chạy kiểm tra rồi đăng lên.
+3. Báo "OK — EN/ES/ZH theo kịp bản tiếng Việt" là xong.
+
+Bản ES/ZH do Claude dịch, **chưa có người bản ngữ duyệt** — nếu nhắm khách Tây Ban Nha/Trung Quốc, nên nhờ người bản ngữ đọc lại một lần.
 
 ## 6. Đo lượt truy cập bằng GA4
 
