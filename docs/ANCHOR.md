@@ -81,6 +81,14 @@ python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Crea
 
 **A14 bổ sung (sau audit).** Nút điều khiển mục chỉ hiện khi bật Sửa chữ (tắt = xem như web). Mục ↔ menu: ô "Tên trên menu" đổi nhãn menu (máy tính + điện thoại, lưu nháp, vào Final); sắp xếp ngay trên menu bằng kéo-thả hoặc Alt+←/→; "＋ Thêm mục" tạo mục mới (`sec-…`, chữ chung mọi ngôn ngữ, chưa dịch) có mục menu; xóa mục tự thêm phải bấm 2 lần. Giới thiệu/Liên hệ khóa; CV là trang riêng. Kiểm: R10-04.
 
+**A18. SEO kỹ thuật (vòng 4, P1).** Cả 2 trang có canonical, og:url/og:image (1200×630, `assets/og-portfolio.png`, `assets/og-cv.png`), twitter:card `summary_large_image`, `robots: index, follow`, JSON-LD `id="w17-jsonld"` (Person + WebSite, CV thêm ProfilePage); `sitemap.xml` 2 URL. Tất cả dựng lại từ `w17-site-config` bằng `tools/site_config.py` (đổi địa chỉ web ở ⚙ là đổi theo). Chưa có: URL riêng từng ngôn ngữ, Search Console, robots.txt ở gốc tên miền (không đặt được từ repo dự án). Kiểm: R11, `site_config.py --check`.
+
+**A19. Thẻ bên trong mục Portfolio.** Lưới `data-w17-card-group="services"` (svc-p1…p6) và `"website"` (spoke1…4 + thẻ tự thêm `web-*`). Khi bật Sửa chữ: ⬅ ➡ đổi chỗ, Ẩn/Hiện từng thẻ; "＋ Thêm website" tạo thẻ (tiêu đề, mô tả, link chỉ nhận https), xóa thẻ tự thêm bấm 2 lần. Số thứ tự dịch vụ do CSS đếm theo vị trí (thẻ ẩn không tính), không nằm trong chữ. Chưa có: thêm thẻ dịch vụ (cần nội dung cửa sổ chi tiết); thẻ tự thêm dùng chung chữ cho mọi ngôn ngữ. Kiểm: R11.
+
+**A20. Thẻ CV.** Nút ✕ (bấm 2 lần, vào thùng rác) có trên thẻ học vấn, tag kỹ năng, thẻ giải pháp, thẻ số liệu; "+ Thêm học vấn" tạo thẻ `edu_custom_*` (nháp ở `customEdu`, khi Lưu nằm thẳng trong HTML). Kiểm: R11.
+
+**A21. GA4 phía Google (cấu hình 20/11/2026, property 565302376).** 7 phương diện tùy chỉnh phạm vi sự kiện: link_location, project_id, service_id, link_type, site_lang, language, detail_tab. 3 sự kiện quan trọng: contact_zalo_click, contact_email_click, contact_phone_click. Bộ lọc "Internal Traffic" (loại `traffic_type=internal`) **đang hoạt động**; trang đặt `traffic_type=internal` khi trình duyệt có `localStorage.w17_03_internal=1` (bật/tắt bằng `?toi_la_chu_trang=1|0`). Đã thấy trang thật gửi `g/collect`. Không gửi dữ liệu cá nhân. Kế hoạch đo + tăng trưởng: `docs/GROWTH_PLAN.md`.
+
 ## 5. Lệnh kiểm tổng
 
 ```bash

@@ -297,3 +297,20 @@ Chủ hồ sơ duyệt qua nhiều vòng ảnh demo trước khi làm.
 - `tools/i18n_stale.py` + `i18n/translated_from.json`: dấu vân tay bản VI lúc dịch; báo khóa cần dịch lại khi VI đổi.
 - Skill cục bộ `w17-translate` (trên máy, không tải skill bên thứ ba): quy trình, bảng thuật ngữ, giọng văn, danh sách kiểm. Không gọi API dịch trả phí.
 - Test CONTENT: câu định vị EN/ES/ZH của Portfolio theo câu VI mới. F04/F06/F08/R3/CONTENT/STATIC/N/RESP/F09/R9/R10/ZOOM PASS. Chưa có người bản ngữ duyệt ES/ZH.
+
+### SEO kỹ thuật, thẻ trong mục, thẻ CV, cờ chủ trang (commit 0bc690f, 2026-11-20)
+
+| Việc | Vì sao | Test |
+|---|---|---|
+| Canonical, OG/Twitter + ảnh chia sẻ 1200×630, robots, JSON-LD, sitemap — dựng từ cấu hình chung | Link gửi qua Zalo/LinkedIn có ảnh + tiêu đề đúng; Google hiểu 2 trang là của cùng một người | R11, `site_config --check` |
+| Đổi chỗ/ẩn từng thẻ dịch vụ + website; thêm/xóa thẻ website | Audit: "reorder/add card còn thiếu"; sắp xếp mục không thay được | R11 |
+| Số dịch vụ do CSS đếm, bỏ số khỏi chữ | Đổi chỗ thẻ không làm số sai | R11, CONTENT |
+| CV: ✕ cho thẻ giải pháp/số liệu, "+ Thêm học vấn" | Audit: CV thiếu thêm/xóa thẻ | R11 |
+| `?toi_la_chu_trang=1` → `traffic_type=internal` | Không để lượt xem của chủ hồ sơ làm sai số liệu | R11 |
+
+### Cài GA4 phía Google + kế hoạch tăng trưởng (2026-11-20)
+
+- Làm trong Chrome đã đăng nhập của chủ hồ sơ (được cho phép), không nhập mật khẩu: 7 phương diện tùy chỉnh, 3 sự kiện quan trọng (bấm Zalo/email/điện thoại), bật bộ lọc "Internal Traffic" (GA cảnh báo: dữ liệu đã loại không lấy lại được — đúng mục đích). Chi tiết: ANCHOR A21.
+- Đã kiểm trang thật gửi `g/collect` với `traffic_type=internal` trên Chrome chủ hồ sơ. Trang chủ GA còn báo "chưa nhận dữ liệu" vì property mới (GA xử lý chậm 24–48 giờ).
+- `docs/GROWTH_PLAN.md`: đo gì, bản đồ từ khóa theo 6 dịch vụ thật (chưa có số lượng tìm kiếm — phải kiểm bằng Keyword Planner/Search Console), việc mũ trắng, 5 thử nghiệm có điều kiện dừng, việc không làm, giới hạn GEO. Không hứa thứ hạng.
+

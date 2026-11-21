@@ -2,7 +2,7 @@
 
 Hệ sinh thái **Portfolio Showcase & Hồ Sơ Năng Lực Tương Tác (Version 3)** của **Thao Nguyen (TJ)** — *Freelance Vận hành & Phân tích Dữ liệu • Tự động hóa Quy trình • Dashboard BI*.
 
-> Bản W17_03 phái sinh từ W17_02 (commit `9a37799`): chỉ đổi **nội dung** để định vị freelancer, gồm 2 dịch vụ chính và 2 dịch vụ nhận theo yêu cầu. Mốc kiểm tra nằm ở [`docs/ANCHOR.md`](docs/ANCHOR.md), lý do từng thay đổi ở [`docs/CHANGE_RATIONALE.md`](docs/CHANGE_RATIONALE.md).
+> Bản W17_03 phái sinh từ W17_02 (commit `9a37799`): chỉ đổi **nội dung** để định vị freelancer, gồm 2 dịch vụ chính và 2 dịch vụ nhận theo yêu cầu. Mốc kiểm tra nằm ở [`docs/ANCHOR.md`](docs/ANCHOR.md), lý do từng thay đổi ở [`docs/CHANGE_RATIONALE.md`](docs/CHANGE_RATIONALE.md). Sổ tay sửa trang: [`docs/EDITOR_HANDBOOK.md`](docs/EDITOR_HANDBOOK.md); đo lường & tăng trưởng: [`docs/GROWTH_PLAN.md`](docs/GROWTH_PLAN.md).
 
 ---
 

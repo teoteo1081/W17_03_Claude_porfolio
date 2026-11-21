@@ -35,9 +35,19 @@ Trong editor Portfolio, bấm **✏️ Bật sửa chữ**; mỗi mục (Dịch 
 - Menu (máy tính và điện thoại) tự đổi theo ngay.
 - Tải lại trang vẫn giữ thay đổi (bản nháp). Bấm **🚀 Lưu & đăng lên web** để đưa lên web.
 
+## 3-thẻ. Di chuyển, ẩn và thêm thẻ bên trong một mục (Portfolio)
+
+Bật **✏️ Bật sửa chữ**; mỗi thẻ ở mục **Dịch vụ** và **Các website tiêu biểu** có thanh nhỏ ở góc:
+
+- **⬅ Trước / Sau ➡**: đổi chỗ thẻ. Số thứ tự dịch vụ (1., 2., …) tự đánh lại theo vị trí.
+- **🚫 Ẩn / 👁 Hiện**: thẻ ẩn không hiện trên web, không được đánh số.
+- **＋ Thêm website** (dưới lưới website): tạo thẻ mới; bấm vào tiêu đề/mô tả để sửa, dán link vào ô "Link trang (https://…)". Thẻ tự thêm có **🗑 Xóa** (bấm 2 lần). Chữ thẻ tự thêm dùng chung cho mọi ngôn ngữ.
+- Chưa thêm được thẻ dịch vụ mới (mỗi dịch vụ còn có cửa sổ "Chi tiết dịch vụ" — nhờ Claude).
+
 ## 3a. Xóa và khôi phục thẻ ở CV
 
-- Bấm **✕** trên thẻ Học vấn hoặc tag kỹ năng: nút đổi thành **"Xóa?"**; bấm lại trong 4 giây mới xóa.
+- **+ Thêm học vấn** (dưới lưới Học vấn): tạo thẻ mới, bấm vào chữ để sửa loại và tên bằng/khóa học.
+- Bấm **✕** trên thẻ Học vấn, tag kỹ năng, thẻ giải pháp hoặc thẻ số liệu: nút đổi thành **"Xóa?"**; bấm lại trong 4 giây mới xóa.
 - Thẻ đã xóa vào **🗑 Đã xóa (n)** trên thanh công cụ CV; mở ra bấm **Khôi phục** từng thẻ. Tải lại trang vẫn khôi phục được, cho tới khi bấm Lưu/Đăng. Sau đó muốn lấy lại thì dùng bản sao lưu (mục 9).
 
 ## 3b. Chuyển giữa Portfolio và CV
@@ -110,6 +120,10 @@ Thêm đuôi vào địa chỉ khi đăng link ở một kênh, ví dụ đăng 
 - Không gắn UTM cho link giữa Portfolio và CV (làm GA4 tách phiên sai). PDF và QR đã có sẵn UTM riêng.
 - Kết quả xem ở **Báo cáo → Thu nạp → Thu nạp lưu lượng truy cập**, chiều "Nguồn/phương tiện của phiên".
 
+### Không đếm lượt xem của chính mình
+
+Trên mỗi trình duyệt/máy bạn hay dùng, mở 1 lần: `https://teoteo1081.github.io/W17_03_Claude_porfolio/?toi_la_chu_trang=1`. Từ đó GA4 bỏ qua lượt xem của trình duyệt đó (bộ lọc "Internal Traffic" đã bật). Muốn được đếm lại: `?toi_la_chu_trang=0`. Chrome chính của bạn đã được đánh dấu. Xem số liệu nào, mỗi tuần làm gì: [GROWTH_PLAN.md](GROWTH_PLAN.md).
+
 ## 8. Kiểm tra mã QR
 
 Mở camera điện thoại, quét mã QR trên PDF (trên màn hình hoặc bản in giấy). Điện thoại phải mở đúng trang Portfolio. Nếu in giấy, in ở cỡ thật (100%), không thu nhỏ trang.
@@ -136,7 +150,7 @@ Mọi việc ở mục 1–9 tự làm được, không cần Claude. Cần Clau
 
 ## Chưa có (đang trong kế hoạch)
 
-Di chuyển từng thẻ bên trong một mục (ở Portfolio), thêm thẻ mới, kinh nghiệm làm việc, dịch tự động bằng Gemini, Search Console. Khi làm xong phần nào, sổ tay này sẽ thêm hướng dẫn phần đó.
+Thêm thẻ dịch vụ mới, mục Kinh nghiệm làm việc (cần dữ liệu thật), Search Console (cần bạn đăng nhập xác minh), URL riêng cho từng ngôn ngữ, dịch chữ của mục/thẻ tự thêm. Dịch EN/ES/ZH hiện làm bằng skill `w17-translate` (mục 5b), không dùng Gemini.
 
 ## Giải thích từ ngữ
 
