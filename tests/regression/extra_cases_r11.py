@@ -166,8 +166,9 @@ def t_cv_cards(b, env):
     pg.click("#btn-cv-trash"); pg.click(f"#w17-cv-trash [data-trash-id='{first}'] button"); pg.wait_for_timeout(200)
     if first not in pg.evaluate(sol):
         bad.append("không khôi phục được thẻ giải pháp")
-    if not pg.evaluate("() => !!document.querySelector('#metrics-grid > .metric-card-item > .delete-btn')"):
-        bad.append("thẻ số liệu không có nút xóa")
+    # Khối 3 bước (thẻ số liệu) đã bỏ khỏi CV theo chủ hồ sơ (2026-11-21)
+    if pg.evaluate("() => !!document.getElementById('metrics-grid')"):
+        bad.append("CV còn khối 3 bước (metrics) đã bỏ")
     pg.click("#btn-add-edu"); pg.wait_for_timeout(200)
     new_id = pg.evaluate("() => { const c = document.querySelector('[data-w17-custom-edu]'); return c && c.getAttribute('data-card-id'); }")
     if not new_id:
@@ -184,7 +185,7 @@ def t_cv_cards(b, env):
     pg.evaluate("(k) => localStorage.removeItem(k)", CV_KEY)
     ctx.close()
     env.reset_work()
-    R.record("R11", "R11-03 CV: thẻ giải pháp/số liệu có ✕ (bấm 2 lần) + thùng rác khôi phục; thêm thẻ học vấn, giữ sau tải lại, vào Final", not bad, " | ".join(bad))
+    R.record("R11", "R11-03 CV: thẻ giải pháp có ✕, không còn khối 3 bước; (bấm 2 lần) + thùng rác khôi phục; thêm thẻ học vấn, giữ sau tải lại, vào Final", not bad, " | ".join(bad))
 
 
 def t_owner_flag(b, env):
